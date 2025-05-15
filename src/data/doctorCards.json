@@ -1,0 +1,80 @@
+[
+    {
+        "id": "1",
+        "title": "Oncologist",
+        "title2": "A breast tumor could be removed by a surgical oncologist",
+        "description": [
+            "Ophthalmologist; Orthopedist; Otolaryngologist; Osteopath; Pathologist; Pediatrician; Physician executive; Plastic surgeon; Podiatrist; Psychiatrist",
+            "An oncologist specialises in diagnosing and treating cancer. Anaesthesiologist: A medical professional who administers anaesthesia"
+        ],
+        "author": "Dr. Peter Schwartzstein",
+        "views": "18k Views",
+        "time": "3 Days Ago",
+        "image": "/images/doctor-profile/details.jpg"
+    },
+    {
+        "id": "2",
+        "title": "Dermatologist",
+        "title2": "a dermatologist—finds, prevents, and treats diseases of the skin",
+        "description": [
+            "Another physician will perform the biopsy (e.g., dermatologist or surgeon) and then give it to the pathologist for review. Radiology — Radiologists",
+            "Allergist/immunologist; Anesthesiologist; Cardiologist; Dermatologist; Endocrinologist; Family physician; Gastroenterologist; Geneticist; Hematologist"
+        ],
+        "author": "Dr. Alice Kim",
+        "views": "12k Views",
+        "time": "1 Week Ago",
+        "image": "/images/doctor-profile/profile-2.jpg"
+    },
+    {
+        "id": "3",
+        "title": "Gastroenterologist",
+        "title2": "a hepatologist is a gastroenterologist who specializes in diseases of the liver",
+        "description": [
+            "a hepatologist is a gastroenterologist who specializes in diseases of the liver. Gastroenterologists can also perform invasive procedures",
+            "When tummy troubles escalate to something more, it may be time to involve a gastroenterologist, sometimes called a gastrologist."
+        ],
+        "author": "Dr. Alice Kim",
+        "views": "12k Views",
+        "time": "1 Week Ago",
+        "image": "/images/doctor-profile/profile-3.jpg"
+    },
+    {
+        "id": "4",
+        "title": "Neurologist",
+        "title2": "A neurologist treats conditions of the nerves, spine, and brain",
+        "description": [
+            "neurologist. Encephalitis, meningitis, and brain abscesses are examples. Cardiothoracic Surgeon. A cardiothoracic surgeon performs on the human body's chest",
+            "A neurologist specialises in diagnosing and treating conditions of the nervous system, including the brain, spinal cord, and nerves."
+        ],
+        "author": "Dr. Alice Kim",
+        "views": "12k Views",
+        "time": "1 Week Ago",
+        "image": "/images/doctor-profile/profile-2.jpg"
+    },
+    {
+        "id": "5",
+        "title": "Oncologist",
+        "title2": "A breast tumor could be removed by a surgical oncologist",
+        "description": [
+            "Ophthalmologist; Orthopedist; Otolaryngologist; Osteopath; Pathologist; Pediatrician; Physician executive; Plastic surgeon; Podiatrist; Psychiatrist",
+            "An oncologist specialises in diagnosing and treating cancer. Anaesthesiologist: A medical professional who administers anaesthesia"
+        ],
+        "author": "Dr. Alice Kim",
+        "views": "12k Views",
+        "time": "1 Week Ago",
+        "image": "/images/doctor-profile/profile-1.jpg"
+    },
+    {
+        "id": "6",
+        "title": "Dermatologist",
+        "title2": "a dermatologist—finds, prevents, and treats diseases of the skin",
+        "description": [
+            "Another physician will perform the biopsy (e.g., dermatologist or surgeon) and then give it to the pathologist for review. Radiology — Radiologists",
+            "Allergist/immunologist; Anesthesiologist; Cardiologist; Dermatologist; Endocrinologist; Family physician; Gastroenterologist; Geneticist; Hematologist"
+        ],
+        "author": "Dr. Alice Kim",
+        "views": "12k Views",
+        "time": "1 Week Ago",
+        "image": "/images/doctor-profile/profile-2.jpg"
+    }
+]
