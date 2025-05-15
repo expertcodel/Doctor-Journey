@@ -1,31 +1,16 @@
 import UserProfileSidebar from "@/app/component/UserProfileSidebar";
+import { faCheckCircle, faUpload, faUser, faUserAlt, faUserAltSlash, faUserCheck } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Image from "next/image";
 import Link from "next/link";
-
+import Select2Component from "../../component/Select2Component";
+import Breadcrumb from "@/app/component/Breadcrumb";
 
 export default function Profile() {
     return (
         <>
             {/*Breadcrumb*/}
-            <section>
-                <div className="bannerimg cover-image bg-background3" data-image-src="../assets/images/banners/banner2.jpg">
-                    <div className="header-text mb-0">
-                        <div className="container">
-                            <div className="text-center text-white">
-                                <h1 className="">My Dashboard</h1>
-                                <ol className="breadcrumb text-center">
-                                    <li className="breadcrumb-item">
-                                        <Link href="/user-dashboard">Restaurants</Link>
-                                    </li>
-                                    <li className="breadcrumb-item active text-white" aria-current="page">
-                                        My Dashboard
-                                    </li>
-                                </ol>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            {/*Breadcrumb*/}
+            <Breadcrumb title="My Profile" />
 
             {/*User Dashboard*/}
             <section className="sptb">
@@ -38,120 +23,191 @@ export default function Profile() {
                         <div className="col-xl-9 col-lg-12 col-md-12">
                             <div className="card mb-0">
                                 <div className="card-header">
-                                    <h3 className="card-title">Edit Profile</h3>
+                                    <h3 className="card-title">Profile</h3>
                                 </div>
-                                <div className="card-body">
-                                    <div className="row">
-                                        <div className="col-sm-6 col-md-6">
-                                            <div className="mb-3">
-                                                <label className="form-label">First Name</label>
-                                                <input type="text" className="form-control" placeholder="First Name" />
+                                <div className="card-body customProfile">
+                                    <div className="card-pay">
+                                        <ul className="tabs-menu nav">
+                                            <li className=""><Link href="#basicDetails" className="active" data-bs-toggle="tab"><FontAwesomeIcon icon={faUser} /> Basic Details</Link></li>
+                                            <li><Link href="#upgradeProfile" data-bs-toggle="tab" className=""><FontAwesomeIcon icon={faUserCheck} />  Upgrade Profile</Link></li>
+                                        </ul>
+
+                                        <div className="tab-content">
+                                            <div className="tab-pane active show" id="basicDetails">
+                                                <div className="row">
+                                                    <div className="col-md-4 col-12">
+                                                        <div className="mb-3">
+                                                            <label className="form-label">Full Name</label>
+                                                            <input type="text" className="form-control" placeholder="Full Name" />
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-md-4 col-12">
+                                                        <div className="mb-3">
+                                                            <label className="form-label">Email address</label>
+                                                            <input type="email" className="form-control" placeholder="Email" />
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-md-4 col-12">
+                                                        <div className="mb-3">
+                                                            <label className="form-label">Phone Number</label>
+                                                            <input type="number" className="form-control" placeholder="Number" />
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-md-12">
+                                                        <div className="mb-3">
+                                                            <label className="form-label">Address</label>
+                                                            <textarea rows={3} className="form-control" placeholder="Address" defaultValue={ ""} />
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-sm-6 col-md-4">
+                                                        <div className="mb-3">
+                                                            <label className="form-label">City</label>
+                                                            <input type="text" className="form-control" placeholder="City" />
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-sm-6 col-md-3">
+                                                        <div className="mb-3">
+                                                            <label className="form-label">Postal Code</label>
+                                                            <input type="number" className="form-control" placeholder="ZIP Code" />
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-md-5">
+                                                        <div className="mb-3">
+                                                            <label className="form-label">Country</label>
+                                                            <Select2Component id="select2" 
+                                                            options={[ 
+                                                                { value: "1", label: "India" }, 
+                                                                { value: "2", label: "Mexico" }, 
+                                                                { value: "3", label: "Canada" }, 
+                                                                { value: "4", label: "Usa" }, 
+                                                                { value: "5", label: "Afghanistan" }, 
+                                                                { value: "6", label: "Albania" },  
+                                                                { value: "6", label: "Germany" }, 
+                                                            ]} 
+                                                            select2Options={{ placeholder: "Select category", allowClear: true }}
+                                                            showSearch={true} />
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-sm-6 col-md-6">
+                                                        <div className="mb-3">
+                                                            <label className="form-label">Facebook</label>
+                                                            <input type="text" className="form-control" placeholder="https://www.facebook.com/" />
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-sm-6 col-md-6">
+                                                        <div className="mb-3">
+                                                            <label className="form-label">Google</label>
+                                                            <input type="text" className="form-control" placeholder="https://www.google.com/" />
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-sm-6 col-md-6">
+                                                        <div className="mb-3">
+                                                            <label className="form-label">Twitter</label>
+                                                            <input type="text" className="form-control" placeholder="https://twitter.com/" />
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-sm-6 col-md-6">
+                                                        <div className="mb-3">
+                                                            <label className="form-label">Pinterest</label>
+                                                            <input type="text" className="form-control" placeholder="https://in.pinterest.com/" />
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-md-12">
+                                                        <div className="mb-3">
+                                                            <label className="form-label">About Me</label>
+                                                            <textarea rows={5} className="form-control" placeholder="Enter About your description" defaultValue={ ""} />
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-md-12">
+                                                        <div className="mb-3 mb-0">
+                                                            <label className="form-label">Upload Image</label>
+                                                            <div className="">
+                                                                <input type="file" className="form-control" name="example-file-input-custom" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-md-12 mt-3 d-flex justify-content-center">
+                                                        <button type="submit" className="btn btn-primary">
+                                                            Updated Profile
+                                                        </button>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div className="col-sm-6 col-md-6">
-                                            <div className="mb-3">
-                                                <label className="form-label">Last Name</label>
-                                                <input type="text" className="form-control" placeholder="Last Name" />
-                                            </div>
-                                        </div>
-                                        <div className="col-sm-6 col-md-6">
-                                            <div className="mb-3">
-                                                <label className="form-label">Email address</label>
-                                                <input type="email" className="form-control" placeholder="Email" />
-                                            </div>
-                                        </div>
-                                        <div className="col-sm-6 col-md-6">
-                                            <div className="mb-3">
-                                                <label className="form-label">Phone Number</label>
-                                                <input type="number" className="form-control" placeholder="Number" />
-                                            </div>
-                                        </div>
-                                        <div className="col-md-12">
-                                            <div className="mb-3">
-                                                <label className="form-label">Address</label>
-                                                <input type="text" className="form-control" placeholder="Home Address" />
-                                            </div>
-                                        </div>
-                                        <div className="col-sm-6 col-md-4">
-                                            <div className="mb-3">
-                                                <label className="form-label">City</label>
-                                                <input type="text" className="form-control" placeholder="City" />
-                                            </div>
-                                        </div>
-                                        <div className="col-sm-6 col-md-3">
-                                            <div className="mb-3">
-                                                <label className="form-label">Postal Code</label>
-                                                <input type="number" className="form-control" placeholder="ZIP Code" />
-                                            </div>
-                                        </div>
-                                        <div className="col-md-5">
-                                            <div className="mb-3">
-                                                <label className="form-label">Country</label>
-                                                <select className="form-control select2-show-search border-bottom-0 w-100 select2-show-search" data-placeholder="Select">
-                                                    <optgroup label="Categories">
-                                                        <option>--Select--</option>
-                                                        <option value={1}>Germany</option>
-                                                        <option value={2}>Real Estate</option>
-                                                        <option value={3}>Canada</option>
-                                                        <option value={4}>Usa</option>
-                                                        <option value={5}>Afghanistan</option>
-                                                        <option value={6}>Albania</option>
-                                                        <option value={7}>China</option>
-                                                        <option value={8}>Denmark</option>
-                                                        <option value={9}>Finland</option>
-                                                        <option value={10}>India</option>
-                                                        <option value={11}>Kiribati</option>
-                                                        <option value={12}>Kuwait</option>
-                                                        <option value={13}>Mexico</option>
-                                                        <option value={14}>Pakistan</option>
-                                                    </optgroup>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div className="col-sm-6 col-md-6">
-                                            <div className="mb-3">
-                                                <label className="form-label">Facebook</label>
-                                                <input type="text" className="form-control" placeholder="https://www.facebook.com/" />
-                                            </div>
-                                        </div>
-                                        <div className="col-sm-6 col-md-6">
-                                            <div className="mb-3">
-                                                <label className="form-label">Google</label>
-                                                <input type="text" className="form-control" placeholder="https://www.google.com/" />
-                                            </div>
-                                        </div>
-                                        <div className="col-sm-6 col-md-6">
-                                            <div className="mb-3">
-                                                <label className="form-label">Twitter</label>
-                                                <input type="text" className="form-control" placeholder="https://twitter.com/" />
-                                            </div>
-                                        </div>
-                                        <div className="col-sm-6 col-md-6">
-                                            <div className="mb-3">
-                                                <label className="form-label">Pinterest</label>
-                                                <input type="text" className="form-control" placeholder="https://in.pinterest.com/" />
-                                            </div>
-                                        </div>
-                                        <div className="col-md-12">
-                                            <div className="mb-3">
-                                                <label className="form-label">About Me</label>
-                                                <textarea rows={5} className="form-control" placeholder="Enter About your description" defaultValue={ ""} />
-                                            </div>
-                                        </div>
-                                        <div className="col-md-12">
-                                            <div className="mb-3 mb-0">
-                                                <label className="form-label">Upload Image</label>
-                                                <div className="">
-                                                    <input type="file" className="form-control" name="example-file-input-custom" />
+
+                                            <div className="tab-pane" id="upgradeProfile">
+                                                {/* upgradeCard */}
+                                                <div className="nav upgradeCard">
+                                                    {/* card */}
+                                                    <div className="card disabled">
+                                                        <Link href="#applyAuthor" data-bs-toggle="tab" />
+                                                        <div className="cardBody">
+                                                            <figure>
+                                                                <Image src="/images/upgrade-icons/author.png" width={60} height={60} alt="user" />
+                                                                <figcaption>
+                                                                    Apply for <span>Author</span>
+                                                                </figcaption>
+                                                            </figure>
+                                                        </div>
+                                                        <FontAwesomeIcon icon={faCheckCircle} className="greenTick" />
+                                                    </div>
+                                                    {/* card */}
+                                                    <div className="card">
+                                                        <Link href="#applyDoctor" data-bs-toggle="tab" />
+                                                        <div className="cardBody">
+                                                            <figure>
+                                                                <Image src="/images/upgrade-icons/doctor.png" width={60} height={60} alt="user" />
+                                                                <figcaption>
+                                                                    Apply for <span>Doctor</span>
+                                                                </figcaption>
+                                                            </figure>
+                                                        </div>
+                                                    </div>
+                                                    {/* card */}
+                                                    <div className="card">
+                                                        <Link href="#applyPublisher" data-bs-toggle="tab" />
+                                                        <div className="cardBody">
+                                                            <figure>
+                                                                <Image src="/images/upgrade-icons/publisher.png" width={60} height={60} alt="user" />
+                                                                <figcaption>
+                                                                    Apply for <span>Publisher</span>
+                                                                </figcaption>
+                                                            </figure>
+                                                        </div>
+                                                    </div>
+                                                    {/* card */}
+                                                    <div className="card">
+                                                        <Link href="#applyOrganization" data-bs-toggle="tab" />
+                                                        <div className="cardBody">
+                                                            <figure>
+                                                                <Image src="/images/upgrade-icons/organization.png" width={60} height={60} alt="user" />
+                                                                <figcaption>
+                                                                    Apply for <span>Organization</span>
+                                                                </figcaption>
+                                                            </figure>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div className="card-footer">
-                                    <button type="submit" className="btn btn-primary">
-                                        Updated Profile
-                                    </button>
+                            </div>
+
+                            {/* apply cards */}
+                            <div className="card mt-3 mb-0">
+                                <div className="tab-content">
+                                    <div className="tab-pane" id="applyDoctor">
+                                        Doctor
+                                    </div>
+                                    <div className="tab-pane" id="applyAuthor">
+                                        Author
+                                    </div>
+                                    <div className="tab-pane" id="applyPublisher">
+                                        Publisher
+                                    </div>
+                                    <div className="tab-pane" id="applyOrganization">
+                                        Organisation
+                                    </div>
                                 </div>
                             </div>
                         </div>

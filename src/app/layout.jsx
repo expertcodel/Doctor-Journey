@@ -5,7 +5,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import 'animate.css';
 import "./custom.scss";
- import "../../public/css/color10.css";
+//  import "../../public/css/color10.css";
 import { headers } from 'next/headers'
 // import "./globals.css";
 import BootstrapClient from "@/app/component/bootstrap-client";
@@ -43,6 +43,7 @@ export default async function RootLayout({ children }) {
       {!path?.startsWith(['/admin']) ? <html lang="en">
         <head>
           <link href="/css/frontend.css" rel="stylesheet" type="text/css" />
+          <link href="/css/color10.css" rel="stylesheet" type="text/css" />
         </head>
         <body className={`${geistSans.variable} ${geistMono.variable}`}>
           <AuthProvider>

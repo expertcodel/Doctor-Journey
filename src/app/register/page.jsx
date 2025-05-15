@@ -3,6 +3,7 @@ import { useAuth } from "@/context/AuthContext";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Breadcrumb from "@/app/component/Breadcrumb";
 
 export default function Register() {
   const { user, login } = useAuth();
@@ -101,7 +102,11 @@ export default function Register() {
       const result = await response.json();
   
       if (result.success) {
-        router.push(`/verify-otp?email=${email}&phone=${phoneNumber}`);
+        localStorage.setItem("tempEmail", email);
+        localStorage.setItem("tempPhone", phoneNumber);
+        router.push('/verify-otp', {
+          state: { email, phoneNumber },
+        });
       } else {
         alert("Failed to send OTP. Try again.");
       }
@@ -143,26 +148,7 @@ export default function Register() {
   return (
       <>
         {/*Breadcrumb*/}
-        <section>
-          <div className="bannerimg cover-image bg-background3" data-image-src="../assets/images/banners/banner2.jpg">
-              <div className="header-text mb-0">
-                  <div className="container">
-                      <div className="text-center text-white">
-                          <h1 className="">Register</h1>
-                          <ol className="breadcrumb text-center">
-                              <li className="breadcrumb-item">
-                                  <Link href="/register">Register</Link>
-                              </li>
-                              <li className="breadcrumb-item active text-white" aria-current="page">
-                                  Register
-                              </li>
-                          </ol>
-                      </div>
-                  </div>
-              </div>
-          </div>
-        </section>
-        {/*Breadcrumb*/}
+        <Breadcrumb title="Register" />
 
         {/*Login-Section*/}
         <section className="sptb loginSec">

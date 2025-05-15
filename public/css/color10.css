@@ -1708,6 +1708,16 @@ body {
 
 /********* loginSec **********/
 .loginSec{margin: auto 0;}
+.loginSec .single-page .wrapper .otpMSZ{
+    font-size: 16px; color: var(--bs-black); margin: 0; line-height: 1.5; padding: 16px; border-bottom: 1px solid var(--bs-border-color);
+}
+.loginSec .single-page .wrapper .otpMSZ span{font-weight: 600;}
+.loginSec.otpScreen .single-page .wrapper label{
+    position: relative; top: auto; left: auto; width: 100%; padding: 0; display: flex; align-items: center;
+    justify-content: space-between; text-align: left; pointer-events: auto; font-size: 14px;
+}
+.loginSec.otpScreen .single-page .wrapper label span{color: var(--secondary-color);}
+.loginSec.otpScreen .single-page .wrapper label span.resendBtn{color: var(--bs-blue); cursor: pointer;}
 
 /******** subscribe form css *********/
 .subscribeBox .rowMain{display: flex; align-items: center; background: linear-gradient(to right, var(--primary-09), var(--secondary-06) 100%);}
@@ -2391,16 +2401,92 @@ body {
 .customSwiper.verticalSwiperArticle .swiper-wrapper .swiper-slide .card{box-shadow: 0 2px 8px rgba(0,0,0,.1);}
 .customSwiper.verticalSwiperProfile{height: 600px;}
 
+/******* otp-box *******/
 .otp-box {
-    width: 40px;
-    height: 45px;
-    text-align: center;
-    font-size: 20px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-  }
-  
+    width: 40px; height: 45px; text-align: center; font-size: 20px; border: 1px solid #ccc; border-radius: 6px;
+}
 
+/******* customProfile *******/
+.customProfile .card-pay .nav{justify-content: center;}
+
+/******* upgradeCard *******/
+.upgradeCard.nav{
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); grid-gap: 8px; position: relative;
+}
+.upgradeCard.nav .card{
+    position: relative; border: 1px solid var(--bs-border-color); padding: 8px; box-shadow: none; margin: 0;
+    transition: ease all .5s; -webkit-transition: ease all .5s;
+}
+.upgradeCard.nav .card a{
+    position: absolute; left: 0; top: 0; width: 100%; height: 100%; z-index: 1;
+}
+.upgradeCard.nav .card .card,
+.card .upgradeCard.nav .card{box-shadow: none;}
+.upgradeCard.nav .card .cardBody{position: relative; width: 100%;}
+.upgradeCard.nav .card .cardBody figure{
+    display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 0; position: relative;
+}
+.upgradeCard.nav .card .cardBody figure > *{margin: 0;}
+.upgradeCard.nav .card .cardBody figure > *:not(:last-child){margin-bottom: 8px;}
+.upgradeCard.nav .card .cardBody figure svg{font-size: 54px; transition: ease all .5s; -webkit-transition: ease all .5s;}
+.upgradeCard.nav .card .cardBody figure img{transition: ease all .5s; -webkit-transition: ease all .5s; filter: grayscale(1);}
+.upgradeCard.nav .card .cardBody figure figcaption{
+    font-size: 14px; color: var(--bs-black); transition: ease all .5s; -webkit-transition: ease all .5s;
+}
+.upgradeCard.nav .card .cardBody figure figcaption span{
+    font-weight: 600; text-transform: uppercase; display: inline-block; transition: ease all .5s; -webkit-transition: ease all .5s;
+}
+.upgradeCard.nav.userDashboardCard .card{padding: 24px 16px; color: var(--bs-dark-border-subtle);}
+.upgradeCard.nav.userDashboardCard .card .cardBody figure > *:not(:last-child){margin-bottom: 16px;}
+.upgradeCard.nav .card:hover,
+.upgradeCard.nav .card:has(> .active),
+.upgradeCard.nav .card.disabled{border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,.1); border-color: transparent;}
+.upgradeCard.nav .card:hover .cardBody figure img,
+.upgradeCard.nav .card:hover .cardBody figure svg,
+.upgradeCard.nav .card .active + .cardBody figure img,
+.upgradeCard.nav .card.disabled .cardBody figure img{transform: scaleX(-1); -webkit-transform: scaleX(-1); filter: grayscale(0);}
+.upgradeCard.nav .card:hover .cardBody figure svg{color: var(--bs-blue);}
+.upgradeCard.nav .card:hover .cardBody figure figcaption span,
+.upgradeCard.nav .card .active + .cardBody figure figcaption span,
+.upgradeCard.nav .card.disabled .cardBody figure figcaption span{color: var(--bs-blue); text-indent: 5px;}
+.upgradeCard.nav .card.disabled{pointer-events: none; opacity: .8;}
+.upgradeCard.nav .card.disabled .greenTick{
+    position: absolute; top: -4px; right: -4px; font-size: 24px; color: var(--bs-form-valid-color);
+}
+
+/******** dashboardFilter *******/
+.dashboardFilter .card-body .single-page .wrapper{box-shadow: none; overflow: visible;}
+
+/***** react-datepicker-wrapper *****/
+.react-datepicker-wrapper{width: 100%;}
+.react-datepicker__tab-loop .react-datepicker-popper{z-index: 9;}
+.react-datepicker__tab-loop .react-datepicker-popper .react-datepicker{
+    border: none; box-shadow: 0 6px 12px rgba(0,0,0,.2);
+}
+.react-datepicker__tab-loop .react-datepicker-popper .react-datepicker .react-datepicker__month-container .react-datepicker__header{
+    background: linear-gradient(to right, var(--primary-09), var(--secondary-06) 100%);
+}
+.react-datepicker__tab-loop .react-datepicker-popper .react-datepicker .react-datepicker__month-container .react-datepicker__header > *,
+.react-datepicker__tab-loop .react-datepicker-popper .react-datepicker .react-datepicker__month-container .react-datepicker__header
+.react-datepicker__day-names > *{
+    color: var(--bs-white);
+}
+.react-datepicker__tab-loop .react-datepicker-popper .react-datepicker .react-datepicker__navigation span::before{
+    border-color: var(--bs-white);
+}
+.react-datepicker__tab-loop .react-datepicker-popper[data-placement^=bottom] .react-datepicker__triangle{
+    fill: var(--primary-09); color: var(--primary-09); stroke: unset;
+}
+.react-datepicker__tab-loop .react-datepicker-popper .react-datepicker .react-datepicker__month-container
+.react-datepicker__month .react-datepicker__week .react-datepicker__day.react-datepicker__day--selected,
+.react-datepicker__tab-loop .react-datepicker-popper .react-datepicker .react-datepicker__month-container
+.react-datepicker__month .react-datepicker__week .react-datepicker__day.react-datepicker__day--in-selecting-range,
+.react-datepicker__tab-loop .react-datepicker-popper .react-datepicker .react-datepicker__month-container
+.react-datepicker__month .react-datepicker__week .react-datepicker__day.react-datepicker__day--in-range,
+.react-datepicker__tab-loop .react-datepicker-popper .react-datepicker .react-datepicker__month-container
+.react-datepicker__month .react-datepicker__week .react-datepicker__day.react-datepicker__day--today{
+    background: var(--primary-09); color: var(--bs-white);
+}
 
 @media only screen and (max-width: 991px) {
     /******** mobileToggleHeading ********/

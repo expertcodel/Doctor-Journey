@@ -1,6 +1,6 @@
 "use client"
 import { useAuth } from "@/context/AuthContext";
-import { faClipboardCheck, faClipboardList, faEdit, faPowerOff } from "@fortawesome/free-solid-svg-icons";
+import { faClipboardCheck, faClipboardList, faDashboard, faEdit, faPowerOff, faUser, faWallet } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import Link from "next/link";
@@ -28,14 +28,23 @@ export default function UserProfileSidebar() {
             </div>
         </div>
         <div className="item1-links mb-0">
+            <Link href="/user-dashboard" 
+                className={`link ${
+                    pathName === '/user-dashboard' ? 'active d-flex border-bottom' : 'd-flex border-bottom'
+                }`}
+            >
+                <span className="icon1 me-2">
+                    <FontAwesomeIcon icon={faDashboard} />
+                </span>{" "} User Dashboard
+            </Link>
             <Link href="/user-dashboard/profile" 
                 className={`link ${
                     pathName === '/user-dashboard/profile' ? 'active d-flex border-bottom' : 'd-flex border-bottom'
                 }`}
             >
                 <span className="icon1 me-2">
-                    <FontAwesomeIcon icon={faEdit} />
-                </span>{" "} Edit Profile
+                    <FontAwesomeIcon icon={faUser} />
+                </span>{" "} Profile
             </Link>
             <Link href="/user-dashboard/my-subscription" 
                 className={`link ${
@@ -46,14 +55,14 @@ export default function UserProfileSidebar() {
                     <FontAwesomeIcon icon={faClipboardList} />
                 </span>{" "} My Subscription
             </Link>
-            <Link href="/user-dashboard/upgrade-subscription" 
+            <Link href="/user-dashboard/payment-history" 
                 className={`link ${
-                    pathName === '/user-dashboard/upgrade-subscription' ? 'active d-flex border-bottom' : 'd-flex border-bottom'
+                    pathName === '/user-dashboard/payment-history' ? 'active d-flex border-bottom' : 'd-flex border-bottom'
                 }`}
             >
                 <span className="icon1 me-2">
-                    <FontAwesomeIcon icon={faClipboardCheck} />
-                </span>{" "} Upgrade Subscription
+                    <FontAwesomeIcon icon={faWallet} />
+                </span>{" "} Payment History
             </Link>
             <button className="d-flex" onClick={logout}>
                 <span className="icon1 me-2">

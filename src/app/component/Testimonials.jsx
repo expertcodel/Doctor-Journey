@@ -11,7 +11,7 @@ export default function TestimonialsCarousel({testimonialList}) {
         <div id="carouselTestimonials" className="carousel slide customTestimonial" data-bs-ride="carousel">
             <div className="carousel-indicators">
               { testimonialList.map((testimonial,i)=><button type="button" data-bs-target="#carouselTestimonials" data-bs-slide-to={i} className="active" aria-current="true" aria-label={`Slide ${i}`} key={testimonial.testimonialId}>
-                    <img width={368} height={190} src={testimonial.image} alt="Decorative Icon" className="img-fluid" />
+                    <Image width={368} height={190} src={testimonial.image} alt="Decorative Icon" className="img-fluid" />
                 </button>)}
                 {/* <button type="button" data-bs-target="#carouselTestimonials" data-bs-slide-to={1} aria-label="Slide 2">
                     <Image width={368} height={190} src="/images/doctor-profile/profile-3.jpg" alt="Decorative Icon" className="img-fluid" />

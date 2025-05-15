@@ -1,33 +1,14 @@
+import Breadcrumb from "@/app/component/Breadcrumb";
 import UserProfileSidebar from "@/app/component/UserProfileSidebar";
+import { faCheck, faX } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 
 export default function MySubscription() {
     return (
         <>
             {/*Breadcrumb*/}
-            <section>
-                <div className="bannerimg cover-image bg-background3" data-image-src="../assets/images/banners/banner2.jpg">
-                    <div className="header-text mb-0">
-                        <div className="container">
-                            <div className="text-center text-white">
-                                <h1 className="">My Dashboard</h1>
-                                <ol className="breadcrumb text-center">
-                                    <li className="breadcrumb-item">
-                                        <Link href="/user-dashboard">Restaurants</Link>
-                                    </li>
-                                    <li className="breadcrumb-item">
-                                        <Link href="/user-dashboard/profile">Profile</Link>
-                                    </li>
-                                    <li className="breadcrumb-item active text-white" aria-current="page">
-                                        My Subscription
-                                    </li>
-                                </ol>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            {/*Breadcrumb*/}
+            <Breadcrumb title="My Subscription" />
 
             {/*User Dashboard*/}
             <section className="sptb">
@@ -43,7 +24,90 @@ export default function MySubscription() {
                                     <h3 className="card-title">My Subscription</h3>
                                 </div>
                                 <div className="card-body">
-                                    <div className="table-responsive border-top">
+                                <div className="row g-3">
+                                        <div className="col-lg-4 col-md-6 col-12">
+                                            <div className="pricingTable bg-white advance-pricing">
+                                                <div className="price-value">
+                                                    $0.0
+                                                    <span className="month">Monthly</span>
+                                                </div>
+                                                <h3 className="title">Business</h3>
+                                                <ul className="pricing-content">
+                                                    <li>
+                                                    <strong>4</strong> Ads
+                                                    </li>
+                                                    <li>
+                                                        <FontAwesomeIcon icon={faCheck} className="text-success me-2" /> 30 days
+                                                    </li>
+                                                    <li>
+                                                        <FontAwesomeIcon icon={faX} className="text-danger me-2" /> Private Messages
+                                                    </li>
+                                                    <li>
+                                                        <FontAwesomeIcon icon={faX} className="text-danger me-2" /> Urgent Ads
+                                                    </li>
+                                                </ul>
+                                                <a href="javascript:void(0);" className="pricingTable-signup">
+                                                    Choose plan
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <div className="col-lg-4 col-md-6 col-12">
+                                            <div className="pricingTable bg-white">
+                                                <div className="price-value">
+                                                    $65
+                                                    <span className="month">Quaterly</span>
+                                                </div>
+                                                <h3 className="title">Standard</h3>
+                                                <ul className="pricing-content">
+                                                    <li>
+                                                    <strong>50</strong> Ads
+                                                    </li>
+                                                    <li>
+                                                        <FontAwesomeIcon icon={faCheck} className="text-success me-2" /> 90 Days
+                                                    </li>
+                                                    <li>
+                                                        <FontAwesomeIcon icon={faX} className="text-danger me-2" /> Private Messages
+                                                    </li>
+                                                    <li>
+                                                        <FontAwesomeIcon icon={faX} className="text-danger me-2" /> Urgent ads
+                                                    </li>
+                                                </ul>
+                                                <a href="javascript:void(0);" className="pricingTable-signup">
+                                                    Choose plan
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <div className="col-lg-4 col-md-6 col-12">
+                                            <div className="pricingTable bg-white">
+                                                <div className="price-value">
+                                                    $100
+                                                    <span className="month">Yearly</span>
+                                                </div>
+                                                <h3 className="title">Premium</h3>
+                                                <ul className="pricing-content">
+                                                    <li>
+                                                    <strong>100</strong> Ads
+                                                    </li>
+                                                    <li>
+                                                        <FontAwesomeIcon icon={faCheck} className="text-success me-2" /> 365 days
+                                                    </li>
+                                                    <li>
+                                                        <FontAwesomeIcon icon={faCheck} className="text-success me-2" /> Private Messages
+                                                    </li>
+                                                    <li>
+                                                        <FontAwesomeIcon icon={faX} className="text-danger me-2" /> Urgent ads
+                                                    </li>
+                                                </ul>
+                                                <a href="javascript:void(0);" className="pricingTable-signup">
+                                                    Choose plan
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="table-responsive border-top mt-5">
                                         <table className="table table-bordered table-hover text-nowrap">
                                             <thead>
                                                 <tr>
@@ -95,33 +159,6 @@ export default function MySubscription() {
                                             </tbody>
                                         </table>
                                     </div>
-                                    {/* <ul className="pagination">
-                                        <li className="page-item page-prev disabled">
-                                            <a className="page-link" href="javascript:void(0);" tabIndex={-1}>
-                                                Prev
-                                            </a>
-                                        </li>
-                                        <li className="page-item active">
-                                            <a className="page-link" href="javascript:void(0);">
-                                                1
-                                            </a>
-                                        </li>
-                                        <li className="page-item">
-                                            <a className="page-link" href="javascript:void(0);">
-                                                2
-                                            </a>
-                                        </li>
-                                        <li className="page-item">
-                                            <a className="page-link" href="javascript:void(0);">
-                                                3
-                                            </a>
-                                        </li>
-                                        <li className="page-item page-next">
-                                            <a className="page-link" href="javascript:void(0);">
-                                                Next
-                                            </a>
-                                        </li>
-                                    </ul> */}
                                 </div>
                             </div>
                         </div>
