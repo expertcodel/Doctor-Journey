@@ -1,0 +1,14 @@
+# Handle all text files automatically
+* text=auto
+
+# Force LF for JS/JSX/TS/TSX files
+*.js text eol=lf
+*.jsx text eol=lf
+*.ts text eol=lf
+*.tsx text eol=lf
+
+# Optionally: force LF for other code files
+*.css text eol=lf
+*.html text eol=lf
+*.json text eol=lf
+*.md text eol=lf

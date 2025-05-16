@@ -1,0 +1,123 @@
+[
+    {
+      "id": "1",
+      "name": "Dr. Peter Schwartzstein",
+      "image": "/images/doctor-profile/profile-1.jpg",
+      "designation": "Principal Consultant - Cosmetic Dentistry, Prosthodontist and Implantologists",
+      "qualification": "MBBS",
+      "description":
+        "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book...",
+      "hospital": "Max Hospital (Noida-63)",
+      "pincode": "110092",
+      "available_days": "Monday to Friday",
+      "available_time": "10:00am to 4:00pm",
+      "rating": "4.2",
+      "profile_link": "/doctor-profile/1"
+    },
+    {
+        "id": "2",
+        "name": "Dr. Alice Kim",
+        "image": "/images/doctor-profile/profile-2.jpg",
+        "designation": "Principal Consultant - Cosmetic Dentistry, Prosthodontist and Implantologists",
+        "qualification": "MBBS",
+        "description":
+          "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book...",
+        "hospital": "Max Hospital (Noida-63)",
+        "pincode": "110092",
+        "available_days": "Monday to Friday",
+        "available_time": "10:00am to 4:00pm",
+        "rating": "4.2",
+        "profile_link": "/doctor-profile/2"
+    },
+    {
+        "id": "3",
+        "name": "Dr. Alice Kim",
+        "image": "/images/doctor-profile/profile-3.jpg",
+        "designation": "Principal Consultant - Cosmetic Dentistry, Prosthodontist and Implantologists",
+        "qualification": "MBBS",
+        "description":
+          "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book...",
+        "hospital": "Max Hospital (Noida-63)",
+        "pincode": "110092",
+        "available_days": "Monday to Friday",
+        "available_time": "10:00am to 4:00pm",
+        "rating": "4.2",
+        "profile_link": "/doctor-profile/3"
+    },
+    {
+        "id": "4",
+        "name": "Dr. Alice Kim",
+        "image": "/images/doctor-profile/profile-2.jpg",
+        "designation": "Principal Consultant - Cosmetic Dentistry, Prosthodontist and Implantologists",
+        "qualification": "MBBS",
+        "description":
+          "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book...",
+        "hospital": "Max Hospital (Noida-63)",
+        "pincode": "110092",
+        "available_days": "Monday to Friday",
+        "available_time": "10:00am to 4:00pm",
+        "rating": "4.2",
+        "profile_link": "/doctor-profile/4"
+    },
+    {
+        "id": "5",
+        "name": "Dr. Alice Kim",
+        "image": "/images/doctor-profile/profile-1.jpg",
+        "designation": "Principal Consultant - Cosmetic Dentistry, Prosthodontist and Implantologists",
+        "qualification": "MBBS",
+        "description":
+          "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book...",
+        "hospital": "Max Hospital (Noida-63)",
+        "pincode": "110092",
+        "available_days": "Monday to Friday",
+        "available_time": "10:00am to 4:00pm",
+        "rating": "4.2",
+        "profile_link": "/doctor-profile/5"
+    },
+    {
+        "id": "6",
+        "name": "Dr. Alice Kim",
+        "image": "/images/doctor-profile/profile-3.jpg",
+        "designation": "Principal Consultant - Cosmetic Dentistry, Prosthodontist and Implantologists",
+        "qualification": "MBBS",
+        "description":
+          "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book...",
+        "hospital": "Max Hospital (Noida-63)",
+        "pincode": "110092",
+        "available_days": "Monday to Friday",
+        "available_time": "10:00am to 4:00pm",
+        "rating": "4.2",
+        "profile_link": "/doctor-profile/6"
+    },
+    {
+        "id": "7",
+        "name": "Dr. Alice Kim",
+        "image": "/images/doctor-profile/profile-2.jpg",
+        "designation": "Principal Consultant - Cosmetic Dentistry, Prosthodontist and Implantologists",
+        "qualification": "MBBS",
+        "description":
+          "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book...",
+        "hospital": "Max Hospital (Noida-63)",
+        "pincode": "110092",
+        "available_days": "Monday to Friday",
+        "available_time": "10:00am to 4:00pm",
+        "rating": "4.2",
+        "profile_link": "/doctor-profile/7"
+    },
+    {
+        "id": "8",
+        "name": "Dr. Alice Kim",
+        "image": "/images/doctor-profile/profile-1.jpg",
+        "designation": "Principal Consultant - Cosmetic Dentistry, Prosthodontist and Implantologists",
+        "qualification": "MBBS",
+        "description":
+          "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book...",
+        "hospital": "Max Hospital (Noida-63)",
+        "pincode": "110092",
+        "available_days": "Monday to Friday",
+        "available_time": "10:00am to 4:00pm",
+        "rating": "4.2",
+        "profile_link": "/doctor-profile/8"
+    }
+]
+  
