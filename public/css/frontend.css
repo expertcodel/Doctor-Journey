@@ -24884,7 +24884,7 @@ video {
 }
 
 .desktoplogo {
-    padding: 1rem 0;
+    padding: .8rem 0;
     margin: 0;
     float: left; font-size: 24px; color: var(--bs-black);
 }
