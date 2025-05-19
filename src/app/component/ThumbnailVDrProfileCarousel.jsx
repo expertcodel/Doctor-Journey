@@ -10,7 +10,7 @@ import "swiper/css/navigation";
 import doctorProfile from "@/data/doctorProfile.json";
 import { faCalendar, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
-export default function ThumbnailVDrProfileCarousel() {
+export default function ThumbnailVDrProfileCarousel({doctorProfile}) {
   const swiperRef = useRef(null);
 
   useEffect(() => {
@@ -53,13 +53,13 @@ export default function ThumbnailVDrProfileCarousel() {
                             <div className="card mb-0">
                                 <div className="card-body">
                                     <div className="cat-item">
-                                        <Link href={item.profile_link} />
+                                        <Link href={`${item.doctorId}`} />
                                         <div className="cat-img bg-primary-transparent brround">
-                                            <Image src={item.image} className="img-fluid" width={155} height={80} alt={item.name} />
+                                            <Image src={item.profileImage} className="img-fluid" width={155} height={80} alt={item.doctorName} unoptimized/>
                                         </div>
                                         <div className="cat-desc">
                                             <h5>
-                                                {item.name} <span>{item.qualification}</span>
+                                                {item.doctorName} <span>{item.qualification}</span>
                                             </h5>
                                             <small className="badge">
                                                 view Details

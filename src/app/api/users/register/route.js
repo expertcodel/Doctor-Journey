@@ -44,15 +44,15 @@ export async function POST(request) {
    
   })
 
-  await activitymodel.create({
+//   await activitymodel.create({
 
-    userId,
-    name,
-    usertype:'readers',
-    activity:'registered',
-    time:new Date().toLocaleString()
+//     userId,
+//     name,
+//     usertype:'readers',
+//     activity:'registered',
+//     time:new Date().toLocaleString()
 
- })
+//  })
 
   return NextResponse.json({status:1,message:"successfull!"});
 

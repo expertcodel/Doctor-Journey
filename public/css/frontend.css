@@ -46553,3 +46553,17 @@ a.text-light:hover {
     max-width: 100% !important;
 }
 /*# sourceMappingURL=style.css.map */
+
+
+.aspect-video {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%;
+}
+.aspect-video iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}

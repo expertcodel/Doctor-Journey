@@ -3,12 +3,14 @@ import { videoModel } from "../../../models/video.model";
 import { NextResponse } from "next/server";
 import { extractErrorMessage } from "../../../../utils/errorMessage";
 import { doctorModel } from "../../../models/doctor.model";
+import { connectTodb } from "@/app/database/database";
 import { Op } from "sequelize";
 export async function POST(request) {
 
     const { videoId } = await request.json();
     const videomodel = await videoModel();
     const doctormodel = await doctorModel();
+    const connection = await connectTodb();
     if (!videomodel) {
         return NextResponse.json({ status: false, message: "database error occured" });
     }
@@ -33,10 +35,12 @@ export async function POST(request) {
             limit: 15,
             where: {videoStatus: true,doctorId:videodetail.doctorId},
             order: [['createdAt', 'DESC']],
-            attributes: ['publishedDate', 'thumbnailImage', 'videoId', 'videoTitle']
+            attributes: ['publishedDate', 'thumbnailImage', 'videoId', 'videoTitle','videoUrl']
         })
 
-        return NextResponse.json({ status: true, videodetail, videolist,doctordetail });
+        const specialization=await connection.query(`SELECT public."Doctors"."specialization" , COUNT(*) FROM public."Doctors" GROUP BY public."Doctors"."specialization" ORDER BY  public."Doctors"."specialization" ASC`)
+
+        return NextResponse.json({ status: true, videodetail, videolist,doctordetail,specialization});
 
 
     } catch (error) {

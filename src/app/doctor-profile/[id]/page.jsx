@@ -13,7 +13,8 @@ export default async function DoctorProfileDetail({ params }) {
 
 
     const { id } = await params;
-    const doctorDetail = {};
+    let doctor = {};
+    let doctorList=[];
     try {
 
         const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/client/doctors`, {
@@ -28,8 +29,8 @@ export default async function DoctorProfileDetail({ params }) {
         const res = await response.json();
 
         if (res.status) {
-            doctorDetail = res.doctordetail;
-
+            doctor = res.doctordetail;
+            doctorList=res.doctorlist;
         }
 
 
@@ -62,15 +63,16 @@ export default async function DoctorProfileDetail({ params }) {
                                         <div className="d-md-flex">
                                             <figure>
                                                 <Image
-                                                    src={doctor.image} width={368} height={190}
+                                                    src={doctor.profileImage} width={368} height={190}
                                                     alt="img"
                                                     className="cover-image"
+                                                    unoptimized
                                                 />
                                             </figure>
                                             <div className="ms-4">
-                                                <h4 className="mt-3 mb-1 text-dark font-weight-bold">{doctor.name}</h4>
+                                                <h4 className="mt-3 mb-1 text-dark font-weight-bold">{doctor.doctorName}</h4>
                                                 <span>
-                                                    <small className="text-muted">{doctor.qualification}, {doctor.designation}</small>
+                                                    <small className="text-muted">{doctor.qualification}, {doctor.specialization}</small>
                                                 </span>
                                                 <div className="mt-1 mb-2 profile-details">
                                                     <span className="">
@@ -121,15 +123,13 @@ export default async function DoctorProfileDetail({ params }) {
                                             <div className="tab-pane userprof-tab active" id="tab-1">
                                                 <div className="">
                                                     <div class="media-heading">
-                                                        <h3 class="card-title mb-3 font-weight-bold"> Biography</h3>
+                                                        <h3 class="card-title mb-3 font-weight-bold"> Description</h3>
                                                     </div>
                                                     <div className="mb-4">
                                                         <p>
-                                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry, Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                                          {doctor.shortDescription}
                                                         </p>
-                                                        <p>
-                                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry, Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry, Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                                        </p>
+                                                        
                                                     </div>
                                                     <div className="row">
                                                         <div className="col-xl-12 col-md-12">
@@ -158,7 +158,7 @@ export default async function DoctorProfileDetail({ params }) {
                                                                             </td>{" "}
                                                                             <td>
                                                                                 <span>
-                                                                                    Paediatic, Endoscopic, Laparoscopy, Thoracosopy
+                                                                                    {doctor.specialization}
                                                                                 </span>
                                                                             </td>
                                                                         </tr>
@@ -170,7 +170,7 @@ export default async function DoctorProfileDetail({ params }) {
                                                                                 <span>:</span>
                                                                             </td>{" "}
                                                                             <td>
-                                                                                <span>+125 254 3562</span>
+                                                                                <span>{doctor.number}</span>
                                                                             </td>
                                                                         </tr>
                                                                     </tbody>
@@ -198,7 +198,7 @@ export default async function DoctorProfileDetail({ params }) {
                                                                                 <span>:</span>
                                                                             </td>{" "}
                                                                             <td>
-                                                                                <span>30 Years</span>
+                                                                                <span>{doctor.experience} Years</span>
                                                                             </td>
                                                                         </tr>
                                                                         <tr>
@@ -209,7 +209,7 @@ export default async function DoctorProfileDetail({ params }) {
                                                                                 <span>:</span>
                                                                             </td>{" "}
                                                                             <td>
-                                                                                <span>rubincarmody@mail.com</span>
+                                                                                <span>{doctor.email}</span>
                                                                             </td>
                                                                         </tr>
                                                                         <tr>
@@ -220,7 +220,7 @@ export default async function DoctorProfileDetail({ params }) {
                                                                                 <span>:</span>
                                                                             </td>{" "}
                                                                             <td>
-                                                                                <span>Lorem Ipsum is simply dummy text of the printing and typesetting industry</span>
+                                                                                <span>{doctor.address}</span>
                                                                             </td>
                                                                         </tr>
                                                                     </tbody>
@@ -231,14 +231,14 @@ export default async function DoctorProfileDetail({ params }) {
                                                 </div>
                                                 <div className="mt-6">
                                                     <div class="media-heading mb-5">
-                                                        <h3 class="card-title font-weight-bold">{doctor.name} Articles</h3>
+                                                        <h3 class="card-title font-weight-bold">{doctor.doctorName} Articles</h3>
                                                     </div>
                                                     <ThumbnailVArticleCarousel />
                                                 </div>
                                             </div>
                                             <div className="tab-pane" id="tab-2">
                                                 <div className="card-body p-0">
-                                                    <DoctorProfileGallery />
+                                                   {doctor.gallery && <DoctorProfileGallery gallery={doctor.gallery}/>}
                                                 </div>
                                             </div>
                                             <div className="tab-pane userprof-tab" id="tab-3">
@@ -339,7 +339,7 @@ export default async function DoctorProfileDetail({ params }) {
                                 <div className="card-body">
                                     <div className="row g-md-4 g-3">
                                         {/* drShortDesc */}
-                                        <ThumbnailVDrProfileCarousel />
+                                        <ThumbnailVDrProfileCarousel doctorProfile={doctorList}/>
                                     </div>
                                 </div>
                             </div>

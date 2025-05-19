@@ -4,7 +4,7 @@ import Image from "next/image";
 import "@fancyapps/ui/dist/fancybox/fancybox.css";
 import { Fancybox } from '@fancyapps/ui';
 
-export default function DoctorProfileGallery() {
+export default function DoctorProfileGallery({gallery}) {
     useEffect(() => {
         Fancybox.bind("[data-fancybox]", {}); // Initialize Fancybox
         return () => {
@@ -16,18 +16,22 @@ export default function DoctorProfileGallery() {
         {/* doctorProfileGallery */}
         <div className='doctorProfileGallery'>
             {/* imageSec */}
-            <div className='imageSec'>
-                <a data-fancybox="image-gallery" data-src="/images/doctor-profile/profile-1.jpg" />
+            {
+                gallery.map((item,i)=>  <div className='imageSec' key={i}>
+                <a data-fancybox="image-gallery" data-src={item} />
                 <figure>
                     <Image
-                        src="/images/doctor-profile/profile-1.jpg" width={675} height={450}
+                        src={item} width={675} height={450}
                         alt="img"
                         className="cover-image"
+                        unoptimized
                     />
                 </figure>
-            </div>
+            </div>)
+            }
+          
             {/* imageSec */}
-            <div className='imageSec'>
+            {/* <div className='imageSec'>
                 <a data-fancybox="image-gallery" data-src="/images/doctor-profile/profile-2.jpg" />
                 <figure>
                     <Image
@@ -36,9 +40,9 @@ export default function DoctorProfileGallery() {
                         className="cover-image"
                     />
                 </figure>
-            </div>
+            </div> */}
             {/* imageSec */}
-            <div className='imageSec'>
+            {/* <div className='imageSec'>
                 <a data-fancybox="image-gallery" data-src="/images/doctor-profile/profile-3.jpg" />
                 <figure>
                     <Image
@@ -47,9 +51,9 @@ export default function DoctorProfileGallery() {
                         className="cover-image"
                     />
                 </figure>
-            </div>
+            </div> */}
             {/* imageSec */}
-            <div className='imageSec'>
+            {/* <div className='imageSec'>
                 <a data-fancybox="image-gallery" data-src="/images/doctor-profile/details.jpg" />
                 <figure>
                     <Image
@@ -58,7 +62,7 @@ export default function DoctorProfileGallery() {
                         className="cover-image"
                     />
                 </figure>
-            </div>
+            </div> */}
         </div>
     </>
   );

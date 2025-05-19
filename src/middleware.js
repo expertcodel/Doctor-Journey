@@ -62,7 +62,7 @@ export async function middleware(request) {
 
 
     if (!userdata) {
-      response.cookies.set('userData', JSON.stringify(verifiedtoken.payload))
+      response.cookies.set('userData', JSON.stringify(verifiedtoken.payload),{maxAge:3600})
     }
 
     // console.log(verifiedtoken.payload,'hj');

@@ -27,6 +27,8 @@ export async function POST(request) {
 
     } catch (error) {
 
+        console.log(error,'err');
+        
         const message = extractErrorMessage(error);
         return NextResponse.json({ status: false, message });
     }

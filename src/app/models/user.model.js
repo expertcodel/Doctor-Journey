@@ -32,7 +32,7 @@ export const UserModel=async()=>{
         name:{
             
             type:DataTypes.STRING,
-            allowNull:false
+          //  allowNull:false
 
         },
         email:{
@@ -49,18 +49,18 @@ export const UserModel=async()=>{
         usertype:{
 
             type:DataTypes.STRING,
-            defaultValue:'readers'
+            defaultValue:'admin'
         },
         mobile_number:{
             
             type:DataTypes.STRING,
-            unique:true,
-            allowNull:false
+            // unique:true,
+            // allowNull:false
         },
         api_key:{
  
             type:DataTypes.STRING,
-            allowNull:false
+           // allowNull:false
         },
         login_status:{
 

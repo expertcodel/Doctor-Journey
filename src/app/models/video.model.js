@@ -17,7 +17,7 @@ export const videoModel = async () => {
 
             type: DataTypes.STRING,
             allowNull: false,
-            unique: true
+           
         },
         videoId: {
 

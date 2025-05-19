@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBarsStaggered, faBuilding, faCalendar, faChevronRight, faClock, faFilter, faLocation, faLocationArrow, faMap, faStar, faTimesCircle, faUsd, faUserFriends } from "@fortawesome/free-solid-svg-icons";
 import RangeSlider from "../component/RangeSlider";
 
-export default  function DoctorList({ doctorProfile, totalItems }) {
+export default function DoctorList({ doctorProfile, totalItems }) {
 
     const [doctorLists, setdoctorLists] = useState(doctorProfile);
     const [button, setButton] = useState(totalItems);
@@ -62,7 +62,7 @@ export default  function DoctorList({ doctorProfile, totalItems }) {
                                 <div className="search-background bg-transparent">
                                     <div className="form row no-gutters ">
                                         <div className="col-xl-4 col-lg-3 col-md-12 mb-0 bg-white form-group">
-                                            <input type="text" className="form-control input-lg br-tr-md-0 br-br-md-0" id="text4" placeholder="Enter Your Keywords" onChange={(e) => searching(idx, e.target.value)}/>
+                                            <input type="text" className="form-control input-lg br-tr-md-0 br-br-md-0" id="text4" placeholder="Enter Your Keywords" onChange={(e) => searching(idx, e.target.value)} />
                                         </div>
                                         <div className="col-xl-3 col-lg-3 col-md-12 mb-0 bg-white form-group">
                                             <input type="text" className="form-control input-lg br-md-0" id="text5" placeholder="Select Location" />
@@ -224,40 +224,26 @@ export default  function DoctorList({ doctorProfile, totalItems }) {
                                         </div>
                                     </div>
                                     <div className="center-block text-center">
-                                        <ul className="pagination mb-5 mb-lg-0">
+                                        {button > 1 && <ul className="pagination mb-5 mb-lg-0">
                                             <li className="page-item page-prev disabled">
                                                 <button className="page-link" onClick={() => pagination(idx - 1)} tabIndex={-1}>
                                                     Prev
                                                 </button>
                                             </li>
                                             {
-                                                Array.from({length:totalItems} ,(_,i)=> <li className="page-item active" key={i}>
-                                                <button className="page-link"  onClick={() => pagination(i + 1)} >
-                                                    {i+1}
-                                                </button>
-                                            </li>)
+                                                Array.from({ length: totalItems }, (_, i) => <li className="page-item active" key={i}>
+                                                    <button className="page-link" onClick={() => pagination(i + 1)} >
+                                                        {i + 1}
+                                                    </button>
+                                                </li>)
                                             }
-                                            {/* <li className="page-item active">
-                                                <a className="page-link" href="javascript:void(0);">
-                                                    1
-                                                </a>
-                                            </li>
-                                            <li className="page-item">
-                                                <a className="page-link" href="javascript:void(0);">
-                                                    2
-                                                </a>
-                                            </li>
-                                            <li className="page-item">
-                                                <a className="page-link" href="javascript:void(0);">
-                                                    3
-                                                </a>
-                                            </li> */}
+
                                             <li className="page-item page-next">
                                                 <button className="page-link" onClick={() => pagination(idx + 1)}>
                                                     Next
                                                 </button>
                                             </li>
-                                        </ul>
+                                        </ul>}
                                     </div>
                                 </div>
                             </div>

@@ -174,6 +174,19 @@ export async function POST(request)
           allowed:true,
           path:`/${usertype}/doctors/list`
         },
+        {
+
+          role:'Upload Videos',
+          allowed:true,
+          path:`/${usertype}/doctors/videos/create`,
+          
+        },
+        {
+          
+          role:'Videos List',
+          allowed:true,
+          path:`/${usertype}/doctors/videos/list`
+        },
        
       ]
 
@@ -200,28 +213,28 @@ export async function POST(request)
       ]
 
       },
-      {
+      // {
 
-        role:'Manage Videos',
-        allowed:true,
-        path:'scroll',
-        child:[{
+      //   role:'Manage Videos',
+      //   allowed:true,
+      //   path:'scroll',
+      //   child:[{
 
-          role:'Upload Videos',
-          allowed:true,
-          path:`/${usertype}/videos/upload`,
+      //     role:'Upload Videos',
+      //     allowed:true,
+      //     path:`/${usertype}/videos/upload`,
           
-        },
-        {
+      //   },
+      //   {
           
-          role:'Videos List',
-          allowed:true,
-          path:`/${usertype}/videos/list`
-        },
+      //     role:'Videos List',
+      //     allowed:true,
+      //     path:`/${usertype}/videos/list`
+      //   },
        
-      ]
+      // ]
 
-      },
+      // },
        {
 
         role:'Manage Blogs',

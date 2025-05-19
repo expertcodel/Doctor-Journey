@@ -94,7 +94,7 @@ export default function ThumbnailBlogsCarousel({blogList}) {
             <div className="card mb-0">
                 <div className="item7-card-img">
                     <Link href="javascript:void(0);" />
-                    <Image src={blog.blogImage} width={368} height={190} alt="img" className="cover-image" />
+                    <Image unoptimized src={blog.blogImage} width={368} height={190} alt="img" className="cover-image" />
                 </div>
                 <div className="card-body p-4">
                     <div className="item7-card-desc d-flex mb-2">

@@ -138,7 +138,6 @@ export async function GET(request) {
 
     const input = new URL(request.url).searchParams;
     const name = input.get('name');
-    const id = input.get('id');
     const page = input.get('page');
     const doctormodel = await doctorModel();
     if (!doctormodel) {
@@ -152,7 +151,7 @@ export async function GET(request) {
 
             limit: 10,
             offset: (page - 1) * 10,
-            where: { [Op.or]: { doctorName: { [Op.iLike]: `%${name}%` }, doctorId: { [Op.iLike]: `%${id}%` } } },
+            where: { [Op.or]: { doctorName: { [Op.iLike]: `%${name}%` }, doctorId: { [Op.iLike]: `%${name}%` } } },
             order: [['createdAt', 'DESC']]
         })
 

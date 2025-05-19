@@ -8,7 +8,8 @@ import ThumbnailSearchCarousel from "./component/ThumbnailSearchCarousel";
 import ThumbnailSponsorCarousel from "./component/ThumbnailSponsorCarousel";
 import ThumbnailBlogsCarousel from "./component/ThumbnailBlogsCarousel";
 import TestimonialsCarousel from "./component/Testimonials";
-import doctorCards from "@/data/doctorCards.json";
+import DaysCalculator from '@/app/component/DaysCalculator'
+// import doctorCards from "@/data/doctorCards.json";
 //  import doctorProfile from "@/data/doctorProfile.json";
 
 export default async function Home() {
@@ -17,6 +18,7 @@ export default async function Home() {
   let blogList = [];
   let testimonialList = [];
   let doctorProfile =[];
+   let doctorCards = [];
 
   try {
 
@@ -34,6 +36,7 @@ export default async function Home() {
       blogList = res.bloglist;
       testimonialList=res.testimoniallist;
       doctorProfile=res.doctorprofile
+      doctorCards=res.videolist;
     }
 
 
@@ -171,37 +174,41 @@ export default async function Home() {
             <div className="col-12">
               <h4 className="mainHeading">
                 New from doctor's journey
-                <Link href="/doctors">Browse all activity</Link>
+                <Link href="/doctors">Browse all journey</Link>
               </h4>
             </div>
           </div>
 
-          <div className="row g-md-4 g-3">
+        <div className="row g-md-4 g-3">
             {doctorCards.map((card) => (
-              <div className="col-md-4 col-12 drCard" key={card.id}>
-                <div className="card mb-0">
-                  <div className="item7-card-img">
-                    <Link href={`/doctors/${card.id}`} />
-                    <Image src={card.image} width={368} height={190} alt="img" className="cover-image" />
-                    <div className="play-button">
-                      <span className="triangle"></span>
-                    </div>
-                  </div>
-                  <div className="card-body">
-                    <Link href={`/doctors/${card.id}`} className="text-dark">
-                      <h4 className="font-weight-semibold">{card.author}</h4>
-                    </Link>
-                    <p>{card.title2}</p>
-                    <div className="item7-card-desc d-flex">
-                      <span>{card.title}</span>
-                      <div className="ms-auto">
-                        <span>{card.views}</span>
-                        <span>{card.time}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+               <div className="col-md-4 col-12 drCard" key={card.videoId}>
+                                <div className="card mb-0">
+                                    <div className="item7-card-img">
+                                        <Link href={`/doctors/${card.videoId}`} />
+                                        <Image src={card.thumbnailImage} width={368} height={190} alt="img" className="cover-image" unoptimized />
+                                        <div className="play-button">
+                                            <span className="triangle"></span>
+                                        </div>
+                                    </div>
+                                    <div className="card-body">
+                                        <div className="item7-card-desc d-flex">
+                                            <Link href={`/doctors/${card.videoId}`} className="text-dark">
+                                            <h4 className="font-weight-semibold">{card.doctorName}</h4>
+                                        </Link>
+                                            <div className="ms-auto">
+                                               
+                                                <span> <DaysCalculator targetDate={card.publishedDate} today={new Date().toLocaleDateString()} /></span>
+                                                {/* <span></span> */}
+                                            </div>
+                                        </div>
+                                        
+                                        <p>{card.specialization}</p>
+                                        <div className="item7-card-desc d-flex">
+                                            <span>{card.videoTitle}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
             ))}
           </div>
         </div>
