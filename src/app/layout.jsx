@@ -8,8 +8,8 @@ import "./custom.scss";
 //  import "../../public/css/color10.css";
 import { headers } from 'next/headers'
 // import "./globals.css";
-import BootstrapClient from "@/app/component/bootstrap-client";
-import { AuthProvider } from "@/context/AuthContext";
+import BootstrapClient from "../app/component/bootstrap-client";
+import { AuthProvider } from "../context/AuthContext";
 import Header from "./component/Header";
 import Footer from "./component/Footer";
 import Script from "next/script";

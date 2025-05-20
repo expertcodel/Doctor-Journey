@@ -8,9 +8,9 @@ import Swiper from "swiper";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/navigation";
-import doctorCards from "@/data/doctorCards.json";
-import DaysCalculator from '@/app/component/DaysCalculator'
-export default function ThumbnailActivityCarousel() {
+// import doctorCards from "@/data/doctorCards.json";
+import DaysCalculator from '../../app/component/DaysCalculator'
+export default function ThumbnailActivityCarousel({doctorCards}) {
   const swiperRef = useRef(null);
 
   useEffect(() => {
@@ -95,8 +95,8 @@ export default function ThumbnailActivityCarousel() {
                   </Link>
                   <div className="ms-auto">
 
-                    {/* <span> <DaysCalculator targetDate={card.publishedDate} today={new Date().toLocaleDateString()} /></span> */}
-                    {/* <span></span> */}
+                    <span> <DaysCalculator targetDate={card.publishedDate} today={new Date().toLocaleDateString()} /></span>
+                  
                   </div>
                 </div>
 

@@ -2,25 +2,23 @@ import Image from "next/image";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCreditCard, faEuro, faEuroSign, faStar } from "@fortawesome/free-solid-svg-icons";
-import Select2Component from "@/app/component/Select2Component";
-import ThumbnailSearchCarousel from "@/app/component/ThumbnailSearchCarousel";
-import ThumbnailSponsorCarousel from "@/app/component/ThumbnailSponsorCarousel";
-import ThumbnailBlogsCarousel from "@/app/component/ThumbnailBlogsCarousel";
-import TestimonialsCarousel from "@/app/component/Testimonials";
+import Select2Component from "../component/Select2Component";
+import ThumbnailSearchCarousel from "../component/ThumbnailSearchCarousel";
+import ThumbnailSponsorCarousel from "../component/ThumbnailSponsorCarousel";
+import ThumbnailBlogsCarousel from "../component/ThumbnailBlogsCarousel";
+import TestimonialsCarousel from "../component/Testimonials";
 import doctorCards from "@/data/doctorCards.json";
 import JournalsThumbCarousel from "../component/JournalsThumbCarousel";
-//  import doctorProfile from "@/data/doctorProfile.json";
+import doctorProfile from "../../data/doctorProfile.json";
 
 export default async function Journals() {
 
-
-  let blogList = [];
-  let testimonialList = [];
-  let doctorProfile =[];
+  let sliderList = [];
+  let offerList = [];
 
   try {
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/client/home`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/client/journal`, {
 
       method: 'GET',
       cache: 'no-store'
@@ -31,9 +29,9 @@ export default async function Journals() {
     const res = await response.json();
 
     if (res.status) {
-      blogList = res.bloglist;
-      testimonialList=res.testimoniallist;
-      doctorProfile=res.doctorprofile
+      sliderList = res.sliderlist;
+      offerList = res.offerlist;
+
     }
 
 
@@ -49,22 +47,16 @@ export default async function Journals() {
       {/* heroBanner */}
       <section className="heroBanner withSliders">
         <div id="carouselExampleIndicators" className="carousel slide" data-bs-ride="carousel">
-            <div className="carousel-indicators">
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to={0} className="active" aria-current="true" aria-label="Slide 1" />
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to={1} aria-label="Slide 2" />
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to={2} aria-label="Slide 3" />
-            </div>
-            <div className="carousel-inner">
-                <div className="carousel-item active">
-                    <Image src="/images/banners/banner1.jpg" width={1920} height={600} className="d-block w-100" alt="Journals" />
-                </div>
-                <div className="carousel-item">
-                    <Image src="/images/banners/banner2.jpg" width={1920} height={600} className="d-block w-100" alt="Journals" />
-                </div>
-                <div className="carousel-item">
-                    <Image src="/images/banners/banner3.jpg" width={1920} height={600} className="d-block w-100" alt="Journals" />
-                </div>
-            </div>
+          <div className="carousel-indicators">
+            {sliderList.map((_, i) => <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to={i} className={i === 0 && "active"} aria-current="true" aria-label={`Slide ${i + 1}`} />)}
+
+          </div>
+          <div className="carousel-inner">
+            {sliderList.map((item, i) => <div className={i === 0 ? "carousel-item active" : "carousel-item"} key={item.sliderId}>
+              <Image src={item.sliderImage} width={1920} height={600} className="d-block w-100" alt="Journals" unoptimized />
+            </div>)}
+
+          </div>
         </div>
       </section>
 
@@ -132,43 +124,39 @@ export default async function Journals() {
       <section className="sectionSpace aboutMain sptb bg-white">
         <div className="container">
           <div className="row g-md-0 g-3">
-            <div className="col-md-6 col-12">
-                <div className="offerBooksCard bgPurple">
-                    <figure>
-                        <Image width={211} height={184} src="/images/journals/books/offer-thumb/book-1.webp" alt="Book" className="img-fluid" />
-                        <figcaption>
-                            20% <span>Off</span>
-                        </figcaption>
-                    </figure>
-                    <aside>
-                        <h3>Get Membership</h3>
-                        <ul className="list-unstyled">
-                            <li>For your individuals</li>
-                            <li>Get started quickly with unlimited</li>
-                            <li>catalog access & easy-to-use tools</li>
-                        </ul>
-                    </aside>
-                </div>
-            </div>
+            {offerList.map((offer,i) => <div className="col-md-6 col-12" key={offer.offerId}>
+              <div className={i%2===0?'offerBooksCard bgYellow':`offerBooksCard bgPurple`}>
+                <figure>
+                  <Image width={211} height={184} src={offer.offerImage} alt="Book" className="img-fluid" unoptimized/>
+                  <figcaption>
+                    {/* 20% <span>Off</span> */}
+                    {offer.offerDiscount}
+                  </figcaption>
+                </figure>
+                <aside dangerouslySetInnerHTML={{__html:offer.offerContent}}>
+                  
+                </aside>
+              </div>
+            </div>)}
 
-            <div className="col-md-6 col-12">
-                <div className="offerBooksCard bgYellow">
-                    <figure>
-                        <Image width={211} height={184} src="/images/journals/books/offer-thumb/book-2.webp" alt="Book" className="img-fluid" />
-                        <figcaption>
-                            20% <span>Off</span>
-                        </figcaption>
-                    </figure>
-                    <aside>
-                        <h3>Get Membership</h3>
-                        <ul className="list-unstyled">
-                            <li>For your individuals</li>
-                            <li>Get started quickly with unlimited</li>
-                            <li>catalog access & easy-to-use tools</li>
-                        </ul>
-                    </aside>
-                </div>
-            </div>
+            {/* <div className="col-md-6 col-12">
+              <div className="offerBooksCard bgYellow">
+                <figure>
+                  <Image width={211} height={184} src="/images/journals/books/offer-thumb/book-2.webp" alt="Book" className="img-fluid" />
+                  <figcaption>
+                    20% <span>Off</span>
+                  </figcaption>
+                </figure>
+                <aside>
+                  <h3>Get Membership</h3>
+                  <ul className="list-unstyled">
+                    <li>For your individuals</li>
+                    <li>Get started quickly with unlimited</li>
+                    <li>catalog access & easy-to-use tools</li>
+                  </ul>
+                </aside>
+              </div>
+            </div> */}
           </div>
         </div>
       </section>
@@ -187,213 +175,213 @@ export default async function Journals() {
 
           <div className="row">
             <div className="col-12">
-                <div className="journalsMain">
-                    <div className="row">
-                        {/***** jrShortCard *****/}
-                        <div className="col-lg-2 col-md-3 col-12 jrShortCard">
-                            {/*** card */}
-                            <div className="card">
-                                <div className="card-body">
-                                    <div className="cat-item">
-                                        <Link href="/" />
-                                        <div className="cat-img bg-primary-transparent">
-                                            <Image unoptimized src="/images/journals/books/walk-into-the-shadow.webp" className="img-fluid" width={68} height={89} alt=""  />
-                                        </div>
-                                        <div className="cat-desc">
-                                            <h5>
-                                                Walk into the Shadow
-                                            </h5>
-                                            <small className="badge">
-                                                INR 1999/
-                                            </small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            {/*** card */}
-                            <div className="card">
-                                <div className="card-body">
-                                    <div className="cat-item">
-                                        <Link href="/" />
-                                        <div className="cat-img bg-primary-transparent">
-                                            <Image unoptimized src="/images/journals/books/walk-into-the-shadow.webp" className="img-fluid" width={68} height={89} alt=""  />
-                                        </div>
-                                        <div className="cat-desc">
-                                            <h5>
-                                                Walk into the Shadow
-                                            </h5>
-                                            <small className="badge">
-                                                INR 1999/
-                                            </small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            {/*** card */}
-                            <div className="card">
-                                <div className="card-body">
-                                    <div className="cat-item">
-                                        <Link href="/" />
-                                        <div className="cat-img bg-primary-transparent">
-                                            <Image unoptimized src="/images/journals/books/walk-into-the-shadow.webp" className="img-fluid" width={68} height={89} alt=""  />
-                                        </div>
-                                        <div className="cat-desc">
-                                            <h5>
-                                                Walk into the Shadow
-                                            </h5>
-                                            <small className="badge">
-                                                INR 1999/
-                                            </small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            {/*** card */}
-                            <div className="card">
-                                <div className="card-body">
-                                    <div className="cat-item">
-                                        <Link href="/" />
-                                        <div className="cat-img bg-primary-transparent">
-                                            <Image unoptimized src="/images/journals/books/walk-into-the-shadow.webp" className="img-fluid" width={68} height={89} alt=""  />
-                                        </div>
-                                        <div className="cat-desc">
-                                            <h5>
-                                                Walk into the Shadow
-                                            </h5>
-                                            <small className="badge">
-                                                INR 1999/
-                                            </small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+              <div className="journalsMain">
+                <div className="row">
+                  {/***** jrShortCard *****/}
+                  <div className="col-lg-2 col-md-3 col-12 jrShortCard">
+                    {/*** card */}
+                    <div className="card">
+                      <div className="card-body">
+                        <div className="cat-item">
+                          <Link href="/" />
+                          <div className="cat-img bg-primary-transparent">
+                            <Image unoptimized src="/images/journals/books/walk-into-the-shadow.webp" className="img-fluid" width={68} height={89} alt="" />
+                          </div>
+                          <div className="cat-desc">
+                            <h5>
+                              Walk into the Shadow
+                            </h5>
+                            <small className="badge">
+                              INR 1999/
+                            </small>
+                          </div>
                         </div>
-
-                        <div className="col-lg-4 col-md-3 col-12 jrLargeCard">
-                            {/*** card */}
-                            <div className="card">
-                                <div className="card-body">
-                                    <div className="cat-item">
-                                        <Link href="/" />
-                                        <div className="cat-img bg-primary-transparent">
-                                            <Image unoptimized src="/images/journals/books/walk-into-the-shadow.webp" className="img-fluid" width={347} height={332} alt=""  />
-                                        </div>
-                                        <div className="cat-desc">
-                                            <h5>
-                                                Walk into the Shadow
-                                            </h5>
-                                            <small className="badge">
-                                                INR 1999/
-                                            </small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="col-lg-4 col-md-3 col-12 jrLargeCard">
-                            {/*** card */}
-                            <div className="card">
-                                <div className="card-body">
-                                    <div className="cat-item">
-                                        <Link href="/" />
-                                        <div className="cat-img bg-primary-transparent">
-                                            <Image unoptimized src="/images/journals/books/walk-into-the-shadow.webp" className="img-fluid" width={347} height={332} alt=""  />
-                                        </div>
-                                        <div className="cat-desc">
-                                            <h5>
-                                                Walk into the Shadow
-                                            </h5>
-                                            <small className="badge">
-                                                INR 1999/
-                                            </small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/***** jrShortCard *****/}
-                        <div className="col-lg-2 col-md-3 col-12 jrShortCard">
-                            {/*** card */}
-                            <div className="card">
-                                <div className="card-body">
-                                    <div className="cat-item">
-                                        <Link href="/" />
-                                        <div className="cat-img bg-primary-transparent">
-                                            <Image unoptimized src="/images/journals/books/walk-into-the-shadow.webp" className="img-fluid" width={68} height={89} alt=""  />
-                                        </div>
-                                        <div className="cat-desc">
-                                            <h5>
-                                                Walk into the Shadow
-                                            </h5>
-                                            <small className="badge">
-                                                INR 1999/
-                                            </small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            {/*** card */}
-                            <div className="card">
-                                <div className="card-body">
-                                    <div className="cat-item">
-                                        <Link href="/" />
-                                        <div className="cat-img bg-primary-transparent">
-                                            <Image unoptimized src="/images/journals/books/walk-into-the-shadow.webp" className="img-fluid" width={68} height={89} alt=""  />
-                                        </div>
-                                        <div className="cat-desc">
-                                            <h5>
-                                                Walk into the Shadow
-                                            </h5>
-                                            <small className="badge">
-                                                INR 1999/
-                                            </small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            {/*** card */}
-                            <div className="card">
-                                <div className="card-body">
-                                    <div className="cat-item">
-                                        <Link href="/" />
-                                        <div className="cat-img bg-primary-transparent">
-                                            <Image unoptimized src="/images/journals/books/walk-into-the-shadow.webp" className="img-fluid" width={68} height={89} alt=""  />
-                                        </div>
-                                        <div className="cat-desc">
-                                            <h5>
-                                                Walk into the Shadow
-                                            </h5>
-                                            <small className="badge">
-                                                INR 1999/
-                                            </small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            {/*** card */}
-                            <div className="card">
-                                <div className="card-body">
-                                    <div className="cat-item">
-                                        <Link href="/" />
-                                        <div className="cat-img bg-primary-transparent">
-                                            <Image unoptimized src="/images/journals/books/walk-into-the-shadow.webp" className="img-fluid" width={68} height={89} alt=""  />
-                                        </div>
-                                        <div className="cat-desc">
-                                            <h5>
-                                                Walk into the Shadow
-                                            </h5>
-                                            <small className="badge">
-                                                INR 1999/
-                                            </small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                      </div>
                     </div>
+                    {/*** card */}
+                    <div className="card">
+                      <div className="card-body">
+                        <div className="cat-item">
+                          <Link href="/" />
+                          <div className="cat-img bg-primary-transparent">
+                            <Image unoptimized src="/images/journals/books/walk-into-the-shadow.webp" className="img-fluid" width={68} height={89} alt="" />
+                          </div>
+                          <div className="cat-desc">
+                            <h5>
+                              Walk into the Shadow
+                            </h5>
+                            <small className="badge">
+                              INR 1999/
+                            </small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {/*** card */}
+                    <div className="card">
+                      <div className="card-body">
+                        <div className="cat-item">
+                          <Link href="/" />
+                          <div className="cat-img bg-primary-transparent">
+                            <Image unoptimized src="/images/journals/books/walk-into-the-shadow.webp" className="img-fluid" width={68} height={89} alt="" />
+                          </div>
+                          <div className="cat-desc">
+                            <h5>
+                              Walk into the Shadow
+                            </h5>
+                            <small className="badge">
+                              INR 1999/
+                            </small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {/*** card */}
+                    <div className="card">
+                      <div className="card-body">
+                        <div className="cat-item">
+                          <Link href="/" />
+                          <div className="cat-img bg-primary-transparent">
+                            <Image unoptimized src="/images/journals/books/walk-into-the-shadow.webp" className="img-fluid" width={68} height={89} alt="" />
+                          </div>
+                          <div className="cat-desc">
+                            <h5>
+                              Walk into the Shadow
+                            </h5>
+                            <small className="badge">
+                              INR 1999/
+                            </small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="col-lg-4 col-md-3 col-12 jrLargeCard">
+                    {/*** card */}
+                    <div className="card">
+                      <div className="card-body">
+                        <div className="cat-item">
+                          <Link href="/" />
+                          <div className="cat-img bg-primary-transparent">
+                            <Image unoptimized src="/images/journals/books/walk-into-the-shadow.webp" className="img-fluid" width={347} height={332} alt="" />
+                          </div>
+                          <div className="cat-desc">
+                            <h5>
+                              Walk into the Shadow
+                            </h5>
+                            <small className="badge">
+                              INR 1999/
+                            </small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="col-lg-4 col-md-3 col-12 jrLargeCard">
+                    {/*** card */}
+                    <div className="card">
+                      <div className="card-body">
+                        <div className="cat-item">
+                          <Link href="/" />
+                          <div className="cat-img bg-primary-transparent">
+                            <Image unoptimized src="/images/journals/books/walk-into-the-shadow.webp" className="img-fluid" width={347} height={332} alt="" />
+                          </div>
+                          <div className="cat-desc">
+                            <h5>
+                              Walk into the Shadow
+                            </h5>
+                            <small className="badge">
+                              INR 1999/
+                            </small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/***** jrShortCard *****/}
+                  <div className="col-lg-2 col-md-3 col-12 jrShortCard">
+                    {/*** card */}
+                    <div className="card">
+                      <div className="card-body">
+                        <div className="cat-item">
+                          <Link href="/" />
+                          <div className="cat-img bg-primary-transparent">
+                            <Image unoptimized src="/images/journals/books/walk-into-the-shadow.webp" className="img-fluid" width={68} height={89} alt="" />
+                          </div>
+                          <div className="cat-desc">
+                            <h5>
+                              Walk into the Shadow
+                            </h5>
+                            <small className="badge">
+                              INR 1999/
+                            </small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {/*** card */}
+                    <div className="card">
+                      <div className="card-body">
+                        <div className="cat-item">
+                          <Link href="/" />
+                          <div className="cat-img bg-primary-transparent">
+                            <Image unoptimized src="/images/journals/books/walk-into-the-shadow.webp" className="img-fluid" width={68} height={89} alt="" />
+                          </div>
+                          <div className="cat-desc">
+                            <h5>
+                              Walk into the Shadow
+                            </h5>
+                            <small className="badge">
+                              INR 1999/
+                            </small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {/*** card */}
+                    <div className="card">
+                      <div className="card-body">
+                        <div className="cat-item">
+                          <Link href="/" />
+                          <div className="cat-img bg-primary-transparent">
+                            <Image unoptimized src="/images/journals/books/walk-into-the-shadow.webp" className="img-fluid" width={68} height={89} alt="" />
+                          </div>
+                          <div className="cat-desc">
+                            <h5>
+                              Walk into the Shadow
+                            </h5>
+                            <small className="badge">
+                              INR 1999/
+                            </small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {/*** card */}
+                    <div className="card">
+                      <div className="card-body">
+                        <div className="cat-item">
+                          <Link href="/" />
+                          <div className="cat-img bg-primary-transparent">
+                            <Image unoptimized src="/images/journals/books/walk-into-the-shadow.webp" className="img-fluid" width={68} height={89} alt="" />
+                          </div>
+                          <div className="cat-desc">
+                            <h5>
+                              Walk into the Shadow
+                            </h5>
+                            <small className="badge">
+                              INR 1999/
+                            </small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
+              </div>
             </div>
           </div>
         </div>
@@ -413,7 +401,7 @@ export default async function Journals() {
 
           <div className="row">
             <div className="col-12">
-                <JournalsThumbCarousel />
+              <JournalsThumbCarousel />
             </div>
           </div>
         </div>
@@ -441,7 +429,7 @@ export default async function Journals() {
                       <div className="cat-item">
                         <Link href={`/doctor-profile/${item.doctorId}`} />
                         <div className="cat-img bg-primary-transparent brround">
-                          <Image  unoptimized src={item.profileImage} className="img-fluid" width={155} height={80} alt=""  />
+                          <Image unoptimized src={item.profileImage} className="img-fluid" width={155} height={80} alt="" />
                         </div>
                         <div className="cat-desc">
                           <h5>
@@ -466,33 +454,33 @@ export default async function Journals() {
         <div className="container">
           <div className="row">
             <div className="col-12">
-                <div className="subscriptionBooksCard bgPink">
-                    <div className="row">
-                        <div className="col-md-6 col-12">
-                            <figure>
-                                <Image width={607} height={494} src="/images/journals/books/subsBook.png" alt="Book" className="img-fluid" />
-                            </figure>
+              <div className="subscriptionBooksCard bgPink">
+                <div className="row">
+                  <div className="col-md-6 col-12">
+                    <figure>
+                      <Image width={607} height={494} src="/images/journals/books/subsBook.png" alt="Book" className="img-fluid" />
+                    </figure>
+                  </div>
+                  <div className="col-md-6 col-12">
+                    <aside>
+                      <h3>
+                        Get 20% Off Your Order !
+                      </h3>
+                      <p>
+                        Enter your email and receive a 10% discount on your next order !
+                      </p>
+                      <div className="input-group w-100">
+                        <input type="text" className="form-control  border" placeholder="Email" />
+                        <div className="">
+                          <button type="button" className="btn btn-primary ">
+                            {" "} Subscribe{" "}
+                          </button>
                         </div>
-                        <div className="col-md-6 col-12">
-                            <aside>
-                                <h3>
-                                    Get 20% Off Your Order !
-                                </h3>
-                                <p>
-                                    Enter your email and receive a 10% discount on your next order !
-                                </p>
-                                <div className="input-group w-100">
-                                    <input type="text" className="form-control  border" placeholder="Email" />
-                                    <div className="">
-                                        <button type="button" className="btn btn-primary ">
-                                            {" "} Subscribe{" "}
-                                        </button>
-                                    </div>
-                                </div>
-                            </aside>
-                        </div>
-                    </div>
+                      </div>
+                    </aside>
+                  </div>
                 </div>
+              </div>
             </div>
           </div>
         </div>

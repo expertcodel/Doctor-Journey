@@ -3,7 +3,7 @@ import { useAuth } from "../../context/AuthContext";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import Breadcrumb from "@/app/component/Breadcrumb";
+import Breadcrumb from "../../app/component/Breadcrumb";
 
 export default function Login() {
   //const { user, login } = useAuth();

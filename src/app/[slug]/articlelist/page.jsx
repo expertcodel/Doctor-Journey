@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Link from 'next/link';
 import Articles from '../../../component/Articles'
-import { UniversalContext } from '@/component/context.js';
+import { UniversalContext } from '../../../component/context.js';
 import { useRouter } from 'next/navigation';
 
 function Page() {

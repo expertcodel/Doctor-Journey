@@ -1,7 +1,7 @@
 import  {publishJournalmodel}  from "../../../models/publish_journal_model";
-import { articleModel } from "@/app/models/article.model";
+import { articleModel } from "../../../../app/models/article.model";
 import { NextResponse } from "next/server";
-import { journalsModel } from "@/app/models/journals.model";
+import { journalsModel } from "../../../../app/models/journals.model";
 import { Op } from "sequelize";
 
  

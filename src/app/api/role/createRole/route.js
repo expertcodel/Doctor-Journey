@@ -99,27 +99,28 @@ export async function POST(request)
 
           role:'Create Journals',
           allowed:true,
-          path:`/${usertype}/createjournals`,
+          path:`/${usertype}/journal/createjournals`,
           
         },
         {
           
           role:'Journals List',
           allowed:true,
-          path:`/${usertype}/journalslist`
+          path:`/${usertype}/journal/journalslist`
         },
         {
           
           role:'Approved Journals',
           allowed:true,
-          path:`/${usertype}/approvedjournals`
+          path:`/${usertype}/journal/approvedjournals`
         },
         {
           
           role:'Published Journals',
           allowed:true,
-          path:`/${usertype}/publishedjournals`
-        }
+          path:`/${usertype}/journal/publishedjournals`
+        },
+        {role:'Journals Slider',allowed:true,path:'scroll',child:[{role:'Create Slider',allowed:true,path:`/${usertype}/journal/slider/create`},{role:'Slider List',allowed:true,path:`/${usertype}/journal/slider/list`}]},{role:'Journals Offer',allowed:true,path:'scroll',child:[{role:'Create Offer',allowed:true,path:`/${usertype}/journal/offer/create`},{role:'Offer List',allowed:true,path:`/${usertype}/journal/offer/list`}]}
       ]
 
       },

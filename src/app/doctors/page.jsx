@@ -1,4 +1,4 @@
-import VideoList from '@/app/component/VideoList.jsx'
+import VideoList from '../../app/component/VideoList.jsx'
 
 export default async function AllDoctors() {
 

@@ -2,7 +2,7 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
-import Articlelist from '@/component/Articlelist'
+import Articlelist from '../../../../../component/Articlelist'
 
 function Page() {
 

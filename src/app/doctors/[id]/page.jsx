@@ -1,4 +1,4 @@
-import VideoPage from '@/app/component/VideoPage.jsx'
+import VideoPage from '../../../app/component/VideoPage.jsx'
 
 export default async function DoctorDetail({ params }) {
     //const doctor = doctorCards.find((d) => d.id === params.id);

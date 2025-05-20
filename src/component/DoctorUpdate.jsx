@@ -3,11 +3,11 @@ import React from 'react'
 import dynamic from 'next/dynamic';
 import { useState, useRef, useMemo, useEffect } from 'react';
 import Image from 'next/image'
-import AdminFooter from '@/component/AdminFooter.jsx'
+import AdminFooter from './AdminFooter.jsx'
 import { useRouter } from 'next/navigation';
-import { extractErrorMessage } from '@/utils/errorMessage'
+import { extractErrorMessage } from '../utils/errorMessage'
 const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
-import DoctorFormUpdate from '@/component/DoctorFormUpdate.jsx'
+import DoctorFormUpdate from './DoctorFormUpdate.jsx'
 export default function DoctorUpdate({ doctorDetail }) {
 
 

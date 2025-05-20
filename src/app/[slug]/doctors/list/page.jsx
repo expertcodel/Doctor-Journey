@@ -1,5 +1,5 @@
 import React from 'react'
-import DoctorList from '@/component/DoctorList.jsx';
+import DoctorList from '../../../../component/DoctorList.jsx';
 export default async function Page() {
 
 

@@ -216,7 +216,7 @@ export default  function Menubar({data}) {
                                                       {item1.path === 'scroll' ?
                                                         <li className="nav-item" >
                                                           <Link
-                                                            href="#sidebarCalendar"
+                                                            href={`#sidebarCalendar${i}`}
                                                             className="nav-link collapsed"
                                                             data-bs-toggle="collapse"
                                                             role="button"
@@ -229,7 +229,7 @@ export default  function Menubar({data}) {
                                                           {
 
                                                             item1.path === 'scroll' ?
-                                                              <div className="menu-dropdown collapse" id="sidebarCalendar" style={{}}>
+                                                              <div className="menu-dropdown collapse" id={`sidebarCalendar${i}`} style={{}}>
 
                                                                 {
 
@@ -238,7 +238,7 @@ export default  function Menubar({data}) {
                                                                     <ul className="nav nav-sm flex-column" key={i}>
                                                                       <li className="nav-item">
                                                                         <Link
-                                                                          href="apps-calendar.html"
+                                                                          href={item2.path}
                                                                           className="nav-link"
                                                                           data-key="t-main-calender"
                                                                         >

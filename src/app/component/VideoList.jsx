@@ -20,7 +20,7 @@ export default function VideoList({ doctorCard, totalItems }) {
         const res = await response.json();
         if (res.status) {
             setdoctorLists(res.videolist);
-            setButton(Math.ceil(res.totalItems / 10));
+            setButton(Math.ceil(res.totalItems / 9));
         }
 
     }
@@ -33,7 +33,7 @@ export default function VideoList({ doctorCard, totalItems }) {
             const res = await response.json();
             if (res.status) {
                 setdoctorLists(res.videolist);
-                setButton(Math.ceil(res.totalItems / 10));
+                setButton(Math.ceil(res.totalItems / 9));
             }
 
         }
@@ -146,13 +146,13 @@ export default function VideoList({ doctorCard, totalItems }) {
                         <div className="col-12">
                             <div className="center-block text-center d-flex justify-content-center">
                                 {button > 1 && <ul className="pagination mb-5 mb-lg-0">
-                                    <li className="page-item page-prev disabled">
+                                    <li className="page-item page-prev">
                                         <button className="page-link" onClick={() => pagination(idx - 1)} tabIndex={-1}>
                                             Prev
                                         </button>
                                     </li>
                                     {Array.from({ length: button }, (_, i) => <li className="page-item active" key={i}>
-                                        <button className="page-link" >
+                                        <button className="page-link" onClick={() => pagination(i+1)} style={{backgroundColor:idx===i+1 &&'orange'}}>
                                             {i + 1}
                                         </button>
                                     </li>)}

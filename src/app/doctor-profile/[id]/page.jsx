@@ -1,12 +1,12 @@
-import DoctorProfileGallery from "@/app/component/DoctorProfileGallery";
+import DoctorProfileGallery from "../../../app/component/DoctorProfileGallery";
 import doctorProfile from "@/data/doctorProfile.json";
 import { faCalendar, faComment, faEye, faLocation, faUser, faMap, faStar, faChevronRight, faClock, faCheckCircle, faMapMarker, } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import Link from "next/link";
-import ThumbnailVArticleCarousel from "@/app/component/ThumbnailVArticleCarousel";
-import ThumbnailVDrProfileCarousel from "@/app/component/ThumbnailVDrProfileCarousel";
-import ThumbnailActivityCarousel from "@/app/component/ThumbnailActivityCarousel";
+import ThumbnailVArticleCarousel from "../../../app/component/ThumbnailVArticleCarousel";
+import ThumbnailVDrProfileCarousel from "../../../app/component/ThumbnailVDrProfileCarousel";
+import ThumbnailActivityCarousel from "../../../app/component/ThumbnailActivityCarousel";
 
 
 export default async function DoctorProfileDetail({ params }) {
@@ -136,7 +136,7 @@ export default async function DoctorProfileDetail({ params }) {
                                                             <div className="table-responsive">
                                                                 <table className="table row table-borderless w-100 m-0">
                                                                     <tbody className="col-lg-12 col-xl-6 p-0">
-                                                                        <tr>
+                                                                        {/* <tr>
                                                                             <td className="px-0 w-150">
                                                                                 <span className="font-weight-semibold">Languages</span>
                                                                             </td>{" "}
@@ -148,7 +148,7 @@ export default async function DoctorProfileDetail({ params }) {
                                                                                     English, Hindi
                                                                                 </span>
                                                                             </td>
-                                                                        </tr>
+                                                                        </tr> */}
                                                                         <tr>
                                                                             <td className="px-0 w-150">
                                                                                 <span className="font-weight-semibold">Speciality</span>
@@ -173,9 +173,20 @@ export default async function DoctorProfileDetail({ params }) {
                                                                                 <span>{doctor.number}</span>
                                                                             </td>
                                                                         </tr>
+                                                                          <tr>
+                                                                            <td className="px-0 w-150">
+                                                                                <span className="font-weight-semibold">City</span>
+                                                                            </td>{" "}
+                                                                            <td>
+                                                                                <span>:</span>
+                                                                            </td>{" "}
+                                                                            <td>
+                                                                                <span>{doctor.city}</span>
+                                                                            </td>
+                                                                        </tr>
                                                                     </tbody>
                                                                     <tbody className="col-lg-12 col-xl-6 p-0">
-                                                                        <tr>
+                                                                        {/* <tr>
                                                                             <td className="px-0 w-150">
                                                                                 <span className="font-weight-semibold">
                                                                                     Types Of
@@ -187,7 +198,7 @@ export default async function DoctorProfileDetail({ params }) {
                                                                             <td>
                                                                                 <span>Full time Physician</span>
                                                                             </td>
-                                                                        </tr>
+                                                                        </tr> */}
                                                                         <tr>
                                                                             <td className="px-0 w-150">
                                                                                 <span className="font-weight-semibold">
@@ -243,7 +254,7 @@ export default async function DoctorProfileDetail({ params }) {
                                             </div>
                                             <div className="tab-pane userprof-tab" id="tab-3">
                                                 <div className="row g-md-4 g-3">
-                                                    <ThumbnailActivityCarousel />
+                                                    {doctor.videolist[0].views!=='null' && <ThumbnailActivityCarousel doctorCards={doctor.videolist}/>}
                                                 </div>
                                             </div>
                                             <div className="tab-pane userprof-tab" id="tab-4">

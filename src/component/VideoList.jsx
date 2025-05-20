@@ -153,7 +153,7 @@ export default function VideoList({ videoList, totalItems }) {
                         <div className="card-body"><form><div className="row g-4 mb-3">
                             <div className="col-sm-auto">
                                 <div>
-                                    <Link href={`/${userData.usertype}/videos/create`} className="btn btn-success"><i className="ri-add-line align-bottom me-1" /> Add New</Link>
+                                    <Link href={`/${userData.usertype}/doctors/videos/create`} className="btn btn-success"><i className="ri-add-line align-bottom me-1" /> Add New</Link>
                                 </div>
                             </div>
 

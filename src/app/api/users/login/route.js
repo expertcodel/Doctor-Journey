@@ -2,7 +2,7 @@
 import { NextResponse } from "next/server";
 import { UserModel } from "../../../models/user.model";
 import { cookies } from "next/headers";
-import { roleModel } from "@/app/models/role.model";
+import { roleModel } from "../../../../app/models/role.model";
 // import {activityModel} from '@/app/models/activity.model'
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken'

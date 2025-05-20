@@ -20,7 +20,7 @@ export async function POST(request) {
         //     where: { doctorId }
         // })
 
-        const doctordetail=await connection.query(`SELECT * , ARRAY_AGG(jsonb_build_object('thumbnailImage',public."Videos"."thumbnailImage",'specialization',public."Videos"."specialization", 'videoId', public."Videos"."videoId",'doctorName', public."Videos"."doctorName",'views',public."Videos"."views",'videoTitle',public."Videos"."videoTitle",'publishedDate',public."Videos"."publishedDate")) AS videoList FROM public."Doctors" INNER JOIN public."Videos" ON public."Doctors"."doctorId"=public."Videos"."doctorId" WHERE public."Doctors"."doctorId"=${doctorId}::text GROUP BY public."Doctors"."doctorId",public."Videos"."videoId"`)
+        const doctordetail=await connection.query(`SELECT public."Doctors"."doctorId", public."Doctors"."doctorName", public."Doctors"."email", public."Doctors"."number", public."Doctors"."address", public."Doctors"."specialization",  public."Doctors"."qualification", public."Doctors"."profileImage", public."Doctors"."experience", public."Doctors"."gallery",public."Doctors"."city",ARRAY_AGG(jsonb_build_object('thumbnailImage',public."Videos"."thumbnailImage",'specialization',public."Videos"."specialization", 'videoId', public."Videos"."videoId",'doctorName', public."Videos"."doctorName",'views',public."Videos"."views",'videoTitle',public."Videos"."videoTitle",'publishedDate',public."Videos"."publishedDate")) AS videoList FROM public."Doctors" LEFT JOIN public."Videos" ON public."Doctors"."doctorId"=public."Videos"."doctorId" WHERE public."Doctors"."doctorId"=${doctorId}::text GROUP BY public."Doctors"."doctorId"`)
 
         const doctorlist = await doctormodel.findAll({
             limit: 10,
@@ -29,7 +29,7 @@ export async function POST(request) {
             attributes: ['qualification', 'profileImage', 'doctorId', 'doctorName']
         })
 
-        return NextResponse.json({ status: true, doctordetail, doctorlist });
+        return NextResponse.json({ status: true, doctordetail:doctordetail[0][0], doctorlist });
 
 
     } catch (error) {

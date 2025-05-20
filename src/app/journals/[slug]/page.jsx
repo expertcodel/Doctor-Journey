@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Breadcrumb from "@/app/component/Breadcrumb";
+import Breadcrumb from "../../../app/component/Breadcrumb";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar, faEye, faStar, faStarHalf, faUser } from "@fortawesome/free-solid-svg-icons";

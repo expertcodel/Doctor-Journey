@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Link from 'next/link';
-import Journalpage from '../../../component/Journalpage'
+import Journalpage from '../../../../component/Journalpage'
 
 
 function Page() {
