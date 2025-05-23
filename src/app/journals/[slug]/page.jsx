@@ -5,7 +5,39 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar, faEye, faStar, faStarHalf, faUser } from "@fortawesome/free-solid-svg-icons";
 import JournalsThumbCarousel from "../../component/JournalsThumbCarousel";
 
-export default function JournalsDetails() {
+export default async function JournalsDetails({ params }) {
+
+    const {slug} = await params;
+    let journalList = [];
+    let journalDetail = {};
+
+    try {
+
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/client/journal`, {
+
+            method: 'POST',
+            cache: 'no-store',
+            body:JSON.stringify({journalsId:slug})
+        })
+
+        if (!response.ok) throw new error(`Failed to fetch: ${response.status}`);
+
+        const res = await response.json();
+
+        if (res.status) {
+
+            journalDetail = res.journaldetail;
+            journalList = res.journallist
+           
+        }
+
+
+    } catch (error) {
+
+        console.log("fetching failed", error);
+
+
+    }
     return (
         <>
             {/*Breadcrumb*/}
@@ -20,7 +52,7 @@ export default function JournalsDetails() {
                             <div className="card imgSec">
                                 <div className="card-body">
                                     <div className="item7-card-img">
-                                        <Image unoptimized src="/images/journals/books/walk-into-the-shadow.webp" className="img-fluid" width={347} height={332} alt=""  />
+                                        <Image unoptimized src="/images/journals/books/walk-into-the-shadow.webp" className="img-fluid" width={347} height={332} alt="" />
                                         <div className="item7-card-text">
                                             <span className="badge bg-pink">by Author Name</span>
                                         </div>
@@ -83,7 +115,7 @@ export default function JournalsDetails() {
 
                     <div className="row">
                         <div className="col-12">
-                            <JournalsThumbCarousel />
+                            <JournalsThumbCarousel journalList={journalList}/>
                         </div>
                     </div>
                 </div>

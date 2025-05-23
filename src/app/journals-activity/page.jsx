@@ -1,14 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
-import Breadcrumb from "@/app/component/Breadcrumb";
+import Breadcrumb from "../../app/component/Breadcrumb";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCreditCard, faEuro, faEuroSign, faStar } from "@fortawesome/free-solid-svg-icons";
-import Select2Component from "@/app/component/Select2Component";
-import ThumbnailSearchCarousel from "@/app/component/ThumbnailSearchCarousel";
-import ThumbnailSponsorCarousel from "@/app/component/ThumbnailSponsorCarousel";
-import ThumbnailBlogsCarousel from "@/app/component/ThumbnailBlogsCarousel";
-import TestimonialsCarousel from "@/app/component/Testimonials";
-import doctorCards from "@/data/doctorCards.json";
+import Select2Component from "../../app/component/Select2Component";
+import ThumbnailSearchCarousel from "../../app/component/ThumbnailSearchCarousel";
+import ThumbnailSponsorCarousel from "../../app/component/ThumbnailSponsorCarousel";
+import ThumbnailBlogsCarousel from "../../app/component/ThumbnailBlogsCarousel";
+import TestimonialsCarousel from "../../app/component/Testimonials";
+import doctorCards from "../../data/doctorCards.json";
 import JournalsThumbCarousel from "../component/JournalsThumbCarousel";
 //  import doctorProfile from "@/data/doctorProfile.json";
 

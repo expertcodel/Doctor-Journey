@@ -1,4 +1,4 @@
-import DoctorList from "@/app/component/DoctorList.jsx";
+import DoctorList from "../../app/component/DoctorList.jsx";
 
 export default async function AllDoctorsProfile() {
 

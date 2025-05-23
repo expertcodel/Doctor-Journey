@@ -15,6 +15,8 @@ export default async function Journals() {
 
   let sliderList = [];
   let offerList = [];
+  let doctorProfile = [];
+  let journalList = [];
 
   try {
 
@@ -31,7 +33,8 @@ export default async function Journals() {
     if (res.status) {
       sliderList = res.sliderlist;
       offerList = res.offerlist;
-
+      doctorProfile = res.doctorlist
+      journalList=res.journallist[0]
     }
 
 
@@ -124,17 +127,17 @@ export default async function Journals() {
       <section className="sectionSpace aboutMain sptb bg-white">
         <div className="container">
           <div className="row g-md-0 g-3">
-            {offerList.map((offer,i) => <div className="col-md-6 col-12" key={offer.offerId}>
-              <div className={i%2===0?'offerBooksCard bgYellow':`offerBooksCard bgPurple`}>
+            {offerList.map((offer, i) => <div className="col-md-6 col-12" key={offer.offerId}>
+              <div className={i % 2 === 0 ? 'offerBooksCard bgYellow' : `offerBooksCard bgPurple`}>
                 <figure>
-                  <Image width={211} height={184} src={offer.offerImage} alt="Book" className="img-fluid" unoptimized/>
+                  <Image width={211} height={184} src={offer.offerImage} alt="Book" className="img-fluid" unoptimized />
                   <figcaption>
                     {/* 20% <span>Off</span> */}
                     {offer.offerDiscount}
                   </figcaption>
                 </figure>
-                <aside dangerouslySetInnerHTML={{__html:offer.offerContent}}>
-                  
+                <aside dangerouslySetInnerHTML={{ __html: offer.offerContent }}>
+
                 </aside>
               </div>
             </div>)}
@@ -401,7 +404,7 @@ export default async function Journals() {
 
           <div className="row">
             <div className="col-12">
-              <JournalsThumbCarousel />
+              <JournalsThumbCarousel journalList={journalList} />
             </div>
           </div>
         </div>

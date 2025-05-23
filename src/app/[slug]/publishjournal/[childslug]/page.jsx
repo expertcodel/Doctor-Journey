@@ -30,14 +30,16 @@ function Page() {
             const option = {
 
                 method: 'GET',
-                url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/pendingArticles`
+                url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/journal/getArticles/?name=`
 
             }
 
             const response = await axios.request(option);
+            if (response.data.status) {
+                setSearchedlist(response.data.response)
+            }
 
-            // setSearchedlist(response.data.articles)
-            setarticleList(response.data.articles);
+
         }
 
         fetching();
@@ -61,7 +63,7 @@ function Page() {
 
     }
 
-    const jodit=useRef(null);
+    const jodit = useRef(null);
     const config = {
 
         readonly: false,
@@ -69,20 +71,20 @@ function Page() {
         uploader: {
 
             //insertImageAsBase64URI: false,
-           // format:'json',
+            // format:'json',
             url: '/api/uploadImage',
-            isSuccess: async(response)=>{
+            isSuccess: async (response) => {
 
                 console.log(response.files[0].url);
-               // editor.insertImage(await response.files[0].url);
-                return  await response.status;
+                // editor.insertImage(await response.files[0].url);
+                return await response.status;
             },
             // defaultHandlerSuccess:async(response,editor)=>{
 
             //    // console.log(await response);
             //    await jodit.s.insertImage(response.files[0].url);
-                
-                       
+
+
             //         // if(await response.status)
             //         // {
             //         //     editor.s.insertImage(await response.files[0].url);
@@ -94,13 +96,13 @@ function Page() {
 
             //         console.log(await response);
             //         return await response
-    
-                   
+
+
             //     },
 
             // },
-           
-           
+
+
 
         },
         wordcount: true,
@@ -165,15 +167,16 @@ function Page() {
     const searchArticles = async (e) => {
 
         e.preventDefault();
-        if(e.target.value!=="")
-        {
 
-        const res = await fetch(`http://localhost:3000/api/searchModel?query=${e.target.value}`);
-        const { response } = await res.json()
-        setSearchedlist(response);
-
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/journal/getArticles/?name=${e.target.value}`);
+        const response = await res.json();
+        if (response.status) {
+            setSearchedlist(response.response);
         }
-        
+
+
+
+
 
     }
 
@@ -247,7 +250,7 @@ function Page() {
                         <div className="form-select" style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', alignItems: 'center', height: '40px' }} onClick={() => setPrimaryauth(!primaryAuth)}>
                             {
                                 check.map((item, i) => <div key={i} style={{ backgroundColor: '#405189', color: 'white', borderRadius: '5px', padding: '3px', display: 'flex', gap: '0.5rem' }}>{item}
-                                <span><i class="ri-home-line ri-scissors-line" onClick={() => removeItems(i)}></i></span>
+                                    <span><i class="ri-home-line ri-scissors-line" onClick={() => removeItems(i)}></i></span>
                                 </div>)
                             }
                         </div>
@@ -321,7 +324,7 @@ function Page() {
                                                                 <td>
                                                                     {item.articleId}
                                                                 </td>
-                                                                <td>{item.articleTitle}</td>
+                                                                <td>{item.articleTitle.substr(0, 30)} {item.articleTitle.length > 30 && '...'}</td>
                                                                 <td>{item.publishedDate}</td>
 
                                                                 <td><span className="badge bg-warning-subtle text-warning">{item.articleStatus}</span>
@@ -440,7 +443,7 @@ function Page() {
                         <label className="form-label">
                             Cover Summary
                         </label>
-                        <JoditEditor config={config}  ref={jodit}/>
+                        <JoditEditor config={config} ref={jodit} />
                     </div>
                     <div className="col-12">
                         <label className="form-label">

@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import dynamic from 'next/dynamic'
-const Summernote = dynamic(()=>import('@/component/Summernote'),{ssr:false})
+
 
 function Page() {
 

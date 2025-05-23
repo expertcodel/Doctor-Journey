@@ -88,7 +88,7 @@ function Page() {
                         <div className="col-lg-12">
                             <div className="card">
                                 <div className="card-header" style={{ display: 'flex' }}>
-                                    <div style={{ width: '50%' }}><h3 className="card-title mb-0">Published Journals</h3></div>
+                                    <div style={{ width: '50%' }}><h3 className="card-title mb-0">Approved Journals</h3></div>
                                     <div style={{ width: '50%', display: 'flex', justifyContent: 'flex-end' }}>
                                         <form className="app-search d-none d-md-block">
                                             <div className="position-relative">

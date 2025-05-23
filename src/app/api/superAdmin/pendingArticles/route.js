@@ -1,4 +1,4 @@
-import { articleModel } from "@/app/models/article.model";
+import { articleModel } from "../../../../app/models/article.model";
 import { NextResponse } from "next/server";
 
 
