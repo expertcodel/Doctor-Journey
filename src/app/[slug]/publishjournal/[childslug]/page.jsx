@@ -123,7 +123,7 @@ function Page() {
             method: "POST",
             url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/publishJournal`,
             data: {
-                volume: e.target.Journalvolume.value.trim(), issue: e.target.Issue.value.trim(), publishDate: e.target.Publishdate.value.trim(), journalsId: slug, imageUrl, editorialDetails, price: e.target.Price.value.trim(), journalTitle: e.target.Journaltitle.value.trim(), check
+                volume: e.target.Journalvolume.value.trim(), issue: e.target.Issue.value.trim(), publishDate: e.target.Publishdate.value.trim(), journalsId: slug, imageUrl, editorialDetails, price: e.target.Price.value.trim(), journalsUrl: e.target.Journalsurl.value.trim(), check
             }
 
         }
@@ -214,14 +214,14 @@ function Page() {
 
                     <div className="col-md-6">
                         <label htmlFor="fullnameInput" className="form-label">
-                            Journal Title
+                            Journal Url
                         </label>
                         <input
                             type="text"
                             className="form-control"
                             id="fullnameInput"
-                            placeholder="Journal Title"
-                            name='Journaltitle'
+                            placeholder="Journal Url"
+                            name='Journalsurl'
                         />
                     </div>
 

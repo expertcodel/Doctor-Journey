@@ -1,21 +1,22 @@
 import { DataTypes } from "sequelize";
 import { connectTodb } from "../database/database";
-
+import { UserModel } from "./user.model";
 
 export const articleModel = async () => {
 
-     const connection = await connectTodb();
-    
-     if (!connection) {
+    const connection = await connectTodb();
+    const Users = await UserModel();
+
+    if (!connection) {
         return null;
-     }
+    }
 
     const Article = connection.define('Article', {
-        
-        id:{
-            
-            type:DataTypes.INTEGER,
-            autoIncrement:true
+
+        id: {
+
+            type: DataTypes.INTEGER,
+            autoIncrement: true
         },
         articleId: {
 
@@ -33,12 +34,12 @@ export const articleModel = async () => {
             type: DataTypes.STRING,
             allowedNull: false
         },
-        journalsId:{
-            
-            type:DataTypes.STRING
+        journalsId: {
+
+            type: DataTypes.STRING
 
         },
-        Abstract:{
+        Abstract: {
 
             type: DataTypes.TEXT,
             allowedNull: false
@@ -117,15 +118,15 @@ export const articleModel = async () => {
             type: DataTypes.STRING,
             defaultValue: 'pending'
         },
-        volume:{
-           
-            type:DataTypes.INTEGER,
-           
+        volume: {
+
+            type: DataTypes.INTEGER,
+
         },
-        issue:{
-    
-            type:DataTypes.INTEGER,
-            
+        issue: {
+
+            type: DataTypes.INTEGER,
+
         },
         remarks: {
 
@@ -134,9 +135,23 @@ export const articleModel = async () => {
 
 
     })
-    
-   await connection.sync();
-   return Article;
+
+    Article.belongsToMany(Users, {
+        through: 'ArticleAuthors',
+        foreignKey: 'articleId',
+        otherKey: 'userId'
+    });
+
+    Users.belongsToMany(Article, {
+        through: 'ArticleAuthors',
+        foreignKey: 'userId',
+        otherKey: 'articleId'
+    });
+
+
+
+    await connection.sync();
+    return Article;
 
 }
 

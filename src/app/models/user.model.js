@@ -66,10 +66,10 @@ export const UserModel=async()=>{
 
             type:DataTypes.BOOLEAN
         },
-        user_status:{
+        status:{
             
-            type:DataTypes.STRING,
-            defaultValue:'Active'
+            type:DataTypes.BOOLEAN,
+            defaultValue:true
         },
         joining_date:{
 

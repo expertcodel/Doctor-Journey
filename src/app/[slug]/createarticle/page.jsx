@@ -14,6 +14,10 @@ function Page() {
   const [secondaryAuth, setSecondaryauth] = useState(false);
   const [secondaryAuthlist, setSecondaryauthList] = useState([]);
   const [secondaryAuthname, setSecondaryauthName] = useState("");
+  const [searchedList, setSearchedlist] = useState([]);
+  const [check, setCheck] = useState([]);
+  const [searchedList1, setSearchedlist1] = useState([]);
+  const [check1, setCheck1] = useState([]);
   // const [content, setContent] = useState([]);
   // const [abstract, setAbstract] = useState("");
   // const [keywords, setKeywords] = useState("");
@@ -78,48 +82,84 @@ function Page() {
 
   }
 
-  const handleList = () => {
-
-    setPrimaryauthList((prev) => [...prev, primaryAuthname]);
-    setPrimaryauth(false);
-
-  }
-
-   const addAuthor = async (articleId) => {
-
-        let flag = true;
-        check.map((item) => {
-            if (item === articleId) {
-                flag = false
-
-            }
-            return item;
-        })
-
-        if (flag) {
-            setCheck((prev) => [...prev, articleId]);
-        }
-
-    }
-
   const removeItems = (idx) => {
 
-    setPrimaryauthList((prev) => prev.filter((item, i) => i !== idx));
-
-
+    setCheck((prev) => prev.filter((_, i) => i !== idx));
   }
 
-  const handleList1 = () => {
 
-    setSecondaryauthList((prev) => [...prev, secondaryAuthname]);
-    setSecondaryauth(false);
-
-  }
 
   const removeItems1 = (idx) => {
 
-    setSecondaryauthList((prev) => prev.filter((item, i) => i !== idx));
+    setCheck1((prev) => prev.filter((_, i) => i !== idx));
+  }
 
+
+
+  const searchArticles = async (e) => {
+
+    e.preventDefault();
+
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users/getUsers/?name=${e.target.value}`, { method: 'GET' });
+    const response = await res.json();
+    if (response.status) {
+      setSearchedlist(response.userlist);
+    }
+
+
+
+
+
+  }
+
+  const searchArticles1 = async (e) => {
+
+    e.preventDefault();
+
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users/getUsers/?name=${e.target.value}`, { method: 'GET' });
+    const response = await res.json();
+    if (response.status) {
+      setSearchedlist1(response.userlist);
+    }
+
+
+
+
+
+  }
+
+  const addArticles = async (articleId) => {
+
+    let flag = true;
+    check.map((item) => {
+      if (item === articleId) {
+        flag = false
+
+      }
+      return item;
+    })
+
+    if (flag) {
+      setCheck((prev) => [...prev, articleId]);
+    }
+
+  }
+
+
+  const addArticles1 = async (articleId) => {
+
+    let flag = true;
+    check1.map((item) => {
+      if (item === articleId) {
+        flag = false
+
+      }
+      return item;
+    })
+
+    if (flag) {
+      setCheck1((prev) => [...prev, articleId]);
+    }
 
   }
 
@@ -358,7 +398,7 @@ function Page() {
                             <th scope="col">User Id</th>
                             <th scope="col">Name</th>
                             <th scope="col">Usertype</th>
-                            {/* <th scope="col">Status</th> */}
+
 
                           </tr>
                         </thead>
@@ -369,20 +409,12 @@ function Page() {
                               <tr key={i} >
                                 <td>
                                   <div className="form-check">
-                                    {/* <input
-                                                                            className="form-check-input checkbox-input"
-                                                                            type="checkbox"
-                                                                            //defaultValue="option"
-                                                                            id="cardtableCheck01"
-                                                                            onClick={()=>setCheck(!check)}
-                                                                            checked={check}
 
-                                                                        /> */}
                                     <button
                                       type="button"
                                       className="btn btn-success add-btn"
-                                      // style={{ height: '50px' }}
-                                      onClick={handleList}
+                                      style={{ height: '50px' }}
+                                      onClick={() => addArticles(item.userId)}
                                     >
                                       Add
                                     </button>
@@ -390,16 +422,11 @@ function Page() {
                                   </div>
                                 </td>
                                 <td>
-                                  {item.articleId}
+                                  {item.userId}
                                 </td>
-                                <td>{item.articleTitle.substr(0, 30)} {item.articleTitle.length > 30 && '...'}</td>
-                                <td>{item.publishedDate}</td>
+                                <td>{item.name.substr(0, 30)} {item.name.length > 30 && '...'}</td>
+                                <td>{item.usertype}</td>
 
-                                <td><span className="badge bg-warning-subtle text-warning">{item.articleStatus}</span>
-
-
-
-                                </td>
 
                               </tr>
 
@@ -422,51 +449,116 @@ function Page() {
               </div>
 
             }
-            {
-              //succMessage !== "" && <div>{succMessage}</div>
-              // sarticle.map((item,i)=><div key={i}>{item}</div>)
-            }
 
 
           </div>
-          <div className="col-md-6">
+
+
+          <div className="col-md-6" >
             <label htmlFor="inputAddress2" className="form-label">
-              Primary author
+              Secondary author
             </label>
-            <div className="form-select mb-3" style={{ height: '50px', display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }} onClick={() => setPrimaryauth(!primaryAuth)}>
+
+
+            <div className="form-select" style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', alignItems: 'center', height: '40px' }} onClick={() => setSecondaryauth(!secondaryAuth)}>
+              {
+                check1.map((item, i) => <div key={i} style={{ backgroundColor: '#405189', color: 'white', borderRadius: '5px', padding: '3px', display: 'flex', gap: '0.5rem' }}>{item}
+                  <span><i class="ri-home-line ri-scissors-line" onClick={() => removeItems1(i)}></i></span>
+                </div>)
+              }
             </div>
 
-
-            {
-              primaryAuthlist.length > 0 && <div className="form-control" style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginTop: '-17px' }}>
-                {
-                  primaryAuthlist.map((item, i) => <div key={i} style={{ backgroundColor: '#405189', color: 'white', borderRadius: '5px', padding: '6px', display: 'flex', gap: '0.5rem' }}>{item}
-                    <span><i class="ri-home-line ri-scissors-line" onClick={() => removeItems(i)}></i></span></div>)
-                }
-              </div>
-            }
             {
 
-              primaryAuth &&
+              secondaryAuth &&
 
-              <div className="form-control" style={{ backgroundColor: '#fff', position: 'absolute', zIndex: '99', width: '97.5%', display: 'flex', gap: '2rem', padding: '30px', marginTop: primaryAuthlist.length === 0 ? "-17px" : "-1px" }} >
+              <div className="form-control" style={{ position: 'absolute', zIndex: '99', marginTop: '10px', width: '98.5%' }}>
 
 
-                <input type="text" className="form-control" placeholder='Add author' style={
-                  { height: '40px', width: "65%" }} onChange={(e) => setPrimaryauthName(e.target.value)} />
-                <button type="button" className="btn btn-primary" onClick={handleList}>
-                  + Add
-                </button>
+
+                <input type="text" className="form-control" placeholder='Search articles' onChange={searchArticles1} />
+
+
+                <div className="form-control" style={{ marginTop: '17px', cursor: 'pointer', overflow: 'hidden', border: 'none', height: '180px' }}>
+
+                  {
+
+
+
+                    <div className="table-responsive table-card">
+                      <table className="table table-nowrap mb-0">
+                        <thead className="table-light">
+                          <tr>
+                            <th scope="col">
+                              <div className="form-check">
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  defaultValue=""
+                                  id="cardtableCheck"
+                                />
+                                <label className="form-check-label" htmlFor="cardtableCheck" />
+                              </div>
+                            </th>
+                            <th scope="col">User Id</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Usertype</th>
+
+
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {
+                            searchedList1.length > 0 &&
+                            searchedList1.map((item, i) =>
+                              <tr key={i} >
+                                <td>
+                                  <div className="form-check">
+
+                                    <button
+                                      type="button"
+                                      className="btn btn-success add-btn"
+                                      style={{ height: '50px' }}
+                                      onClick={() => addArticles1(item.userId)}
+                                    >
+                                      Add
+                                    </button>
+                                    <label className="form-check-label" htmlFor="cardtableCheck01" />
+                                  </div>
+                                </td>
+                                <td>
+                                  {item.userId}
+                                </td>
+                                <td>{item.name.substr(0, 30)} {item.name.length > 30 && '...'}</td>
+                                <td>{item.usertype}</td>
+
+
+                              </tr>
+
+                            )
+                          }
+
+                        </tbody>
+                      </table>
+                    </div>
+
+
+
+
+
+                  }
+                </div>
+
 
 
               </div>
 
             }
-
 
 
           </div>
-          <div className="col-md-6">
+
+          {/* <div className="col-md-6">
             <label htmlFor="inputAddress2" className="form-label">
               Secondary author
             </label>
@@ -500,7 +592,7 @@ function Page() {
 
 
 
-          </div>
+          </div> */}
 
 
 

@@ -28,7 +28,7 @@ export async function POST(request)
             
             volume,issue,publishDate,journalsId,imageUrl,
             coverSummary:editorialDetails[0],editorialDetails:editorialDetails[1],subscription:editorialDetails[2],
-            journalTitle,price
+            journalsUrl,price
         })
 
         await journalmodel.update({journalStatus:'published'},{where:{journalsId}});

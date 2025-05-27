@@ -23,7 +23,7 @@ const Publishjournal=connection.define('Publishjournal',{
         type:DataTypes.STRING,
         allowNull:false
     },
-    journalTitle:{
+    journalsUrl:{
         
         type:DataTypes.STRING,
         allowNull:false

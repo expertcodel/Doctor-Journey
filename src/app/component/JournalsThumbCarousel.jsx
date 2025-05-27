@@ -49,22 +49,22 @@ export default function JournalsThumbCarousel({ journalList }) {
                         <div className="card">
                             <div className="card-body">
                                 <div className="cat-item">
-                                    <Link href="/" />
+                                    <Link href={`/journals/${journal.journalsUrl}`} />
                                     <div className="cat-img bg-primary-transparent">
                                         <Image unoptimized src={journal.imageUrl} className="img-fluid" width={347} height={332} alt="" />
                                     </div>
                                     <div className="cat-desc">
                                         <h5>
-                                            {journal.journalTitle.substr(0,50)} {journal.journalTitle.length > 50 && '...'}
+                                            {journal.journalsName?.substr(0, 50)} {journal.journalsName?.length > 50 && '...'}
                                         </h5>
                                         <small className="badge">
                                             INR {journal.price}/
                                         </small>
                                         <div className="catFooter">
-                                            <Link href="/hello" className="btn btn-warning">
+                                            <Link href={`/journals/${journal.journalsUrl}`} className="btn btn-warning">
                                                 Read Now
                                             </Link>
-                                            <Link href="/hello2" className="btn btn-primary">
+                                            <Link href={`/journals/${journal.journalsUrl}`} className="btn btn-primary">
                                                 Buy Now
                                             </Link>
                                         </div>
@@ -73,7 +73,7 @@ export default function JournalsThumbCarousel({ journalList }) {
                             </div>
                         </div>
                     </div>)}
-                    
+
                 </div>
             </div>
         </>

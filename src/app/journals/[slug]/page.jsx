@@ -7,7 +7,7 @@ import JournalsThumbCarousel from "../../component/JournalsThumbCarousel";
 
 export default async function JournalsDetails({ params }) {
 
-    const {slug} = await params;
+    const { slug } = await params;
     let journalList = [];
     let journalDetail = {};
 
@@ -17,7 +17,7 @@ export default async function JournalsDetails({ params }) {
 
             method: 'POST',
             cache: 'no-store',
-            body:JSON.stringify({journalsId:slug})
+            body: JSON.stringify({ journalsUrl: slug })
         })
 
         if (!response.ok) throw new error(`Failed to fetch: ${response.status}`);
@@ -28,7 +28,7 @@ export default async function JournalsDetails({ params }) {
 
             journalDetail = res.journaldetail;
             journalList = res.journallist
-           
+
         }
 
 
@@ -52,7 +52,7 @@ export default async function JournalsDetails({ params }) {
                             <div className="card imgSec">
                                 <div className="card-body">
                                     <div className="item7-card-img">
-                                        <Image unoptimized src="/images/journals/books/walk-into-the-shadow.webp" className="img-fluid" width={347} height={332} alt="" />
+                                        <Image unoptimized src={journalDetail.imageUrl} className="img-fluid" width={347} height={332} alt="" />
                                         <div className="item7-card-text">
                                             <span className="badge bg-pink">by Author Name</span>
                                         </div>
@@ -69,8 +69,8 @@ export default async function JournalsDetails({ params }) {
                         <div className="col-md-7 col-12">
                             <div className="productsDetails">
                                 <h3 className="title">
-                                    Walk into the shadow
-                                    <span>Paperback – 24 April 2025</span>
+                                    {journalDetail.journalsName}
+                                    <span>Paperback – {journalDetail.publishDate}</span>
                                 </h3>
                                 <div className="productsReview">
                                     <span className="reviewText">
@@ -81,10 +81,14 @@ export default async function JournalsDetails({ params }) {
                                     </span>
                                 </div>
                                 <div className="priceSec">
-                                    <span className="newPrice">₹664</span>
+                                    <span className="newPrice">&#8377;{journalDetail.price}</span>
                                     <span className="oldPrice">₹725</span>
                                 </div>
-                                <p className="shortDec">
+
+                                <p className="shortDec" dangerouslySetInnerHTML={{__html:journalDetail.coverSummary}}>
+                                   
+                                </p>
+                                {/* <p className="shortDec">
                                     <strong>FROM THE SUNDAY TIMES BESTSELLING AUTHOR & GLOBAL TIK TOK SENSATION, Author Name</strong>
                                 </p>
                                 <p className="shortDec">
@@ -94,7 +98,7 @@ export default async function JournalsDetails({ params }) {
                                 <p className="shortDec">
                                     This story, dazzling in its powerful simplicity and soul-stirring wisdom, is about an Andalusian shepherd boy named Santiago who travels from his homeland in Spain to the Egyptian desert in search of a treasure buried near the Pyramids. Lorem ipsum dolor
                                     sit amet.
-                                </p>
+                                </p> */}
                             </div>
                         </div>
                     </div>
@@ -115,7 +119,7 @@ export default async function JournalsDetails({ params }) {
 
                     <div className="row">
                         <div className="col-12">
-                            <JournalsThumbCarousel journalList={journalList}/>
+                            <JournalsThumbCarousel journalList={journalList} />
                         </div>
                     </div>
                 </div>
