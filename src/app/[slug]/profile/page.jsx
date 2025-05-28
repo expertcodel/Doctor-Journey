@@ -1,5 +1,5 @@
 "use client"
-import { UniversalContext } from '@/component/context.js'
+import { UniversalContext } from '../../../component/context.js'
 import React from 'react'
 import Link from 'next/link'
 export default function Page() {

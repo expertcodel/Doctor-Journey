@@ -1,5 +1,5 @@
 import DoctorProfileGallery from "../../../app/component/DoctorProfileGallery";
-import doctorProfile from "@/data/doctorProfile.json";
+
 import { faCalendar, faComment, faEye, faLocation, faUser, faMap, faStar, faChevronRight, faClock, faCheckCircle, faMapMarker, } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
@@ -15,6 +15,7 @@ export default async function DoctorProfileDetail({ params }) {
     const { id } = await params;
     let doctor = {};
     let doctorList=[];
+    let doctorArticle=[];
     try {
 
         const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/client/doctors`, {
@@ -31,6 +32,7 @@ export default async function DoctorProfileDetail({ params }) {
         if (res.status) {
             doctor = res.doctordetail;
             doctorList=res.doctorlist;
+            doctorArticle=res.articlelist;
         }
 
 
@@ -240,12 +242,12 @@ export default async function DoctorProfileDetail({ params }) {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div className="mt-6">
+                                                {doctorArticle.length > 0 && <div className="mt-6">
                                                     <div class="media-heading mb-5">
                                                         <h3 class="card-title font-weight-bold">{doctor.doctorName} Articles</h3>
                                                     </div>
-                                                    <ThumbnailVArticleCarousel />
-                                                </div>
+                                                    <ThumbnailVArticleCarousel doctorArticle={doctorArticle}/>
+                                                </div>}
                                             </div>
                                             <div className="tab-pane" id="tab-2">
                                                 <div className="card-body p-0">

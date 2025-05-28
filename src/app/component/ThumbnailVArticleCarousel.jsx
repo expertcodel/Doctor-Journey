@@ -7,10 +7,10 @@ import Swiper from "swiper";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/navigation";
-import doctorArticle from "@/data/doctorArticle.json";
+// import doctorArticle from "@/data/doctorArticle.json";
 import { faCalendar, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
-export default function ThumbnailVArticleCarousel() {
+export default function ThumbnailVArticleCarousel({doctorArticle}) {
   const swiperRef = useRef(null);
 
   useEffect(() => {
@@ -54,7 +54,7 @@ export default function ThumbnailVArticleCarousel() {
                                 <div className="p-0 m-0 item-card9-img">
                                     <div className="item-card9-imgs">
                                         {/* <Link href="/user-dashboard" /> */}
-                                        <div id={`carousel-${item.id}`} className="carousel slide customCarousel" data-bs-ride="carousel">
+                                        <div id={`carousel-${item.articleId}`} className="carousel slide customCarousel" data-bs-ride="carousel">
                                             {/* <div className="carousel-indicators">
                                                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to={0} className="active" aria-current="true" aria-label="Slide 1" />
                                                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to={1} aria-label="Slide 2" />
@@ -64,9 +64,10 @@ export default function ThumbnailVArticleCarousel() {
                                                 <div className="carousel-item active">
                                                     <figure>
                                                         <Image
-                                                            src={item.image} width={200} height={242}
-                                                            alt={item.name}
+                                                            src={item.thumbnailImage} width={200} height={242}
+                                                            alt={item.articleTitle}
                                                             className="cover-image"
+                                                            unoptimized
                                                         />
                                                     </figure>
                                                 </div>
@@ -77,19 +78,19 @@ export default function ThumbnailVArticleCarousel() {
                                 <div className="card overflow-hidden  border-0 box-shadow-0 border-start br-0 mb-0">
                                     <div className="card-body pt-3 pt-md-5">
                                         <div className="item-card9">
-                                            <Link href={item.article_link} className="text-dark">
+                                            <Link href={`/articles/${item.articleId}`} className="text-dark">
                                                 <h4 className="font-weight-semibold mt-1">
-                                                    {item.title}
+                                                    {item.articleTitle}
                                                 </h4>
                                             </Link>
                                             <div className="mt-2 mb-2">
                                                 <span className="me-4">
                                                     <FontAwesomeIcon icon={faCalendar} />{" "}
-                                                    Posted {item.date}
+                                                    Posted {item.publishedDate}
                                                 </span>
                                             </div>
                                             <p className="mb-0 leading-tight">
-                                            {item.description}
+                                            {item.articleSummary}
                                             </p>
                                         </div>
                                     </div>
@@ -104,7 +105,7 @@ export default function ThumbnailVArticleCarousel() {
                                                 </div>
                                             </div>
                                             <div className="ms-auto">
-                                                <Link href={item.article_link} className="text-primary viewDetailsBtn">
+                                                <Link href={`/articles/${item.articleId}`} className="text-primary viewDetailsBtn">
                                                     Read Article <FontAwesomeIcon icon={faChevronRight} />
                                                 </Link>
                                             </div>

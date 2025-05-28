@@ -1,8 +1,8 @@
 "use client"
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import Tooltip from '@/component/Tooltip.jsx'
-import AdminFooter from '@/component/AdminFooter.jsx'
+import Tooltip from '.././component/Tooltip.jsx'
+import AdminFooter from '.././component/AdminFooter.jsx'
 export default function Blog({ buttons, blogList, totalPages }) {
 
 

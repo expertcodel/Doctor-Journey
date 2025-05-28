@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation';
 import Header from '../../component/Header'
 import Menubar from '../../component/Menu.jsx'
 import { cookies } from 'next/headers';
-import AdminLayout from '@/component/AdminLayout.jsx'
+import AdminLayout from '../../component/AdminLayout.jsx'
 export default async function Layoutchild({ children }) {
 
 

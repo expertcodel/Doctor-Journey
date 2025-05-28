@@ -3,7 +3,7 @@ import { videoModel } from "../../../models/video.model";
 import { NextResponse } from "next/server";
 import { extractErrorMessage } from "../../../../utils/errorMessage";
 import { doctorModel } from "../../../models/doctor.model";
-import { connectTodb } from "@/app/database/database";
+import { connectTodb } from "../../../../app/database/database";
 import { Op } from "sequelize";
 export async function POST(request) {
 

@@ -3,10 +3,12 @@ import { NextResponse } from "next/server";
 import { doctorModel } from "../../../models/doctor.model.js";
 import { Op } from "sequelize";
 import { connectTodb } from "../../../database/database.js";
+import { articleModel } from "../../../models/article.model";
 export async function POST(request) {
 
     const { doctorId } = await request.json();
     const doctormodel = await doctorModel();
+    const Article = await articleModel();
     const connection = await connectTodb();
     if (!doctormodel) {
         return NextResponse.json({ status: false, message: "database error occured" });
@@ -14,13 +16,7 @@ export async function POST(request) {
 
     try {
 
-
-
-        // const doctordetail = await doctormodel.findOne({
-        //     where: { doctorId }
-        // })
-
-        const doctordetail=await connection.query(`SELECT public."Doctors"."doctorId", public."Doctors"."doctorName", public."Doctors"."email", public."Doctors"."number", public."Doctors"."address", public."Doctors"."specialization",  public."Doctors"."qualification", public."Doctors"."profileImage", public."Doctors"."experience", public."Doctors"."gallery",public."Doctors"."city",ARRAY_AGG(jsonb_build_object('thumbnailImage',public."Videos"."thumbnailImage",'specialization',public."Videos"."specialization", 'videoId', public."Videos"."videoId",'doctorName', public."Videos"."doctorName",'views',public."Videos"."views",'videoTitle',public."Videos"."videoTitle",'publishedDate',public."Videos"."publishedDate")) AS videoList FROM public."Doctors" LEFT JOIN public."Videos" ON public."Doctors"."doctorId"=public."Videos"."doctorId" WHERE public."Doctors"."doctorId"=${doctorId}::text GROUP BY public."Doctors"."doctorId"`)
+        const doctordetail = await connection.query(`SELECT public."Doctors"."doctorId", public."Doctors"."userId",public."Doctors"."doctorName", public."Doctors"."email", public."Doctors"."number", public."Doctors"."address", public."Doctors"."specialization",  public."Doctors"."qualification", public."Doctors"."profileImage", public."Doctors"."experience", public."Doctors"."gallery",public."Doctors"."city",ARRAY_AGG(jsonb_build_object('thumbnailImage',public."Videos"."thumbnailImage",'specialization',public."Videos"."specialization", 'videoId', public."Videos"."videoId",'doctorName', public."Videos"."doctorName",'views',public."Videos"."views",'videoTitle',public."Videos"."videoTitle",'publishedDate',public."Videos"."publishedDate")) AS videoList FROM public."Doctors" LEFT JOIN public."Videos" ON public."Doctors"."doctorId"=public."Videos"."doctorId" WHERE public."Doctors"."doctorId"=${doctorId}::text GROUP BY public."Doctors"."doctorId"`)
 
         const doctorlist = await doctormodel.findAll({
             limit: 10,
@@ -29,13 +25,23 @@ export async function POST(request) {
             attributes: ['qualification', 'profileImage', 'doctorId', 'doctorName']
         })
 
-        return NextResponse.json({ status: true, doctordetail:doctordetail[0][0], doctorlist });
+
+        const articlelist = await Article.findAll({
+            where: {
+                articleAuthor: {
+                    [Op.contains]: [{ userId: doctordetail[0][0].userId }],
+
+                }
+            },
+            attributes: ['articleId', 'articleTitle', 'publishedDate', 'thumbnailImage', 'articleSummary']
+        })
+        return NextResponse.json({ status: true, doctordetail: doctordetail[0][0], doctorlist, articlelist });
 
 
     } catch (error) {
 
         console.log(error);
-        
+
         const message = extractErrorMessage(error);
         return NextResponse.json({ status: false, message });
     }

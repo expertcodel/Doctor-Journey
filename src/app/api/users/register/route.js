@@ -1,21 +1,20 @@
 "use server"
 import { NextResponse } from "next/server";
 import { UserModel } from "../../../models/user.model.js";
-import {activityModel} from '../../../models/activity.model.js'
+import { activityModel } from '../../../models/activity.model.js'
 import bcrypt from 'bcrypt'
-
-function randomNumbers()
-{
-   return String(Math.floor(Math.random()*9000+1000));
-}
+import { extractErrorMessage } from "../../../../utils/errorMessage.js";
+// function randomNumbers() {
+//   return String(Math.floor(Math.random() * 9000 + 1000));
+// }
 
 
 export async function POST(request) {
 
-  const {name, email, password,number} = await request.json()
-  const api_key=new Headers(request.headers).get('api_key')+email;
- 
-  const activitymodel=await activityModel();
+  const { name, email, password, number } = await request.json()
+  const api_key = new Headers(request.headers).get('api_key') + email;
+
+  // const activitymodel=await activityModel();
   const user = await UserModel();
   if (!user) {
     return NextResponse.json({ status: 0, message: "some internal error occured!" });
@@ -28,32 +27,42 @@ export async function POST(request) {
     return NextResponse.json({ status: 0, message: "user already existed!" });
   }
 
-  const salt = bcrypt.genSaltSync(10);
-  const hashedPassword = bcrypt.hashSync(password, salt);
-  const hashed_Api_key = bcrypt.hashSync(api_key, salt);
-  const userId=String(new Date().getMilliseconds())+randomNumbers();
-  await user.create({
+  try {
 
-    name,
-    email,
-    password: hashedPassword,
-    api_key: hashed_Api_key,
-    mobile_number:number,
-    joining_date:new Date().toLocaleDateString(),
-    userId
-   
-  })
+    const salt = bcrypt.genSaltSync(10);
+    const hashedPassword = bcrypt.hashSync(password, salt);
+    const hashed_Api_key = bcrypt.hashSync(api_key, salt);
+    //const userId=String(new Date().getMilliseconds())+randomNumbers();
+    await user.create({
 
-//   await activitymodel.create({
+      name,
+      email,
+      password: hashedPassword,
+      api_key: hashed_Api_key,
+      mobile_number: number,
+      joining_date: new Date().toLocaleDateString(),
+      userId: String(Date.now())
 
-//     userId,
-//     name,
-//     usertype:'readers',
-//     activity:'registered',
-//     time:new Date().toLocaleString()
+    })
 
-//  })
+    //   await activitymodel.create({
 
-  return NextResponse.json({status:1,message:"successfull!"});
+    //     userId,
+    //     name,
+    //     usertype:'readers',
+    //     activity:'registered',
+    //     time:new Date().toLocaleString()
+
+    //  })
+
+    return NextResponse.json({ status: 1, message: "Registered Successfully!" });
+
+  } catch (error) {
+    console.log(error);
+    
+    const message = extractErrorMessage(error);
+    return NextResponse.json({ status: 0, message });
+  }
+
 
 }

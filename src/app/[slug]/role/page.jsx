@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { useEffect } from 'react'
 import axios from 'axios'
 import Roles from '../../../component/Roles'
-import { UniversalContext } from '@/component/context'
+import { UniversalContext } from '../../../component/context'
 function Page() {
 
     const [roles, setRoles] = useState([]);

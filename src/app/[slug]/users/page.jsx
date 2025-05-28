@@ -1,7 +1,7 @@
 "use client"
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { UniversalContext } from "@/component/context";
+import { UniversalContext } from "../../../component/context";
 
 function Page() {
 

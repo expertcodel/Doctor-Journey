@@ -19,6 +19,10 @@ export const doctorModel = async () => {
          primaryKey: true,
          defaultValue: String(Date.now())
       },
+      userId: {
+         type: DataTypes.STRING,
+         allowNull:false
+      },
       doctorName: {
 
          type: DataTypes.STRING,
@@ -32,7 +36,7 @@ export const doctorModel = async () => {
       videos: {
 
          type: DataTypes.JSONB,
-        
+
       },
       specialization: {
 
@@ -59,7 +63,7 @@ export const doctorModel = async () => {
 
       },
       qualification: {
-        
+
          type: DataTypes.STRING,
          allowNull: false
       },
@@ -81,12 +85,12 @@ export const doctorModel = async () => {
       },
       email: {
          type: DataTypes.STRING,
-         unique:true,
-         allowNull:false
+         unique: true,
+         allowNull: false
       },
       number: {
          type: DataTypes.STRING,
-         allowNull:false
+         allowNull: false
       },
       experience: {
          type: DataTypes.STRING
@@ -103,14 +107,14 @@ export const doctorModel = async () => {
       document: {
          type: DataTypes.JSONB
       },
-      
+
       branchAddress: {
          type: DataTypes.STRING
       },
       branchName: {
          type: DataTypes.STRING
       },
-      bankName : {
+      bankName: {
          type: DataTypes.STRING
       },
       ifsc: {

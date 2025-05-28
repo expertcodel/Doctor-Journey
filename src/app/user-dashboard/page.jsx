@@ -1,9 +1,9 @@
-import UserProfileSidebar from "@/app/component/UserProfileSidebar";
+import UserProfileSidebar from "../../app/component/UserProfileSidebar";
 import { faCheckCircle, faUpload, faUser, faUserAlt, faUserAltSlash, faUserCheck, faEye, faPlus, faClipboardList, faWallet } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import Link from "next/link";
-import Breadcrumb from "@/app/component/Breadcrumb";
+import Breadcrumb from "../../app/component/Breadcrumb";
 
 export default function UserDashboard() {
   return (

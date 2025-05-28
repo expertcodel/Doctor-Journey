@@ -1,11 +1,11 @@
-import UserProfileSidebar from "@/app/component/UserProfileSidebar";
+import UserProfileSidebar from "../../../app/component/UserProfileSidebar";
 import { faCheckCircle, faUpload, faUser, faUserAlt, faUserAltSlash, faUserCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import Link from "next/link";
 import Select2Component from "../../component/Select2Component";
-import Breadcrumb from "@/app/component/Breadcrumb";
-
+import Breadcrumb from "../../../app/component/Breadcrumb";
+import DoctorForm from "../../../component/DoctorForm";
 export default function Profile() {
     return (
         <>
@@ -197,7 +197,7 @@ export default function Profile() {
                             <div className="card mt-3 mb-0">
                                 <div className="tab-content">
                                     <div className="tab-pane" id="applyDoctor">
-                                        Doctor
+                                        <DoctorForm/>
                                     </div>
                                     <div className="tab-pane" id="applyAuthor">
                                         Author

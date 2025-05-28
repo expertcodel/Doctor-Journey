@@ -1,17 +1,19 @@
 "use client";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import Breadcrumb from "@/app/component/Breadcrumb";
-
+import Breadcrumb from "../../app/component/Breadcrumb";
+import axios from "axios";
 export default function Register() {
   const { user, login } = useAuth();
   const router = useRouter();
   // Local state for email and password
+  const [Message, setMessage] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+   const [loading, setLoading] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [country, setCountry] = useState("");
   const [errors, setErrors] = useState({ email: "", password: "" });
@@ -24,13 +26,13 @@ export default function Register() {
       router.push("/user-dashboard"); // Redirect logged-in users
     }
   }, [user, router]);
-  
+
   useEffect(() => {
     document.getElementById("name").value = "";
     document.getElementById("email").value = "";
     document.getElementById("password").value = "";
     document.getElementById("phoneNumber").value = "";
-    document.getElementById("country").value = "";
+    //document.getElementById("country").value = "";
   }, []);
 
   // Function to validate inputs
@@ -70,10 +72,10 @@ export default function Register() {
       isValid = false;
     }
 
-    if (!country.trim()) {
-      newErrors.country = "Country is required";
-      isValid = false;
-    }
+    // if (!country.trim()) {
+    //   newErrors.country = "Country is required";
+    //   isValid = false;
+    // }
 
     setErrors(newErrors);
     return isValid;
@@ -93,23 +95,53 @@ export default function Register() {
     // document.cookie = `authToken=${fakeToken}; path=/; max-age=86400;`; // Store token in cookie
 
     try {
-      const response = await fetch("/api/send-otp", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, phoneNumber, password, country }),
-      });
-  
-      const result = await response.json();
-  
-      if (result.success) {
-        localStorage.setItem("tempEmail", email);
-        localStorage.setItem("tempPhone", phoneNumber);
-        router.push('/verify-otp', {
-          state: { email, phoneNumber },
-        });
-      } else {
-        alert("Failed to send OTP. Try again.");
+      // const response = await fetch("/api/send-otp", {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify({ name, email, phoneNumber, password, country }),
+      // });
+
+      // const result = await response.json();
+
+      // if (result.success) {
+      //   localStorage.setItem("tempEmail", email);
+      //   localStorage.setItem("tempPhone", phoneNumber);
+      //   router.push('/verify-otp', {
+      //     state: { email, phoneNumber },
+      //   });
+      // } else {
+      //   alert("Failed to send OTP. Try again.");
+      // }
+
+      const option = {
+
+        method: 'POST',
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/users/register`,
+        data: { name: name.trim().toLowerCase(), email: email.trim().toLowerCase(), password: password.trim(), number: phoneNumber.trim() },
+        headers: {
+
+          'api_key': process.env.NEXT_PUBLIC_SECRET_KEY
+
+        }
+
       }
+      setLoading(true)
+      const res = await axios.request(option)
+      setLoading(false);
+      if (res.data.status === 1) {
+
+        sessionStorage.setItem('successMsg', 'User Profile Created Successfully');
+        router.push('/login')
+
+      }
+      else {
+
+        setMessage(res.data.message);
+
+      }
+
+
+
     } catch (error) {
       console.error("Error sending OTP:", error);
     }
@@ -146,93 +178,100 @@ export default function Register() {
   };
 
   return (
-      <>
-        {/*Breadcrumb*/}
-        <Breadcrumb title="Register" />
+    <>
+      {/*Breadcrumb*/}
+      <Breadcrumb title="Register" />
 
-        {/*Login-Section*/}
-        <section className="sptb loginSec">
-          <div className="container customerpage">
-            <div className="row">
-              <div className="single-page">
-                <div className="col-md-4 d-block mx-auto">
-                  <div className="wrapper wrapper2 border">
-                    <form id="login" autoComplete="off" noValidate className="card-body" tabIndex={500} onSubmit={handleRegister}>
-                      <div className="mail">
-                        <input type="text" value={name}
-                          id="name"
-                          onChange={(e) => handleInputChange("name", e.target.value)}
-                          onBlur={() => handleBlur("name")}
-                          autoComplete="off"
-                        />
-                        <label>Full name</label>
-                        {errors.name && <p className="text-danger text-start mt-2">{errors.name}</p>}
-                      </div>
-                      <div className="mail">
-                        <input type="text" value={email}
-                          id="email"
-                          onChange={(e) => handleInputChange("email", e.target.value)}
-                          onBlur={() => handleBlur("email")}
-                          autoComplete="off"
-                        />
-                        <label>Email Id</label>
-                        {errors.email && <p className="text-danger text-start mt-2">{errors.email}</p>}
-                      </div>
-                      <div className="passwd">
-                        <input type="password" value={password}
-                          id="password"
-                          onChange={(e) => handleInputChange("password", e.target.value)}
-                          onBlur={() => handleBlur("password")}
-                          autoComplete="new-password"
-                        />
-                        <label>Password</label>
-                        {errors.password && <p className="text-danger text-start mt-2">{errors.password}</p>}
-                      </div>
-                      <div className="phoneNumber">
-                        <input type="tel" value={phoneNumber}
-                          id="phoneNumber"
-                          onChange={(e) => {
-                            const onlyNums = e.target.value.replace(/\D/g, "");
-                            if (onlyNums.length <= 10) {
-                              handleInputChange("phoneNumber", onlyNums);
-                            }
-                          }}
-                          onBlur={() => handleBlur("phoneNumber")}
-                          autoComplete="new-phoneNumber"
-                          maxLength={10}
-                        />
-                        <label>Phone Number</label>
-                        {errors.phoneNumber && <p className="text-danger text-start mt-2">{errors.phoneNumber}</p>}
-                      </div>
-                      <div className="country">
-                        <input type="country" value={country}
-                          id="country"
-                          onChange={(e) => handleInputChange("country", e.target.value)}
-                          onBlur={() => handleBlur("country")}
-                          autoComplete="new-country"
-                        />
-                        <label>Country</label>
-                        {errors.country && <p className="text-danger text-start mt-2">{errors.country}</p>}
-                      </div>
-                      <div className="submit">
-                        <button className="btn btn-primary btn-block" type="submit">
-                          Register
-                        </button>
-                      </div>
-                      <p className="text-dark mb-0">
-                        Do you have account?
-                        <Link href="/login" className="text-primary ms-1">
-                          Login
-                        </Link>
-                      </p>
-                    </form>
-                  </div>
+      {/*Login-Section*/}
+      <section className="sptb loginSec">
+        <div className="container customerpage">
+          <div className="row">
+            <div className="single-page">
+              <div className="col-md-4 d-block mx-auto">
+                <div className="wrapper wrapper2 border">
+                  <form id="login" autoComplete="off" noValidate className="card-body" tabIndex={500} onSubmit={handleRegister}>
+                    <div className="mail">
+                      <input type="text" value={name}
+                        id="name"
+                        onChange={(e) => handleInputChange("name", e.target.value)}
+                        onBlur={() => handleBlur("name")}
+                        autoComplete="off"
+                      />
+                      <label>Full name</label>
+                      {errors.name && <p className="text-danger text-start mt-2">{errors.name}</p>}
+                    </div>
+                    <div className="mail">
+                      <input type="text" value={email}
+                        id="email"
+                        onChange={(e) => handleInputChange("email", e.target.value)}
+                        onBlur={() => handleBlur("email")}
+                        autoComplete="off"
+                      />
+                      <label>Email Id</label>
+                      {errors.email && <p className="text-danger text-start mt-2">{errors.email}</p>}
+                    </div>
+                    <div className="passwd">
+                      <input type="password" value={password}
+                        id="password"
+                        onChange={(e) => handleInputChange("password", e.target.value)}
+                        onBlur={() => handleBlur("password")}
+                        autoComplete="new-password"
+                      />
+                      <label>Password</label>
+                      {errors.password && <p className="text-danger text-start mt-2">{errors.password}</p>}
+                    </div>
+                    <div className="phoneNumber">
+                      <input type="tel" value={phoneNumber}
+                        id="phoneNumber"
+                        onChange={(e) => {
+                          const onlyNums = e.target.value.replace(/\D/g, "");
+                          if (onlyNums.length <= 10) {
+                            handleInputChange("phoneNumber", onlyNums);
+                          }
+                        }}
+                        onBlur={() => handleBlur("phoneNumber")}
+                        autoComplete="new-phoneNumber"
+                        maxLength={10}
+                      />
+                      <label>Phone Number</label>
+                      {errors.phoneNumber && <p className="text-danger text-start mt-2">{errors.phoneNumber}</p>}
+                    </div>
+                    {/* <div className="country">
+                      <input type="country" value={country}
+                        id="country"
+                        onChange={(e) => handleInputChange("country", e.target.value)}
+                        onBlur={() => handleBlur("country")}
+                        autoComplete="new-country"
+                      />
+                      <label>Country</label>
+                      {errors.country && <p className="text-danger text-start mt-2">{errors.country}</p>}
+                    </div> */}
+                    <div className="submit">
+
+                       <button className="btn btn-primary btn-block" type="submit">
+                        {loading ? <div className="spinner-border text-white" role="status">
+                          <span className="visually-hidden">Loading...</span>
+                        </div> : 'Register'}
+                      </button>
+                      {
+                        Message !== "" && <div className="text-danger text-start mt-2">{Message}</div>
+                      }
+                    
+                    </div>
+                    <p className="text-dark mb-0">
+                      Do you have account?
+                      <Link href="/login" className="text-primary ms-1">
+                        Login
+                      </Link>
+                    </p>
+                  </form>
                 </div>
               </div>
             </div>
           </div>
-        </section>
-        {/*/Login-Section*/}
-      </>
+        </div>
+      </section>
+      {/*/Login-Section*/}
+    </>
   );
 }

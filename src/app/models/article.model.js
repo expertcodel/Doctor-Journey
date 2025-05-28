@@ -1,11 +1,12 @@
 import { DataTypes } from "sequelize";
 import { connectTodb } from "../database/database";
-import { UserModel } from "./user.model";
+import { format } from 'date-fns';
+
+
 
 export const articleModel = async () => {
 
     const connection = await connectTodb();
-    const Users = await UserModel();
 
     if (!connection) {
         return null;
@@ -18,11 +19,17 @@ export const articleModel = async () => {
             type: DataTypes.INTEGER,
             autoIncrement: true
         },
+        url: {
+            type: DataTypes.STRING,
+            unique: true,
+            allowNull: false
+
+        },
         articleId: {
 
             type: DataTypes.STRING,
             primaryKey: true,
-            allowedNull: false
+            allowNull: false
         },
         userId: {
 
@@ -32,7 +39,7 @@ export const articleModel = async () => {
         articleTitle: {
 
             type: DataTypes.STRING,
-            allowedNull: false
+            allowNull: false
         },
         journalsId: {
 
@@ -42,7 +49,7 @@ export const articleModel = async () => {
         Abstract: {
 
             type: DataTypes.TEXT,
-            allowedNull: false
+            allowNull: false
 
         },
         Keywords: {
@@ -52,22 +59,22 @@ export const articleModel = async () => {
         },
         Introduction: {
             type: DataTypes.TEXT,
-            allowedNull: false
+            allowNull: false
 
         },
         Methods: {
             type: DataTypes.TEXT,
-            allowedNull: false
+            allowNull: false
 
         },
         Results: {
             type: DataTypes.TEXT,
-            allowedNull: false
+            allowNull: false
 
         },
         Discussion: {
             type: DataTypes.TEXT,
-            allowedNull: false
+            allowNull: false
 
         },
         Conclusion: {
@@ -77,7 +84,7 @@ export const articleModel = async () => {
         },
         References: {
             type: DataTypes.TEXT,
-            allowedNull: false
+            allowNull: false
 
         },
         Abbreviations: {
@@ -93,7 +100,7 @@ export const articleModel = async () => {
         articleAuthor: {
 
             type: DataTypes.JSONB,
-            allowedNull: false
+            allowNull: false
         },
         articleSummary: {
 
@@ -102,12 +109,12 @@ export const articleModel = async () => {
         publishedDate: {
 
             type: DataTypes.STRING,
-            defaultValue: new Date().toLocaleDateString()
+            defaultValue: format(new Date(), 'dd MMMM yyyy')
         },
         DOI: {
 
             type: DataTypes.STRING,
-            allowedNull: false
+            allowNull: false
         },
         price: {
 
@@ -131,22 +138,16 @@ export const articleModel = async () => {
         remarks: {
 
             type: DataTypes.STRING(1000)
+        },
+        thumbnailImage: {
+
+            type: DataTypes.STRING,
+            allowNull: false
         }
 
 
     })
 
-    Article.belongsToMany(Users, {
-        through: 'ArticleAuthors',
-        foreignKey: 'articleId',
-        otherKey: 'userId'
-    });
-
-    Users.belongsToMany(Article, {
-        through: 'ArticleAuthors',
-        foreignKey: 'userId',
-        otherKey: 'articleId'
-    });
 
 
 

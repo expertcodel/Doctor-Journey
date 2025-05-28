@@ -7,7 +7,7 @@ import ThumbnailSearchCarousel from "../component/ThumbnailSearchCarousel";
 import ThumbnailSponsorCarousel from "../component/ThumbnailSponsorCarousel";
 import ThumbnailBlogsCarousel from "../component/ThumbnailBlogsCarousel";
 import TestimonialsCarousel from "../component/Testimonials";
-import doctorCards from "@/data/doctorCards.json";
+// import doctorCards from "@/data/doctorCards.json";
 import JournalsThumbCarousel from "../component/JournalsThumbCarousel";
 import doctorProfile from "../../data/doctorProfile.json";
 

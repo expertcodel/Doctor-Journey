@@ -7,7 +7,7 @@ import Swiper from "swiper";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/navigation";
-import doctorProfile from "@/data/doctorProfile.json";
+// import doctorProfile from "@/data/doctorProfile.json";
 import { faCalendar, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
 export default function ThumbnailVDrProfileCarousel() {

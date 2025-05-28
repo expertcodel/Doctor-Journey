@@ -1,5 +1,5 @@
-import Breadcrumb from "@/app/component/Breadcrumb";
-import UserProfileSidebar from "@/app/component/UserProfileSidebar";
+import Breadcrumb from "../../../app/component/Breadcrumb";
+import UserProfileSidebar from "../../../app/component/UserProfileSidebar";
 import { faCheck, faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";

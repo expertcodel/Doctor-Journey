@@ -1,5 +1,5 @@
 import DoctorProfileGallery from "@/app/component/DoctorProfileGallery";
-import doctorProfile from "@/data/doctorProfile.json";
+// import doctorProfile from "@/data/doctorProfile.json";
 import { faCalendar, faComment, faEye, faLocation, faUser, faMap, faStar, faChevronRight, faClock, faCheckCircle, faMapMarker, } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";

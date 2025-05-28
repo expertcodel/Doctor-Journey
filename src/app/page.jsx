@@ -8,7 +8,7 @@ import ThumbnailSearchCarousel from "./component/ThumbnailSearchCarousel";
 import ThumbnailSponsorCarousel from "./component/ThumbnailSponsorCarousel";
 import ThumbnailBlogsCarousel from "./component/ThumbnailBlogsCarousel";
 import TestimonialsCarousel from "./component/Testimonials";
-import DaysCalculator from '@/app/component/DaysCalculator'
+import DaysCalculator from '../app/component/DaysCalculator'
 // import doctorCards from "@/data/doctorCards.json";
 //  import doctorProfile from "@/data/doctorProfile.json";
 

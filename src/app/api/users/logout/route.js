@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { activityModel } from "@/app/models/activity.model";
+import { activityModel } from "../../../../app/models/activity.model";
 import jwt from 'jsonwebtoken'
 
 export async function POST(request) {

@@ -213,12 +213,12 @@ function Page() {
                                   >
 
 
-                                    <div className="gridjs-th-content" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}> <input
+                                    {/* <div className="gridjs-th-content" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}> <input
                                       className="form-check-input"
                                       id="checkAll"
                                       type="checkbox"
                                       defaultValue="option"
-                                    /></div>
+                                    /></div> */}
                                   </th>
                                   <th
                                     data-column-id="id"

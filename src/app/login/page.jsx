@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Breadcrumb from "../../app/component/Breadcrumb";
-
+import Tooltip from "../../component/Tooltip";
 export default function Login() {
   //const { user, login } = useAuth();
   const router = useRouter();
@@ -12,9 +12,25 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-   const [message,setMessage]=useState("");
+  const [message, setMessage] = useState("");
   const [errors, setErrors] = useState({ email: "", password: "" });
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const [Message, setmessage] = useState(typeof window !== 'undefined' && sessionStorage.getItem('successMsg') ? sessionStorage.getItem('successMsg') : "")
+
+
+  useEffect(() => {
+
+
+    if (Message !== "") {
+      const timer = setTimeout(() => {
+        setmessage("");
+        sessionStorage.removeItem('successMsg');
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+
+  }, [])
 
   // useEffect(() => {
   //   if (user) {
@@ -22,7 +38,7 @@ export default function Login() {
   //   }
   // }, [user, router]);
 
- 
+
   // Function to validate email
 
   const validateEmail = (email) => {
@@ -62,26 +78,26 @@ export default function Login() {
     e.preventDefault();
 
     if (!validateInputs()) return; // Stop execution if validation fails
- 
+
     // document.cookie = `authToken=${fakeToken}; path=/; max-age=86400;`; // Store token in cookie
 
     setLoading(true)
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users/login`, { method: 'POST', body: JSON.stringify({ email: email.trim(), password: password.trim() }), headers: { "Content-Type": "application/json"} })
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users/login`, { method: 'POST', body: JSON.stringify({ email: email.trim(), password: password.trim() }), headers: { "Content-Type": "application/json" } })
 
     const res = await response.json();
     setLoading(false);
     if (res.status) {
 
-      console.log(res.url,"url");
-      
-     
-    // router.push(res.url); // Redirect after login
-      window.location.href=res.url
+      console.log(res.url, "url");
+
+
+      // router.push(res.url); // Redirect after login
+      window.location.href = res.url
     }
-    else{
+    else {
 
       setMessage(res.message);
-      
+
     }
 
 
@@ -106,9 +122,13 @@ export default function Login() {
   };
 
   return (
-      <>
-        {/*Breadcrumb*/}
-        <Breadcrumb title="Login" />
+    <>
+      {/*Breadcrumb*/}
+      {
+
+        Message !== "" && <Tooltip message={Message} />
+      }
+      <Breadcrumb title="Login" />
 
       {/*Login-Section*/}
       <section className="sptb loginSec">
@@ -142,10 +162,10 @@ export default function Login() {
                       <button className="btn btn-primary btn-block" type="submit">
                         {loading ? <div className="spinner-border text-white" role="status">
                           <span className="visually-hidden">Loading...</span>
-                        </div>:'Login'}
+                        </div> : 'Login'}
                       </button>
                       {
-                         message!=="" && <div className="text-danger text-start mt-2">{message}</div>
+                        message !== "" && <div className="text-danger text-start mt-2">{message}</div>
                       }
                     </div>
                     <p className="mb-2">
@@ -153,9 +173,9 @@ export default function Login() {
                     </p>
                     <p className="text-dark mb-0">
                       Don't have account?
-                        <Link href="/register" className="text-primary ms-1">
-                          Register
-                        </Link>
+                      <Link href="/register" className="text-primary ms-1">
+                        Register
+                      </Link>
                     </p>
                   </form>
                 </div>

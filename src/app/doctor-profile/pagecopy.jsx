@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Select2Component from "../component/Select2Component";
-import doctorProfile from "@/data/doctorProfile.json";
+// import doctorProfile from "@/data/doctorProfile.json";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBarsStaggered, faBuilding, faCalendar, faChevronRight, faClock, faFilter, faLocation, faLocationArrow, faMap, faStar, faTimesCircle, faUsd, faUserFriends } from "@fortawesome/free-solid-svg-icons";
 import RangeSlider from "../component/RangeSlider";

@@ -3,9 +3,9 @@ import React from 'react'
 import dynamic from 'next/dynamic';
 import { useState, useRef, useMemo } from 'react';
 import Image from 'next/image'
-import AdminFooter from '@/component/AdminFooter.jsx'
+import AdminFooter from '../../../../component/AdminFooter.jsx'
 import { useRouter } from 'next/navigation';
-import { extractErrorMessage } from '@/utils/errorMessage'
+import { extractErrorMessage } from '../../../../utils/errorMessage'
 import AuthorForm from '../../../../component/AuthorForm.jsx'
 
 const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });

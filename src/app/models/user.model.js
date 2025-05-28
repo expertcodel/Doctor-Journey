@@ -1,88 +1,87 @@
 "use server"
-import { DataTypes} from "sequelize";
+import { DataTypes } from "sequelize";
 import { connectTodb } from "../database/database.js";
 
-export const UserModel=async()=>{
+export const UserModel = async () => {
 
-    
-    const sequelize=await connectTodb();
 
-    if(!sequelize)
-    {
+    const sequelize = await connectTodb();
+
+    if (!sequelize) {
         return null;
     }
 
-    const usermodelSchema= sequelize.define('User',{
+    const usermodelSchema = sequelize.define('User', {
 
-        id:{
+        id: {
 
-            type:DataTypes.INTEGER,
-            autoIncrement:true,
-            unique:true
-            
-        },
-        userId:{
-           
-            type:DataTypes.STRING,
-            primaryKey:true,
-            allowNull:false,
-            
-          
-        },
-        name:{
-            
-            type:DataTypes.STRING,
-          //  allowNull:false
+            type: DataTypes.INTEGER,
+            autoIncrement: true,
+            unique: true
 
         },
-        email:{
+        userId: {
 
-            type:DataTypes.STRING,
-            unique:true,
-            allowNull:false
-        },
-        password:{
+            type: DataTypes.STRING,
+            primaryKey: true,
+            allowNull: false,
 
-            type:DataTypes.STRING,
-            allowNull:false
-        },
-        usertype:{
 
-            type:DataTypes.STRING,
-            defaultValue:'admin'
         },
-        mobile_number:{
-            
-            type:DataTypes.STRING,
+        name: {
+
+            type: DataTypes.STRING,
+            //  allowNull:false
+
+        },
+        email: {
+
+            type: DataTypes.STRING,
+            unique: true,
+            allowNull: false
+        },
+        password: {
+
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        usertype: {
+
+            type: DataTypes.STRING,
+            defaultValue: 'readers'
+        },
+        mobile_number: {
+
+            type: DataTypes.STRING,
             // unique:true,
             // allowNull:false
         },
-        api_key:{
- 
-            type:DataTypes.STRING,
-           // allowNull:false
-        },
-        login_status:{
+        api_key: {
 
-            type:DataTypes.BOOLEAN
+            type: DataTypes.STRING,
+            // allowNull:false
         },
-        status:{
-            
-            type:DataTypes.BOOLEAN,
-            defaultValue:true
-        },
-        joining_date:{
+        login_status: {
 
-            type:DataTypes.STRING,
-            allowNull:false
+            type: DataTypes.BOOLEAN
         },
-        profile_img:{
+        status: {
 
-            type:DataTypes.STRING,
-            defaultValue:'/images/profile-bg.jpg'
+            type: DataTypes.BOOLEAN,
+            defaultValue: true
+        },
+        joining_date: {
+
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        profile_img: {
+
+            type: DataTypes.STRING,
+            defaultValue: '/images/profile-bg.jpg'
         }
     })
-    
+
     await sequelize.sync();
     return usermodelSchema
 

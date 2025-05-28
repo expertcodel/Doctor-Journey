@@ -1,5 +1,5 @@
 "use client"
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "../../context/AuthContext"
 import { faFacebook, faGooglePlus, faLinkedin, faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { faAnglesDown, faArrowAltCircleDown, faChevronDown, faClipboardCheck, faClipboardList, faHome, faPowerOff, faSignIn, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

@@ -1,5 +1,5 @@
 
-import Blog from '@/component/Blog.jsx'
+import Blog from '../../../component/Blog.jsx'
 
 export default async function Page() {
 
