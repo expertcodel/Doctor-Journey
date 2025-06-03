@@ -1,3 +1,4 @@
+"use client"
 import UserProfileSidebar from "../../../app/component/UserProfileSidebar";
 import { faCheckCircle, faUpload, faUser, faUserAlt, faUserAltSlash, faUserCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -6,7 +7,31 @@ import Link from "next/link";
 import Select2Component from "../../component/Select2Component";
 import Breadcrumb from "../../../app/component/Breadcrumb";
 import DoctorForm from "../../../component/DoctorForm";
+import { useState, useEffect } from "react";
+import { UniversalContext } from "../../../component/context";
 export default function Profile() {
+
+
+    const { userData } = UniversalContext();
+    console.log(userData.usertype);
+
+    const [userType, setUsertype] = useState({ 'readers': false, 'author': false, 'doctor': false, 'publisher': false, 'organization': false });
+
+    useEffect(() => {
+        let usertype = { ...userType };
+        userData.usertype.map((user) => {
+            usertype[user] = true;
+        })
+        setUsertype(usertype);
+    }, [])
+
+    const openLink = () => {
+
+        window.open('/admin', '_blank');
+    }
+
+
+
     return (
         <>
             {/*Breadcrumb*/}
@@ -56,7 +81,7 @@ export default function Profile() {
                                                     <div className="col-md-12">
                                                         <div className="mb-3">
                                                             <label className="form-label">Address</label>
-                                                            <textarea rows={3} className="form-control" placeholder="Address" defaultValue={ ""} />
+                                                            <textarea rows={3} className="form-control" placeholder="Address" defaultValue={""} />
                                                         </div>
                                                     </div>
                                                     <div className="col-sm-6 col-md-4">
@@ -74,18 +99,18 @@ export default function Profile() {
                                                     <div className="col-md-5">
                                                         <div className="mb-3">
                                                             <label className="form-label">Country</label>
-                                                            <Select2Component id="select2" 
-                                                            options={[ 
-                                                                { value: "1", label: "India" }, 
-                                                                { value: "2", label: "Mexico" }, 
-                                                                { value: "3", label: "Canada" }, 
-                                                                { value: "4", label: "Usa" }, 
-                                                                { value: "5", label: "Afghanistan" }, 
-                                                                { value: "6", label: "Albania" },  
-                                                                { value: "6", label: "Germany" }, 
-                                                            ]} 
-                                                            select2Options={{ placeholder: "Select category", allowClear: true }}
-                                                            showSearch={true} />
+                                                            <Select2Component id="select2"
+                                                                options={[
+                                                                    { value: "1", label: "India" },
+                                                                    { value: "2", label: "Mexico" },
+                                                                    { value: "3", label: "Canada" },
+                                                                    { value: "4", label: "Usa" },
+                                                                    { value: "5", label: "Afghanistan" },
+                                                                    { value: "6", label: "Albania" },
+                                                                    { value: "6", label: "Germany" },
+                                                                ]}
+                                                                select2Options={{ placeholder: "Select category", allowClear: true }}
+                                                                showSearch={true} />
                                                         </div>
                                                     </div>
                                                     <div className="col-sm-6 col-md-6">
@@ -115,7 +140,7 @@ export default function Profile() {
                                                     <div className="col-md-12">
                                                         <div className="mb-3">
                                                             <label className="form-label">About Me</label>
-                                                            <textarea rows={5} className="form-control" placeholder="Enter About your description" defaultValue={ ""} />
+                                                            <textarea rows={5} className="form-control" placeholder="Enter About your description" defaultValue={""} />
                                                         </div>
                                                     </div>
                                                     <div className="col-md-12">
@@ -138,8 +163,10 @@ export default function Profile() {
                                                 {/* upgradeCard */}
                                                 <div className="nav upgradeCard">
                                                     {/* card */}
-                                                    <div className="card disabled">
-                                                        <Link href="#applyAuthor" data-bs-toggle="tab" />
+                                                    <div className={userType.readers ? "card disabled" : "card"} style={{ pointerEvents: 'auto' }}>
+                                                        {
+                                                            !userType.readers && <Link href="#applyAuthor" data-bs-toggle="tab" />
+                                                        }
                                                         <div className="cardBody">
                                                             <figure>
                                                                 <Image src="/images/upgrade-icons/author.png" width={60} height={60} alt="user" />
@@ -148,11 +175,20 @@ export default function Profile() {
                                                                 </figcaption>
                                                             </figure>
                                                         </div>
-                                                        <FontAwesomeIcon icon={faCheckCircle} className="greenTick" />
+
+                                                        {
+                                                            userType.readers && <>
+                                                                <em onClick={openLink}>Go to Dashboard</em>
+                                                                <FontAwesomeIcon icon={faCheckCircle} className="greenTick" />
+                                                            </>
+                                                        }
                                                     </div>
                                                     {/* card */}
-                                                    <div className="card">
-                                                        <Link href="#applyDoctor" data-bs-toggle="tab" />
+                                                    <div className={userType.doctor ? "card disabled" : "card"}style={{ pointerEvents: 'auto' }}>
+                                                        {
+                                                            !userType.doctor && <Link href="#applyDoctor" data-bs-toggle="tab" />
+                                                        }
+
                                                         <div className="cardBody">
                                                             <figure>
                                                                 <Image src="/images/upgrade-icons/doctor.png" width={60} height={60} alt="user" />
@@ -161,10 +197,19 @@ export default function Profile() {
                                                                 </figcaption>
                                                             </figure>
                                                         </div>
+                                                        {
+                                                            userType.doctor && <>
+                                                                <em onClick={openLink}>Go to Dashboard</em><FontAwesomeIcon icon={faCheckCircle} className="greenTick" />
+                                                            </>
+                                                        }
                                                     </div>
                                                     {/* card */}
-                                                    <div className="card">
-                                                        <Link href="#applyPublisher" data-bs-toggle="tab" />
+                                                    <div className={userType.publisher ? "card disabled" : "card"} style={{ pointerEvents: 'auto' }}>
+                                                        {
+                                                            !userType.publisher &&<Link href="#applyPublisher" data-bs-toggle="tab" />
+
+                                                        }
+                                                       
                                                         <div className="cardBody">
                                                             <figure>
                                                                 <Image src="/images/upgrade-icons/publisher.png" width={60} height={60} alt="user" />
@@ -173,10 +218,17 @@ export default function Profile() {
                                                                 </figcaption>
                                                             </figure>
                                                         </div>
+                                                        {userType.publisher && <>
+                                                            <em onClick={openLink}>Go to Dashboard</em><FontAwesomeIcon icon={faCheckCircle} className="greenTick" />
+                                                        </>}
                                                     </div>
                                                     {/* card */}
-                                                    <div className="card">
-                                                        <Link href="#applyOrganization" data-bs-toggle="tab" />
+                                                    <div className={userType.organization ? "card disabled" : "card"} style={{ pointerEvents: 'auto' }}>
+
+                                                        {
+                                                            !userType.organization && <Link href="#applyOrganization" data-bs-toggle="tab" />
+                                                        }
+
                                                         <div className="cardBody">
                                                             <figure>
                                                                 <Image src="/images/upgrade-icons/organization.png" width={60} height={60} alt="user" />
@@ -185,6 +237,10 @@ export default function Profile() {
                                                                 </figcaption>
                                                             </figure>
                                                         </div>
+
+                                                        {userType.organization && <>
+                                                            <em onClick={openLink}>Go to Dashboard</em><FontAwesomeIcon icon={faCheckCircle} className="greenTick" />
+                                                        </>}
                                                     </div>
                                                 </div>
                                             </div>
@@ -197,7 +253,7 @@ export default function Profile() {
                             <div className="card mt-3 mb-0">
                                 <div className="tab-content">
                                     <div className="tab-pane" id="applyDoctor">
-                                        <DoctorForm/>
+                                        <DoctorForm />
                                     </div>
                                     <div className="tab-pane" id="applyAuthor">
                                         Author

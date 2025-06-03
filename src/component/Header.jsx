@@ -1475,7 +1475,7 @@ function Header({userData}) {
                       {userData.name?.toUpperCase()}
                     </span>
                     <span className="d-none d-xl-block ms-1 fs-12 user-name-sub-text">
-                      {userData?.usertype?.toUpperCase()}
+                      {/* {userData?.usertype?.toUpperCase()} */}
                     </span>
                   </span>
                 </span>

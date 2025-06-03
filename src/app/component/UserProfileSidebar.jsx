@@ -1,75 +1,82 @@
 "use client"
+import axios from 'axios'
 import { useAuth } from "../../context/AuthContext";
 import { faClipboardCheck, faClipboardList, faDashboard, faEdit, faPowerOff, faUser, faWallet } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
+import { UniversalContext } from "../../component/context";
 export default function UserProfileSidebar() {
-    const { logout } = useAuth();
+
+    const logout = async () => {
+
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users/logout`);
+        if (response.data.status) {
+            window.location.href = response.data.url;
+        }
+
+    }
     const pathName = usePathname();
-  return (
-    <div className="card">
-        <div className="card-header">
-            <h3 className="card-title">My Dashboard</h3>
-        </div>
-        <div className="card-body text-center item-user border-bottom">
-            <div className="profile-pic">
-                <div className="profile-pic-img">
-                    <span className="bg-success dots" data-bs-toggle="tooltip" data-bs-placement="top" title="online" />
-                    <Image src="/images/users/male/25.jpg" width={80} height={80} className="brround" alt="user" />
+    const { userData } = UniversalContext()
+
+    return (
+        <div className="card">
+            <div className="card-header">
+                <h3 className="card-title">My Dashboard</h3>
+            </div>
+            <div className="card-body text-center item-user border-bottom">
+                <div className="profile-pic">
+                    <div className="profile-pic-img">
+                        <span className="bg-success dots" data-bs-toggle="tooltip" data-bs-placement="top" title="online" />
+                        <Image src={userData.profile_img} width={80} height={80} className="brround" alt="user" />
+                    </div>
+                    <Link href="/user-dashboard/profile">
+                        <h4 className="mt-3 mb-0 font-weight-semibold text-dark">
+                            {userData.name}
+                        </h4>
+                    </Link>
                 </div>
-                <Link href="/user-dashboard/profile">
-                    <h4 className="mt-3 mb-0 font-weight-semibold text-dark">
-                        Robert McLean
-                    </h4>
+            </div>
+            <div className="item1-links mb-0">
+                <Link href="/user-dashboard"
+                    className={`link ${pathName === '/user-dashboard' ? 'active d-flex border-bottom' : 'd-flex border-bottom'
+                        }`}
+                >
+                    <span className="icon1 me-2">
+                        <FontAwesomeIcon icon={faDashboard} />
+                    </span>{" "} User Dashboard
                 </Link>
+                <Link href="/user-dashboard/profile"
+                    className={`link ${pathName === '/user-dashboard/profile' ? 'active d-flex border-bottom' : 'd-flex border-bottom'
+                        }`}
+                >
+                    <span className="icon1 me-2">
+                        <FontAwesomeIcon icon={faUser} />
+                    </span>{" "} Profile
+                </Link>
+                <Link href="/user-dashboard/my-subscription"
+                    className={`link ${pathName === '/user-dashboard/my-subscription' ? 'active d-flex border-bottom' : 'd-flex border-bottom'
+                        }`}
+                >
+                    <span className="icon1 me-2">
+                        <FontAwesomeIcon icon={faClipboardList} />
+                    </span>{" "} My Subscription
+                </Link>
+                <Link href="/user-dashboard/payment-history"
+                    className={`link ${pathName === '/user-dashboard/payment-history' ? 'active d-flex border-bottom' : 'd-flex border-bottom'
+                        }`}
+                >
+                    <span className="icon1 me-2">
+                        <FontAwesomeIcon icon={faWallet} />
+                    </span>{" "} Payment History
+                </Link>
+                <button className="d-flex" onClick={logout}>
+                    <span className="icon1 me-2">
+                        <FontAwesomeIcon icon={faPowerOff} />
+                    </span>{" "} Logout
+                </button>
             </div>
         </div>
-        <div className="item1-links mb-0">
-            <Link href="/user-dashboard" 
-                className={`link ${
-                    pathName === '/user-dashboard' ? 'active d-flex border-bottom' : 'd-flex border-bottom'
-                }`}
-            >
-                <span className="icon1 me-2">
-                    <FontAwesomeIcon icon={faDashboard} />
-                </span>{" "} User Dashboard
-            </Link>
-            <Link href="/user-dashboard/profile" 
-                className={`link ${
-                    pathName === '/user-dashboard/profile' ? 'active d-flex border-bottom' : 'd-flex border-bottom'
-                }`}
-            >
-                <span className="icon1 me-2">
-                    <FontAwesomeIcon icon={faUser} />
-                </span>{" "} Profile
-            </Link>
-            <Link href="/user-dashboard/my-subscription" 
-                className={`link ${
-                    pathName === '/user-dashboard/my-subscription' ? 'active d-flex border-bottom' : 'd-flex border-bottom'
-                }`}
-            >
-                <span className="icon1 me-2">
-                    <FontAwesomeIcon icon={faClipboardList} />
-                </span>{" "} My Subscription
-            </Link>
-            <Link href="/user-dashboard/payment-history" 
-                className={`link ${
-                    pathName === '/user-dashboard/payment-history' ? 'active d-flex border-bottom' : 'd-flex border-bottom'
-                }`}
-            >
-                <span className="icon1 me-2">
-                    <FontAwesomeIcon icon={faWallet} />
-                </span>{" "} Payment History
-            </Link>
-            <button className="d-flex" onClick={logout}>
-                <span className="icon1 me-2">
-                <FontAwesomeIcon icon={faPowerOff} />
-                </span>{" "} Logout
-            </button>
-        </div>
-    </div>
-  );
+    );
 }

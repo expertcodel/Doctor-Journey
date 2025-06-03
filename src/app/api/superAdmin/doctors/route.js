@@ -3,14 +3,19 @@ import { NextResponse } from "next/server";
 import { doctorModel } from "../../../models/doctor.model";
 import { fileUploader } from "../../../../utils/fileUploader";
 import { Op } from "sequelize";
+import { connectTodb } from "../../../../app/database/database";
 export async function POST(request) {
 
+    
+    
     const input = await request.formData();
     const profileImage = input.get('profileImage');
     const degreeDocument = input.getAll('documentImage');
 
-    const { doctorName, specialization, qualification, email, number, shortDescription, address, location, experience, city, country, zip, branchAddress, branchName, bankName, ifsc, accountNumber, license, identityName, document, gstNumber, accountType, accountName } = JSON.parse(input.get('data'));
+    const { doctorName, specialization, qualification, email, number, shortDescription, address, location, experience, city, country, zip, branchAddress, branchName, bankName, ifsc, accountNumber, license, identityName, document, gstNumber, accountType, accountName, userId } = JSON.parse(input.get('data'));
     const doctormodel = await doctorModel();
+    const connection = await connectTodb();
+    console.log(userId,'userid');
     if (!doctormodel) {
         return NextResponse.json({ status: false, message: "database error occured" });
     }
@@ -33,13 +38,22 @@ export async function POST(request) {
         }
 
 
-
+        await connection.query(`
+  UPDATE "Users"
+  SET "usertype" = COALESCE("usertype", '[]'::jsonb) || to_jsonb(:type::text[])
+  WHERE "userId" = :userId
+`, {
+            replacements: {
+                userId,
+                type: `{${["doctor"]}}`
+            }
+        });
 
 
         await doctormodel.create({
             doctorName, specialization, qualification, email, number, shortDescription, address, location, experience, city, country, zip, branchAddress, branchName, bankName, ifsc, accountNumber, license, identityName,
             profileImage: profileimage && profileimage, document, gstNumber, accountType, accountName,
-            location: (location[0].latitude && location[0].longitude) ? location : null
+            location: (location[0].latitude && location[0].longitude) ? location : null, userId
         })
 
         return NextResponse.json({ status: true, message: "Doctor created successfully!" });
@@ -48,6 +62,8 @@ export async function POST(request) {
     } catch (error) {
 
         const message = extractErrorMessage(error);
+        //console.log(error);
+        
         return NextResponse.json({ status: false, message });
     }
 }
@@ -63,14 +79,14 @@ export async function PUT(request) {
         return NextResponse.json({ status: false, message: "database error occured" });
     }
 
-   
+
 
     try {
 
         let profileimage;
         let degreedocumenturl;
 
-        
+
         if (profileImage !== 'null' && profileImage !== 'undefined') {
             if (typeof (profileImage) === 'object') {
 
@@ -91,7 +107,7 @@ export async function PUT(request) {
 
 
         await doctormodel.update({
-            doctorName, specialization, qualification, email, number, shortDescription, address, location, experience, city, country, zip,  branchAddress, branchName, bankName, ifsc, accountNumber, license, identityName,
+            doctorName, specialization, qualification, email, number, shortDescription, address, location, experience, city, country, zip, branchAddress, branchName, bankName, ifsc, accountNumber, license, identityName,
             profileImage: profileimage && profileimage, document, gstNumber, accountType, accountName,
             location: (location[0].latitude && location[0].longitude) ? location : null
         }, { where: { doctorId } })
@@ -103,8 +119,8 @@ export async function PUT(request) {
 
 
         const message = extractErrorMessage(error);
-        console.log(message,"error");
-        
+        console.log(message, "error");
+
         return NextResponse.json({ status: false, message });
     }
 }

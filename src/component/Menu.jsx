@@ -184,7 +184,7 @@ export default  function Menubar({data}) {
                                   {
                                     data.map((item, i) => {
 
-                                      if (item.allowed) {
+                                      // if (item.allowed) {
 
 
                                         {
@@ -291,7 +291,7 @@ export default  function Menubar({data}) {
                                               </Link>
                                             </li>
                                         }
-                                      }
+                                      // }
                                     })}
 
 

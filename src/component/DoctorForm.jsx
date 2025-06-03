@@ -5,9 +5,10 @@ import Image from 'next/image';
 import Tooltip from './Tooltip';
 import { extractErrorMessage } from '../utils/errorMessage';
 import { useRouter } from 'next/navigation';
-
+import { UniversalContext } from './context';
 export default function DoctorForm() {
 
+    const {userData}=UniversalContext();
     const [errorMsg, setErrormsg] = useState("");
     const [imageUrl, setImageurl] = useState(null);
     const [tabs, setTabs] = useState({ first: true, second: false, third: false, fourth: false });
@@ -197,7 +198,7 @@ export default function DoctorForm() {
 
                 const data = {
 
-                    doctorName, specialization, qualification, email, number, shortDescription, address, location, experience, city, country, zip, branchAddress, branchName, bankName, ifsc, accountNumber, gstNumber, accountType, accountName, document
+                    doctorName, specialization, qualification, email, number, shortDescription, address, location, experience, city, country, zip, branchAddress, branchName, bankName, ifsc, accountNumber, gstNumber, accountType, accountName, document,userId:userData.userId
                 }
 
                 const formData = new FormData();

@@ -65,7 +65,7 @@ export async function POST(request) {
    //  const response= NextResponse.json({ status: 1, message: "Verified user!", url: `/${isValiduser.usertype}` });
    //  response.cookies.set('token', token, { httpOnly: true, maxAge: 3600,path:'/'});
    //  return response
-  return NextResponse.json({ status: 1, message: "Verified user!", url: `/${isValiduser.usertype}` });
+  return NextResponse.json({ status: 1, message: "Verified user!", url: `/user-dashboard` });
 
    } catch (error) {
 

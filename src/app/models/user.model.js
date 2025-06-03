@@ -47,8 +47,8 @@ export const UserModel = async () => {
         },
         usertype: {
 
-            type: DataTypes.STRING,
-            defaultValue: 'readers'
+            type: DataTypes.JSONB,
+            defaultValue: ["readers"]
         },
         mobile_number: {
 

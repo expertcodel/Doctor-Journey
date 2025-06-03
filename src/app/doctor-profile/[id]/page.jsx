@@ -246,7 +246,7 @@ export default async function DoctorProfileDetail({ params }) {
                                                     <div class="media-heading mb-5">
                                                         <h3 class="card-title font-weight-bold">{doctor.doctorName} Articles</h3>
                                                     </div>
-                                                    <ThumbnailVArticleCarousel doctorArticle={doctorArticle}/>
+                                                  <ThumbnailVArticleCarousel doctorArticle={doctorArticle}/>
                                                 </div>}
                                             </div>
                                             <div className="tab-pane" id="tab-2">
@@ -256,7 +256,7 @@ export default async function DoctorProfileDetail({ params }) {
                                             </div>
                                             <div className="tab-pane userprof-tab" id="tab-3">
                                                 <div className="row g-md-4 g-3">
-                                                    {doctor.videolist[0].views!=='null' && <ThumbnailActivityCarousel doctorCards={doctor.videolist}/>}
+                                                    {doctor.videolist[0].views!== null && <ThumbnailActivityCarousel doctorCards={doctor.videolist}/>}
                                                 </div>
                                             </div>
                                             <div className="tab-pane userprof-tab" id="tab-4">
