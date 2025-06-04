@@ -1703,7 +1703,7 @@ body {
 
 /****** mainSec ******/
 .mainSec{display: flex; flex-direction: column; flex-grow: 1;}
-.mainSec .middleSec{flex-grow: 1;}
+.mainSec .middleSec{flex-grow: 1; overflow-x: hidden;}
 .mainSec .footerMain{margin-top: auto;}
 
 /********* loginSec **********/
@@ -1787,11 +1787,12 @@ body {
 /* .customCard .item-card9-imgs{height: 100%;} */
 .customCard .item-card9-imgs{display: block;}
 .customCard .item-card9-imgs figure{position: relative; margin: 0; height: 210px; display: flex; flex-direction: column; width: 100%;}
-.customCard .item-card9-imgs figure img{
+/* .customCard .item-card9-imgs figure img{
   color: transparent; position: absolute; top: -9999px; left: -9999px; right: -9999px; bottom: -9999px; min-width: fit-content;
   min-height: 100%; height: auto; width: auto; margin: auto; display: block; z-index: 1; transition: ease all .5s;
   -webkit-transition: ease all .5s;
-}
+} */
+.customCard .item-card9-imgs figure img{transition: ease all .5s; -webkit-transition: ease all .5s;}
 .customCard .customCardSec .card .card-footer .item-card9-footer .reviewText{
     margin: 0; position: relative; z-index: 2; color: #fff; display: inline-flex; align-items: center; font-size: 16px; 
     width: 50px; padding: 2px 4px; border-radius: 4px; background: var(--primary-bg-color);
@@ -1974,13 +1975,14 @@ body {
     position: absolute; width: 100%; height: 100%; display: block; z-index: 2; cursor: pointer;
 }
 .doctorProfileGallery .imageSec figure{
-    position: relative; margin: 0; height: 210px; display: flex; flex-direction: column; width: 100%; overflow: hidden;
+    position: relative; margin: 0; height: 170px; display: flex; flex-direction: column; width: 100%; overflow: hidden;
 }
-.doctorProfileGallery .imageSec figure img{
+/* .doctorProfileGallery .imageSec figure img{
   color: transparent; position: absolute; top: -9999px; left: -9999px; right: -9999px; bottom: -9999px; min-width: fit-content;
   min-height: 100%; height: auto; width: auto; margin: auto; display: block; z-index: 1; max-height: 100%;
   transition: ease all .5s; -webkit-transition: ease all .5s;
-}
+} */
+.doctorProfileGallery .imageSec figure img{transition: ease all .5s; -webkit-transition: ease all .5s;}
 .doctorProfileGallery .imageSec:hover figure::after {
     color: var(--bs-body-bg);
 }
@@ -2114,14 +2116,15 @@ body {
 }
 
 /***** drCard *******/
-.drCard .card{box-shadow: none; transition: ease all .5s; -webkit-transition: ease all .5s;}
+.drCard .card{box-shadow: none; height: 100%; transition: ease all .5s; -webkit-transition: ease all .5s;}
 .drCard .card .item7-card-img{
     height: 190px; overflow: hidden; position: relative; display: flex; align-items: center; justify-content: center;
 }
-.drCard .card .item7-card-img img{
+/* .drCard .card .item7-card-img img{
     position: absolute; top: -9999px; left: -9999px; bottom: -9999px; right: -9999px; margin: auto; width: auto; height: auto; min-height: 100%;
     min-width: 100%; display: block; padding: 0; max-width: 100%; transition: ease all .5s; -webkit-transition: ease all .5s;
-}
+} */
+ .drCard .card .item7-card-img img{transition: ease all .5s; -webkit-transition: ease all .5s;}
 .drCard .card .card-body{padding: 16px 8px; transition: ease all .5s; -webkit-transition: ease all .5s;}
 .drCard .card .card-body > *{margin: 0;}
 .drCard .card .card-body > *:not(:last-child){margin-bottom: 8px;}
@@ -2134,7 +2137,7 @@ body {
     -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; transition: ease all .5s;
     -webkit-transition: ease all .5s;
 }
-.drCard .card.noImg{border: none;}
+/* .drCard .card.noImg{border: none;} */
 .drCard .card.noImg .card-body .noImgLink{
     position: absolute; top: 0; left: 0; bottom: 0; width: 100%; height: 100%; z-index: 1;
 }
@@ -2142,11 +2145,11 @@ body {
 .drCard .card .card-body .item7-card-desc span,
 .drCard .card .card-body .cardDescription{font-size: 16px; font-weight: 500; color: var(--bs-gray-600); line-height: 1.2;}
 .drCard .card:hover{box-shadow: 0 0 20px rgba(0, 0, 0, .15);}
-.drCard .card:hover .card-body{padding: 16px;}
+/* .drCard .card:hover .card-body{padding: 16px;} */
 .drCard .card:hover .item7-card-img img{transform: scale(1.1);}
 .drCard .card:hover .card-body a h4{color: var(--secondary-color);}
-.drCard .card.noImg:hover{box-shadow: none;}
-.drCard .card.noImg:hover .card-body{padding: 16px 0;}
+/* .drCard .card.noImg:hover{box-shadow: none;} */
+/* .drCard .card.noImg:hover .card-body{padding: 16px 0;} */
 /********* userJourneyCard *****/
 .userJourneyCard.drCard .card.h-276 .item7-card-img{height: 276px;}
 .userJourneyCard.drCard .card .card-body .cardDescription{
@@ -2164,10 +2167,11 @@ body {
     width: 80px; height: 80px; border-radius: 100%; overflow: hidden; position: relative; flex: none;
     transition: ease all .5s; -webkit-transition: ease all .5s;
 }
-.drShortDesc .card .card-body .cat-item .cat-img img{
+/* .drShortDesc .card .card-body .cat-item .cat-img img{
     position: absolute; top: -9999px; left: -9999px; bottom: -9999px; right: -9999px; margin: auto; width: auto; height: auto; min-height: 100%;
     min-width: fit-content; display: block; padding: 0; max-width: 100%;; max-height: 100%; transition: ease all .5s; -webkit-transition: ease all .5s;
-}
+} */
+ .drShortDesc .card .card-body .cat-item .cat-img img{transition: ease all .5s; -webkit-transition: ease all .5s;}
 .drShortDesc .card .card-body .cat-item .cat-desc{display: flex; flex-direction: column;}
 .drShortDesc .card .card-body .cat-item .cat-desc > *{margin: 0;}
 .drShortDesc .card .card-body .cat-item .cat-desc > *:not(:last-child){margin-bottom: 8px;}
@@ -2274,10 +2278,10 @@ body {
 .articalDetails .card-body .item7-card-img{
     height: 485px; overflow: hidden; margin: -1.5rem -1.5rem 0; display: flex; align-items: center; justify-content: center;
 }
-.articalDetails .card-body .item7-card-img img{
+/* .articalDetails .card-body .item7-card-img img{
     position: absolute; top: -9999px; left: -9999px; bottom: -9999px; right: -9999px; margin: auto; width: auto; height: auto; min-height: 100%;
     min-width: fit-content; display: block; padding: 0; max-width: 100%; max-height: 100%;
-}
+} */
 
 /********* drProfileDesc *******/
 .drProfileDesc .card{border-radius: 0; border: none; transition: ease all .5s; -webkit-transition: ease all .5s;}
@@ -2292,10 +2296,11 @@ body {
     width: 80px; height: 80px; border-radius: 100%; overflow: hidden; position: relative;
     transition: ease all .5s; -webkit-transition: ease all .5s;
 }
-.drProfileDesc .card .card-body .cat-item .cat-img img{
+/* .drProfileDesc .card .card-body .cat-item .cat-img img{
     position: absolute; top: -9999px; left: -9999px; bottom: -9999px; right: -9999px; margin: auto; width: auto; height: auto; min-height: 100%;
     min-width: fit-content; display: block; padding: 0; max-width: 100%;; max-height: 100%; transition: ease all .5s; -webkit-transition: ease all .5s;
-}
+} */
+.drProfileDesc .card .card-body .cat-item .cat-img img{transition: ease all .5s; -webkit-transition: ease all .5s;}
 .drProfileDesc .card .card-body .cat-item .cat-desc{display: flex; flex-direction: column;}
 .drProfileDesc .card .card-body .cat-item .cat-desc > *{margin: 0;}
 .drProfileDesc .card .card-body .cat-item .cat-desc > *:not(:last-child){margin-bottom: 8px;}
@@ -2319,10 +2324,11 @@ body {
 .customSpecialization li a .specializationIcon{
     width: 40px; height: 40px; display: inline-flex; overflow: hidden; border-radius: 100%; margin-right: 8px; position: relative;
 }
-.customSpecialization li a .specializationIcon img{
+/* .customSpecialization li a .specializationIcon img{
     position: absolute; top: -9999px; left: -9999px; bottom: -9999px; right: -9999px; margin: auto; width: auto; height: auto; min-height: 100%;
     min-width: fit-content; display: block; padding: 0; max-width: 100%;; max-height: 100%; transition: ease all .5s; -webkit-transition: ease all .5s;
-}
+} */
+.customSpecialization li a .specializationIcon img{transition: ease all .5s; -webkit-transition: ease all .5s;}
 .customSpecialization li a .badge{margin-left: auto;}
 
 /********* interviewCard *******/
@@ -2340,10 +2346,11 @@ body {
     height: 80px; width: 96px; overflow: hidden; position: relative; margin: 0 8px 0 0; flex: none; border-radius: 8px;
     display: flex; align-items: center; justify-content: center;
 }
-.interviewCard .card-body .interviewCardBody figure img{
+/* .interviewCard .card-body .interviewCardBody figure img{
     position: absolute; top: -9999px; left: -9999px; bottom: -9999px; right: -9999px; margin: auto; width: auto; height: auto; min-height: 100%;
     min-width: 100%; display: block; padding: 0; max-width: 100%; transition: ease all .5s; -webkit-transition: ease all .5s;
-}
+} */
+.interviewCard .card-body .interviewCardBody figure img{transition: ease all .5s; -webkit-transition: ease all .5s;}
 .interviewCard .card-body .interviewCardBody figure .play-button{width: 40px; height: 40px;}
 .interviewCard .card-body .interviewCardBody figure .play-button .triangle{
     border-left: 14px solid var(--bs-body-bg); border-top: 8px solid transparent; border-bottom: 8px solid transparent;
@@ -2368,10 +2375,11 @@ body {
 .blogsSlider .card .item7-card-img{
     height: 190px; overflow: hidden; position: relative;
 }
-.blogsSlider .card .item7-card-img img{
+/* .blogsSlider .card .item7-card-img img{
     position: absolute; top: -9999px; left: -9999px; bottom: -9999px; right: -9999px; margin: auto; width: auto; height: auto; min-height: 100%;
     min-width: 100%; display: block; padding: 0; max-width: 100%; transition: ease all .5s; -webkit-transition: ease all .5s;
-}
+} */
+.blogsSlider .card .item7-card-img img{transition: ease all .5s; -webkit-transition: ease all .5s;}
 .blogsSlider .card .card-body div.d-flex figure{
     height: 40px; width: 40px; overflow: hidden; position: relative; margin: 0 8px 0 0; border: 1px solid var(--bs-border-color);
     border-radius: 100%; flex: none;
@@ -2388,11 +2396,11 @@ body {
     position: relative; margin: 0; height: 100px; width: 100px; display: flex; flex-direction: column; border-radius: 100%;
     overflow: hidden;
 }
-.customProfileMain .card .card-body .profile-pic figure img{
+/* .customProfileMain .card .card-body .profile-pic figure img{
   color: transparent; position: absolute; top: -9999px; left: -9999px; right: -9999px; bottom: -9999px; min-width: fit-content;
   min-height: 100%; height: auto; width: auto; margin: auto; display: block; z-index: 1; transition: ease all .5s;
   -webkit-transition: ease all .5s;
-}
+} */
 .customProfileMain .table-responsive .table tbody tr{
     display: grid; grid-template-columns: 25% 5% 70%; grid-gap: 0;
 }
@@ -2659,6 +2667,8 @@ body {
     font-size: 16px; color: var(--bs-dark-text-emphasis); margin-left: 8px;
 }
 .journalsDetails .productsDetails .shortDec{font-size: 16px; color: var(--bs-black);}
+
+.page-link:focus{box-shadow: none;}
 
 @media only screen and (max-width: 991px) {
     /******** mobileToggleHeading ********/

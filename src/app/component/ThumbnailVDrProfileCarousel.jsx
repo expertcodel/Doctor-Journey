@@ -55,7 +55,7 @@ export default function ThumbnailVDrProfileCarousel({doctorProfile}) {
                                     <div className="cat-item">
                                         <Link href={`${item.doctorId}`} />
                                         <div className="cat-img bg-primary-transparent brround">
-                                            <Image src={item.profileImage} className="img-fluid" width={155} height={80} alt={item.doctorName} unoptimized/>
+                                            <Image src={item.profileImage} className="img-fluid" fill alt={item.doctorName} unoptimized/>
                                         </div>
                                         <div className="cat-desc">
                                             <h5>

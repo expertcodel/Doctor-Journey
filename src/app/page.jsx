@@ -181,34 +181,34 @@ export default async function Home() {
 
         <div className="row g-md-4 g-3">
             {doctorCards.map((card) => (
-               <div className="col-md-4 col-12 drCard" key={card.videoId}>
-                                <div className="card mb-0">
-                                    <div className="item7-card-img">
-                                        <Link href={`/doctors/${card.videoId}`} />
-                                        <Image src={card.thumbnailImage} width={368} height={190} alt="img" className="cover-image" unoptimized />
-                                        <div className="play-button">
-                                            <span className="triangle"></span>
-                                        </div>
-                                    </div>
-                                    <div className="card-body">
-                                        <div className="item7-card-desc d-flex">
-                                            <Link href={`/doctors/${card.videoId}`} className="text-dark">
-                                            <h4 className="font-weight-semibold">{card.doctorName}</h4>
-                                        </Link>
-                                            <div className="ms-auto">
-                                               
-                                                <span> <DaysCalculator targetDate={card.publishedDate} today={new Date().toLocaleDateString()} /></span>
-                                                {/* <span></span> */}
-                                            </div>
-                                        </div>
-                                        
-                                        <p>{card.specialization}</p>
-                                        <div className="item7-card-desc d-flex">
-                                            <span>{card.videoTitle}</span>
-                                        </div>
-                                    </div>
-                                </div>
+              <div className="col-md-4 col-12 drCard" key={card.videoId}>
+                <div className="card mb-0">
+                    <div className="item7-card-img">
+                        <Link href={`/doctors/${card.videoId}`} />
+                        <Image src={card.thumbnailImage} fill alt="img" className="cover-image" unoptimized />
+                        <div className="play-button">
+                            <span className="triangle"></span>
+                        </div>
+                    </div>
+                    <div className="card-body">
+                        <div className="item7-card-desc d-flex">
+                            <Link href={`/doctors/${card.videoId}`} className="text-dark">
+                            <h4 className="font-weight-semibold">{card.doctorName}</h4>
+                        </Link>
+                            <div className="ms-auto">
+                                
+                                <span> <DaysCalculator targetDate={card.publishedDate} today={new Date().toLocaleDateString()} /></span>
+                                {/* <span></span> */}
                             </div>
+                        </div>
+                        
+                        <p>{card.specialization}</p>
+                        <div className="item7-card-desc d-flex">
+                            <span>{card.videoTitle}</span>
+                        </div>
+                    </div>
+                </div>
+              </div>
             ))}
           </div>
         </div>
@@ -231,7 +231,7 @@ export default async function Home() {
               <div className="card mb-0 h-276">
                 <div className="item7-card-img">
                   <Link href="javascript:void(0);" />
-                  <Image src="/images/doctor-profile/profile-2.jpg" width={466} height={276} alt="img" className="cover-image" />
+                  <Image src="/images/doctor-profile/profile-2.jpg" fill alt="img" className="cover-image" />
                   <div className="play-button">
                     <span className="triangle"></span>
                   </div>
@@ -253,7 +253,7 @@ export default async function Home() {
                   <div className="card mb-0">
                     <div className="item7-card-img">
                       <Link href="javascript:void(0);" />
-                      <Image src="/images/doctor-profile/profile-1.jpg" width={368} height={190} alt="img" className="cover-image" />
+                      <Image src="/images/doctor-profile/profile-1.jpg" fill alt="img" className="cover-image" />
                       <div className="play-button">
                         <span className="triangle"></span>
                       </div>
@@ -274,7 +274,7 @@ export default async function Home() {
 
                 <div className="col-md-6 col-12">
                   <div className="card noImg mb-0">
-                    <div className="card-body pt-0">
+                    <div className="card-body">
                       <Link className="noImgLink" href="/" />
                       <p>
                         Why violence is rising with global temperatures
@@ -325,7 +325,7 @@ export default async function Home() {
                       <div className="cat-item">
                         <Link href={`/doctor-profile/${item.doctorId}`} />
                         <div className="cat-img bg-primary-transparent brround">
-                          <Image  unoptimized src={item.profileImage} className="img-fluid" width={155} height={80} alt=""  />
+                          <Image  unoptimized src={item.profileImage} className="img-fluid" fill alt=""  />
                         </div>
                         <div className="cat-desc">
                           <h5>

@@ -48,7 +48,7 @@ export default function ArticlePage({ articledetail, articleList }) {
                             <div className="card articalDetails">
                                 <div className="card-body">
                                     <div className="item7-card-img">
-                                        <Image src={articledetail?.thumbnailImage} alt={articledetail?.articleTitle} width={786} height={485} unoptimized />
+                                        <Image src={articledetail?.thumbnailImage} alt={articledetail?.articleTitle} fill unoptimized />
 
 
                                         <div className="item7-card-text">
@@ -84,43 +84,6 @@ export default function ArticlePage({ articledetail, articleList }) {
                                     </p>
                                 </div>
                             </div>
-
-                            {/* article profile */}
-                            {/* <div className="card">
-                                <div className="card-header">
-                                    <h3 className="card-title">About the speaker</h3>
-                                </div>
-                                <div className="card-body drProfileDesc p-0">
-                                    <div className="card mb-0">
-                                        <div className="card-body">
-                                            <div className="cat-item">
-                                                <Link href={`/article-profile/${articledetail?.articleId}`} />
-                                                <div className="cat-img bg-primary-transparent brround">
-                                                    <Image src={articledetail?.thumbnailImage} className="img-fluid" width={155} height={80} alt="img" unoptimized />
-                                                </div>
-                                                <div className="cat-desc">
-                                                    <h5>
-                                                        {articledetail?.articleTitle} <span>&#8377;{articledetail?.price}</span>
-                                                    </h5>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="card-body">
-                                            <div className="cat-item">
-                                                <Link href={`/article-profile/${articledetail?.articleId}`} />
-                                                <div className="cat-desc">
-                                                    <p>
-                                                        {articledetail?.articleSummary}
-                                                    </p>
-                                                    <small className="badge">
-                                                        See Speaker Profile
-                                                    </small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> */}
                         </div>
 
                         {/*Rightside Content*/}
@@ -153,34 +116,6 @@ export default function ArticlePage({ articledetail, articleList }) {
                                     ))
                                 }
                             </div>
-
-                            {/* <div className="card">
-                                <div className="card-header">
-                                    <h3 className="card-title">Specialization</h3>
-                                </div>
-                                <div className="card-body p-0">
-                                    <div className="list-catergory">
-                                        <div className="item-list">
-                                            <ul className="list-group mb-0 customSpecialization">
-                                                {
-                                                    specialization[0].map((item, id) => (
-                                                        <li key={id} className="list-group-item">
-                                                            <Link href="/" className="text-dark">
-                                                                <span className="specializationIcon">
-                                                                    <Image src="/images/article-profile/profile-1.jpg" className="img-fluid" width={155} height={80} alt="img" />
-                                                                </span> {item.specialization}
-                                                                <span className="badgetext badge rounded-pill bg-light mb-0 mt-1">
-                                                                    {item.count}
-                                                                </span>
-                                                            </Link>
-                                                        </li>
-                                                    ))
-                                                }
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> */}
                         </div>
                         {/*/Rightside Content*/}
                     </div>

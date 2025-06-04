@@ -56,7 +56,9 @@ const DaysCalculator: React.FC<Props> = ({ today, targetDate }) => {
 
   return (
    
- <small className="d-block text-muted">{days} days ago</small>
+    <>
+      {days} days ago
+    </>
     
   );
 };

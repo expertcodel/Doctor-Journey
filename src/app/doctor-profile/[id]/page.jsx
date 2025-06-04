@@ -65,7 +65,7 @@ export default async function DoctorProfileDetail({ params }) {
                                         <div className="d-md-flex">
                                             <figure>
                                                 <Image
-                                                    src={doctor.profileImage} width={368} height={190}
+                                                    src={doctor.profileImage} fill
                                                     alt="img"
                                                     className="cover-image"
                                                     unoptimized
@@ -78,7 +78,7 @@ export default async function DoctorProfileDetail({ params }) {
                                                 </span>
                                                 <div className="mt-1 mb-2 profile-details">
                                                     <span className="">
-                                                        <FontAwesomeIcon icon={faLocation} /> {doctor.hospital}
+                                                        <FontAwesomeIcon icon={faLocation} /> {doctor.hospital ? "doctor.hospital" : "--"}
                                                     </span>
                                                 </div>
                                             </div>
@@ -251,7 +251,20 @@ export default async function DoctorProfileDetail({ params }) {
                                             </div>
                                             <div className="tab-pane" id="tab-2">
                                                 <div className="card-body p-0">
-                                                   {doctor.gallery && <DoctorProfileGallery gallery={doctor.gallery}/>}
+                                                   {
+                                                    doctor.gallery ? (<DoctorProfileGallery gallery={doctor.gallery}/>) : 
+                                                    (
+                                                        <div className="text-center my-4 p-4">
+                                                            <img
+                                                                src="/images/no-img.gif"
+                                                                alt="No Gallery"
+                                                                style={{ width: "100px", height: "100px", objectFit: "contain", marginBottom: "10px" }}
+                                                            />
+                                                            <h5>No Gallery Found</h5>
+                                                            <p>This doctor has not shared any gallery images.</p>
+                                                        </div>
+                                                    )
+                                                   }
                                                 </div>
                                             </div>
                                             <div className="tab-pane userprof-tab" id="tab-3">

@@ -3,7 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import Select2Component from "../component/Select2Component";
 import { useState } from "react";
-import DaysCalculator from '../component/DaysCalculator'
+import DaysCalculator from '../component/DaysCalculator';
+import Pagination from './Pagination';
 export default function VideoList({ doctorCard, totalItems }) {
 
 
@@ -115,7 +116,7 @@ export default function VideoList({ doctorCard, totalItems }) {
                                 <div className="card mb-0">
                                     <div className="item7-card-img">
                                         <Link href={`/doctors/${card.videoId}`} />
-                                        <Image src={card.thumbnailImage} width={368} height={190} alt="img" className="cover-image" unoptimized />
+                                        <Image src={card.thumbnailImage} fill alt="img" className="cover-image" unoptimized />
                                         <div className="play-button">
                                             <span className="triangle"></span>
                                         </div>
@@ -145,24 +146,14 @@ export default function VideoList({ doctorCard, totalItems }) {
                     <div className="row g-md-4 g-3">
                         <div className="col-12">
                             <div className="center-block text-center d-flex justify-content-center">
-                                {button > 1 && <ul className="pagination mb-5 mb-lg-0">
-                                    <li className="page-item page-prev">
-                                        <button className="page-link" onClick={() => pagination(idx - 1)} tabIndex={-1}>
-                                            Prev
-                                        </button>
-                                    </li>
-                                    {Array.from({ length: button }, (_, i) => <li className="page-item active" key={i}>
-                                        <button className="page-link" onClick={() => pagination(i+1)} style={{backgroundColor:idx===i+1 &&'orange'}}>
-                                            {i + 1}
-                                        </button>
-                                    </li>)}
-
-                                    <li className="page-item page-next">
-                                        <button className="page-link" onClick={() => pagination(idx + 1)}>
-                                            Next
-                                        </button>
-                                    </li>
-                                </ul>}
+                                {
+                                    button > 1 && 
+                                    <Pagination
+                                        currentPage={idx}
+                                        totalPages={button}
+                                        onPageChange={pagination}
+                                    />
+                                }
                             </div>
                         </div>
                     </div>

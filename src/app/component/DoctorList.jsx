@@ -7,6 +7,7 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBarsStaggered, faBuilding, faCalendar, faChevronRight, faClock, faFilter, faLocation, faLocationArrow, faMap, faStar, faTimesCircle, faUsd, faUserFriends } from "@fortawesome/free-solid-svg-icons";
 import RangeSlider from "../component/RangeSlider";
+import Pagination from './Pagination';
 
 export default function DoctorList({ doctorProfile, totalItems }) {
 
@@ -154,7 +155,7 @@ export default function DoctorList({ doctorProfile, totalItems }) {
                                                                                     <figure>
                                                                                         <Image
                                                                                             unoptimized
-                                                                                            src={item.profileImage} width={368} height={190}
+                                                                                            src={item.profileImage} fill
                                                                                             alt={item.doctorName}
                                                                                             className="cover-image"
                                                                                         />
@@ -197,18 +198,33 @@ export default function DoctorList({ doctorProfile, totalItems }) {
                                                                                 </div>
                                                                             </div>
                                                                             <div className="ms-auto">
-                                                                                <span className="me-4">
-                                                                                    <FontAwesomeIcon icon={faCalendar} />{" "}
-                                                                                    {item.available_days}
-                                                                                </span>
-                                                                                <span className="me-4">
-                                                                                    <FontAwesomeIcon icon={faClock} />{" "}
-                                                                                    {item.available_time}
-                                                                                </span>
-                                                                                <span className="reviewText me-5">
-                                                                                    {item.rating} <FontAwesomeIcon icon={faStar} />
-                                                                                </span>
-                                                                                <Link href={item.doctorId} className="text-primary viewDetailsBtn">
+                                                                                {
+                                                                                    item.available_days && (
+                                                                                        <span className="me-4">
+                                                                                            <FontAwesomeIcon icon={faCalendar} />{" "}
+                                                                                            {item.available_days}
+                                                                                        </span>
+                                                                                    )
+                                                                                }
+                                                                                
+                                                                                {
+                                                                                    item.available_time && (
+                                                                                        <span className="me-4">
+                                                                                            <FontAwesomeIcon icon={faClock} />{" "}
+                                                                                            {item.available_time}
+                                                                                        </span>
+                                                                                    )
+                                                                                }
+                                                                                
+                                                                                {
+                                                                                    item.rating && (
+                                                                                        <span className="reviewText me-5">
+                                                                                            {item.rating} <FontAwesomeIcon icon={faStar} />
+                                                                                        </span>
+                                                                                    )
+                                                                                }
+                                                                                
+                                                                                <Link href={`/doctor-profile/${item.doctorId}`} className="text-primary viewDetailsBtn">
                                                                                     View Profile <FontAwesomeIcon icon={faChevronRight} />
                                                                                 </Link>
                                                                             </div>
@@ -224,26 +240,13 @@ export default function DoctorList({ doctorProfile, totalItems }) {
                                         </div>
                                     </div>
                                     <div className="center-block text-center">
-                                        {button > 1 && <ul className="pagination mb-5 mb-lg-0">
-                                            <li className="page-item page-prev disabled">
-                                                <button className="page-link" onClick={() => pagination(idx - 1)} tabIndex={-1}>
-                                                    Prev
-                                                </button>
-                                            </li>
-                                            {
-                                                Array.from({ length: totalItems }, (_, i) => <li className="page-item active" key={i}>
-                                                    <button className="page-link" onClick={() => pagination(i + 1)} >
-                                                        {i + 1}
-                                                    </button>
-                                                </li>)
-                                            }
-
-                                            <li className="page-item page-next">
-                                                <button className="page-link" onClick={() => pagination(idx + 1)}>
-                                                    Next
-                                                </button>
-                                            </li>
-                                        </ul>}
+                                        {button > 1 && 
+                                            <Pagination
+                                                currentPage={idx}
+                                                totalPages={button}
+                                                onPageChange={pagination}
+                                            />
+                                        }
                                     </div>
                                 </div>
                             </div>

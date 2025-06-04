@@ -48,26 +48,25 @@ export default function VideoPage({ doctordetail, videoList, doctor,specializati
                             <div className="card articalDetails">
                                 <div className="card-body">
                                     <div className="item7-card-img">
-                                        <Image src={doctor?.thumbnailImage} alt={doctor?.videoTitle} width={786} height={485} unoptimized />
+                                        <Image src={doctor?.thumbnailImage} alt={doctor?.videoTitle} fill unoptimized />
                                         <div className="play-button" onClick={openModal}>
                                             <span className="triangle"></span>
-
                                         </div>
 
                                         <div className="item7-card-text">
-                                            <span className="badge bg-pink">{doctor?.videoTitle}</span>
+                                            <span className="badge bg-pink">{doctor?.specialization}</span>
                                         </div>
                                     </div>
                                     <div className="item7-card-desc d-flex mb-2 mt-3">
                                         <span>
                                             <FontAwesomeIcon icon={faCalendar} />  <DaysCalculator today={new Date().toLocaleDateString()} targetDate={doctor.publishedDate}/>
                                         </span>
-                                        <span>
+                                        <span className='ms-2'>
                                             <FontAwesomeIcon icon={faUser} /> {doctor?.doctorName}
                                         </span>
                                         <div className="ms-auto">
                                             <span className="me-0">
-                                                <FontAwesomeIcon icon={faEye} />{doctor?.views}
+                                                <FontAwesomeIcon icon={faEye} /> {doctor?.views}
                                             </span>
                                         </div>
                                     </div>
@@ -99,7 +98,7 @@ export default function VideoPage({ doctordetail, videoList, doctor,specializati
                                             <div className="cat-item">
                                                 <Link href={`/doctor-profile/${doctordetail?.doctorId}`} />
                                                 <div className="cat-img bg-primary-transparent brround">
-                                                    <Image src={doctordetail?.profileImage} className="img-fluid" width={155} height={80} alt="img" unoptimized />
+                                                    <Image src={doctordetail?.profileImage} className="img-fluid" fill alt="img" unoptimized />
                                                 </div>
                                                 <div className="cat-desc">
                                                     <h5>
@@ -138,7 +137,7 @@ export default function VideoPage({ doctordetail, videoList, doctor,specializati
                                             <Link href={`/doctors/${item.videoId}`} />
                                             <div className="interviewCardBody">
                                                 <figure>
-                                                    <Image src={item.thumbnailImage} alt={item.videoTitle} width={96} height={80} unoptimized />
+                                                    <Image src={item.thumbnailImage} alt={item.videoTitle} fill unoptimized />
                                                     <div className="play-button">
                                                         <span className="triangle"></span>
                                                     </div>
@@ -148,7 +147,11 @@ export default function VideoPage({ doctordetail, videoList, doctor,specializati
                                                         {item.videoTitle}
                                                     </h5>
                                                     <p>
-                                                        <span>{item.views}</span>
+                                                        {
+                                                            item.views && (
+                                                                <span>{item.views}</span>
+                                                            )
+                                                        }
 
                                                         <span><DaysCalculator today={new Date().toLocaleDateString()} targetDate={item.publishedDate}/></span>
                                                     </p>
@@ -172,7 +175,7 @@ export default function VideoPage({ doctordetail, videoList, doctor,specializati
                                                         <li key={id} className="list-group-item">
                                                             <Link href="/" className="text-dark">
                                                                 <span className="specializationIcon">
-                                                                    <Image src="/images/doctor-profile/profile-1.jpg" className="img-fluid" width={155} height={80} alt="img" />
+                                                                    <Image src="/images/doctor-profile/profile-1.jpg" className="img-fluid" fill alt="img" />
                                                                 </span> {item.specialization}
                                                                 <span className="badgetext badge rounded-pill bg-light mb-0 mt-1">
                                                                     {item.count}

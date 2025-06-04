@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Breadcrumb from "@/app/component/Breadcrumb";
+import Breadcrumb from "../component/Breadcrumb";
 
 export default function About() {
     return (

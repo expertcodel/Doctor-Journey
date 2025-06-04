@@ -64,7 +64,7 @@ export default function ThumbnailVArticleCarousel({doctorArticle}) {
                                                 <div className="carousel-item active">
                                                     <figure>
                                                         <Image
-                                                            src={item.thumbnailImage} width={200} height={242}
+                                                            src={item.thumbnailImage} fill
                                                             alt={item.articleTitle}
                                                             className="cover-image"
                                                             unoptimized

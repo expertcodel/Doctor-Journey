@@ -43,47 +43,13 @@ export default function ThumbnailActivityCarousel({doctorCards}) {
   return (
     <>
       {/* Thumbnail Slider */}
-      {/* <div className="swiper activity-slider customSwiper">
-        <div className="swiper-wrapper">
-            {
-                doctorCards.map((card) => (
-                    <div key={card.id} className="swiper-slide">
-                        <div className="drCard">
-                            <div className="card mb-0">
-                                <div className="item7-card-img">
-                                    <Link href={`/doctors/${card.id}`} />
-                                    <Image src={card.image} width={368} height={190} alt="img" className="cover-image" />
-                                    <div className="play-button">
-                                        <span className="triangle"></span>
-                                    </div>
-                                </div>
-                                <div className="card-body">
-                                    <Link href={`/doctors/${card.id}`} className="text-dark">
-                                        <h4 className="font-weight-semibold">{card.author}</h4>
-                                    </Link>
-                                    <p>{card.title2}</p>
-                                    <div className="item7-card-desc d-flex">
-                                        <span>{card.title}</span>
-                                        <div className="ms-auto">
-                                            <span>{card.views}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                ))
-            }
-        </div>
-      </div> */}
-
       <div className="row g-md-4 g-3">
         {doctorCards.map((card) => (
           <div className="col-md-6 col-12 drCard" key={card.videoId}>
             <div className="card mb-0">
               <div className="item7-card-img">
                 <Link href={`/doctors/${card.videoId}`} />
-                <Image src={card.thumbnailImage} width={368} height={190} alt="img" className="cover-image" unoptimized />
+                <Image src={card.thumbnailImage} fill alt="img" className="cover-image" unoptimized />
                 <div className="play-button">
                   <span className="triangle"></span>
                 </div>

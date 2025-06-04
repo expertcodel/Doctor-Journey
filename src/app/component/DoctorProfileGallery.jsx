@@ -21,7 +21,7 @@ export default function DoctorProfileGallery({gallery}) {
                 <a data-fancybox="image-gallery" data-src={item} />
                 <figure>
                     <Image
-                        src={item} width={675} height={450}
+                        src={item} fill
                         alt="img"
                         className="cover-image"
                         unoptimized
@@ -29,40 +29,6 @@ export default function DoctorProfileGallery({gallery}) {
                 </figure>
             </div>)
             }
-          
-            {/* imageSec */}
-            {/* <div className='imageSec'>
-                <a data-fancybox="image-gallery" data-src="/images/doctor-profile/profile-2.jpg" />
-                <figure>
-                    <Image
-                        src="/images/doctor-profile/profile-2.jpg" width={675} height={450}
-                        alt="img"
-                        className="cover-image"
-                    />
-                </figure>
-            </div> */}
-            {/* imageSec */}
-            {/* <div className='imageSec'>
-                <a data-fancybox="image-gallery" data-src="/images/doctor-profile/profile-3.jpg" />
-                <figure>
-                    <Image
-                        src="/images/doctor-profile/profile-3.jpg" width={675} height={450}
-                        alt="img"
-                        className="cover-image"
-                    />
-                </figure>
-            </div> */}
-            {/* imageSec */}
-            {/* <div className='imageSec'>
-                <a data-fancybox="image-gallery" data-src="/images/doctor-profile/details.jpg" />
-                <figure>
-                    <Image
-                        src="/images/doctor-profile/details.jpg" width={675} height={450}
-                        alt="img"
-                        className="cover-image"
-                    />
-                </figure>
-            </div> */}
         </div>
     </>
   );

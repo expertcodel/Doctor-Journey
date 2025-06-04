@@ -48,7 +48,7 @@ export default function ThumbnailBlogsCarousel({blogList}) {
             <div className="card mb-0">
                 <div className="item7-card-img">
                     <Link href="javascript:void(0);" />
-                    <Image src="/images/doctor-profile/profile-1.jpg" width={368} height={190} alt="img" className="cover-image" />
+                    <Image src="/images/doctor-profile/profile-1.jpg" fill alt="img" className="cover-image" />
                 </div>
                 <div className="card-body p-4">
                     <div className="item7-card-desc d-flex mb-2">
@@ -94,7 +94,7 @@ export default function ThumbnailBlogsCarousel({blogList}) {
             <div className="card mb-0">
                 <div className="item7-card-img">
                     <Link href="javascript:void(0);" />
-                    <Image unoptimized src={blog.blogImage} width={368} height={190} alt="img" className="cover-image" />
+                    <Image unoptimized src={blog.blogImage} fill alt="img" className="cover-image" />
                 </div>
                 <div className="card-body p-4">
                     <div className="item7-card-desc d-flex mb-2">
@@ -141,7 +141,7 @@ export default function ThumbnailBlogsCarousel({blogList}) {
             <div className="card mb-0">
                 <div className="item7-card-img">
                     <Link href="javascript:void(0);" />
-                    <Image src="/images/doctor-profile/profile-1.jpg" width={368} height={190} alt="img" className="cover-image" />
+                    <Image src="/images/doctor-profile/profile-1.jpg" fill alt="img" className="cover-image" />
                 </div>
                 <div className="card-body p-4">
                     <div className="item7-card-desc d-flex mb-2">
@@ -186,7 +186,7 @@ export default function ThumbnailBlogsCarousel({blogList}) {
             <div className="card mb-0">
                 <div className="item7-card-img">
                     <Link href="javascript:void(0);" />
-                    <Image src="/images/doctor-profile/profile-1.jpg" width={368} height={190} alt="img" className="cover-image" />
+                    <Image src="/images/doctor-profile/profile-1.jpg" fill alt="img" className="cover-image" />
                 </div>
                 <div className="card-body p-4">
                     <div className="item7-card-desc d-flex mb-2">
@@ -231,7 +231,7 @@ export default function ThumbnailBlogsCarousel({blogList}) {
             <div className="card mb-0">
                 <div className="item7-card-img">
                     <Link href="javascript:void(0);" />
-                    <Image src="/images/doctor-profile/profile-1.jpg" width={368} height={190} alt="img" className="cover-image" />
+                    <Image src="/images/doctor-profile/profile-1.jpg" fill alt="img" className="cover-image" />
                 </div>
                 <div className="card-body p-4">
                     <div className="item7-card-desc d-flex mb-2">
@@ -276,7 +276,7 @@ export default function ThumbnailBlogsCarousel({blogList}) {
             <div className="card mb-0">
                 <div className="item7-card-img">
                     <Link href="javascript:void(0);" />
-                    <Image src="/images/doctor-profile/profile-1.jpg" width={368} height={190} alt="img" className="cover-image" />
+                    <Image src="/images/doctor-profile/profile-1.jpg" fill alt="img" className="cover-image" />
                 </div>
                 <div className="card-body p-4">
                     <div className="item7-card-desc d-flex mb-2">
