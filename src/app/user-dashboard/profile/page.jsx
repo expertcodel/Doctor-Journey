@@ -163,84 +163,111 @@ export default function Profile() {
                                                 {/* upgradeCard */}
                                                 <div className="nav upgradeCard">
                                                     {/* card */}
-                                                    <div className={userType.readers ? "card disabled" : "card"} style={{ pointerEvents: 'auto' }}>
-                                                        {
-                                                            !userType.readers && <Link href="#applyAuthor" data-bs-toggle="tab" />
-                                                        }
-                                                        <div className="cardBody">
-                                                            <figure>
-                                                                <Image src="/images/upgrade-icons/author.png" width={60} height={60} alt="user" />
-                                                                <figcaption>
-                                                                    Apply for <span>Author</span>
-                                                                </figcaption>
-                                                            </figure>
-                                                        </div>
+                                                    <div className="profileCardMain">
+                                                        <div className={userType.readers ? "card disabled" : "card"} style={{ pointerEvents: 'auto' }}>
+                                                            {
+                                                                !userType.readers && <Link href="#applyAuthor" data-bs-toggle="tab" />
+                                                            }
+                                                            <div className="cardBody">
+                                                                <figure>
+                                                                    <Image src="/images/upgrade-icons/author.png" width={60} height={60} alt="user" />
+                                                                    <figcaption>
+                                                                        Apply for <span>Author</span>
+                                                                    </figcaption>
+                                                                </figure>
+                                                            </div>
 
+                                                            {
+                                                                userType.readers && <>
+                                                                    <FontAwesomeIcon icon={faCheckCircle} className="greenTick" />
+                                                                </>
+                                                            }
+                                                        </div>
                                                         {
                                                             userType.readers && <>
-                                                                <em onClick={openLink}>Go to Dashboard</em>
-                                                                <FontAwesomeIcon icon={faCheckCircle} className="greenTick" />
+                                                                <button className="btn btn-info mt-3 btn-block" onClick={openLink}>Go to Dashboard</button>
                                                             </>
                                                         }
                                                     </div>
                                                     {/* card */}
-                                                    <div className={userType.doctor ? "card disabled" : "card"}style={{ pointerEvents: 'auto' }}>
-                                                        {
-                                                            !userType.doctor && <Link href="#applyDoctor" data-bs-toggle="tab" />
-                                                        }
+                                                    <div className="profileCardMain">
+                                                        <div className={userType.doctor ? "card disabled" : "card"}style={{ pointerEvents: 'auto' }}>
+                                                            {
+                                                                !userType.doctor && <Link href="#applyDoctor" data-bs-toggle="tab" />
+                                                            }
 
-                                                        <div className="cardBody">
-                                                            <figure>
-                                                                <Image src="/images/upgrade-icons/doctor.png" width={60} height={60} alt="user" />
-                                                                <figcaption>
-                                                                    Apply for <span>Doctor</span>
-                                                                </figcaption>
-                                                            </figure>
+                                                            <div className="cardBody">
+                                                                <figure>
+                                                                    <Image src="/images/upgrade-icons/doctor.png" width={60} height={60} alt="user" />
+                                                                    <figcaption>
+                                                                        Apply for <span>Doctor</span>
+                                                                    </figcaption>
+                                                                </figure>
+                                                            </div>
+                                                            {
+                                                                userType.doctor && <>
+                                                                    <FontAwesomeIcon icon={faCheckCircle} className="greenTick" />
+                                                                </>
+                                                            }
                                                         </div>
                                                         {
                                                             userType.doctor && <>
-                                                                <em onClick={openLink}>Go to Dashboard</em><FontAwesomeIcon icon={faCheckCircle} className="greenTick" />
+                                                                <button className="btn btn-info mt-3 btn-block" onClick={openLink}>Go to Dashboard</button>
                                                             </>
                                                         }
                                                     </div>
                                                     {/* card */}
-                                                    <div className={userType.publisher ? "card disabled" : "card"} style={{ pointerEvents: 'auto' }}>
-                                                        {
-                                                            !userType.publisher &&<Link href="#applyPublisher" data-bs-toggle="tab" />
+                                                    <div className="profileCardMain">
+                                                        <div className={userType.publisher ? "card disabled" : "card"} style={{ pointerEvents: 'auto' }}>
+                                                            {
+                                                                !userType.publisher &&<Link href="#applyPublisher" data-bs-toggle="tab" />
 
-                                                        }
-                                                       
-                                                        <div className="cardBody">
-                                                            <figure>
-                                                                <Image src="/images/upgrade-icons/publisher.png" width={60} height={60} alt="user" />
-                                                                <figcaption>
-                                                                    Apply for <span>Publisher</span>
-                                                                </figcaption>
-                                                            </figure>
+                                                            }
+                                                        
+                                                            <div className="cardBody">
+                                                                <figure>
+                                                                    <Image src="/images/upgrade-icons/publisher.png" width={60} height={60} alt="user" />
+                                                                    <figcaption>
+                                                                        Apply for <span>Publisher</span>
+                                                                    </figcaption>
+                                                                </figure>
+                                                            </div>
+                                                            {userType.publisher && <>
+                                                                <FontAwesomeIcon icon={faCheckCircle} className="greenTick" />
+                                                            </>}
                                                         </div>
-                                                        {userType.publisher && <>
-                                                            <em onClick={openLink}>Go to Dashboard</em><FontAwesomeIcon icon={faCheckCircle} className="greenTick" />
-                                                        </>}
+                                                        {
+                                                            userType.publisher && <>
+                                                                <button className="btn btn-info mt-3 btn-block" onClick={openLink}>Go to Dashboard</button>
+                                                            </>
+                                                        }
                                                     </div>
                                                     {/* card */}
-                                                    <div className={userType.organization ? "card disabled" : "card"} style={{ pointerEvents: 'auto' }}>
+                                                    <div className="profileCardMain">
+                                                        <div className={userType.organization ? "card disabled" : "card"} style={{ pointerEvents: 'auto' }}>
 
-                                                        {
-                                                            !userType.organization && <Link href="#applyOrganization" data-bs-toggle="tab" />
-                                                        }
+                                                            {
+                                                                !userType.organization && <Link href="#applyOrganization" data-bs-toggle="tab" />
+                                                            }
 
-                                                        <div className="cardBody">
-                                                            <figure>
-                                                                <Image src="/images/upgrade-icons/organization.png" width={60} height={60} alt="user" />
-                                                                <figcaption>
-                                                                    Apply for <span>Organization</span>
-                                                                </figcaption>
-                                                            </figure>
+                                                            <div className="cardBody">
+                                                                <figure>
+                                                                    <Image src="/images/upgrade-icons/organization.png" width={60} height={60} alt="user" />
+                                                                    <figcaption>
+                                                                        Apply for <span>Organization</span>
+                                                                    </figcaption>
+                                                                </figure>
+                                                            </div>
+
+                                                            {userType.organization && <>
+                                                                <FontAwesomeIcon icon={faCheckCircle} className="greenTick" />
+                                                            </>}
                                                         </div>
-
-                                                        {userType.organization && <>
-                                                            <em onClick={openLink}>Go to Dashboard</em><FontAwesomeIcon icon={faCheckCircle} className="greenTick" />
-                                                        </>}
+                                                        {
+                                                            userType.organization && <>
+                                                                <button className="btn btn-info mt-3 btn-block" onClick={openLink}>Go to Dashboard</button>
+                                                            </>
+                                                        }
                                                     </div>
                                                 </div>
                                             </div>

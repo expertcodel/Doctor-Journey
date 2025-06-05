@@ -51,7 +51,7 @@ export default function JournalsThumbCarousel({ journalList }) {
                                 <div className="cat-item">
                                     <Link href={`/journals/${journal.journalsUrl}`} />
                                     <div className="cat-img bg-primary-transparent">
-                                        <Image unoptimized src={journal.imageUrl} className="img-fluid" width={347} height={332} alt="" />
+                                        <Image unoptimized src={journal.imageUrl} className="img-fluid" fill alt="" />
                                     </div>
                                     <div className="cat-desc">
                                         <h5>

@@ -626,8 +626,8 @@ export default function DoctorForm() {
     }
 
     return (
-        <div className="col-xxl-9">
-            <div className="card mt-xxl-n5">
+        <div className="col-12 userViewCard">
+            <div className="card">
                 <div className="card-header">
                     <ul
                         className="nav nav-tabs-custom rounded card-header-tabs border-bottom-0"
@@ -764,7 +764,7 @@ export default function DoctorForm() {
                                             />
                                         </div>
                                         <div className="mb-3">
-                                            <Image id='imagePreview' width={tabsdata.image && 100} height={tabsdata.image && 100} ref={previewImg} alt='' src={tabsdata.image} />
+                                            <Image id='imagePreview' className='showBrowseImg' width={tabsdata.image && 100} height={tabsdata.image && 100} ref={previewImg} alt='' src={tabsdata.image} />
                                         </div>
 
                                     </div>
@@ -954,7 +954,7 @@ export default function DoctorForm() {
                                     <div className="cardBodySec">
                                         <h4>
                                             Location
-                                            <button type="button" onClick={addLocation} className="add-btn" >
+                                            <button type="button" onClick={addLocation} className="add-btn btn btn-info" >
                                                 <i className="ri-add-line" /> Add
                                             </button>
                                         </h4>
@@ -1011,17 +1011,17 @@ export default function DoctorForm() {
                                 {/* <form> */}
 
                                 <div className="cardBodySec">
-                                    <h4>
+                                    <h4 className='d-flex'>
                                         Document
-                                        <button type="button" onClick={addDocument} className="add-btn" >
-                                            <i className="ri-add-line" /> Add
+                                        <button type="button" onClick={addDocument} className="add-btn btn btn-warning ms-auto" >
+                                            <i className="fas fa-plus" /> Add
                                         </button>
                                     </h4>
                                     {document.length > 0 && document.map((item, i) => <div key={i} className="content-section">
 
                                         <div class="text-end">
-                                            {document.length > 1 && <button type="button" onClick={() => removeDocument(i)} className="remove-btn">
-                                                <i className="ri-delete-bin-line" />
+                                            {document.length > 1 && <button type="button" onClick={() => removeDocument(i)} className="remove-btn btn btn-danger ms-auto">
+                                                <i className="fas fa-trash" />
                                             </button>
                                             }
                                         </div>
@@ -1045,7 +1045,10 @@ export default function DoctorForm() {
 
                                                 <input type="file" className="form-control" id={`project-document-img${i}`} placeholder="Choose File" onChange={(e) => handleDocument(e, i)} required={item.documentName !== "" ? true : false} name='documentFile' accept="image/*,application/pdf" ref={domRef} style={{ border: formValidation.document === 0 && '0.5px solid red' }} />
 
-                                                <img priority width={item.documentUrl && 100} height={item.documentUrl && 100} id={`imagePreview${i}`} alt='' style={{ marginTop: '10px' }} ref={(el) => (imgRef.current[i] = el)} src={item.documentUrl} />
+                                                <div className="mt-3">
+                                                    <Image id={`imagePreview${i}`} className='showBrowseImg' width={item.documentUrl && 100} height={item.documentUrl && 100} ref={(el) => (imgRef.current[i] = el)} alt='' src={item.documentUrl} />
+                                                </div>
+                                                {/* <img priority width={item.documentUrl && 100} height={item.documentUrl && 100} id={`imagePreview${i}`} alt='' style={{ marginTop: '10px' }} ref={(el) => (imgRef.current[i] = el)} src={item.documentUrl} /> */}
                                                 <br />
 
 
@@ -1064,112 +1067,6 @@ export default function DoctorForm() {
                                         Next
                                     </button>
                                 </div>
-
-                                {/* <div className='row'>
-
-
-                                    <div className="col-lg-6" >
-                                        <div className="mb-3">
-                                            <label htmlFor="degreeInput" className="form-label">
-                                                Medical degree certificate
-                                            </label>
-                                            <input
-                                                type="text"
-                                                className="form-control"
-                                                id="degreeInput"
-                                                placeholder="Enter degree Name"
-                                                name='degreeName'
-
-
-                                            />
-                                        </div>
-
-                                        <div className="mb-3" id='img2'>
-
-                                            <input
-                                                type="file"
-                                                className="form-control"
-                                                name='degreeDocument'
-                                                placeholder="Choose File"
-                                                accept='image/*'
-                                                onChange={() => fileUpload("profile-img2", 'imagePreview2')}
-                                                id='profile-image2'
-
-                                            />
-                                        </div>
-
-                                        <div className="mb-3">
-                                            <img id='imagePreview2' width={100} height={100} />
-                                        </div>
-
-
-                                    </div>
-
-                                    <div className="col-lg-6">
-                                        <div className="mb-3">
-                                            <label htmlFor="identityInput" className="form-label">
-                                                Proof of identity
-                                            </label>
-                                            <input
-                                                type="text"
-                                                className="form-control"
-                                                id="identityInput"
-                                                placeholder="Aadhar,Passport,Pan,etc"
-                                                name='identityName'
-
-                                            />
-                                        </div>
-
-                                        <div className="mb-3">
-
-                                            <input
-                                                type="file"
-                                                className="form-control"
-                                                name='identityDocument'
-                                                placeholder="Choose File"
-                                                accept='image/*'
-                                                onChange={() => fileUpload("profile-img3", 'imagePreview3')}
-                                                id='profile-image3'
-
-                                            />
-                                        </div>
-
-                                   
-                                    </div>
-
-                                    <div className="col-lg-6">
-                                        <div className="mb-3">
-                                            <label htmlFor="registrationInput" className="form-label">
-                                                Medical Council registration/license
-                                            </label>
-                                            <input
-                                                type="text"
-                                                className="form-control"
-                                                id="registrationInput"
-                                                placeholder="NMC (India), GMC (UK), ECFMG (USA)"
-                                                name='license'
-
-                                            />
-                                        </div>
-
-                                        <div className="mb-3">
-
-                                            <input
-                                                type="file"
-                                                className="form-control"
-                                                name='licenseDocument'
-                                                placeholder="Choose File"
-                                                accept='image/*'
-                                                onChange={() => fileUpload("profile-img4", 'imagePreview4')}
-                                                id='profile-image4'
-
-                                            />
-                                        </div>
-
-                                      
-                                    </div>
-                                </div>  */}
-
 
                                 {/* </form> */}
                             </div>}
@@ -1344,9 +1241,6 @@ export default function DoctorForm() {
                                             </button>
                                             <button type="submit" className="btn btn-primary">
                                                 Submit
-                                            </button>
-                                            <button type="button" className="btn btn-soft-success">
-                                                Cancel
                                             </button>
                                         </div>
                                     </div>

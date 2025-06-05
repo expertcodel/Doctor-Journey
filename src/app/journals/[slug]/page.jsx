@@ -52,7 +52,7 @@ export default async function JournalsDetails({ params }) {
                             <div className="card imgSec">
                                 <div className="card-body">
                                     <div className="item7-card-img">
-                                        <Image unoptimized src={journalDetail.imageUrl} className="img-fluid" width={347} height={332} alt="" />
+                                        <Image unoptimized src={journalDetail.imageUrl} className="img-fluid" fill alt="" />
                                         <div className="item7-card-text">
                                             <span className="badge bg-pink">by Author Name</span>
                                         </div>

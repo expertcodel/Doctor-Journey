@@ -2060,7 +2060,10 @@ body {
     content: ""; position: absolute; top: 50%; left: -24px; transform: translateY(-50%); width: 12px; height: 12px; background: var(--bs-body-bg);
     display: block; border-radius: 100%;
 }
-.heroBanner.withSliders{padding: 0; align-items: flex-start; min-height: auto;}
+.heroBanner.withSliders{padding: 0; align-items: flex-start;}
+.heroBanner .carousel,
+.heroBanner .carousel .carousel-inner,
+.heroBanner .carousel .carousel-inner .carousel-item{min-height: inherit; width: inherit;}
 
 /****** aboutMain *****/
 .aboutMain figure{margin: 0;}
@@ -2539,10 +2542,11 @@ body {
     width: 68px; height: 89px; border-radius: 10px; overflow: hidden; position: relative; flex: none;
     transition: ease all .5s; -webkit-transition: ease all .5s;
 }
-.jrShortCard .card .card-body .cat-item .cat-img img{
+/* .jrShortCard .card .card-body .cat-item .cat-img img{
     position: absolute; top: -9999px; left: -9999px; bottom: -9999px; right: -9999px; margin: auto; width: auto; height: auto; min-height: 100%;
     min-width: fit-content; display: block; padding: 0; max-width: 100%;; max-height: 100%; transition: ease all .5s; -webkit-transition: ease all .5s;
-}
+} */
+.jrShortCard .card .card-body .cat-item .cat-img img{transition: ease all .5s; -webkit-transition: ease all .5s;}
 .jrShortCard .card .card-body .cat-item .cat-desc{display: flex; flex-direction: column;}
 .jrShortCard .card .card-body .cat-item .cat-desc > *{margin: 0;}
 .jrShortCard .card .card-body .cat-item .cat-desc > *:not(:last-child){margin-bottom: 4px;}
@@ -2569,10 +2573,11 @@ body {
     width: 100%; height: 332px; border-radius: 10px; overflow: hidden; position: relative; flex: none;
     transition: ease all .5s; -webkit-transition: ease all .5s;
 }
-.jrLargeCard .card .card-body .cat-item .cat-img img{
+/* .jrLargeCard .card .card-body .cat-item .cat-img img{
     position: absolute; top: 0; left: 0; bottom: 0; right: 0; margin: 0 auto; width: auto; height: auto; min-height: 100%;
     min-width: 100%; display: block; padding: 0; transition: ease all .5s; -webkit-transition: ease all .5s;
-}
+} */
+.jrLargeCard .card .card-body .cat-item .cat-img img{transition: ease all .5s; -webkit-transition: ease all .5s;}
 .jrLargeCard .card .card-body .cat-item .cat-desc{display: flex; flex-direction: column;}
 .jrLargeCard .card .card-body .cat-item .cat-desc > *{margin: 0;}
 .jrLargeCard .card .card-body .cat-item .cat-desc > *:not(:last-child){margin-bottom: 4px;}
@@ -2625,10 +2630,10 @@ body {
     margin: 0; display: flex; align-items: center; justify-content: center; position: relative; height: 450px; overflow: hidden;
     border-top-left-radius: 8px; border-top-right-radius: 8px;
 }
-.journalsDetails .imgSec .card-body .item7-card-img img{
+/* .journalsDetails .imgSec .card-body .item7-card-img img{
     width: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0; height: auto; margin: 0 auto; min-height: 100%;
     min-width: 100%;
-}
+} */
 .journalsDetails .imgSec .card-body .item7-card-desc{
     display: flex; align-items: center; justify-content: center; margin-top: 8px;
 }
@@ -2670,6 +2675,24 @@ body {
 
 .page-link:focus{box-shadow: none;}
 
+/********* userViewCard **********/
+.userViewCard{padding: 0;}
+.userViewCard .card{box-shadow: none; border: none;}
+.userViewCard .card .nav{
+    display: flex; align-items: center; margin: 0;
+}
+.userViewCard .card .nav .nav-item .nav-link{
+    color: var(--bs-dark-text-emphasis); font-size: 16px; position: relative;
+}
+.userViewCard .card .nav .nav-item .nav-link::before{
+    content: ""; position: absolute; left: 0; bottom: -10px; width: 100%; height: 2px; background: var(--secondary-color);
+    display: block; opacity: 0;
+}
+.userViewCard .card .nav .nav-item .nav-link.active{color: var(--secondary-color);}
+.userViewCard .card .nav .nav-item .nav-link.active::before{opacity: 1;}
+.userViewCard .card .nav .nav-item .nav-link i{margin-right: 4px;}
+.userViewCard .card .card-body .showBrowseImg{border: 1px solid var(--bs-border-color);}
+
 @media only screen and (max-width: 991px) {
     /******** mobileToggleHeading ********/
     .horizontalMenu .horizontalMenu-list li.mobileToggleHeading{
@@ -2702,7 +2725,7 @@ body {
     .heroBanner .bodyContent{text-align: center;}
     .heroBanner .bodyContent h1 span,
     .heroBanner .bodyContent p{font-size: 16px;}
-    .heroBanner.withSliders{min-height: auto;}
+    /* .heroBanner.withSliders{min-height: auto;} */
 
     /****** aboutMain ********/
     .aboutMain .aboutBody{margin-top: 32px; align-items: normal;}
