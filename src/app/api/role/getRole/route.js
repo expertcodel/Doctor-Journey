@@ -9,19 +9,25 @@ export async function GET() {
 
 export async function POST(request) {
   const { usertype } = await request.json();
-  //const role = await roleModel();
+
   const connection = await connectTodb();
   if (!connection) {
     return NextResponse.json({ status: false, message: "database error occured!" });
   }
-  // const menubar = await role.findOne({ where: { usertype } });
-  // console.log(JSON.stringify(usertype).substr(0,usertype.length-1),'ragul');
-  let str = "";
-  usertype.forEach((type) => str += `'${type}'` + ',');
-  console.log(str.substr(0, str.length - 1), 'rahul1');
 
+  try {
 
-  const menubar = await connection.query(`CREATE OR REPLACE FUNCTION merge_jsonb_access_recursive(input jsonb)
+    let str = "";
+    if (typeof (usertype) === 'string') {
+      str = `'${usertype}'`;
+    }
+    else {
+      let str1 = "";
+      usertype.forEach((type) => str1 += `'${type}'` + ',');
+      str = str1.substr(0, str1.length - 1);
+    }
+
+    const menubar = await connection.query(`CREATE OR REPLACE FUNCTION merge_jsonb_access_recursive(input jsonb)
 RETURNS jsonb LANGUAGE plpgsql AS $$
 DECLARE
     result jsonb := '[]'::jsonb;
@@ -82,7 +88,7 @@ $$;
 WITH all_access AS (
   SELECT jsonb_array_elements(access) AS role_item
   FROM public."Roles"
-  WHERE usertype IN (${str.substr(0, str.length - 1)})
+  WHERE usertype IN (${str})
 )
 SELECT merge_jsonb_access_recursive(jsonb_agg(role_item)) AS merged_access
 FROM all_access;
@@ -90,6 +96,14 @@ FROM all_access;
 
 
 `)
-  return NextResponse.json({ status: true, menubar: menubar[0][0].merged_access });
+    return NextResponse.json({ status: true, menubar: menubar[0][0].merged_access });
+
+  } catch (error) {
+
+    console.log(error);
+    return NextResponse.json({ status: false, message: "some error occured!" });
+
+  }
+
 
 }

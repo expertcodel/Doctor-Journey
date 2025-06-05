@@ -13,8 +13,7 @@ export default function Profile() {
 
 
     const { userData } = UniversalContext();
-    console.log(userData.usertype);
-
+   
     const [userType, setUsertype] = useState({ 'readers': false, 'author': false, 'doctor': false, 'publisher': false, 'organization': false });
 
     useEffect(() => {
@@ -27,7 +26,7 @@ export default function Profile() {
 
     const openLink = () => {
 
-        window.open('/admin', '_blank');
+        window.open('/dashboard', '_blank');
     }
 
 

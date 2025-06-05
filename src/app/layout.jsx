@@ -34,36 +34,40 @@ export default async function RootLayout({ children }) {
 
   const headersList = await headers();
   const path = headersList.get('x-pathname');
+  console.log(path, "path");
+
   //  path.startsWith(['/about-us','/contact-us','doctor-profile','/doctors','/forgot-password','/register','/user-dashboard','/verify-otp','/login'])
 
 
   return (
 
     <>
-      {!path?.startsWith(['/admin']) ? <html lang="en">
-        <head>
-          <link href="/css/frontend.css" rel="stylesheet" type="text/css" />
-          <link href="/css/color10.css" rel="stylesheet" type="text/css" />
-        </head>
-        <body className={`${geistSans.variable} ${geistMono.variable}`}>
-          <AuthProvider>
-            <main className="mainSec">
-              <Header />
+      {['/about-us', '/articles', '/contact-us', '/doctor-profile', '/doctors', '/forgot-password', '/journals', '/journals-activity', '/login', '/privacy-policy', '/register', '/terms-condition', '/user-dashboard', '/verify-otp'].some(prefix => path.startsWith(prefix)) || path==='/' ?
 
-              <main className="middleSec">{children}</main>
+        <html lang="en">
+          <head>
+            <link href="/css/frontend.css" rel="stylesheet" type="text/css" />
+            <link href="/css/color10.css" rel="stylesheet" type="text/css" />
+          </head>
+          <body className={`${geistSans.variable} ${geistMono.variable}`}>
+            <AuthProvider>
+              <main className="mainSec">
+                <Header />
 
-              <Footer />
-            </main>
-          </AuthProvider>
-        </body>
-        <BootstrapClient />
-      </html> :
+                <main className="middleSec">{children}</main>
+
+                <Footer />
+              </main>
+            </AuthProvider>
+          </body>
+          <BootstrapClient />
+        </html> :
 
         <html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none" data-preloader="disable" data-theme="default" data-theme-colors="default" data-sidebar-visibility="show" data-layout-style="default" data-bs-theme="light" data-layout-width="fluid" data-layout-position="fixed" data-body-image="none">
 
           <head>
             <meta charSet="utf-8" />
-            <title>Journals | Mind</title>
+            <title>Doctors | Journey</title>
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
             <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
             <meta content="Themesbrand" name="author" />
@@ -120,7 +124,6 @@ export default async function RootLayout({ children }) {
           </body>
 
         </html>
-
       }
     </>
   );

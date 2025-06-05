@@ -437,7 +437,7 @@ export default function Page() {
                     </div> */}
 
                     <div className="row">
-                        <div className="col-xxl-3">
+                        <div className="col-12">
 
                             {/*end card*/}
                             <div className="card">

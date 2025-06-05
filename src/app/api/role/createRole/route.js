@@ -29,7 +29,7 @@ export async function POST(request)
         role:'Basic',
         allowed:true,
         path:'scroll',
-        child:[{role:'Email',allowed:true,path:'scroll',child:[{role:'Mail to admin',allowed:true,path:`/${usertype}/basic/email/toadmin`}]},{role:'Profile',allowed:true,path:`/${usertype}/basic/profile`},{role:'theme',allowed:true,path:`/${usertype}/basic/theme`}]
+        child:[{role:'Email',allowed:true,path:'scroll',child:[{role:'Mail to admin',allowed:true,path:`/dashboard/basic/email/toadmin`}]},{role:'Profile',allowed:true,path:`/dashboard/basic/profile`},{role:'theme',allowed:true,path:`/dashboard/basic/theme`}]
       },
       {
         role:'Manage Users',
@@ -39,21 +39,21 @@ export async function POST(request)
 
           role:'User Management',
           allowed:true,
-          path:`/${usertype}/user`,
+          path:`/dashboard/user`,
           
         },
         {
           
           role:'Role Management',
           allowed:true,
-          path:`/${usertype}/role`
+          path:`/dashboard/role`
           
   
       },
       {
           role:'Users',
           allowed:true,
-          path:`/${usertype}/users`
+          path:`/dashboard/users`
         }]
 
       },
@@ -66,26 +66,26 @@ export async function POST(request)
 
           role:'Create Articles',
           allowed:true,
-          path:`/${usertype}/createarticle`,
+          path:`/dashboard/createarticle`,
           
         },
         {
           
           role:'Articles List',
           allowed:true,
-          path:`/${usertype}/articlelist`
+          path:`/dashboard/articlelist`
         },
         {
           
           role:'Approved Articles',
           allowed:true,
-          path:`/${usertype}/articlelist`
+          path:`/dashboard/articlelist`
         },
         {
           
           role:'Published Articles',
           allowed:true,
-          path:`/${usertype}/publishedarticles`
+          path:`/dashboard/publishedarticles`
         }
       ]
 
@@ -99,28 +99,28 @@ export async function POST(request)
 
           role:'Create Journals',
           allowed:true,
-          path:`/${usertype}/journal/createjournals`,
+          path:`/dashboard/journal/createjournals`,
           
         },
         {
           
           role:'Journals List',
           allowed:true,
-          path:`/${usertype}/journal/journalslist`
+          path:`/dashboard/journal/journalslist`
         },
         {
           
           role:'Approved Journals',
           allowed:true,
-          path:`/${usertype}/journal/approvedjournals`
+          path:`/dashboard/journal/approvedjournals`
         },
         {
           
           role:'Published Journals',
           allowed:true,
-          path:`/${usertype}/journal/publishedjournals`
+          path:`/dashboard/journal/publishedjournals`
         },
-        {role:'Journals Slider',allowed:true,path:'scroll',child:[{role:'Create Slider',allowed:true,path:`/${usertype}/journal/slider/create`},{role:'Slider List',allowed:true,path:`/${usertype}/journal/slider/list`}]},{role:'Journals Offer',allowed:true,path:'scroll',child:[{role:'Create Offer',allowed:true,path:`/${usertype}/journal/offer/create`},{role:'Offer List',allowed:true,path:`/${usertype}/journal/offer/list`}]}
+        {role:'Journals Slider',allowed:true,path:'scroll',child:[{role:'Create Slider',allowed:true,path:`/dashboard/journal/slider/create`},{role:'Slider List',allowed:true,path:`/dashboard/journal/slider/list`}]},{role:'Journals Offer',allowed:true,path:'scroll',child:[{role:'Create Offer',allowed:true,path:`/dashboard/journal/offer/create`},{role:'Offer List',allowed:true,path:`/dashboard/journal/offer/list`}]}
       ]
 
       },
@@ -133,26 +133,26 @@ export async function POST(request)
 
           role:'Profile',
           allowed:true,
-          path:`/${usertype}/profile`,
+          path:`/dashboard/profile`,
           
         },
         {
           
           role:'Users & Team',
           allowed:true,
-          path:`/${usertype}/user`
+          path:`/dashboard/user`
         },
         {
           
           role:'Billing & Payments',
           allowed:true,
-          path:`/${usertype}/billing`
+          path:`/dashboard/billing`
         },
         {
           
           role:'System Activity Logs',
           allowed:true,
-          path:`/${usertype}/activity`
+          path:`/dashboard/activity`
         }
       ]
 
@@ -166,27 +166,27 @@ export async function POST(request)
 
           role:'Create Doctors',
           allowed:true,
-          path:`/${usertype}/doctors/create`,
+          path:`/dashboard/doctors/create`,
           
         },
         {
           
           role:'Doctors List',
           allowed:true,
-          path:`/${usertype}/doctors/list`
+          path:`/dashboard/doctors/list`
         },
         {
 
           role:'Upload Videos',
           allowed:true,
-          path:`/${usertype}/doctors/videos/create`,
+          path:`/dashboard/doctors/videos/create`,
           
         },
         {
           
           role:'Videos List',
           allowed:true,
-          path:`/${usertype}/doctors/videos/list`
+          path:`/dashboard/doctors/videos/list`
         },
        
       ]
@@ -201,14 +201,14 @@ export async function POST(request)
 
           role:'Create Authors',
           allowed:true,
-          path:`/${usertype}/authors/create`,
+          path:`/dashboard/authors/create`,
           
         },
         {
           
           role:'Authors List',
           allowed:true,
-          path:`/${usertype}/authors/list`
+          path:`/dashboard/authors/list`
         },
        
       ]
@@ -223,14 +223,14 @@ export async function POST(request)
 
       //     role:'Upload Videos',
       //     allowed:true,
-      //     path:`/${usertype}/videos/upload`,
+      //     path:`/dashboard/videos/upload`,
           
       //   },
       //   {
           
       //     role:'Videos List',
       //     allowed:true,
-      //     path:`/${usertype}/videos/list`
+      //     path:`/dashboard/videos/list`
       //   },
        
       // ]
@@ -245,14 +245,14 @@ export async function POST(request)
 
           role:'Create Blog',
           allowed:true,
-          path:`/${usertype}/blog/create`,
+          path:`/dashboard/blog/create`,
           
         },
         {
           
           role:'Blogs List',
           allowed:true,
-          path:`/${usertype}/blog`
+          path:`/dashboard/blog`
         },
        
       ]
@@ -267,14 +267,14 @@ export async function POST(request)
 
           role:'Create Testimonial',
           allowed:true,
-          path:`/${usertype}/testimonial/create`,
+          path:`/dashboard/testimonial/create`,
           
         },
         {
           
           role:'Testimonials List',
           allowed:true,
-          path:`/${usertype}/testimonial/list`
+          path:`/dashboard/testimonial/list`
         },
        
       ]

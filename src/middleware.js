@@ -70,9 +70,9 @@ export async function middleware(request) {
     // await cookies().set('userData', JSON.stringify(verifiedtoken.payload))
 
 
-    if (pathname.startsWith([`/${verifiedtoken.payload.userData.usertype}`])) {
-      return response;
-    }
+    // if (pathname.startsWith([`/${verifiedtoken.payload.userData.usertype}`])) {
+    //   return response;
+    // }
 
 
 

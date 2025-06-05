@@ -27,8 +27,8 @@ export async function POST(request) {
 
     } catch (error) {
 
-        console.log(error,'err');
-        
+        console.log(error, 'err');
+
         const message = extractErrorMessage(error);
         return NextResponse.json({ status: false, message });
     }
@@ -54,7 +54,7 @@ export async function PUT(request) {
 
         }
 
-        await videomodel.update({ videoUrl, videoTitle, videoContent, thumbnailImage: thumbnailImage && thumbnailImage,videoStatus}, { where: { videoId } });
+        await videomodel.update({ videoUrl, videoTitle, videoContent, thumbnailImage: thumbnailImage && thumbnailImage, videoStatus }, { where: { videoId } });
         return NextResponse.json({ status: true, message: "Video Uploaded Successfully!" });
 
 
@@ -97,6 +97,8 @@ export async function GET(request) {
     const input = new URL(request.url).searchParams;
     const name = input.get('name');
     const page = input.get('page');
+    const userId = input.get('userId');
+    const usertype = input.get('usertype');
     const videomodel = await videoModel();
     if (!videomodel) {
         return NextResponse.json({ status: false, message: "database error occured" });
@@ -105,15 +107,32 @@ export async function GET(request) {
     try {
 
 
-        const { rows, count } = await videomodel.findAndCountAll({
+        if (typeof (usertype) === 'string') {
 
-            limit: 10,
-            offset: (page - 1) * 10,
-            where: { [Op.or]: { videoTitle: { [Op.iLike]: `%${name}%` }, videoId: { [Op.iLike]: `%${name}%` } } },
-            order: [['createdAt', 'DESC']]
-        })
+            const { rows, count } = await videomodel.findAndCountAll({
 
-        return NextResponse.json({ status: true, videolist: rows, totalItems: count });
+                limit: 10,
+                offset: (page - 1) * 10,
+                where: { [Op.or]: { videoTitle: { [Op.iLike]: `%${name}%` }, videoId: { [Op.iLike]: `%${name}%` } } },
+                order: [['createdAt', 'DESC']]
+            })
+            return NextResponse.json({ status: true, videolist: rows, totalItems: count });
+
+        }
+        else {
+
+            const { rows, count } = await videomodel.findAndCountAll({
+
+                limit: 10,
+                offset: (page - 1) * 10,
+                where: { [Op.or]: { videoTitle: { [Op.iLike]: `%${name}%` }, videoId: { [Op.iLike]: `%${name}%` } }, userId },
+                order: [['createdAt', 'DESC']]
+            })
+            return NextResponse.json({ status: true, videolist: rows, totalItems: count });
+
+        }
+
+
 
 
     } catch (error) {

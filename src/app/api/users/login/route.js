@@ -40,15 +40,7 @@ export async function POST(request) {
 
    try {
 
-      const menubar = await role.findOne({ where: { usertype: isValiduser.usertype } });
-       //console.log(menubar.access);
-
-      const token = jwt.sign({ userData: isValiduser}, process.env.AUTHENTICATION_KEY, { expiresIn: '1h' })
-
-      
-      //  console.log(token,"jd");
-
-      //NextResponse.cookies.set('token',token,{httpOnly:true,maxAge:3600})
+      const token = jwt.sign({ userData: isValiduser }, process.env.AUTHENTICATION_KEY, { expiresIn: '1h' })
 
       // await activitymodel.create({
 
@@ -60,12 +52,18 @@ export async function POST(request) {
 
       // })
 
-      await cookies().set('token', token, { httpOnly: true, maxAge: 3600,path:'/'});
+      let flag = false;
+      if(typeof(isValiduser.usertype)==='string')
+      {
+         flag = true;
+      }
+      
+      await cookies().set('token', token, { httpOnly: true, maxAge: 3600, path: '/' });
 
-   //  const response= NextResponse.json({ status: 1, message: "Verified user!", url: `/${isValiduser.usertype}` });
-   //  response.cookies.set('token', token, { httpOnly: true, maxAge: 3600,path:'/'});
-   //  return response
-  return NextResponse.json({ status: 1, message: "Verified user!", url: `/user-dashboard` });
+      //  const response= NextResponse.json({ status: 1, message: "Verified user!", url: `/${isValiduser.usertype}` });
+      //  response.cookies.set('token', token, { httpOnly: true, maxAge: 3600,path:'/'});
+      //  return response
+      return NextResponse.json({ status: 1, message: "Verified user!", url: flag ? isValiduser.usertype : `/user-dashboard` });
 
    } catch (error) {
 
