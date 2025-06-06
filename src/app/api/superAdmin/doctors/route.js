@@ -4,10 +4,13 @@ import { doctorModel } from "../../../models/doctor.model";
 import { fileUploader } from "../../../../utils/fileUploader";
 import { Op } from "sequelize";
 import { connectTodb } from "../../../../app/database/database";
+import { UserModel } from "../../../models/user.model";
+import jwt from 'jsonwebtoken'
+import { cookies } from "next/headers";
 export async function POST(request) {
 
-    
-    
+
+
     const input = await request.formData();
     const profileImage = input.get('profileImage');
     const degreeDocument = input.getAll('documentImage');
@@ -15,7 +18,8 @@ export async function POST(request) {
     const { doctorName, specialization, qualification, email, number, shortDescription, address, location, experience, city, country, zip, branchAddress, branchName, bankName, ifsc, accountNumber, license, identityName, document, gstNumber, accountType, accountName, userId } = JSON.parse(input.get('data'));
     const doctormodel = await doctorModel();
     const connection = await connectTodb();
-    console.log(userId,'userid');
+     const usermodel = await UserModel();
+    console.log(userId, 'userid');
     if (!doctormodel) {
         return NextResponse.json({ status: false, message: "database error occured" });
     }
@@ -56,6 +60,10 @@ export async function POST(request) {
             location: (location[0].latitude && location[0].longitude) ? location : null, userId
         })
 
+        const isValiduser = await usermodel.findOne({ where: { userId } });
+        const token = jwt.sign({ userData: isValiduser }, process.env.AUTHENTICATION_KEY, { expiresIn: '1h' })
+        await cookies().set('token', token, { httpOnly: true, maxAge: 3600, path: '/' });
+
         return NextResponse.json({ status: true, message: "Doctor created successfully!" });
 
 
@@ -63,7 +71,7 @@ export async function POST(request) {
 
         const message = extractErrorMessage(error);
         //console.log(error);
-        
+
         return NextResponse.json({ status: false, message });
     }
 }

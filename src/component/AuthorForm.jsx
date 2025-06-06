@@ -5,10 +5,13 @@ import Image from 'next/image';
 import Tooltip from './Tooltip';
 import { extractErrorMessage } from '../utils/errorMessage';
 import { useRouter } from 'next/navigation';
-
+import { UniversalContext } from './context';
+import { usePathname } from 'next/navigation';
 export default function AuthorForm() {
 
+    const path=usePathname();
     const [errorMsg, setErrormsg] = useState("");
+    const { userData } = UniversalContext();
     const [imageUrl, setImageurl] = useState(null);
     const [tabs, setTabs] = useState({ first: true, second: false, third: false, fourth: false });
     const [formValidation, setFormvalidation] = useState({ name: -1, number: -1, email: -1, image: -1, specialization: -1, qualification: -1, city: -1, country: -1, zip: -1, accountNumber: -1, accountType: -1, ifsc: -1, accountName: -1, branchName: -1, branchAddress: -1, bankName: -1, document: -1 })
@@ -197,7 +200,7 @@ export default function AuthorForm() {
 
                 const data = {
 
-                    authorName, specialization, qualification, email, number, shortDescription, address, location, experience, city, country, zip, branchAddress, branchName, bankName, ifsc, accountNumber, gstNumber, accountType, accountName, document
+                    authorName, specialization, qualification, email, number, shortDescription, address, location, experience, city, country, zip, branchAddress, branchName, bankName, ifsc, accountNumber, gstNumber, accountType, accountName, document, userId: userData.userId
                 }
 
                 const formData = new FormData();
@@ -218,8 +221,15 @@ export default function AuthorForm() {
 
                 if (res.status) {
 
-                    sessionStorage.setItem('successMsg', 'author Profile Created Successfully');
-                    router.push("/admin/authors/list");
+                    if (path.startsWith('/user-dashboard')) {
+                        sessionStorage.setItem('successMsg', 'Author Profile Created Successfully');
+                        window.location.href = "/user-dashboard/profile";
+                    }
+                    else {
+                        sessionStorage.setItem('successMsg', 'Author Profile Created Successfully');
+                        router.push("/admin/authors/list");
+                    }
+
 
                 }
                 else {
@@ -273,7 +283,7 @@ export default function AuthorForm() {
                 validation['name'] = 1;
             }
 
-            if (tabsdata.number === "") {
+            if (!phoneValidator(tabsdata.number)) {
                 validation['number'] = 0;
                 flag = false;
             }
@@ -281,13 +291,14 @@ export default function AuthorForm() {
                 validation['number'] = 1;
             }
 
-            if (tabsdata.email === "") {
+            if (!validateEmail(tabsdata.email)) {
                 validation['email'] = 0;
                 flag = false;
             }
             else {
                 validation['email'] = 1;
             }
+
 
             if (!tabsdata.image) {
                 validation['image'] = 0;
@@ -421,6 +432,28 @@ export default function AuthorForm() {
 
     }
 
+    const validateEmail = (email) => {
+        return String(email)
+            .toLowerCase()
+            .match(
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            );
+    };
+
+    const phoneValidator = (inputtxt) => {
+
+        let phoneno = /^\d{10}$/;
+        if (inputtxt.match(phoneno)) {
+            return true;
+        }
+        else {
+
+            return false;
+        }
+
+
+    }
+
     const validateSecond = () => {
 
         let validation = { ...formValidation };
@@ -436,7 +469,9 @@ export default function AuthorForm() {
             validation['name'] = 1;
         }
 
-        if (tabsdata.number === "") {
+
+
+        if (!phoneValidator(tabsdata.number)) {
             validation['number'] = 0;
             flag = false;
         }
@@ -444,7 +479,7 @@ export default function AuthorForm() {
             validation['number'] = 1;
         }
 
-        if (tabsdata.email === "") {
+        if (!validateEmail(tabsdata.email)) {
             validation['email'] = 0;
             flag = false;
         }
@@ -530,7 +565,7 @@ export default function AuthorForm() {
             validation['name'] = 1;
         }
 
-        if (tabsdata.number === "") {
+        if (!phoneValidator(tabsdata.number)) {
             validation['number'] = 0;
             flag = false;
         }
@@ -538,7 +573,7 @@ export default function AuthorForm() {
             validation['number'] = 1;
         }
 
-        if (tabsdata.email === "") {
+        if (!validateEmail(tabsdata.email)) {
             validation['email'] = 0;
             flag = false;
         }
@@ -625,8 +660,8 @@ export default function AuthorForm() {
     }
 
     return (
-        <div className="col-xxl-9">
-            <div className="card mt-xxl-n5">
+        <div className="col-12 userViewCard">
+            <div className="card">
                 <div className="card-header">
                     <ul
                         className="nav nav-tabs-custom rounded card-header-tabs border-bottom-0"
@@ -687,11 +722,8 @@ export default function AuthorForm() {
                                     <div className="col-lg-6">
                                         <div className="mb-3">
                                             <label htmlFor="firstnameInput" className="form-label">
-                                                author Name
+                                                Author Name
                                             </label>
-
-
-
                                             <input
                                                 type="text"
                                                 className="form-control"

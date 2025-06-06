@@ -4,9 +4,15 @@ import Header from '../../component/Header'
 import Menubar from '../../component/Menu.jsx'
 import { cookies } from 'next/headers';
 import AdminLayout from '../../component/AdminLayout.jsx'
-export default async function Layoutchild({ children }) {
+import { notFound } from 'next/navigation';
+export default async function Layoutchild({ children,params }) {
 
 
+  const {slug}=await params;
+  if(slug!=='dashboard')
+  {
+      return notFound();
+  }
   const data = await cookies().get('userData');
   if (!data) {
     redirect('/login');

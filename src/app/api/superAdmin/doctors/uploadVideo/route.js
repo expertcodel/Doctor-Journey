@@ -107,8 +107,9 @@ export async function GET(request) {
     try {
 
 
-        if (typeof (usertype) === 'string') {
+        if (usertype === 'string') {
 
+        
             const { rows, count } = await videomodel.findAndCountAll({
 
                 limit: 10,
@@ -121,15 +122,15 @@ export async function GET(request) {
         }
         else {
 
-            const { rows, count } = await videomodel.findAndCountAll({
+          const { rows, count } = await videomodel.findAndCountAll({
 
                 limit: 10,
                 offset: (page - 1) * 10,
-                where: { [Op.or]: { videoTitle: { [Op.iLike]: `%${name}%` }, videoId: { [Op.iLike]: `%${name}%` } }, userId },
+                where: { userId,[Op.or]: { videoTitle: { [Op.iLike]: `%${name}%` }, videoId: { [Op.iLike]: `%${name}%` } } },
                 order: [['createdAt', 'DESC']]
             })
             return NextResponse.json({ status: true, videolist: rows, totalItems: count });
-
+            
         }
 
 

@@ -45,7 +45,7 @@ export const videoModel = async () => {
             type: DataTypes.STRING,
             allowNull: false
         },
-        doctorId: {
+        userId: {
             type: DataTypes.STRING,
             allowNull: false
         },

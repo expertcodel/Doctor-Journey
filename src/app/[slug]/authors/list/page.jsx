@@ -1,5 +1,5 @@
 import React from 'react'
-import AuthorList from '@/component/AuthorList.jsx';
+import AuthorList from '../../../../component/AuthorList.jsx';
 export default async function Page() {
 
 
@@ -22,6 +22,7 @@ export default async function Page() {
       authorList = res.authorlist;
       totalItems=Math.ceil(res.totalItems/10);
     }
+    
 
 
   } catch (error) {

@@ -1,6 +1,6 @@
 "use client"
-import Breadcrumb from "@/app/component/Breadcrumb";
-import UserProfileSidebar from "@/app/component/UserProfileSidebar";
+import Breadcrumb from "../../../app/component/Breadcrumb";
+import UserProfileSidebar from "../../../app/component/UserProfileSidebar";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";

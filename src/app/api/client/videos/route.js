@@ -25,7 +25,7 @@ export async function POST(request) {
         })
 
         const doctordetail = await doctormodel.findOne({
-            where: { doctorId:videodetail.doctorId },
+            where: { userId:videodetail.userId },
             attributes: ['profileImage', 'doctorName', 'shortDescription','doctorId','qualification']
            
         })
@@ -33,7 +33,7 @@ export async function POST(request) {
 
         const videolist = await videomodel.findAll({
             limit: 15,
-            where: {videoStatus: true,doctorId:videodetail.doctorId},
+            where: {videoStatus: true,userId:videodetail.userId},
             order: [['createdAt', 'DESC']],
             attributes: ['publishedDate', 'thumbnailImage', 'videoId', 'videoTitle','videoUrl']
         })

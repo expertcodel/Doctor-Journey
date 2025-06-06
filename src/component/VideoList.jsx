@@ -6,7 +6,7 @@ import Tooltip from './Tooltip.jsx'
 import { useRouter } from 'next/navigation'
 import AdminFooter from './AdminFooter.jsx'
 import { UniversalContext } from './context.js'
-export default function VideoList({ videoList, totalItems }) {
+export default function VideoList({ videoList, totalItems ,usertype, userId}) {
 
     const router = useRouter();
     const [loading, setLoading] = useState(false)
@@ -77,9 +77,8 @@ export default function VideoList({ videoList, totalItems }) {
     const searching = async (idx, name) => {
 
 
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/doctors/uploadVideo/?page=${idx}&name=${name}`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/doctors/uploadVideo/?page=${idx}&name=${name}&userId=${userId}&usertype=${typeof(usertype)}`);
         setName(name);
-
         const res = await response.json();
         if (res.status) {
             setvideoLists(res.videolist);
@@ -91,7 +90,7 @@ export default function VideoList({ videoList, totalItems }) {
     const pagination = async (idx) => {
 
         if (idx > 0 && idx <= button) {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/doctors/uploadVideo/?page=${idx}&name=${name}`);
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/doctors/uploadVideo/?page=${idx}&name=${name}&userId=${userId}&usertype=${typeof(usertype)}`);
             setIdx(idx);
             const res = await response.json();
             if (res.status) {

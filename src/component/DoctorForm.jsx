@@ -6,14 +6,17 @@ import Tooltip from './Tooltip';
 import { extractErrorMessage } from '../utils/errorMessage';
 import { useRouter } from 'next/navigation';
 import { UniversalContext } from './context';
+import { usePathname } from 'next/navigation';
 export default function DoctorForm() {
 
-    const {userData}=UniversalContext();
+    const path=usePathname();
+    const { userData } = UniversalContext();
     const [errorMsg, setErrormsg] = useState("");
     const [imageUrl, setImageurl] = useState(null);
     const [tabs, setTabs] = useState({ first: true, second: false, third: false, fourth: false });
     const [formValidation, setFormvalidation] = useState({ name: -1, number: -1, email: -1, image: -1, specialization: -1, qualification: -1, city: -1, country: -1, zip: -1, accountNumber: -1, accountType: -1, ifsc: -1, accountName: -1, branchName: -1, branchAddress: -1, bankName: -1, document: -1 })
     const [tabsdata, setTabsData] = useState({ name: "", number: "", email: "", image: null, specialization: "", qualification: "", experience: "", description: "", city: "", country: "", zip: "", accountNumber: "", accountType: "", ifsc: "", accountName: "", branchName: "", branchAddress: "", bankName: "", gstNumber: "", address: "" })
+     const [message, setMessage] = useState({ name: "", number: "", email: "", image: null, specialization: "", qualification: "", experience: "", description: "", city: "", country: "", zip: "", accountNumber: "", accountType: "", ifsc: "", accountName: "", branchName: "", branchAddress: "", bankName: "", gstNumber: "", address: "" })
     const domRef = useRef(null);
     const imgRef = useRef([]);
     const profileImg = useRef(null);
@@ -198,7 +201,7 @@ export default function DoctorForm() {
 
                 const data = {
 
-                    doctorName, specialization, qualification, email, number, shortDescription, address, location, experience, city, country, zip, branchAddress, branchName, bankName, ifsc, accountNumber, gstNumber, accountType, accountName, document,userId:userData.userId
+                    doctorName, specialization, qualification, email, number, shortDescription, address, location, experience, city, country, zip, branchAddress, branchName, bankName, ifsc, accountNumber, gstNumber, accountType, accountName, document, userId: userData.userId
                 }
 
                 const formData = new FormData();
@@ -258,11 +261,34 @@ export default function DoctorForm() {
 
     }
 
+    const validateEmail = (email) => {
+        return String(email)
+            .toLowerCase()
+            .match(
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            );
+    };
+
+    const phoneValidator = (inputtxt) => {
+
+        let phoneno = /^\d{10}$/;
+        if (inputtxt.match(phoneno)) {
+            return true;
+        }
+        else {
+
+            return false;
+        }
+
+
+    }
+
+
     const manageTabforward = (tabName) => {
 
         if (tabName === 'first') {
 
-            let validation = { ...formValidation };
+            let validation = {...formValidation };
             let flag = true;
 
             if (tabsdata.name === "") {
@@ -274,7 +300,7 @@ export default function DoctorForm() {
                 validation['name'] = 1;
             }
 
-            if (tabsdata.number === "") {
+            if (!phoneValidator(tabsdata.number)) {
                 validation['number'] = 0;
                 flag = false;
             }
@@ -282,7 +308,7 @@ export default function DoctorForm() {
                 validation['number'] = 1;
             }
 
-            if (tabsdata.email === "") {
+            if (!validateEmail(tabsdata.email)) {
                 validation['email'] = 0;
                 flag = false;
             }
@@ -437,7 +463,7 @@ export default function DoctorForm() {
             validation['name'] = 1;
         }
 
-        if (tabsdata.number === "") {
+        if (!phoneValidator(tabsdata.number)) {
             validation['number'] = 0;
             flag = false;
         }
@@ -445,7 +471,7 @@ export default function DoctorForm() {
             validation['number'] = 1;
         }
 
-        if (tabsdata.email === "") {
+        if (!validateEmail(tabsdata.email)) {
             validation['email'] = 0;
             flag = false;
         }
@@ -531,7 +557,7 @@ export default function DoctorForm() {
             validation['name'] = 1;
         }
 
-        if (tabsdata.number === "") {
+        if (!phoneValidator(tabsdata.number)) {
             validation['number'] = 0;
             flag = false;
         }
@@ -539,7 +565,7 @@ export default function DoctorForm() {
             validation['number'] = 1;
         }
 
-        if (tabsdata.email === "") {
+        if (!validateEmail(tabsdata.email)) {
             validation['email'] = 0;
             flag = false;
         }
@@ -888,6 +914,7 @@ export default function DoctorForm() {
                                                 value={tabsdata.city}
 
                                             />
+                                            <span></span>
                                         </div>
                                     </div>
 

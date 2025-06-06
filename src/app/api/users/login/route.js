@@ -33,10 +33,10 @@ export async function POST(request) {
    //    return NextResponse.json({ status: 0, message: "Wrong Credentials!" });
    // }
 
-   const isPasswordvalid = await bcrypt.compare(password, isValiduser.password);
-   if (!isPasswordvalid) {
-      return NextResponse.json({ status: 0, message: "Wrong Password!" });
-   }
+   // const isPasswordvalid = await bcrypt.compare(password, isValiduser.password);
+   // if (!isPasswordvalid) {
+   //    return NextResponse.json({ status: 0, message: "Wrong Password!" });
+   // }
 
    try {
 
@@ -63,7 +63,7 @@ export async function POST(request) {
       //  const response= NextResponse.json({ status: 1, message: "Verified user!", url: `/${isValiduser.usertype}` });
       //  response.cookies.set('token', token, { httpOnly: true, maxAge: 3600,path:'/'});
       //  return response
-      return NextResponse.json({ status: 1, message: "Verified user!", url: flag ? isValiduser.usertype : `/user-dashboard` });
+      return NextResponse.json({ status: 1, message: "Verified user!", url: flag ? '/dashboard' : `/user-dashboard` });
 
    } catch (error) {
 

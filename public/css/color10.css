@@ -2693,6 +2693,19 @@ body {
 .userViewCard .card .nav .nav-item .nav-link i{margin-right: 4px;}
 .userViewCard .card .card-body .showBrowseImg{border: 1px solid var(--bs-border-color);}
 
+/****** tooltipSec ******/
+.tooltipSec{
+    position: fixed; top: 16px; left: 50%; transform: translateX(-50%); width: auto; border-radius: 8px; display: flex; flex-direction: column;
+    background: rgba(0,0,0,.6); padding: 8px 16px; font-size: 18px; color: var(--bs-body-bg); z-index: 9999; align-items: center;
+    justify-content: center; text-align: center;
+  }
+  .tooltipSec span{
+    display: block; width: 100%; font-size: 20px; text-transform: uppercase; margin-bottom: 8px; line-height: 12px;
+  }
+  .tooltipSec.success{background: rgba(25, 135, 84, .6);}
+  
+  .navbar-menu .navbar-nav .nav-sm .nav-link{text-transform: capitalize;}
+
 @media only screen and (max-width: 991px) {
     /******** mobileToggleHeading ********/
     .horizontalMenu .horizontalMenu-list li.mobileToggleHeading{

@@ -9,12 +9,18 @@ import Breadcrumb from "../../../app/component/Breadcrumb";
 import DoctorForm from "../../../component/DoctorForm";
 import { useState, useEffect } from "react";
 import { UniversalContext } from "../../../component/context";
+import AuthorForm from '../../../component/AuthorForm.jsx';
+import OrganizationForm from '../../../component/OrganizationForm'
+import PublisherForm from '../../../component/PublisherForm'
+import Tooltip from "../../../component/Tooltip";
 export default function Profile() {
 
 
     const { userData } = UniversalContext();
-   
     const [userType, setUsertype] = useState({ 'readers': false, 'author': false, 'doctor': false, 'publisher': false, 'organization': false });
+
+    const [message, setMessage] = useState(typeof window !== 'undefined' && sessionStorage.getItem('successMsg') ? sessionStorage.getItem('successMsg') : "")
+
 
     useEffect(() => {
         let usertype = { ...userType };
@@ -22,6 +28,15 @@ export default function Profile() {
             usertype[user] = true;
         })
         setUsertype(usertype);
+    
+        if (message !== "") {
+            const timer = setTimeout(() => {
+                setMessage("");
+                sessionStorage.removeItem('successMsg');
+            }, 3000);
+
+            return () => clearTimeout(timer);
+        }
     }, [])
 
     const openLink = () => {
@@ -35,6 +50,12 @@ export default function Profile() {
         <>
             {/*Breadcrumb*/}
             <Breadcrumb title="My Profile" />
+
+            {
+
+                message !== "" && <Tooltip message={message} />
+            }
+
 
             {/*User Dashboard*/}
             <section className="sptb">
@@ -163,9 +184,9 @@ export default function Profile() {
                                                 <div className="nav upgradeCard">
                                                     {/* card */}
                                                     <div className="profileCardMain">
-                                                        <div className={userType.readers ? "card disabled" : "card"} style={{ pointerEvents: 'auto' }}>
+                                                        <div className={userType.author ? "card disabled" : "card"} style={{ pointerEvents: 'auto' }}>
                                                             {
-                                                                !userType.readers && <Link href="#applyAuthor" data-bs-toggle="tab" />
+                                                                !userType.author && <Link href="#applyAuthor" data-bs-toggle="tab" />
                                                             }
                                                             <div className="cardBody">
                                                                 <figure>
@@ -177,20 +198,20 @@ export default function Profile() {
                                                             </div>
 
                                                             {
-                                                                userType.readers && <>
+                                                                userType.author && <>
                                                                     <FontAwesomeIcon icon={faCheckCircle} className="greenTick" />
                                                                 </>
                                                             }
                                                         </div>
                                                         {
-                                                            userType.readers && <>
+                                                            userType.author && <>
                                                                 <button className="btn btn-info mt-3 btn-block" onClick={openLink}>Go to Dashboard</button>
                                                             </>
                                                         }
                                                     </div>
                                                     {/* card */}
                                                     <div className="profileCardMain">
-                                                        <div className={userType.doctor ? "card disabled" : "card"}style={{ pointerEvents: 'auto' }}>
+                                                        <div className={userType.doctor ? "card disabled" : "card"} style={{ pointerEvents: 'auto' }}>
                                                             {
                                                                 !userType.doctor && <Link href="#applyDoctor" data-bs-toggle="tab" />
                                                             }
@@ -219,10 +240,10 @@ export default function Profile() {
                                                     <div className="profileCardMain">
                                                         <div className={userType.publisher ? "card disabled" : "card"} style={{ pointerEvents: 'auto' }}>
                                                             {
-                                                                !userType.publisher &&<Link href="#applyPublisher" data-bs-toggle="tab" />
+                                                                !userType.publisher && <Link href="#applyPublisher" data-bs-toggle="tab" />
 
                                                             }
-                                                        
+
                                                             <div className="cardBody">
                                                                 <figure>
                                                                     <Image src="/images/upgrade-icons/publisher.png" width={60} height={60} alt="user" />
@@ -282,13 +303,13 @@ export default function Profile() {
                                         <DoctorForm />
                                     </div>
                                     <div className="tab-pane" id="applyAuthor">
-                                        Author
+                                        <AuthorForm />
                                     </div>
                                     <div className="tab-pane" id="applyPublisher">
-                                        Publisher
+                                        <PublisherForm />
                                     </div>
                                     <div className="tab-pane" id="applyOrganization">
-                                        Organisation
+                                        <OrganizationForm />
                                     </div>
                                 </div>
                             </div>
