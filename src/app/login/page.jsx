@@ -32,12 +32,7 @@ export default function Login() {
 
   }, [])
 
-  // useEffect(() => {
-  //   if (user) {
-  //     router.push("/restaurants"); // Redirect logged-in users
-  //   }
-  // }, [user, router]);
-
+ 
 
   // Function to validate email
 
@@ -88,11 +83,13 @@ export default function Login() {
     setLoading(false);
     if (res.status) {
 
-      console.log(res.url, "url");
-
-
-      // router.push(res.url); // Redirect after login
-      window.location.href = res.url
+      if (res.url === '/dashboard') {
+        window.location.href=res.url;
+      }
+      else {
+        router.push(res.url);
+      }
+    
     }
     else {
 

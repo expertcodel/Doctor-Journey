@@ -7,7 +7,7 @@ export async function POST(request) {
 
     const input = await request.formData();
     const file = input.get('file');
-    const { doctorId, doctorName, views, specialization, videoUrl, videoTitle, videoContent } = JSON.parse(input.get('data'));
+    const { userId, doctorName, views, specialization, videoUrl, videoTitle, videoContent } = JSON.parse(input.get('data'));
     const videomodel = await videoModel();
     if (!videomodel) {
         return NextResponse.json({ status: false, message: "database error occured" });
@@ -21,7 +21,7 @@ export async function POST(request) {
 
         }
 
-        await videomodel.create({ doctorId, doctorName, views, specialization, videoUrl, videoTitle, videoContent, thumbnailImage: thumbnailImage && thumbnailImage });
+        await videomodel.create({ userId, doctorName, views, specialization, videoUrl, videoTitle, videoContent, thumbnailImage: thumbnailImage && thumbnailImage });
         return NextResponse.json({ status: true, message: "Video Uploaded Successfully!" });
 
 
@@ -55,12 +55,14 @@ export async function PUT(request) {
         }
 
         await videomodel.update({ videoUrl, videoTitle, videoContent, thumbnailImage: thumbnailImage && thumbnailImage, videoStatus }, { where: { videoId } });
-        return NextResponse.json({ status: true, message: "Video Uploaded Successfully!" });
+        return NextResponse.json({ status: true, message: "Video Updated Successfully!" });
 
 
     } catch (error) {
 
         const message = extractErrorMessage(error);
+        console.log(error);
+        
         return NextResponse.json({ status: false, message });
     }
 

@@ -7,37 +7,16 @@ export async function middleware(request) {
 
   const { pathname } = request.nextUrl;
   const token = request.cookies.get('token');
-  const userdata = request.cookies.get('userData');
+  // const userdata = request.cookies.get('userData');
   const response = NextResponse.next();
   response.headers.set('x-pathname', pathname);
-  //return response;
 
-  // if (pathname === '/') {
-  //   return response
-  // }
-
-  // console.log(pathname, 'lkl');
-
-
-  // if (pathname.startsWith(['/about-us', '/contact-us', 'doctor-profile', '/doctors', '/forgot-password', '/register', '/user-dashboard', '/verify-otp'])) {
-  //   return response;
-  // }
 
   if (!token) {
 
-    // if (pathname === '/') {
-    //   return response;
-    // }
-
-    // if (pathname === '/login') {
-
-
-    //   return response;
-    // }
-    // if (pathname === '/admin') {
-
-    //   return NextResponse.redirect(new URL('/login', request.url));
-    // }
+    if (pathname.startsWith('/user-dashboard')) {
+      return NextResponse.redirect(new URL('/login', request.url));
+    }
 
     return response;
 
@@ -46,88 +25,31 @@ export async function middleware(request) {
   try {
 
 
-   
+
     const verifiedtoken = await jwtVerify(token.value, new TextEncoder().encode(process.env.AUTHENTICATION_KEY));
     if (!verifiedtoken) {
-     return  NextResponse.redirect(new URL('/login', request.url));
+      return NextResponse.redirect(new URL('/login', request.url));
     }
 
-    // if (pathname.startsWith(['/login'])) {
-    //   return NextResponse.redirect(new URL(`/${verifiedtoken.payload.userData.usertype}`, request.url));
-    // }
+    if (pathname.startsWith('/login')) {
+      return NextResponse.redirect(new URL('/user-dashboard', request.url));
+    }
 
-    // const rolemodel=await roleModel();
-    // const menuItem = await rolemodel.findOne({ where: { usertype: isValiduser.usertype } });
-    // const menubar=menuItem.access
-
-
-    // if (!userdata) {
-      response.cookies.set('userData', JSON.stringify(verifiedtoken.payload),{maxAge:3600})
-    // }
-
-    // console.log(verifiedtoken.payload,'hj');
-
-    // await cookies().set('userData', JSON.stringify(verifiedtoken.payload))
-
-
-    // if (pathname.startsWith([`/${verifiedtoken.payload.userData.usertype}`])) {
-    //   return response;
-    // }
-
-
-
-    // if (!pathname.startsWith([`/${verifiedtoken.payload.userData.usertype}`])) {
-    // return  NextResponse.redirect(new URL(`/${verifiedtoken.payload.userData.usertype}/notFound`, request.url));
-    // }
-
-    //  const menubar = verifiedtoken.payload.menubar;
-    // for (let i = 0; i < menubar.length; i++) {
-    //   if (menubar[i].path === 'scroll') {
-
-    //     const status = menubar[i].allowed;
-    //     for (let j = 0; j < menubar[i].child.length; j++) {
-
-
-
-    //       if (menubar[i].child[j].path === 'scroll') {
-
-    //         for (let k = 0; k < menubar[i].child[j].child.length; k++) {
-
-    //           if (pathname.startsWith([menubar[i].child[j].child[k].path])) {
-
-    //             if (!status) {
-    //              return NextResponse.redirect(new URL(`/${verifiedtoken.payload.userData.usertype}/notFound`, request.url));
-    //             }
-    //           }
-    //         }
-    //       }
-    //       else {
-
-    //         if (pathname.startsWith([menubar[i].child[j].path])) {
-
-    //           if (!status) {
-    //             return NextResponse.redirect(new URL(`/${verifiedtoken.payload.userData.usertype}/notFound`, request.url));
-    //           }
-    //         }
-
-    //       }
-
-
-    //     }
-    //   }
-    //   else {
-
-    //     if (pathname.startsWith([menubar[i].path])) {
-
-    //       if (menubar[i].allowed) {
-    //        return NextResponse.redirect(new URL(`/${verifiedtoken.payload.userData.usertype}/notFound`, request.url));
+    response.cookies.set('userData', JSON.stringify(verifiedtoken.payload), { maxAge: 3600 })
+    //  console.log('path',pathname);
+    // for (let i = 0; i < verifiedtoken.payload.length; i++) {
+    //  let allowed=verifiedtoken.payload[i].allowed;
+    //   for (let j = 0; j < verifiedtoken.payload[i].child.length; i++) {
+        
+    //     if (verifiedtoken.payload[i].child[j].path === pathname) {
+    //       if (!allowed) {
+    //         console.log(allowed,'hello','hhh',pathname);
+            
+    //         return NextResponse.redirect(new URL('/dashboard/notFound', request.url));
     //       }
     //     }
-
     //   }
     // }
-
-
 
     return response;
 
@@ -139,12 +61,13 @@ export async function middleware(request) {
 
 }
 
-// export const config = {
-//   matcher: [
-  
-//     '/admin/:path*','/login'
-//   ],
-// };
+export const config = {
+  matcher: [
 
-  // '/((?!_next/|favicon.ico|api/|assets/|images/|fonts/).*)',
+    // '/user-dashboard/:path*', '/login', '/:path*', '/dashboard/:path*'
+    '/((?!_next/|favicon.ico|api/|assets/|images/|fonts/).*)'
+  ],
+};
+
+// '/((?!_next/|favicon.ico|api/|assets/|images/|fonts/).*)',
 

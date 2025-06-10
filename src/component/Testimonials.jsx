@@ -144,7 +144,7 @@ export default function Testimonials({ testimonialList, totalItems }) {
                                             <a class="btn btn-sm btn-success edit-item-btn" href={`/admin/testimonial/update/${item.testimonialId}`}>Edit</a>
                                         </div> */}
                                          <div className="edit">
-                                            <Link class="btn btn-sm btn-success edit-item-btn" href={`/admin/testimonial/update/${item.testimonialId}`}>Edit</Link>
+                                            <Link class="btn btn-sm btn-success edit-item-btn" href={`/dashboard/testimonial/update/${item.testimonialId}`}>Edit</Link>
                                         </div>
                                         <div className="remove">
                                             <button class="btn btn-sm btn-danger remove-item-btn" onClick={() => openPopup(item.testimonialId)}>Remove</button>

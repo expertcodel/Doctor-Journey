@@ -1,14 +1,17 @@
 import React from 'react'
 import VideoUpload from '../../../../../component/VideoUpload.jsx';
+import { extractUsertype } from '../../../../../utils/userType.js'
 export default async function Page() {
 
 
-  let doctorList=null;
+  let doctorList = null;
+  let doctorDetail = null;
   let totalItems;
+  const { usertype, userId } = await extractUsertype();
 
   try {
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/doctors/getDoctors`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/doctors/getDoctors/?userId=${userId}&usertype=${typeof (usertype)}`, {
 
       method: 'GET',
       cache: 'no-store'
@@ -19,8 +22,17 @@ export default async function Page() {
     const res = await response.json();
 
     if (res.status) {
-      doctorList = res.doctorlist;
-      totalItems=Math.ceil(res.totalItems/10);
+      if (typeof (usertype) === 'string') {
+
+        doctorList = res.doctorlist;
+        totalItems = Math.ceil(res.totalItems / 10);
+      }
+      else {
+
+        doctorDetail=res.doctordetail;
+
+      }
+
     }
 
 
@@ -34,7 +46,7 @@ export default async function Page() {
 
     <>
       {
-        doctorList && <VideoUpload doctorList={doctorList}  totalItems={totalItems} />
+         <VideoUpload doctorList={doctorList} totalItems={totalItems} doctorDetail={doctorDetail}/>
       }
     </>
 

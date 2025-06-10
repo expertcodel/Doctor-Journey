@@ -144,7 +144,7 @@ export default function OfferList({ offerList, totalItems }) {
                                 <td>
                                     <div class="d-flex gap-2">
                                         <div class="edit">
-                                            <Link class="btn btn-sm btn-success edit-item-btn" href={`/admin/journal/offer/update/${item.offerId}`}>Edit</Link>
+                                            <Link class="btn btn-sm btn-success edit-item-btn" href={`/dashboard/journal/offer/update/${item.offerId}`}>Edit</Link>
                                         </div>
                                         <div class="remove">
                                             <button class="btn btn-sm btn-danger remove-item-btn deleteBtn" onClick={() => openPopup(item.offerId)}><i className='ri-delete-bin-line'></i></button>

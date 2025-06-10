@@ -4,14 +4,25 @@ import { faFacebook, faGooglePlus, faLinkedin, faTwitter } from "@fortawesome/fr
 import { faAnglesDown, faArrowAltCircleDown, faChevronDown, faClipboardCheck, faClipboardList, faHome, faPowerOff, faSignIn, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
+import axios from 'axios'
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-
+import { usePathname, useRouter } from "next/navigation";
+import { UniversalContext } from "../../component/context";
 import { useEffect, useState } from "react"
 
 export default function Header() {
     const [isMenuVisible, setIsMenuVisible] = useState(false);
-    const { user, logout } = useAuth();
+    const router=useRouter()
+    // const logout = async () => {
+
+    //     const response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users/logout`);
+    //     if (response.data.status) {
+    //         // window.location.href = response.data.url;
+    //         router.push(response.data.url)
+    //     }
+
+    // }
+    const { user, logout} = useAuth();
     const pathName = usePathname();
 
     const toggleMenu = () => {
@@ -22,7 +33,7 @@ export default function Header() {
         <>
             {/*Header Main*/}
             <div className={`header-main ${isMenuVisible ? "active" : ""}`}>
-        
+
                 {/*Top Bar*/}
                 <div className="top-bar">
                     <div className="container">
@@ -90,8 +101,8 @@ export default function Header() {
                                                             <span>Login</span>
                                                         </Link>
                                                     </li>
-                                                </> 
-                                            )                                           
+                                                </>
+                                            )
                                         }
                                     </ul>
                                 </div>
@@ -122,13 +133,13 @@ export default function Header() {
                                 /> */}
                             </span>
                             {
-                                user ? 
-                                <Link className="btn btn-info ad-post mt-1 callusbtn packages" href="/user-dashboard">
-                                    Restaurants
-                                </Link> :
-                                <Link className="btn btn-info ad-post mt-1 callusbtn packages" href="/subscribe">
-                                    Subscribe Now
-                                </Link>
+                                user ?
+                                    <Link className="btn btn-info ad-post mt-1 callusbtn packages" href="/user-dashboard">
+                                        Restaurants
+                                    </Link> :
+                                    <Link className="btn btn-info ad-post mt-1 callusbtn packages" href="/subscribe">
+                                        Subscribe Now
+                                    </Link>
                             }
                         </div>
                     </div>
@@ -167,54 +178,48 @@ export default function Header() {
                                 </li>
                                 <li>
                                     <Link href="/"
-                                        className={`link ${
-                                            pathName === '/' ? 'active' : ''
-                                        }`}
+                                        className={`link ${pathName === '/' ? 'active' : ''
+                                            }`}
                                     >
                                         Home
                                     </Link>
                                 </li>
                                 <li>
                                     <Link href="/about-us"
-                                        className={`link ${
-                                            pathName === '/about-us' ? 'active' : ''
-                                        }`}
+                                        className={`link ${pathName === '/about-us' ? 'active' : ''
+                                            }`}
                                     >
                                         About Us
                                     </Link>
                                 </li>
                                 <li>
                                     <Link href="/journals"
-                                        className={`link ${
-                                            pathName === '/journals' ? 'active' : ''
-                                        }`}
+                                        className={`link ${pathName === '/journals' ? 'active' : ''
+                                            }`}
                                     >
                                         Journals
                                     </Link>
                                 </li>
                                 <li>
                                     <Link href="/journey"
-                                        className={`link ${
-                                            pathName === '/journey' ? 'active' : ''
-                                        }`}
+                                        className={`link ${pathName === '/journey' ? 'active' : ''
+                                            }`}
                                     >
                                         Journey
                                     </Link>
                                 </li>
                                 <li>
                                     <Link href="/events"
-                                        className={`link ${
-                                            pathName === '/events' ? 'active' : ''
-                                        }`}
+                                        className={`link ${pathName === '/events' ? 'active' : ''
+                                            }`}
                                     >
                                         Events
                                     </Link>
                                 </li>
                                 <li>
                                     <Link href="/contact-us"
-                                        className={`link ${
-                                            pathName === '/contact-us' ? 'active' : ''
-                                        }`}
+                                        className={`link ${pathName === '/contact-us' ? 'active' : ''
+                                            }`}
                                     >
                                         Contact Us
                                     </Link>

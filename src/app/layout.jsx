@@ -10,6 +10,7 @@ import { headers } from 'next/headers'
 // import "./globals.css";
 import BootstrapClient from "../app/component/bootstrap-client";
 import { AuthProvider } from "../context/AuthContext";
+
 import Header from "./component/Header";
 import Footer from "./component/Footer";
 import Script from "next/script";
@@ -34,7 +35,7 @@ export default async function RootLayout({ children }) {
 
   const headersList = await headers();
   const path = headersList.get('x-pathname');
-  console.log(path, "path");
+
 
   //  path.startsWith(['/about-us','/contact-us','doctor-profile','/doctors','/forgot-password','/register','/user-dashboard','/verify-otp','/login'])
 
@@ -42,7 +43,7 @@ export default async function RootLayout({ children }) {
   return (
 
     <>
-      {['/about-us', '/articles', '/contact-us', '/doctor-profile', '/doctors', '/forgot-password', '/journals', '/journals-activity', '/login', '/privacy-policy', '/register', '/terms-condition', '/user-dashboard', '/verify-otp'].some(prefix => path.startsWith(prefix)) || path==='/' ?
+      {['/about-us', '/articles', '/contact-us', '/doctor-profile', '/doctors', '/forgot-password', '/journals', '/journals-activity', '/login', '/privacy-policy', '/register', '/terms-condition', '/user-dashboard', '/verify-otp'].some(prefix => path.startsWith(prefix)) || path === '/' ?
 
         <html lang="en">
           <head>
@@ -50,6 +51,7 @@ export default async function RootLayout({ children }) {
             <link href="/css/color10.css" rel="stylesheet" type="text/css" />
           </head>
           <body className={`${geistSans.variable} ${geistMono.variable}`}>
+
             <AuthProvider>
               <main className="mainSec">
                 <Header />
@@ -59,6 +61,7 @@ export default async function RootLayout({ children }) {
                 <Footer />
               </main>
             </AuthProvider>
+
           </body>
           <BootstrapClient />
         </html> :

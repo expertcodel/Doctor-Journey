@@ -9,6 +9,8 @@ export default async function Layoutchild({ children,params }) {
 
 
   const {slug}=await params;
+  
+  
   if(slug!=='dashboard')
   {
       return notFound();

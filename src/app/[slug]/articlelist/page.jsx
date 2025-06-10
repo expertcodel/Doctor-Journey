@@ -308,7 +308,7 @@ function Page() {
                                         </button>
                                       </span>
                                       <span>
-                                        <Link href={`/admin/articlelist/${item.articleId}`} className="btn btn-sm btn-light">
+                                        <Link href={`/dashboard/articlelist/${item.articleId}`} className="btn btn-sm btn-light">
                                           Edit
                                         </Link>
                                       </span>

@@ -73,7 +73,7 @@ export default function TestimonialUpdate({testimonial}) {
             if (res.status) {
 
                 sessionStorage.setItem('successMsg','Testimonial Updated Successfully');
-                router.push("/admin/testimonial/list");
+                router.push("/dashboard/testimonial/list");
                
             }
             else {

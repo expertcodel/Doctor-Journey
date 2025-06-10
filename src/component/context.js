@@ -6,7 +6,7 @@ export const UseContext = createContext({
 
     articlelist: [],
     setarticlelist:()=>{},
-    userData:{},
+    userData:null,
     setUserdata:()=>{},
     data:[],
     setData:()=>{},

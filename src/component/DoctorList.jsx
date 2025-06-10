@@ -66,8 +66,8 @@ export default function DoctorList({ doctorList, totalItems }) {
 
             sessionStorage.setItem('successMsg', 'Doctor Deleted Successfully');
             // setPopup(false);
-            // router.push(`/${userData.usertype}/doctors/list`)
-            window.location.href = `/${userData.usertype}/doctors/list`
+            // router.push(`/dashboard/doctors/list`)
+            window.location.href = `/dashboard/doctors/list`
           
         }
     }
@@ -128,7 +128,7 @@ export default function DoctorList({ doctorList, totalItems }) {
                         <div className="card-body"><form><div className="row g-4 mb-3">
                             <div className="col-sm-auto">
                                 <div>
-                                    <Link href={`/${userData.usertype}/doctors/create`} className="btn btn-success"><i className="ri-add-line align-bottom me-1" /> Add New</Link>
+                                    <Link href={`/dashboard/doctors/create`} className="btn btn-success"><i className="ri-add-line align-bottom me-1" /> Add New</Link>
                                 </div>
                             </div>
 
@@ -148,7 +148,7 @@ export default function DoctorList({ doctorList, totalItems }) {
                                 <td>
                                     <div class="d-flex gap-2">
                                         <div class="edit">
-                                            <Link class="btn btn-sm btn-success edit-item-btn" href={`/${userData.usertype}/doctors/update/${item.doctorId}`}>Edit</Link>
+                                            <Link class="btn btn-sm btn-success edit-item-btn" href={`/dashboard/doctors/update/${item.doctorId}`}>Edit</Link>
                                         </div>
                                         <div class="remove">
                                             <button class="btn btn-sm btn-danger remove-item-btn" onClick={() => openPopup(item.doctorId)}>Remove</button>

@@ -7,15 +7,18 @@ import dynamic from 'next/dynamic';
 import AdminFooter from './AdminFooter.jsx'
 const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
 import { useRouter } from 'next/navigation';
-export default function Page({ doctorList ,doctorDetail}) {
+export default function VideoUpdate({ videoDetail, Videostatus, Videostatus1 }) {
 
 
     const { userData } = UniversalContext();
     const router = useRouter();
     const editor = useRef(null)
     const [success, setSuccess] = useState(false);
+    const [videoStatus, setVideostatus] = useState(Videostatus);
+    const [videoStatus1, setVideostatus1] = useState(Videostatus1);
     const [errorMsg, setErrormsg] = useState("");
     const [imageUrl, setImageurl] = useState(null);
+    const [imageUrl1, setImageurl1] = useState(videoDetail.thumbnailImage);
 
     const config = {
         readonly: false,
@@ -38,23 +41,17 @@ export default function Page({ doctorList ,doctorDetail}) {
         const videoTitle = e.target.title.value.trim();
         const videoUrl = e.target.url.value.trim();
         const videoContent = document.querySelector('.jodit-wysiwyg').innerHTML;
-        let userId
-        let doctorName
-        let specialization
-        if (typeof (userData.usertype) === 'string') {
-            userId = JSON.parse(e.target.doctor.value).id.trim();
-            doctorName = JSON.parse(e.target.doctor.value).name.trim();
-            specialization = JSON.parse(e.target.doctor.value).specialization.trim();
+       
+
+        let videostatus;
+        if (videoStatus1 === 'active') {
+            videostatus = true;
         }
-        else{
-
-            userId = doctorDetail.userId;
-            doctorName = doctorDetail.doctorName;
-            specialization = doctorDetail.specialization
-
+        else {
+            videostatus = false;
         }
 
-        
+
 
 
         if (videoTitle === "") {
@@ -69,16 +66,12 @@ export default function Page({ doctorList ,doctorDetail}) {
             flag = false;
         }
 
-        if (userId === "" || userId === "select") {
-            arr[2] = 0;
-            flag = false;
+       
 
-        }
-
-        if (!imageUrl) {
-            arr[3] = 0;
-            flag = false;
-        }
+        // if (!imageUrl) {
+        //     arr[3] = 0;
+        //     flag = false;
+        // }
 
 
 
@@ -91,7 +84,8 @@ export default function Page({ doctorList ,doctorDetail}) {
 
             const data = {
 
-                videoUrl, videoTitle, userId, doctorName, specialization, videoContent
+                videoUrl, videoTitle, videoContent, videoId: videoDetail.videoId, videoStatus: videostatus
+
             }
 
             const formData = new FormData();
@@ -99,7 +93,7 @@ export default function Page({ doctorList ,doctorDetail}) {
             formData.append('data', JSON.stringify(data));
 
             const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/doctors/uploadVideo`, {
-                method: 'POST',
+                method: 'PUT',
                 body: formData
             })
 
@@ -107,7 +101,7 @@ export default function Page({ doctorList ,doctorDetail}) {
 
             if (res.status) {
 
-                sessionStorage.setItem('successMsg', 'Video Uploaded Successfully');
+                sessionStorage.setItem('successMsg', 'Video Updated Successfully');
                 router.push("/dashboard/doctors/videos/list");
 
             }
@@ -134,10 +128,10 @@ export default function Page({ doctorList ,doctorDetail}) {
 
 
         const thumbnailImage = document.getElementById('project-thumbnail-img').files[0];
-        const imagePreview = document.getElementById('imagePreview');
         const imageurl = URL.createObjectURL(thumbnailImage);
-        imagePreview.src = imageurl
         setImageurl(thumbnailImage);
+        setImageurl1(imageurl);
+
 
 
     }
@@ -150,7 +144,7 @@ export default function Page({ doctorList ,doctorDetail}) {
                     <div className="row">
                         <div className="col-12">
                             <div className="page-title-box d-sm-flex align-items-center justify-content-between bg-galaxy-transparent">
-                                <h4 className="mb-sm-0">Upload Videos</h4>
+                                <h4 className="mb-sm-0">Update Video</h4>
 
                             </div>
                         </div>
@@ -165,34 +159,27 @@ export default function Page({ doctorList ,doctorDetail}) {
 
                                         <div className="mb-3">
                                             <label className="form-label" htmlFor="menu-title-input">Video Title</label>
-                                            <input type="text" className="form-control" id="menu-title-input" placeholder="Enter title" name='title' style={{ border: formValidation.title === 0 && '1px solid red' }} />
+                                            <input type="text" className="form-control" id="menu-title-input" placeholder="Enter title" name='title' style={{ border: formValidation.title === 0 && '1px solid red' }} defaultValue={videoDetail.videoTitle} />
                                         </div>
 
                                         <div className="mb-3">
                                             <label className="form-label" htmlFor="menu-serial-input">Video Url</label>
-                                            <input type="text" className="form-control" id="menu-serial-input" placeholder="Enter url" name='url' style={{ border: formValidation.url === 0 && '1px solid red' }} />
+                                            <input type="text" className="form-control" id="menu-serial-input" placeholder="Enter url" name='url' style={{ border: formValidation.url === 0 && '1px solid red' }} defaultValue={videoDetail.videoUrl} />
                                         </div>
 
-                                        {typeof (userData.usertype) === 'string' && <div className="mb-3">
-                                            <label className="form-label" htmlFor="category-input">Select Doctor</label>
-
-                                            <select name="doctor" className="form-control" style={{ border: formValidation.doctor === 0 && '1px solid red' }} >
-
-                                                <option value={JSON.stringify({ id: "select", name: "select", specialization: "select" })} >Select</option>
-                                                {
-                                                    doctorList.length > 0 && doctorList.map((item) => <option value={JSON.stringify({ id: item.userId, name: item.doctorName, specialization: item.specialization })} key={item.userId}>{item.doctorName.toUpperCase()}</option>)
-                                                }
-
-
+                                        <div className="mb-3">
+                                            <label htmlFor="choices-categories-input" className="form-label">Status</label>
+                                            <select className="form-select" onChange={(e) => setVideostatus1(e.target.value)}  >
+                                                <option value={videoStatus === 'active' ? 'active' : 'inactive'} >{videoStatus === 'active' ? 'active' : 'inactive'}</option>
+                                                <option value={videoStatus === 'active' ? 'inactive' : 'active'} >{videoStatus === 'active' ? 'inactive' : 'active'}</option>
                                             </select>
-
-                                        </div>}
+                                        </div>
 
                                         <div className="mb-3">
                                             <label className="form-label" htmlFor="project-thumbnail-img">Thumbnail Image</label>
                                             <input className="form-control" id="project-thumbnail-img" type="file" name='image' accept="image/*" onChange={fileUpload} style={{ border: formValidation.image === 0 && '1px solid red' }} />
                                             <div style={{ marginTop: '10px' }}>Choose 300 x 300 Dimension</div>
-                                            {!success && <img width={imageUrl && 100} height={imageUrl && 100} id='imagePreview' alt='' />}
+                                            <img width={imageUrl1 && 100} height={imageUrl1 && 100} id='imagePreview' alt='' src={imageUrl1} />
 
                                         </div>
 
@@ -207,6 +194,7 @@ export default function Page({ doctorList ,doctorDetail}) {
                                             <JoditEditor
                                                 config={config}
                                                 ref={editor}
+                                                value={videoDetail.videoContent}
 
                                             />
 
@@ -215,7 +203,7 @@ export default function Page({ doctorList ,doctorDetail}) {
 
                                         <div className="text-end mb-4">
 
-                                            <button type="submit" className="btn btn-success w-sm">Upload</button>
+                                            <button type="submit" className="btn btn-success w-sm">Update</button>
                                         </div>
                                         {
                                             errorMsg !== "" && <div style={{ color: 'red' }}>{errorMsg}</div>
@@ -239,7 +227,7 @@ export default function Page({ doctorList ,doctorDetail}) {
             </div>
             {/* End Page-content */}
             <AdminFooter />
-            
+
         </div>
     )
 }

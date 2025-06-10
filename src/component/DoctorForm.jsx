@@ -7,16 +7,17 @@ import { extractErrorMessage } from '../utils/errorMessage';
 import { useRouter } from 'next/navigation';
 import { UniversalContext } from './context';
 import { usePathname } from 'next/navigation';
+import {country} from '../utils/country.js'
 export default function DoctorForm() {
 
-    const path=usePathname();
+    const path = usePathname();
     const { userData } = UniversalContext();
     const [errorMsg, setErrormsg] = useState("");
     const [imageUrl, setImageurl] = useState(null);
     const [tabs, setTabs] = useState({ first: true, second: false, third: false, fourth: false });
-    const [formValidation, setFormvalidation] = useState({ name: -1, number: -1, email: -1, image: -1, specialization: -1, qualification: -1, city: -1, country: -1, zip: -1, accountNumber: -1, accountType: -1, ifsc: -1, accountName: -1, branchName: -1, branchAddress: -1, bankName: -1, document: -1 })
+    const [formValidation, setFormvalidation] = useState({ name: -1, number: -1, email: -1, image: -1, specialization: -1, qualification: -1, city: -1, country: -1, zip: -1, accountNumber: -1, accountType: -1, ifsc: -1, accountName: -1, branchName: -1, branchAddress: -1, bankName: -1, document: -1, documentType: -1 })
     const [tabsdata, setTabsData] = useState({ name: "", number: "", email: "", image: null, specialization: "", qualification: "", experience: "", description: "", city: "", country: "", zip: "", accountNumber: "", accountType: "", ifsc: "", accountName: "", branchName: "", branchAddress: "", bankName: "", gstNumber: "", address: "" })
-     const [message, setMessage] = useState({ name: "", number: "", email: "", image: null, specialization: "", qualification: "", experience: "", description: "", city: "", country: "", zip: "", accountNumber: "", accountType: "", ifsc: "", accountName: "", branchName: "", branchAddress: "", bankName: "", gstNumber: "", address: "" })
+    const [message, setMessage] = useState({ name: "", number: "", email: "", image: "", specialization: "", qualification: "", experience: "", description: "", city: "", country: "", zip: "", accountNumber: "", accountType: "", ifsc: "", accountName: "", branchName: "", branchAddress: "", bankName: "", gstNumber: "", address: "", document: "" })
     const domRef = useRef(null);
     const imgRef = useRef([]);
     const profileImg = useRef(null);
@@ -91,6 +92,7 @@ export default function DoctorForm() {
 
         e.preventDefault();
         let validation = { ...formValidation };
+        let validationMessage = { ...message };
         let flag = true;
 
 
@@ -119,48 +121,56 @@ export default function DoctorForm() {
 
             flag = false;
             validation['accountName'] = 0;
+            validationMessage['accountName'] = "This field can't be blank"
         }
         else {
 
             validation['accountName'] = 1;
+            validationMessage['accountName'] = ""
         }
 
         if (accountType === "") {
 
             flag = false;
             validation['accountType'] = 0;
+            validationMessage['accountType'] = "This field can't be blank"
         }
         else {
             validation['accountType'] = 1;
+            validationMessage['accountType'] = ""
         }
 
 
-        if (gstNumber === "") {
+        // if (gstNumber === "") {
 
-            flag = false;
-            validation['gstNumber'] = 0;
+        //     flag = false;
+        //     validation['gstNumber'] = 0;
 
-        }
-        else {
-            validation['gstNumber'] = 1;
-        }
+        // }
+        // else {
+        //     validation['gstNumber'] = 1;
+        // }
 
         if (accountNumber === "") {
 
             flag = false;
             validation['accountNumber'] = 0;
+            validationMessage['accountNumber'] = "This field can't be blank"
         }
         else {
             validation['accountNumber'] = 1;
+            validationMessage['accountNumber'] = ""
         }
 
 
         if (ifsc === "") {
             flag = false;
             validation['ifsc'] = 0;
+            validationMessage['ifsc'] = "This field can't be blank"
         }
         else {
             validation['ifsc'] = 1;
+            validationMessage['ifsc'] = ""
         }
 
 
@@ -168,34 +178,43 @@ export default function DoctorForm() {
 
             flag = false;
             validation['bankName'] = 0;
+            validationMessage['bankName'] = "This field can't be blank"
 
         }
         else {
             validation['bankName'] = 1;
+            validationMessage['bankName'] = ""
         }
 
         if (branchName === "") {
 
             flag = false;
             validation['branchName'] = 0;
+            validationMessage['branchName'] = "This field can't be blank"
 
         }
         else {
             validation['branchName'] = 1;
+            validationMessage['branchName'] = ""
         }
 
         if (branchAddress === "") {
             flag = false;
             validation['branchAddress'] = 0;
+            validationMessage['branchAddress'] = "This field can't be blank"
         }
         else {
             validation['branchAddress'] = 1;
+            validationMessage['branchAddress'] = ""
         }
 
         setFormvalidation(validation)
+        setMessage(validationMessage);
 
 
         if (flag) {
+
+            setErrormsg("");
 
             try {
 
@@ -222,8 +241,16 @@ export default function DoctorForm() {
 
                 if (res.status) {
 
-                    sessionStorage.setItem('successMsg', 'Doctor Profile Created Successfully');
-                    router.push("/admin/doctors/list");
+                    if (path.startsWith('/user-dashboard')) {
+                        sessionStorage.setItem('successMsg', 'Doctor Profile Created Successfully');
+                        window.location.href = "/user-dashboard/profile";
+                    }
+                    else {
+                        sessionStorage.setItem('successMsg', 'Doctor Profile Created Successfully');
+                        router.push("/dashboard/doctors/list");
+                    }
+
+
 
                 }
                 else {
@@ -237,6 +264,9 @@ export default function DoctorForm() {
                 setErrormsg(message)
 
             }
+        }
+        else {
+            setErrormsg("Please check error fields!")
         }
     }
 
@@ -269,6 +299,19 @@ export default function DoctorForm() {
             );
     };
 
+    const handleKeyDown = (e) => {
+        const allowedKeys = [
+            'Backspace', 'ArrowLeft', 'ArrowRight', 'Tab', 'Delete'
+        ];
+        // Prevent non-digit keys
+        if (!/\d/.test(e.key) && !allowedKeys.includes(e.key)) {
+            e.preventDefault();
+        }
+    };
+
+
+
+
     const phoneValidator = (inputtxt) => {
 
         let phoneno = /^\d{10}$/;
@@ -288,66 +331,101 @@ export default function DoctorForm() {
 
         if (tabName === 'first') {
 
-            let validation = {...formValidation };
+            let validation = { ...formValidation };
+            let validationMessage = { ...message };
             let flag = true;
 
             if (tabsdata.name === "") {
 
                 validation['name'] = 0;
+                validationMessage['name'] = "This field can't be blank"
                 flag = false;
             }
             else {
+
                 validation['name'] = 1;
+                validationMessage['name'] = "";
             }
 
-            if (!phoneValidator(tabsdata.number)) {
+            if (tabsdata.number === "") {
                 validation['number'] = 0;
-                flag = false;
+                validationMessage['number'] = "This field can't be blank";
             }
             else {
-                validation['number'] = 1;
+
+                if (!phoneValidator(tabsdata.number)) {
+                    validation['number'] = 0;
+                    validationMessage['number'] = "Number must be of 10 digit";
+                    flag = false;
+                }
+                else {
+                    validation['number'] = 1;
+                    validationMessage['number'] = "";
+                }
+
             }
 
-            if (!validateEmail(tabsdata.email)) {
+
+
+            if (tabsdata.email === "") {
                 validation['email'] = 0;
-                flag = false;
+                validationMessage['email'] = "This field can't be blank";
             }
             else {
-                validation['email'] = 1;
+
+                if (!validateEmail(tabsdata.email)) {
+                    validation['email'] = 0;
+                    validationMessage['email'] = "Please fill valid email";
+                    flag = false;
+                }
+                else {
+                    validation['email'] = 1;
+                    validationMessage['email'] = "";
+                }
+
+
             }
+
 
             if (!tabsdata.image) {
                 validation['image'] = 0;
+                validationMessage['image'] = "This field can't be blank";
                 flag = false;
             }
             else {
                 validation['image'] = 1;
+                validationMessage['image'] = "";
             }
 
             if (tabsdata.specialization === "") {
                 validation['specialization'] = 0;
+                validationMessage['specialization'] = "This field can't be blank"
                 flag = false;
             }
             else {
                 validation['specialization'] = 1;
+                validationMessage['specialization'] = ""
             }
 
             if (tabsdata.qualification === "") {
                 validation['qualification'] = 0;
+                validationMessage['qualification'] = "This field can't be blank"
                 flag = false;
             }
             else {
                 validation['qualification'] = 1;
+                validationMessage['qualification'] = ""
             }
 
             setFormvalidation(validation)
+            setMessage(validationMessage);
 
             if (flag) {
                 setErrormsg("")
                 setTabs({ first: false, second: true, third: false, fourth: false });
             }
             else {
-                setErrormsg("Please fill required fields!")
+                setErrormsg("Please check error fields!")
             }
 
 
@@ -357,41 +435,48 @@ export default function DoctorForm() {
         else if (tabName === 'second') {
 
             let validation = { ...formValidation };
+            let validationMessage = { ...message };
             let flag = true;
             if (tabsdata.city === "") {
 
                 validation['city'] = 0;
+                validationMessage['city'] = "This field can't be blank"
                 flag = false;
             }
             else {
                 validation['city'] = 1;
+                validationMessage['city'] = ""
             }
 
-            if (tabsdata.country === "") {
+            if (tabsdata.country === "" || tabsdata.country === "select") {
 
                 validation['country'] = 0;
+                validationMessage['country'] = "This field can't be blank"
                 flag = false;
             }
             else {
                 validation['country'] = 1;
+                validationMessage['country'] = ""
             }
             if (tabsdata.zip === "") {
                 validation['zip'] = 0;
+                validationMessage['zip'] = "This field can't be blank"
                 flag = false;
             }
             else {
                 validation['zip'] = 1;
+                validationMessage['zip'] = ""
             }
 
             setFormvalidation(validation)
-
+            setMessage(validationMessage);
 
             if (flag) {
                 setErrormsg("")
                 setTabs({ first: false, second: false, third: true, fourth: false });
             }
             else {
-                setErrormsg("Please fill required fields!")
+                setErrormsg("Please check error fields!")
             }
 
         }
@@ -399,26 +484,31 @@ export default function DoctorForm() {
 
 
             let validation = { ...formValidation };
+            let validationMessage = { ...message };
             let flag = true;
-            if (!document[0].documentFile) {
-                validation['document'] = 0;
-                flag = false;
-            }
-            else {
-                validation['document'] = 1;
-            }
 
             if (document[0].documentName === "" || document[0].documentName === "select") {
                 flag = false;
-                validation['document'] = 0;
+                validation['documentType'] = 0;
+                validationMessage['document'] = "Please select document type"
 
             }
             else {
-                validation['document'] = 1;
+
+                validation['documentType'] = 1;
+                if (!document[0].documentFile) {
+                    validation['document'] = 0;
+                    validationMessage['document'] = "Please upload document"
+                    flag = false;
+                }
+                else {
+                    validation['document'] = 1;
+                    validationMessage['document'] = ""
+                }
             }
 
-
             setFormvalidation(validation);
+            setMessage(validationMessage);
             if (flag) {
 
                 setErrormsg("");
@@ -451,85 +541,126 @@ export default function DoctorForm() {
     const validateSecond = () => {
 
         let validation = { ...formValidation };
+        let validationMessage = { ...message };
         let flag = true;
 
 
         if (tabsdata.name === "") {
 
             validation['name'] = 0;
+            validationMessage['name'] = "This field can't be blank"
             flag = false;
         }
         else {
+
             validation['name'] = 1;
+            validationMessage['name'] = "";
         }
 
-        if (!phoneValidator(tabsdata.number)) {
+        if (tabsdata.number === "") {
             validation['number'] = 0;
-            flag = false;
+            validationMessage['number'] = "This field can't be blank";
         }
         else {
-            validation['number'] = 1;
+
+            if (!phoneValidator(tabsdata.number)) {
+                validation['number'] = 0;
+                validationMessage['number'] = "Number must be of 10 digit";
+                flag = false;
+            }
+            else {
+                validation['number'] = 1;
+                validationMessage['number'] = "";
+            }
+
         }
 
-        if (!validateEmail(tabsdata.email)) {
+
+
+        if (tabsdata.email === "") {
             validation['email'] = 0;
-            flag = false;
+            validationMessage['email'] = "This field can't be blank";
         }
         else {
-            validation['email'] = 1;
+
+            if (!validateEmail(tabsdata.email)) {
+                validation['email'] = 0;
+                validationMessage['email'] = "Please fill valid email";
+                flag = false;
+            }
+            else {
+                validation['email'] = 1;
+                validationMessage['email'] = "";
+            }
+
+
         }
+
 
         if (!tabsdata.image) {
             validation['image'] = 0;
+            validationMessage['image'] = "This field can't be blank";
             flag = false;
         }
         else {
             validation['image'] = 1;
+            validationMessage['image'] = "";
         }
 
         if (tabsdata.specialization === "") {
             validation['specialization'] = 0;
+            validationMessage['specialization'] = "This field can't be blank"
             flag = false;
         }
         else {
             validation['specialization'] = 1;
+            validationMessage['specialization'] = ""
         }
 
         if (tabsdata.qualification === "") {
             validation['qualification'] = 0;
+            validationMessage['qualification'] = "This field can't be blank"
             flag = false;
         }
         else {
             validation['qualification'] = 1;
+            validationMessage['qualification'] = ""
         }
 
         if (tabsdata.city === "") {
 
             validation['city'] = 0;
+            validationMessage['city'] = "This field can't be blank"
             flag = false;
         }
         else {
             validation['city'] = 1;
+            validationMessage['city'] = ""
         }
 
-        if (tabsdata.country === "") {
+        if (tabsdata.country === "" || tabsdata.country === "select") {
 
             validation['country'] = 0;
+            validationMessage['country'] = "This field can't be blank"
             flag = false;
         }
         else {
             validation['country'] = 1;
+            validationMessage['country'] = ""
         }
         if (tabsdata.zip === "") {
             validation['zip'] = 0;
+            validationMessage['zip'] = "This field can't be blank"
             flag = false;
         }
         else {
             validation['zip'] = 1;
+            validationMessage['zip'] = ""
         }
 
 
         setFormvalidation(validation)
+        setMessage(validationMessage);
 
         if (flag) {
             setErrormsg("")
@@ -545,102 +676,146 @@ export default function DoctorForm() {
     const validateThird = () => {
 
         let validation = { ...formValidation };
+        let validationMessage = { ...message };
         let flag = true;
 
 
         if (tabsdata.name === "") {
 
             validation['name'] = 0;
+            validationMessage['name'] = "This field can't be blank"
             flag = false;
         }
         else {
+
             validation['name'] = 1;
+            validationMessage['name'] = "";
         }
 
-        if (!phoneValidator(tabsdata.number)) {
+        if (tabsdata.number === "") {
             validation['number'] = 0;
-            flag = false;
+            validationMessage['number'] = "This field can't be blank";
         }
         else {
-            validation['number'] = 1;
+
+            if (!phoneValidator(tabsdata.number)) {
+                validation['number'] = 0;
+                validationMessage['number'] = "Number must be of 10 digit";
+                flag = false;
+            }
+            else {
+                validation['number'] = 1;
+                validationMessage['number'] = "";
+            }
+
         }
 
-        if (!validateEmail(tabsdata.email)) {
+
+
+        if (tabsdata.email === "") {
             validation['email'] = 0;
-            flag = false;
+            validationMessage['email'] = "This field can't be blank";
         }
         else {
-            validation['email'] = 1;
+
+            if (!validateEmail(tabsdata.email)) {
+                validation['email'] = 0;
+                validationMessage['email'] = "Please fill valid email";
+                flag = false;
+            }
+            else {
+                validation['email'] = 1;
+                validationMessage['email'] = "";
+            }
+
+
         }
+
 
         if (!tabsdata.image) {
             validation['image'] = 0;
+            validationMessage['image'] = "This field can't be blank";
             flag = false;
         }
         else {
             validation['image'] = 1;
+            validationMessage['image'] = "";
         }
 
         if (tabsdata.specialization === "") {
             validation['specialization'] = 0;
+            validationMessage['specialization'] = "This field can't be blank"
             flag = false;
         }
         else {
             validation['specialization'] = 1;
+            validationMessage['specialization'] = ""
         }
 
         if (tabsdata.qualification === "") {
             validation['qualification'] = 0;
+            validationMessage['qualification'] = "This field can't be blank"
             flag = false;
         }
         else {
             validation['qualification'] = 1;
+            validationMessage['qualification'] = ""
         }
 
         if (tabsdata.city === "") {
 
             validation['city'] = 0;
+            validationMessage['city'] = "This field can't be blank"
             flag = false;
         }
         else {
             validation['city'] = 1;
+            validationMessage['city'] = ""
         }
 
-        if (tabsdata.country === "") {
+        if (tabsdata.country === "" || tabsdata.country === "select") {
 
             validation['country'] = 0;
+            validationMessage['country'] = "This field can't be blank"
             flag = false;
         }
         else {
             validation['country'] = 1;
+            validationMessage['country'] = ""
         }
         if (tabsdata.zip === "") {
             validation['zip'] = 0;
+            validationMessage['zip'] = "This field can't be blank"
             flag = false;
         }
         else {
             validation['zip'] = 1;
-        }
-
-        if (!document[0].documentFile) {
-            validation['document'] = 0;
-            flag = false;
-        }
-        else {
-            validation['document'] = 1;
+            validationMessage['zip'] = ""
         }
 
         if (document[0].documentName === "" || document[0].documentName === "select") {
             flag = false;
-            validation['document'] = 0;
+            validation['documentType'] = 0;
+            validationMessage['document'] = "Please select document type"
 
         }
         else {
-            validation['document'] = 1;
+
+            validation['documentType'] = 1;
+            if (!document[0].documentFile) {
+                validation['document'] = 0;
+                validationMessage['document'] = "Please upload document"
+                flag = false;
+            }
+            else {
+                validation['document'] = 1;
+                validationMessage['document'] = ""
+            }
         }
 
 
         setFormvalidation(validation)
+        setMessage(validationMessage);
 
         if (flag) {
             setErrormsg("")
@@ -730,6 +905,7 @@ export default function DoctorForm() {
                                                 style={{ border: formValidation.name === 0 && '0.5px solid red' }}
 
                                             />
+                                            {message.name !== "" && <span style={{ color: 'red' }}>{message.name}</span>}
                                         </div>
                                     </div>
                                     {/*end col*/}
@@ -749,7 +925,10 @@ export default function DoctorForm() {
                                                 value={tabsdata.number}
                                                 onChange={(e) => handleFormData(e)}
                                                 style={{ border: formValidation.number === 0 && '0.5px solid red' }}
+                                                onKeyDown={handleKeyDown}
+                                                maxLength={12}
                                             />
+                                            {message.number !== "" && <span style={{ color: 'red' }}>{message.number}</span>}
                                         </div>
                                     </div>
                                     {/*end col*/}
@@ -769,6 +948,7 @@ export default function DoctorForm() {
                                                 style={{ border: formValidation.email === 0 && '0.5px solid red' }}
 
                                             />
+                                            {message.email !== "" && <span style={{ color: 'red' }}>{message.email}</span>}
                                         </div>
                                     </div>
                                     {/*end col*/}
@@ -788,6 +968,7 @@ export default function DoctorForm() {
                                                 style={{ border: formValidation.image === 0 && '0.5px solid red' }}
 
                                             />
+                                            {message.image !== "" && <span style={{ color: 'red' }}>{message.image}</span>}
                                         </div>
                                         <div className="mb-3">
                                             <Image id='imagePreview' className='showBrowseImg' width={tabsdata.image && 100} height={tabsdata.image && 100} ref={previewImg} alt='' src={tabsdata.image} />
@@ -812,6 +993,7 @@ export default function DoctorForm() {
                                                 style={{ border: formValidation.specialization === 0 && '0.5px solid red' }}
 
                                             />
+                                            {message.specialization !== "" && <span style={{ color: 'red' }}>{message.specialization}</span>}
                                         </div>
                                     </div>
 
@@ -832,6 +1014,7 @@ export default function DoctorForm() {
                                                 style={{ border: formValidation.qualification === 0 && '0.5px solid red' }}
 
                                             />
+                                            {message.qualification !== "" && <span style={{ color: 'red' }}>{message.qualification}</span>}
                                         </div>
                                     </div>
 
@@ -851,6 +1034,7 @@ export default function DoctorForm() {
 
 
                                             />
+
                                         </div>
                                     </div>
 
@@ -914,7 +1098,7 @@ export default function DoctorForm() {
                                                 value={tabsdata.city}
 
                                             />
-                                            <span></span>
+                                            {message.city !== "" && <span style={{ color: 'red' }}>{message.city}</span>}
                                         </div>
                                     </div>
 
@@ -923,17 +1107,15 @@ export default function DoctorForm() {
                                             <label htmlFor="countryInput" className="form-label">
                                                 Country
                                             </label>
-                                            <input
-                                                type="text"
-                                                className="form-control"
-                                                id="countryInput"
-                                                placeholder="Country"
-                                                name='country'
-                                                style={{ border: formValidation.country === 0 && '0.5px solid red' }}
+                                             <select name='country' id="countryInput"  style={{ border: formValidation.country === 0 && '0.5px solid red' }}
                                                 onChange={(e) => handleFormData(e)}
-                                                value={tabsdata.country}
-
-                                            />
+                                                value={tabsdata.country} className="form-control">
+                                                <option value="select">select</option>
+                                                {
+                                                    country.map((item)=><option value={item.name}>{item.name}</option>)
+                                                }
+                                            </select>
+                                            {message.country !== "" && <span style={{ color: 'red' }}>{message.country}</span>}
                                         </div>
                                     </div>
 
@@ -955,6 +1137,7 @@ export default function DoctorForm() {
                                                 value={tabsdata.zip}
 
                                             />
+                                            {message.zip !== "" && <span style={{ color: 'red' }}>{message.zip}</span>}
                                         </div>
                                     </div>
 
@@ -1058,7 +1241,7 @@ export default function DoctorForm() {
 
                                             <div className="col-lg-6 mb-3">
                                                 <label className="form-label" htmlFor="latitude-input">Document Name {document.length === 1 ? "" : i + 1}</label>
-                                                <select name="documentName" id="" className="form-control" onChange={(e) => handleDocument(e, i)} required={item.documentFile !== "" ? true : false} value={item.documentName} style={{ border: formValidation.document === 0 && '0.5px solid red' }}>
+                                                <select name="documentName" className="form-control" onChange={(e) => handleDocument(e, i)} required={item.documentFile !== "" ? true : false} value={item.documentName} style={{ border: formValidation.documentType === 0 && '0.5px solid red' }}>
                                                     <option value="select">Select</option>
                                                     <option value="Medical Degree">Medical Degree</option>
                                                     <option value="Identity Document">Identity Document</option>
@@ -1082,11 +1265,13 @@ export default function DoctorForm() {
                                             </div>
                                         </div>
                                     </div>)}
+
+
                                 </div>
 
                                 <div className="hstack gap-2 justify-content-end">
 
-                                    <div className='col-auto' style={{ color: 'red' }}>{errorMsg !== "" && errorMsg}</div>
+                                    {message.document !== "" && <span style={{ color: 'red' }}>{message.document}</span>}
                                     <button type="submit" className="btn btn-primary" onClick={() => manageTabbackward("third")}>
                                         Previous
                                     </button>
@@ -1118,6 +1303,7 @@ export default function DoctorForm() {
                                                 style={{ border: formValidation.accountNumber === 0 && '0.5px solid red' }}
 
                                             />
+                                            {message.accountNumber !== "" && <span style={{ color: 'red' }}>{message.accountNumber}</span>}
                                         </div>
                                     </div>
 
@@ -1137,6 +1323,7 @@ export default function DoctorForm() {
                                                 style={{ border: formValidation.ifsc === 0 && '0.5px solid red' }}
 
                                             />
+                                            {message.ifsc !== "" && <span style={{ color: 'red' }}>{message.ifsc}</span>}
                                         </div>
                                     </div>
 
@@ -1156,6 +1343,7 @@ export default function DoctorForm() {
                                                 style={{ border: formValidation.accountName === 0 && '0.5px solid red' }}
 
                                             />
+                                            {message.accountName !== "" && <span style={{ color: 'red' }}>{message.accountName}</span>}
                                         </div>
                                     </div>
 
@@ -1175,6 +1363,7 @@ export default function DoctorForm() {
                                                 style={{ border: formValidation.accountType === 0 && '0.5px solid red' }}
 
                                             />
+                                            {message.accountType !== "" && <span style={{ color: 'red' }}>{message.accountType}</span>}
                                         </div>
                                     </div>
 
@@ -1214,6 +1403,7 @@ export default function DoctorForm() {
                                                 style={{ border: formValidation.bankName === 0 && '0.5px solid red' }}
 
                                             />
+                                            {message.bankName !== "" && <span style={{ color: 'red' }}>{message.bankName}</span>}
                                         </div>
                                     </div>
                                     <div className="col-lg-6">
@@ -1232,6 +1422,7 @@ export default function DoctorForm() {
                                                 style={{ border: formValidation.branchName === 0 && '0.5px solid red' }}
 
                                             />
+                                            {message.branchName !== "" && <span style={{ color: 'red' }}>{message.branchName}</span>}
                                         </div>
                                     </div>
 
@@ -1256,6 +1447,7 @@ export default function DoctorForm() {
                                                 style={{ border: formValidation.branchAddress === 0 && '0.5px solid red' }}
 
                                             />
+                                            {message.branchAddress !== "" && <span style={{ color: 'red' }}>{message.branchAddress}</span>}
                                         </div>
                                     </div>
 

@@ -8,7 +8,8 @@ import Select2Component from "../../component/Select2Component";
 import Breadcrumb from "../../../app/component/Breadcrumb";
 import DoctorForm from "../../../component/DoctorForm";
 import { useState, useEffect } from "react";
-import { UniversalContext } from "../../../component/context";
+import { useAuth } from "../../../context/AuthContext";
+// import { UniversalContext } from "../../../component/context";
 import AuthorForm from '../../../component/AuthorForm.jsx';
 import OrganizationForm from '../../../component/OrganizationForm'
 import PublisherForm from '../../../component/PublisherForm'
@@ -16,33 +17,43 @@ import Tooltip from "../../../component/Tooltip";
 export default function Profile() {
 
 
-    const { userData } = UniversalContext();
+    const { user } = useAuth();
+    console.log(user, "proohh");
+
     const [userType, setUsertype] = useState({ 'readers': false, 'author': false, 'doctor': false, 'publisher': false, 'organization': false });
 
     const [message, setMessage] = useState(typeof window !== 'undefined' && sessionStorage.getItem('successMsg') ? sessionStorage.getItem('successMsg') : "")
 
 
     useEffect(() => {
-        let usertype = { ...userType };
-        userData.usertype.map((user) => {
-            usertype[user] = true;
-        })
-        setUsertype(usertype);
-    
-        if (message !== "") {
-            const timer = setTimeout(() => {
-                setMessage("");
-                sessionStorage.removeItem('successMsg');
-            }, 3000);
 
-            return () => clearTimeout(timer);
+        if (user) {
+
+            let usertype = { ...userType };
+            user.usertype.map((user) => {
+                usertype[user] = true;
+            })
+            setUsertype(usertype);
+
+            if (message !== "") {
+                const timer = setTimeout(() => {
+                    setMessage("");
+                    sessionStorage.removeItem('successMsg');
+                }, 3000);
+
+                return () => clearTimeout(timer);
+            }
+
         }
-    }, [])
+
+    }, [user])
 
     const openLink = () => {
 
         window.open('/dashboard', '_blank');
     }
+
+
 
 
 

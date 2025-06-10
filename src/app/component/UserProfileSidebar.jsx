@@ -6,20 +6,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { UniversalContext } from "../../component/context";
+// import { UniversalContext } from "../../component/context";
 export default function UserProfileSidebar() {
 
-    const logout = async () => {
 
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users/logout`);
-        if (response.data.status) {
-            window.location.href = response.data.url;
-        }
-
-    }
     const pathName = usePathname();
-    const { userData } = UniversalContext()
-
+    const { user, logout } = useAuth()
+    
     return (
         <div className="card">
             <div className="card-header">
@@ -29,11 +22,11 @@ export default function UserProfileSidebar() {
                 <div className="profile-pic">
                     <div className="profile-pic-img">
                         <span className="bg-success dots" data-bs-toggle="tooltip" data-bs-placement="top" title="online" />
-                        <Image src={userData.profile_img} width={80} height={80} className="brround" alt="user" />
+                        <Image src={user?.profile_img} width={80} height={80} className="brround" alt="user" />
                     </div>
                     <Link href="/user-dashboard/profile">
                         <h4 className="mt-3 mb-0 font-weight-semibold text-dark">
-                            {userData.name}
+                            {user?.name}
                         </h4>
                     </Link>
                 </div>

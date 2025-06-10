@@ -68,8 +68,8 @@ export default function VideoList({ videoList, totalItems ,usertype, userId}) {
 
             sessionStorage.setItem('successMsg', 'Video Deleted Successfully');
             // setPopup(false);
-            // router.push(`/${userData.usertype}/videos/list`)
-            window.location.href = `/${userData.usertype}/doctors/videos/list`
+            // router.push(`/dashboard/videos/list`)
+            window.location.href = `/dashboard/doctors/videos/list`
 
         }
     }
@@ -152,7 +152,7 @@ export default function VideoList({ videoList, totalItems ,usertype, userId}) {
                         <div className="card-body"><form><div className="row g-4 mb-3">
                             <div className="col-sm-auto">
                                 <div>
-                                    <Link href={`/${userData.usertype}/doctors/videos/create`} className="btn btn-success"><i className="ri-add-line align-bottom me-1" /> Add New</Link>
+                                    <Link href={`/dashboard/doctors/videos/create`} className="btn btn-success"><i className="ri-add-line align-bottom me-1" /> Add New</Link>
                                 </div>
                             </div>
 
@@ -166,13 +166,13 @@ export default function VideoList({ videoList, totalItems ,usertype, userId}) {
                             </div>
                         </div></form></div>
 
-                        <div className="card-body"><div><div className="table-responsive table-card"><table className="table align-middle table-nowrap" id="invoiceTable"><thead className="text-muted"><tr><th className=" text-uppercase" data-sort="invoice_id">videos Id</th><th className="text-uppercase" data-sort="customer_name">Profile</th><th className=" text-uppercase" data-sort="email">Specialization</th><th className=" text-uppercase" data-sort="email">Qualification</th><th className=" text-uppercase" data-sort="country">Status</th><th className=" text-uppercase" data-sort="action">Action</th><th className=" text-uppercase" data-sort="action">Gallery</th></tr></thead>
+                        <div className="card-body"><div><div className="table-responsive table-card"><table className="table align-middle table-nowrap" id="invoiceTable"><thead className="text-muted"><tr><th className=" text-uppercase" data-sort="invoice_id">videos Id</th><th className="text-uppercase" data-sort="customer_name">Video Title</th><th className=" text-uppercase" data-sort="email">Specialization</th><th className=" text-uppercase" data-sort="email">Published Date</th><th className=" text-uppercase" data-sort="country">Status</th><th className=" text-uppercase" data-sort="action">Action</th></tr></thead>
 
-                            {videoLists.length > 0 && videoLists.map((item, i) => <tbody key={item.videoId} className="list form-check-all"><tr><td className="id"><a href="javascript:throw new Error('React has blocked a javascript: URL as a security precaution.')" data-id={25000351} className="fw-medium link-primary">{item.videoId} </a></td><td className="customer_name"><div className="d-flex align-items-center"><img className="avatar-xs rounded-circle me-2" src={item.thumbnailImage} alt='not found' />{item.videoTitle} </div></td><td className="email">{item.specialization}</td><td className="email">{item.qualification}</td><td className="status"><span className={item.videoStatus ? "badge bg-success-subtle text-success text-uppercase" : "badge bg-warning-subtle text-warning text-uppercase"}>{item.videoStatus ? 'active' : 'inactive'}</span></td>
+                            {videoLists.length > 0 && videoLists.map((item, i) => <tbody key={item.videoId} className="list form-check-all"><tr><td className="id"><a href="javascript:throw new Error('React has blocked a javascript: URL as a security precaution.')" data-id={25000351} className="fw-medium link-primary">{item.videoId} </a></td><td className="customer_name"><div className="d-flex align-items-center"><img className="avatar-xs rounded-circle me-2" src={item.thumbnailImage} alt='not found' />{item.videoTitle} </div></td><td className="email">{item.specialization}</td><td className="email">{item.publishedDate}</td><td className="status"><span className={item.videoStatus ? "badge bg-success-subtle text-success text-uppercase" : "badge bg-warning-subtle text-warning text-uppercase"}>{item.videoStatus ? 'active' : 'inactive'}</span></td>
                                 <td>
                                     <div class="d-flex gap-2">
                                         <div class="edit">
-                                            <Link class="btn btn-sm btn-success edit-item-btn" href={`/${userData.usertype}/doctors/videos/update/${item.videoId}`}>Edit</Link>
+                                            <Link class="btn btn-sm btn-success edit-item-btn" href={`/dashboard/doctors/videos/update/${item.videoId}`}>Edit</Link>
                                         </div>
                                         <div class="remove">
                                             <button class="btn btn-sm btn-danger remove-item-btn" onClick={() => openPopup(item.videoId)}>Remove</button>
@@ -181,17 +181,7 @@ export default function VideoList({ videoList, totalItems ,usertype, userId}) {
                                     </div>
                                 </td>
 
-                                <td>
-                                    <div class="d-flex gap-2">
-
-
-
-                                        <div class="remove">
-                                            <button class="btn btn-sm btn-danger remove-item-btn" data-bs-toggle="modal"
-                                                data-bs-target="#deletetable" onClick={() => setvideoid(item.videoId)}>Upload</button>
-                                        </div>
-                                    </div>
-                                </td>
+                            
 
 
                             </tr>

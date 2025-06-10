@@ -148,7 +148,7 @@ export default function OrganizationList({ organizationList, totalItems }) {
                                 <td>
                                     <div class="d-flex gap-2">
                                         <div class="edit">
-                                            <Link class="btn btn-sm btn-success edit-item-btn" href={`/${userData.usertype}/organization/update/${item.organizationId}`}>Edit</Link>
+                                            <Link class="btn btn-sm btn-success edit-item-btn" href={`/dashboard/organization/update/${item.organizationId}`}>Edit</Link>
                                         </div>
                                         <div class="remove">
                                             <button class="btn btn-sm btn-danger remove-item-btn" onClick={() => openPopup(item.organizationId)}>Remove</button>

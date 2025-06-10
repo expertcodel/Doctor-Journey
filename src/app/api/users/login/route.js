@@ -17,7 +17,7 @@ export async function POST(request) {
    const usermodel = await UserModel();
    //const cookie = await cookies();
    // const activitymodel=await activityModel();
-   const role = await roleModel();
+  // const role = await roleModel();
 
    const isValiduser = await usermodel.findOne({ where: { email } });
    if (!isValiduser) {
@@ -33,10 +33,10 @@ export async function POST(request) {
    //    return NextResponse.json({ status: 0, message: "Wrong Credentials!" });
    // }
 
-   // const isPasswordvalid = await bcrypt.compare(password, isValiduser.password);
-   // if (!isPasswordvalid) {
-   //    return NextResponse.json({ status: 0, message: "Wrong Password!" });
-   // }
+   const isPasswordvalid = await bcrypt.compare(password, isValiduser.password);
+   if (!isPasswordvalid) {
+      return NextResponse.json({ status: 0, message: "Wrong Password!" });
+   }
 
    try {
 
