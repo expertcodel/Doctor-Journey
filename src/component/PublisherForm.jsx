@@ -8,10 +8,13 @@ import { useRouter } from 'next/navigation';
 import { UniversalContext } from './context';
 import { usePathname } from 'next/navigation';
 import {country} from '../utils/country.js'
+import { useAuth } from '../context/AuthContext';
 export default function publisherForm() {
 
     const path = usePathname();
-    const { userData } = UniversalContext();
+    // const { userData } = UniversalContext();
+     const {user}=useAuth();
+    
     const [errorMsg, setErrormsg] = useState("");
     const [imageUrl, setImageurl] = useState(null);
     const [tabs, setTabs] = useState({ first: true, second: false, third: false, fourth: false });
@@ -219,7 +222,7 @@ export default function publisherForm() {
 
                 const data = {
 
-                    publisherName, specialization, qualification, email, number, shortDescription, address, location, experience, city, country, zip, branchAddress, branchName, bankName, ifsc, accountNumber, gstNumber, accountType, accountName, document, userId: userData.userId
+                    publisherName, specialization, qualification, email, number, shortDescription, address, location, experience, city, country, zip, branchAddress, branchName, bankName, ifsc, accountNumber, gstNumber, accountType, accountName, document, userId: user.userId
                 }
 
                 const formData = new FormData();

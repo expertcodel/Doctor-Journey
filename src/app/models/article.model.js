@@ -125,6 +125,11 @@ export const articleModel = async () => {
             type: DataTypes.STRING,
             defaultValue: 'pending'
         },
+        status: {
+
+            type: DataTypes.BOOLEAN,
+            defaultValue: true
+        },
         volume: {
 
             type: DataTypes.INTEGER,

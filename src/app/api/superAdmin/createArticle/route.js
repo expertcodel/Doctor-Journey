@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { articleModel } from '../../../models/article.model'
 import { fileUploader } from "../../../../utils/fileUploader";
 import { extractErrorMessage } from "../../../../utils/errorMessage";
-
+import { Op } from 'sequelize';
 function randomNumbers() {
     return String(Math.floor((Math.random() * 9000) + 1000));
 }
@@ -10,8 +10,8 @@ function randomNumbers() {
 export async function POST(request) {
 
     const input = await request.formData();
-    const {articleTitle, primaryAuthor, secondaryAuthor, articleSummary, DOI, price, remarks, userId, contentList } = JSON.parse(input.get('data'));
-    const file=input.get('file');
+    const { articleTitle, primaryAuthor, secondaryAuthor, articleSummary, DOI, price, remarks, userId, contentList } = JSON.parse(input.get('data'));
+    const file = input.get('file');
 
     const article = await articleModel();
     if (!article) {
@@ -21,8 +21,8 @@ export async function POST(request) {
     try {
 
 
-        
-        
+
+
 
         let thumbnailImage;
         if (file !== 'null') {
@@ -49,7 +49,7 @@ export async function POST(request) {
             DOI,
             price,
             remarks,
-            thumbnailImage:thumbnailImage && thumbnailImage
+            thumbnailImage: thumbnailImage && thumbnailImage
         })
 
         return NextResponse.json({ status: true, message: "article saved successfully!" });
@@ -57,29 +57,90 @@ export async function POST(request) {
 
     } catch (error) {
 
-     
-        
-        const message=extractErrorMessage(error);
+
+
+        const message = extractErrorMessage(error);
         console.log("some error occured", message);
         return NextResponse.json({ status: false, message });
 
 
     }
 
-  
+
 
 
 
 }
 
-export async function GET() {
+export async function GET(request) {
 
-    const article = await articleModel();
-    if (!article) {
-        return NextResponse.json({ status: false, message: "some error occured" });
+
+    const input = new URL(request.url).searchParams;
+    const name = input.get('name');
+    const page = input.get('page');
+    const userId = input.get('userId');
+    const usertype = input.get('usertype');
+    const articlemodel = await articleModel();
+    if (!articlemodel) {
+        return NextResponse.json({ status: false, message: "database error occured" });
     }
 
-    const articles = await article.findAll({ order: [['id', 'ASC']] });
-    return NextResponse.json({ status: true, articles });
 
+    try {
+
+        if (usertype === 'string') {
+            const { rows, count } = await articlemodel.findAndCountAll({
+
+                limit: 10,
+                offset: (page - 1) * 10,
+                where: { [Op.or]: { articleTitle: { [Op.iLike]: `%${name}%` }, articleId: { [Op.iLike]: `%${name}%` } } },
+                order: [['createdAt', 'DESC']]
+            })
+
+            return NextResponse.json({ status: true, articlelist: rows, totalItems: count });
+        }
+        else {
+
+            const { rows, count } = await articlemodel.findAndCountAll({
+
+                limit: 10,
+                offset: (page - 1) * 10,
+                where: { userId,[Op.or]: { articleTitle: { [Op.iLike]: `%${name}%` }, articleId: { [Op.iLike]: `%${name}%` } } },
+                order: [['createdAt', 'DESC']]
+            })
+
+            return NextResponse.json({ status: true, articlelist: rows, totalItems: count });
+
+        }
+
+
+    } catch (error) {
+
+        const message = extractErrorMessage(error);
+        return NextResponse.json({ status: false, message });
+    }
+}
+
+
+export async function DELETE(request) {
+
+    const { deleteditem } = await request.json();
+    const articlemodel = await articleModel();
+
+    if (!articlemodel) {
+        return NextResponse.json({ status: false, message: "database error occured!" });
+    }
+
+
+    try {
+
+        await articlemodel.destroy({ where: { id: { [Op.in]: deleteditem } } });
+        return NextResponse.json({ status: true, message: "deleted successfully" });
+
+    } catch (error) {
+
+        console.log(error);
+        const message = extractErrorMessage(error);
+        return NextResponse.json({ status: false, message });
+    }
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import ArticlelistPage from '../../../component/ArticlelistPage.jsx';
+import ApprovedArticles from '../../../component/ApprovedArticles.jsx';
 import { extractUsertype } from '../../../utils/userType.js'
 export default async function Page() {
 
@@ -10,7 +10,7 @@ export default async function Page() {
 
   try {
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/createArticle/?page=1&userId=${userId}&usertype=${typeof(usertype)}&name=`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/approvedArticle/?page=1&userId=${userId}&usertype=${typeof(usertype)}&name=`, {
 
       method: 'GET',
       cache: 'no-store'
@@ -37,7 +37,7 @@ export default async function Page() {
 
     <>
       {
-        articleList && <ArticlelistPage articleList={articleList}  totalItems={totalItems} usertype={usertype} userId={userId}/>
+        articleList && <ApprovedArticles articleList={articleList}  totalItems={totalItems} usertype={usertype} userId={userId}/>
       }
     </>
 

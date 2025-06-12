@@ -6,13 +6,15 @@ import Tooltip from './Tooltip.jsx'
 import { useRouter } from 'next/navigation'
 import AdminFooter from './AdminFooter.jsx'
 import { UniversalContext } from './context.js'
-export default function VideoList({ videoList, totalItems ,usertype, userId}) {
+export default function VideoList({ videoList, totalItems, usertype, userId }) {
 
     const router = useRouter();
     const [loading, setLoading] = useState(false)
     const { userData } = UniversalContext();
     const [popup, setPopup] = useState(false);
     const [deleteView, setDeleteview] = useState(-1);
+    const [deleteditems, setDeleteditems] = useState([])
+    const [msg, setMsg] = useState("");
     const [id, setId] = useState(null);
     const [success, setSuccess] = useState(false);
     const [errorMsg, setErrormsg] = useState("");
@@ -40,13 +42,73 @@ export default function VideoList({ videoList, totalItems ,usertype, userId}) {
     }, [])
 
 
+    const deleteMultipleRecords = async () => {
 
-    const openPopup = (menuId) => {
 
-        setDeleteview(1);
-        setId(menuId);
-        setPopup(true);
+        let deleteditem = [];
+        const checkboxlist = Array.from(document.querySelectorAll('.deleteinput'));
+        checkboxlist.map((item, i) => item.checked && deleteditem.push(videoLists[i].id))
+        setDeleteditems(deleteditem);
+
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/doctors/uploadVideo`, {
+            method: "DELETE",
+            body: JSON.stringify({ deleteditem }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+
+
+
+        const res = await response.json();
+        setDeleteview(0);
+        if (!res.status) {
+
+            setErrormsg(res.message);
+
+        }
+        else {
+
+            sessionStorage.setItem('successMsg', 'Video Deleted Successfully');
+            window.location.href = "/dashboard/doctors/videos/list"
+        }
+
+
+
+
     }
+
+    const openPopup = () => {
+
+        let deleteditem = [];
+        const checkboxlist = Array.from(document.querySelectorAll('.deleteinput'));
+        checkboxlist.map((item, i) => item.checked && deleteditem.push(videoList[i].id))
+        setDeleteditems(deleteditem);
+        if (deleteditem.length === 0) {
+            setMsg("Please select atleast one checkbox!")
+        }
+        else {
+
+            setDeleteview(1);
+            setPopup(true)
+        }
+
+    }
+
+    const selectAllcheckbox = () => {
+
+        const parent = document.getElementById('selectall').checked;
+        const checkboxlist = Array.from(document.querySelectorAll('.deleteinput'));
+        checkboxlist.forEach((box) => box.checked = parent);
+    }
+
+
+    // const openPopup = (menuId) => {
+
+    //     setDeleteview(1);
+    //     setId(menuId);
+    //     setPopup(true);
+    // }
     const deleteRecords = async (videoId) => {
 
         const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/doctors/uploadVideo`, {
@@ -77,7 +139,7 @@ export default function VideoList({ videoList, totalItems ,usertype, userId}) {
     const searching = async (idx, name) => {
 
 
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/doctors/uploadVideo/?page=${idx}&name=${name}&userId=${userId}&usertype=${typeof(usertype)}`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/doctors/uploadVideo/?page=${idx}&name=${name}&userId=${userId}&usertype=${typeof (usertype)}`);
         setName(name);
         const res = await response.json();
         if (res.status) {
@@ -90,7 +152,7 @@ export default function VideoList({ videoList, totalItems ,usertype, userId}) {
     const pagination = async (idx) => {
 
         if (idx > 0 && idx <= button) {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/doctors/uploadVideo/?page=${idx}&name=${name}&userId=${userId}&usertype=${typeof(usertype)}`);
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/doctors/uploadVideo/?page=${idx}&name=${name}&userId=${userId}&usertype=${typeof (usertype)}`);
             setIdx(idx);
             const res = await response.json();
             if (res.status) {
@@ -157,31 +219,60 @@ export default function VideoList({ videoList, totalItems ,usertype, userId}) {
                             </div>
 
                             <div className="col-sm">
-                                <div className="d-flex justify-content-sm-end">
+                                <div className="d-flex justify-content-sm-end" style={{ display: 'flex', gap: '1rem' }}>
                                     <div className="search-box ms-2">
                                         <input type="text" className="form-control search" placeholder="Search..." onChange={(e) => searching(idx, e.target.value)} />
                                         <i className="ri-search-line search-icon" />
                                     </div>
+                                    <button class="btn btn-sm btn-danger remove-item-btn deleteBtn" type="button" onClick={openPopup}
+
+                                    >Remove</button>
                                 </div>
+
+
+
                             </div>
+
                         </div></form></div>
 
-                        <div className="card-body"><div><div className="table-responsive table-card"><table className="table align-middle table-nowrap" id="invoiceTable"><thead className="text-muted"><tr><th className=" text-uppercase" data-sort="invoice_id">videos Id</th><th className="text-uppercase" data-sort="customer_name">Video Title</th><th className=" text-uppercase" data-sort="email">Specialization</th><th className=" text-uppercase" data-sort="email">Published Date</th><th className=" text-uppercase" data-sort="country">Status</th><th className=" text-uppercase" data-sort="action">Action</th></tr></thead>
+                        <div className="card-body"><div><div className="table-responsive table-card"><table className="table align-middle table-nowrap" id="invoiceTable"><thead className="text-muted"><tr>  <th
+                            data-column-id="id"
+                            className="gridjs-th"
+                            style={{ width: 5 }}
+                        >
+                            <div className="gridjs-th-content" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}> <input
+                                className="form-check-input"
+                                id="checkAll"
+                                type="checkbox"
+                                defaultValue="option"
 
-                            {videoLists.length > 0 && videoLists.map((item, i) => <tbody key={item.videoId} className="list form-check-all"><tr><td className="id"><a href="javascript:throw new Error('React has blocked a javascript: URL as a security precaution.')" data-id={25000351} className="fw-medium link-primary">{item.videoId} </a></td><td className="customer_name"><div className="d-flex align-items-center"><img className="avatar-xs rounded-circle me-2" src={item.thumbnailImage} alt='not found' />{item.videoTitle} </div></td><td className="email">{item.specialization}</td><td className="email">{item.publishedDate}</td><td className="status"><span className={item.videoStatus ? "badge bg-success-subtle text-success text-uppercase" : "badge bg-warning-subtle text-warning text-uppercase"}>{item.videoStatus ? 'active' : 'inactive'}</span></td>
+                            /></div>
+                        </th><th className=" text-uppercase" data-sort="invoice_id">videos Id</th><th className="text-uppercase" data-sort="customer_name">Video Title</th><th className=" text-uppercase" data-sort="email">Specialization</th><th className=" text-uppercase" data-sort="email">Published Date</th><th className=" text-uppercase" data-sort="country">Status</th><th className=" text-uppercase" data-sort="action">Action</th></tr></thead>
+
+                            {videoLists.length > 0 && videoLists.map((item, i) => <tbody key={item.videoId} className="list form-check-all"><tr> <td data-column-id="name" className="gridjs-td" style={{
+                                display: 'flex', justifyContent: 'center', alignItems: 'center',
+                                border: 'none'
+                            }}>
+                                <div className="gridjs-th-content" > <input
+                                    className="form-check-input checkbox-input deleteinput"
+                                    id="checkAll"
+                                    type="checkbox"
+
+                                /></div>
+                            </td><td className="id"><a href="javascript:throw new Error('React has blocked a javascript: URL as a security precaution.')" data-id={25000351} className="fw-medium link-primary">{item.videoId} </a></td><td className="customer_name"><div className="d-flex align-items-center"><img className="avatar-xs rounded-circle me-2" src={item.thumbnailImage} alt='not found' />{item.videoTitle} </div></td><td className="email">{item.specialization}</td><td className="email">{item.publishedDate}</td><td className="status"><span className={item.videoStatus ? "badge bg-success-subtle text-success text-uppercase" : "badge bg-warning-subtle text-warning text-uppercase"}>{item.videoStatus ? 'active' : 'inactive'}</span></td>
                                 <td>
                                     <div class="d-flex gap-2">
                                         <div class="edit">
                                             <Link class="btn btn-sm btn-success edit-item-btn" href={`/dashboard/doctors/videos/update/${item.videoId}`}>Edit</Link>
                                         </div>
-                                        <div class="remove">
+                                        {/* <div class="remove">
                                             <button class="btn btn-sm btn-danger remove-item-btn" onClick={() => openPopup(item.videoId)}>Remove</button>
-                                        </div>
+                                        </div> */}
 
                                     </div>
                                 </td>
 
-                            
+
 
 
                             </tr>
@@ -190,7 +281,9 @@ export default function VideoList({ videoList, totalItems ,usertype, userId}) {
 
                             </tbody>)}
 
-                        </table><div className="noresult" style={{ display: button > 0 && "none" }}><div className="text-center"><lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop" colors="primary:#121331,secondary:#08a88a" style={{ "width": "75px", "height": "75px" }} /><h5 className="mt-2">Sorry! No Result Found</h5></div></div></div><div className="d-flex justify-content-end mt-3">
+                        </table><div className="noresult" style={{ display: button > 0 && "none" }}><div className="text-center"><lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop" colors="primary:#121331,secondary:#08a88a" style={{ "width": "75px", "height": "75px" }} /><h5 className="mt-2">Sorry! No Result Found</h5></div></div></div>
+
+                            <div className="d-flex justify-content-end mt-3">
 
                                 {button > 0 && <div className="pagination-wrap hstack gap-2" style={{ "display": "flex" }}>
 
@@ -210,7 +303,9 @@ export default function VideoList({ videoList, totalItems ,usertype, userId}) {
 
                                 </div>}
 
-                            </div><div className="modal fade flip" id="deleteOrder" tabIndex={-1} aria-labelledby="deleteOrderLabel" aria-hidden="true"><div className="modal-dialog modal-dialog-centered"><div className="modal-content"><div className="modal-body p-5 text-center"><lord-icon src="https://cdn.lordicon.com/gsqxdxog.json" trigger="loop" colors="primary:#405189,secondary:#f06548" style={{ "width": "90px", "height": "90px" }} /><div className="mt-4 text-center"><h4>You are about to delete a order ?</h4><p className="text-muted fs-15 mb-4">Deleting your order will remove all of your information from our database.</p><div className="hstack gap-2 justify-content-center remove"><button className="btn btn-link link-success fw-medium text-decoration-none" id="deleteRecord-close" data-bs-dismiss="modal"><i className="ri-close-line me-1 align-middle" /> Close</button><button className="btn btn-danger" id="delete-record">Yes, Delete It</button></div></div></div></div></div></div></div></div></div></div>
+                            </div>
+
+                            <div className="modal fade flip" id="deleteOrder" tabIndex={-1} aria-labelledby="deleteOrderLabel" aria-hidden="true"><div className="modal-dialog modal-dialog-centered"><div className="modal-content"><div className="modal-body p-5 text-center"><lord-icon src="https://cdn.lordicon.com/gsqxdxog.json" trigger="loop" colors="primary:#405189,secondary:#f06548" style={{ "width": "90px", "height": "90px" }} /><div className="mt-4 text-center"><h4>You are about to delete a order ?</h4><p className="text-muted fs-15 mb-4">Deleting your order will remove all of your information from our database.</p><div className="hstack gap-2 justify-content-center remove"><button className="btn btn-link link-success fw-medium text-decoration-none" id="deleteRecord-close" data-bs-dismiss="modal"><i className="ri-close-line me-1 align-middle" /> Close</button><button className="btn btn-danger" id="delete-record">Yes, Delete It</button></div></div></div></div></div></div></div></div></div></div>
 
                     </div>
 
@@ -218,7 +313,7 @@ export default function VideoList({ videoList, totalItems ,usertype, userId}) {
 
                 <div
                     className={popup ? "modal fade zoomIn show" : "modal fade zoomIn"}
-                    // id="deletetable"
+                    id="deletetable"
                     aria-hidden={!popup && 'true'}
                     role={popup && 'dialog'}
                     aria-modal={popup && 'true'}
@@ -242,7 +337,7 @@ export default function VideoList({ videoList, totalItems ,usertype, userId}) {
                                 </div>
                                 <div className="d-flex gap-2 justify-content-center mt-4 mb-2">
                                     <button type="button" className="btn w-sm btn-light" onClick={() => setPopup(false)}>Close</button>
-                                    <button type="button" className="btn w-sm btn-danger " id="delete-record" onClick={() => deleteRecords(id)}>Yes, Delete It!</button>
+                                    <button type="button" className="btn w-sm btn-danger " id="delete-record" onClick={deleteMultipleRecords}>Yes, Delete It!</button>
                                 </div>
                             </div>
                         </div>}

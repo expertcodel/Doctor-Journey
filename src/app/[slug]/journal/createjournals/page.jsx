@@ -2,16 +2,17 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import dynamic from 'next/dynamic'
-
+import { useRouter } from 'next/navigation'
 
 function Page() {
 
-  const [message,setMessage]=useState("");
+  const [message, setMessage] = useState("");
+  const router=useRouter();
   async function saveJournal(e) {
 
-    e.preventDefault(); 
+    e.preventDefault();
     //console.log(e.target.frequency.value.trim());
-    
+
 
     const option =
     {
@@ -19,25 +20,32 @@ function Page() {
       url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/createJournal`,
       data:
       {
-        journalsName:e.target.Journalname.value.trim(),
-        journalsIsbn:e.target.ISBN.value.trim(),
-        publisherName:e.target.Publishername.value.trim(),
-        rights:e.target.Rights.value.trim(),
-        frequency:e.target.frequency.value.trim(),
+        journalsName: e.target.Journalname.value.trim(),
+        journalsIsbn: e.target.ISBN.value.trim(),
+        publisherName: e.target.Publishername.value.trim(),
+        rights: e.target.Rights.value.trim(),
+        frequency: e.target.frequency.value.trim(),
       }
     }
 
-    const response=await axios.request(option)
-    setMessage(response.data.message);
+    const response = await axios.request(option)
+    if (response.data.status) {
+      sessionStorage.setItem('successMsg', 'Journal Created Successfully');
+      router.push("/dashboard/journal/journalslist");
+    }
+    else {
+      setMessage(response.data.message)
+    }
+
 
   }
 
 
   return (
-    
+
     <div className="main-content">
-    <div className="page-content">
-    <form className="row g-3" onSubmit={saveJournal}>
+      <div className="page-content">
+        <form className="row g-3" onSubmit={saveJournal}>
 
           <div className="col-md-6">
             <label htmlFor="fullnameInput" className="form-label">
@@ -53,7 +61,7 @@ function Page() {
           </div>
           <div className="col-md-6">
             <label htmlFor="fullnameInput" className="form-label">
-             ISBN
+              ISBN
             </label>
             <input
               type="text"
@@ -91,8 +99,8 @@ function Page() {
             <label htmlFor="fullnameInput" className="form-label">
               frequency
             </label>
-          
-            <select name="frequency" id=""  className="form-control" 
+
+            <select name="frequency" id="" className="form-control"
             >
               <option value="select" selected>Select</option>
               <option value="Yearly">Yearly</option>
@@ -103,7 +111,7 @@ function Page() {
           </div>
           <div className="col-12">
             <label htmlFor="form-control" className="form-label">
-            Description
+              Description
             </label>
             <textarea
               name='Description'
@@ -113,7 +121,7 @@ function Page() {
             />
           </div>
 
-         
+
           <div className="col-12">
             <div className="text-end">
               <button type="submit" className="btn btn-primary">
@@ -122,10 +130,10 @@ function Page() {
             </div>
           </div>
           {
-             message!=="" && <div>{message}</div>
+            message !== "" && <div>{message}</div>
           }
-    </form>
-    </div>
+        </form>
+      </div>
     </div>
   )
 }

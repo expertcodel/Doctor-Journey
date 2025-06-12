@@ -30,7 +30,7 @@ export default async function Page() {
 
 
   return (
-    <CreateArticle userList={userList}/>
+    <CreateArticle userList={userList} />
   )
 }
 

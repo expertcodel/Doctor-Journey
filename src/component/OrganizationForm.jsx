@@ -7,11 +7,14 @@ import { extractErrorMessage } from '../utils/errorMessage';
 import { useRouter } from 'next/navigation';
 import { UniversalContext } from './context';
 import { usePathname } from 'next/navigation';
-import {country} from '../utils/country.js'
+import { country } from '../utils/country.js'
+import { useAuth } from '../context/AuthContext';
 export default function organizationForm() {
 
     const path = usePathname();
-    const { userData } = UniversalContext();
+    // const { userData } = UniversalContext();
+    const { user } = useAuth();
+    // console.log(user,userData, 'kk');
     const [errorMsg, setErrormsg] = useState("");
     const [imageUrl, setImageurl] = useState(null);
     const [tabs, setTabs] = useState({ first: true, second: false, third: false, fourth: false });
@@ -219,7 +222,7 @@ export default function organizationForm() {
 
                 const data = {
 
-                    organizationName, specialization, qualification, email, number, shortDescription, address, location, experience, city, country, zip, branchAddress, branchName, bankName, ifsc, accountNumber, gstNumber, accountType, accountName, document, userId: userData.userId
+                    organizationName, specialization, qualification, email, number, shortDescription, address, location, experience, city, country, zip, branchAddress, branchName, bankName, ifsc, accountNumber, gstNumber, accountType, accountName, document, userId: user.userId
                 }
 
                 const formData = new FormData();
@@ -1106,12 +1109,12 @@ export default function organizationForm() {
                                             <label htmlFor="countryInput" className="form-label">
                                                 Country
                                             </label>
-                                            <select name='country' id="countryInput"  style={{ border: formValidation.country === 0 && '0.5px solid red' }}
+                                            <select name='country' id="countryInput" style={{ border: formValidation.country === 0 && '0.5px solid red' }}
                                                 onChange={(e) => handleFormData(e)}
                                                 value={tabsdata.country} className="form-control">
                                                 <option value="select">select</option>
                                                 {
-                                                    country.map((item)=><option value={item.name}>{item.name}</option>)
+                                                    country.map((item) => <option value={item.name}>{item.name}</option>)
                                                 }
                                             </select>
                                             {message.country !== "" && <span style={{ color: 'red' }}>{message.country}</span>}

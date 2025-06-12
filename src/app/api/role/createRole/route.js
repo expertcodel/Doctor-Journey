@@ -76,7 +76,7 @@ export async function POST(request) {
 
         role: 'Approved Articles',
         allowed: true,
-        path: `/dashboard/articlelist`
+        path: `/dashboard/approved-articles`
       },
       {
 
