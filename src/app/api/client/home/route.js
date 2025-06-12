@@ -30,6 +30,8 @@ export async function GET() {
     } catch (error) {
 
         const message = extractErrorMessage(error);
+        console.log(error,'home-err');
+        
         return NextResponse.json({ status: false, message });
     }
 }

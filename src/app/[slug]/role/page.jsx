@@ -183,7 +183,7 @@ function Page() {
                         <div className="modal-body">
                             <div className="mt-2 text-center">
 
-                                <i class="ri-home-line ri-pencil-fill" style={{ fontSize: 'x-large' }}></i>
+                                <i className="ri-home-line ri-pencil-fill" style={{ fontSize: 'x-large' }}></i>
                                 <div className="mt-4 pt-2 fs-15 mx-4 mx-sm-5">
 
 

@@ -40,7 +40,8 @@ export async function POST(request) {
                 document[i].documentFile = degreedocumenturl
             }
         }
-
+        console.log(userId,'userid');
+        
 
         await connection.query(`
   UPDATE "Users"

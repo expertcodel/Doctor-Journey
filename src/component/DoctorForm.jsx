@@ -1161,10 +1161,10 @@ export default function DoctorForm() {
                                             />
                                         </div>
                                     </div>
-                                    <div className="cardBodySec">
-                                        <h4>
+                                    {/* <div className="cardBodySec col-12">
+                                        <h4 className='d-flex align-items-center'>
                                             Location
-                                            <button type="button" onClick={addLocation} className="add-btn btn btn-info" >
+                                            <button type="button" onClick={addLocation} className="add-btn btn btn-info ms-auto" >
                                                 <i className="ri-add-line" /> Add
                                             </button>
                                         </h4>
@@ -1196,7 +1196,7 @@ export default function DoctorForm() {
                                                 </div>
                                             </div>
                                         </div>)}
-                                    </div>
+                                    </div> */}
                                     <div className="col-lg-12">
 
                                         <div className="hstack gap-2 justify-content-end">

@@ -1,7 +1,10 @@
-import { useEffect } from 'react';
+import Link from 'next/link';
+import { useEffect, useRef, useState } from 'react';
 
 const LazyYoutube = ({ videoId, isOpen, setIsOpen }) => {
   // Lock scroll and close on ESC key
+  const playerRef = useRef(null);
+  const [isVideoEnded, setIsVideoEnded] = useState(false);
 
   const overlayStyle = {
   position: 'fixed',
@@ -56,23 +59,76 @@ const closeButtonStyle = {
     }
   }, [isOpen, setIsOpen]);
 
+  // Load YouTube IFrame API
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const loadPlayer = () => {
+      playerRef.current = new window.YT.Player('yt-player', {
+        videoId,
+        events: {
+          onStateChange: (event) => {
+            if (event.data === 0) {
+              // Video ended
+              setIsVideoEnded(true);
+            }
+          },
+        },
+        playerVars: {
+          autoplay: 1,
+        },
+      });
+    };
+
+    if (!window.YT) {
+      const tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/iframe_api';
+      window.onYouTubeIframeAPIReady = loadPlayer;
+      document.body.appendChild(tag);
+    } else {
+      loadPlayer();
+    }
+
+    return () => {
+      if (playerRef.current && playerRef.current.destroy) {
+        playerRef.current.destroy();
+      }
+    };
+  }, [isOpen, videoId]);
+
   if (!isOpen) return null;
 
   return (
-    <div style={overlayStyle} onClick={() => setIsOpen(false)}>
-      <div style={modalStyle} onClick={(e) => e.stopPropagation()}>
-        <button style={closeButtonStyle} onClick={() => setIsOpen(false)}>&times;</button>
-        <iframe
-          width="100%"
-          height="100%"
-          src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
-          title="YouTube Video"
-          frameBorder="0"
-          allow="autoplay; encrypted-media"
-          allowFullScreen
-        ></iframe>
+    <>
+      <div style={overlayStyle} onClick={() => setIsOpen(false)}>
+        <div style={modalStyle} onClick={(e) => e.stopPropagation()}>
+          <button style={closeButtonStyle} onClick={() => setIsOpen(false)}>&times;</button>
+          {/* <iframe
+            width="100%"
+            height="100%"
+            src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
+            title="YouTube Video"
+            frameBorder="0"
+            allow="autoplay; encrypted-media"
+            allowFullScreen
+          ></iframe> */}
+          <div id="yt-player" style={{ width: '100%', height: '100%' }}></div>
+        </div>
       </div>
-    </div>
+
+      {isVideoEnded && (
+        <div style={{ ...overlayStyle, backgroundColor: 'rgba(0,0,0,0.95)' }}>
+          <div style={{ background: '#111', padding: '2rem', borderRadius: '8px', textAlign: 'center' }}>
+            <button style={closeButtonStyle} onClick={() => setIsVideoEnded(false)}>&times;</button>
+            <h2 className="text-white mb-3">Want to unlock the full video?</h2>
+            <p className="text-white mb-3">Create your free account now and enjoy unrestricted access to all our premium content!</p>
+            <Link className="btn btn-danger" href="/register">
+              Register Now
+            </Link>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
