@@ -92,7 +92,7 @@ export async function GET(request) {
             const { rows, count } = await articlemodel.findAndCountAll({
 
                 limit: 10,
-                offset: (page - 1) * 10,
+                offset: name==="" ? (page - 1) * 10 : 0,
                 where: { [Op.or]: { articleTitle: { [Op.iLike]: `%${name}%` }, articleId: { [Op.iLike]: `%${name}%` } } },
                 order: [['createdAt', 'DESC']]
             })
@@ -104,7 +104,7 @@ export async function GET(request) {
             const { rows, count } = await articlemodel.findAndCountAll({
 
                 limit: 10,
-                offset: (page - 1) * 10,
+                offset: name==="" ? (page - 1) * 10 : 0,
                 where: { userId,[Op.or]: { articleTitle: { [Op.iLike]: `%${name}%` }, articleId: { [Op.iLike]: `%${name}%` } } },
                 order: [['createdAt', 'DESC']]
             })

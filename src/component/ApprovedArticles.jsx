@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Articles from './Articles'
 // import { UniversalContext } from '../../../component/context.js';
 import { useRouter } from 'next/navigation';
-import Tooltip from '../component/Tooltip.jsx'
+import Tooltip from './Tooltip.jsx'
 
 function ApprovedArticles({ articleList, totalItems, usertype, userId }) {
 
@@ -56,14 +56,11 @@ function ApprovedArticles({ articleList, totalItems, usertype, userId }) {
     const deleteMultipleRecords = async () => {
 
 
-        let deleteditem = [];
-        const checkboxlist = Array.from(document.querySelectorAll('.deleteinput'));
-        checkboxlist.map((item, i) => item.checked && deleteditem.push(articleLists[i].id))
-        setDeleteditems(deleteditem);
+
 
         const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/createArticle`, {
             method: "DELETE",
-            body: JSON.stringify({ deleteditem }),
+            body: JSON.stringify({ deleteditem: deleteditems }),
             headers: {
                 "Content-Type": "application/json"
             }
@@ -87,11 +84,8 @@ function ApprovedArticles({ articleList, totalItems, usertype, userId }) {
 
     const openPopup = () => {
 
-        let deleteditem = [];
-        const checkboxlist = Array.from(document.querySelectorAll('.deleteinput'));
-        checkboxlist.map((item, i) => item.checked && deleteditem.push(articleList[i].id))
-        setDeleteditems(deleteditem);
-        if (deleteditem.length === 0) {
+
+        if (deleteditems.length === 0) {
             setMsg("Please select atleast one checkbox!")
         }
         else {
@@ -102,11 +96,25 @@ function ApprovedArticles({ articleList, totalItems, usertype, userId }) {
 
     }
 
+    const checkBox = () => {
+        let deleteditem = [];
+        const checkboxlist = Array.from(document.querySelectorAll('.deleteinput'));
+        checkboxlist.map((item, i) => item.checked && deleteditem.push(articleLists[i].id))
+        setDeleteditems(deleteditem);
+    }
+
     const selectAllcheckbox = () => {
 
+        let deleteditem = [];
         const parent = document.getElementById('selectall').checked;
         const checkboxlist = Array.from(document.querySelectorAll('.deleteinput'));
-        checkboxlist.forEach((box) => box.checked = parent);
+        checkboxlist.forEach((box, i) => {
+            box.checked = parent
+            if (box.checked) {
+                deleteditem.push(articleLists[i].id);
+            }
+        });
+        setDeleteditems(deleteditem);
     }
 
 
@@ -176,16 +184,16 @@ function ApprovedArticles({ articleList, totalItems, usertype, userId }) {
 
                                                     <div className="col-sm">
                                                         <div className="d-flex justify-content-sm-end">
-                                                            <div className="search-box ms-2">
+                                                            {deleteditems.length === 0 && <div className="search-box ms-2">
                                                                 <input type="text" className="form-control search" placeholder="Search..." onChange={(e) => searching(idx, e.target.value)} />
                                                                 <i className="ri-search-line search-icon" />
-                                                            </div>
+                                                            </div>}
                                                         </div>
                                                     </div>
 
-                                                    <button class="btn btn-primary btn-danger remove-item-btn deleteBtn" type="button" onClick={openPopup}
+                                                    {deleteditems.length > 0 && <button class="btn btn-primary btn-danger remove-item-btn deleteBtn" type="button" onClick={openPopup}
 
-                                                    >Remove</button>
+                                                    >Remove</button>}
 
 
 
@@ -215,18 +223,17 @@ function ApprovedArticles({ articleList, totalItems, usertype, userId }) {
                                                                         <th
                                                                             data-column-id="id"
                                                                             className="gridjs-th"
-                                                                            style={{ width: 5 }}
-
-
+                                                                            style={{ width: 40 }}
                                                                         >
+                                                                            <div className="gridjs-th-content"  > <input
+                                                                                className="form-check-input"
+                                                                                id="selectall"
+                                                                                type="checkbox"
+                                                                                defaultValue="option"
+                                                                                onChange={selectAllcheckbox}
+                                                                                checked={deleteditems.length > 0 ? true : false}
 
-
-                                                                            {/* <div className="gridjs-th-content" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}> <input
-                                      className="form-check-input"
-                                      id="checkAll"
-                                      type="checkbox"
-                                      defaultValue="option"
-                                    /></div> */}
+                                                                            /></div>
                                                                         </th>
                                                                         <th
                                                                             data-column-id="id"
@@ -284,6 +291,7 @@ function ApprovedArticles({ articleList, totalItems, usertype, userId }) {
                                                                                     className="form-check-input checkbox-input deleteinput"
                                                                                     id="checkAll"
                                                                                     type="checkbox"
+                                                                                    onChange={checkBox}
                                                                                 // onClick={()=>console.log('k',item.articleId)}
 
                                                                                 /></div>

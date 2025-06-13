@@ -96,15 +96,9 @@ function JournalList({ journalLists, totalItems, usertype, userId }) {
 
     const deleteMultipleRecords = async () => {
 
-
-        let deleteditem = [];
-        const checkboxlist = Array.from(document.querySelectorAll('.deleteinput'));
-        checkboxlist.map((item, i) => item.checked && deleteditem.push(journalList[i].id))
-        setDeleteditems(deleteditem);
-
         const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/getJournal`, {
             method: "DELETE",
-            body: JSON.stringify({ deleteditem }),
+            body: JSON.stringify({ deleteditem: deleteditems }),
             headers: {
                 "Content-Type": "application/json"
             }
@@ -132,11 +126,7 @@ function JournalList({ journalLists, totalItems, usertype, userId }) {
 
     const openPopup = () => {
 
-        let deleteditem = [];
-        const checkboxlist = Array.from(document.querySelectorAll('.deleteinput'));
-        checkboxlist.map((item, i) => item.checked && deleteditem.push(journalLists[i].id))
-        setDeleteditems(deleteditem);
-        if (deleteditem.length === 0) {
+        if (deleteditems.length === 0) {
             setMsg("Please select atleast one checkbox!")
         }
         else {
@@ -147,11 +137,25 @@ function JournalList({ journalLists, totalItems, usertype, userId }) {
 
     }
 
+    const checkBox = () => {
+        let deleteditem = [];
+        const checkboxlist = Array.from(document.querySelectorAll('.deleteinput'));
+        checkboxlist.map((item, i) => item.checked && deleteditem.push(journalList[i].id))
+        setDeleteditems(deleteditem);
+    }
+
     const selectAllcheckbox = () => {
 
+        let deleteditem = [];
         const parent = document.getElementById('selectall').checked;
         const checkboxlist = Array.from(document.querySelectorAll('.deleteinput'));
-        checkboxlist.forEach((box) => box.checked = parent);
+        checkboxlist.forEach((box, i) => {
+            box.checked = parent
+            if (box.checked) {
+                deleteditem.push(journalList[i].id);
+            }
+        });
+        setDeleteditems(deleteditem);
     }
 
 
@@ -186,22 +190,22 @@ function JournalList({ journalLists, totalItems, usertype, userId }) {
 
                                             <div className="col-sm">
                                                 <div className="d-flex justify-content-sm-end">
-                                                    <div className="search-box ms-2">
+                                                    {deleteditems.length === 0 && <div className="search-box ms-2">
                                                         <input type="text" className="form-control search" placeholder="Search..." onChange={(e) => searching(idx, e.target.value)} />
                                                         <i className="ri-search-line search-icon" />
-                                                    </div>
+                                                    </div>}
                                                 </div>
 
                                             </div>
 
 
-                                            {typeof (usertype) === 'string' && <button type="submit" className="btn btn-primary" onClick={approveJournals}>
+                                            {typeof (usertype) === 'string' && deleteditems.length > 0 && <button type="submit" className="btn btn-primary" onClick={approveJournals}>
                                                 Approve
                                             </button>}
 
-                                            <button class="btn btn-primary btn-danger remove-item-btn deleteBtn" type="button" onClick={openPopup}
+                                            {deleteditems.length > 0 && <button class="btn btn-primary btn-danger remove-item-btn deleteBtn" type="button" onClick={openPopup}
 
-                                            >Remove</button>
+                                            >Remove</button>}
 
 
 
@@ -232,13 +236,15 @@ function JournalList({ journalLists, totalItems, usertype, userId }) {
                                                                 <th
                                                                     data-column-id="id"
                                                                     className="gridjs-th"
-                                                                    style={{ width: 5 }}
+                                                                    style={{ width: 40 }}
                                                                 >
-                                                                    <div className="gridjs-th-content" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}> <input
+                                                                    <div className="gridjs-th-content"  > <input
                                                                         className="form-check-input"
-                                                                        id="checkAll"
+                                                                        id="selectall"
                                                                         type="checkbox"
                                                                         defaultValue="option"
+                                                                        onChange={selectAllcheckbox}
+                                                                        checked={deleteditems.length > 0 ? true : false}
 
                                                                     /></div>
                                                                 </th>
@@ -312,6 +318,7 @@ function JournalList({ journalLists, totalItems, usertype, userId }) {
                                                                             className="form-check-input checkbox-input deleteinput"
                                                                             id="checkAll"
                                                                             type="checkbox"
+                                                                            onChange={checkBox}
 
                                                                         /></div>
                                                                     </td>
@@ -349,7 +356,7 @@ function JournalList({ journalLists, totalItems, usertype, userId }) {
                                       </button>
                                     </span> */}
                                                                         <span>
-                                                                            <Link href={`/admin/journalList/${item.journalsId}`} className="btn btn-sm btn-light">
+                                                                            <Link href={`/dashboard/journalList/${item.journalsId}`} className="btn btn-sm btn-light">
                                                                                 Edit
                                                                             </Link>
                                                                         </span>

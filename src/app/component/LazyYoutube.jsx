@@ -1,44 +1,45 @@
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
-
+import { useAuth } from '../../context/AuthContext';
 const LazyYoutube = ({ videoId, isOpen, setIsOpen }) => {
   // Lock scroll and close on ESC key
+  const { user } = useAuth();
   const playerRef = useRef(null);
   const [isVideoEnded, setIsVideoEnded] = useState(false);
 
   const overlayStyle = {
-  position: 'fixed',
-  top: 0,
-  left: 0,
-  width: '100vw',
-  height: '100vh',
-  backgroundColor: 'rgba(0,0,0,0.9)',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  zIndex: 1000,
-};
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100vw',
+    height: '100vh',
+    backgroundColor: 'rgba(0,0,0,0.9)',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 1000,
+  };
 
-const modalStyle = {
-  position: 'relative',
-  width: '90%',
-  maxWidth: '960px',
-  aspectRatio: '16 / 9',
-  backgroundColor: '#000',
-  boxShadow: '0 0 20px rgba(0,0,0,0.5)',
-};
+  const modalStyle = {
+    position: 'relative',
+    width: '90%',
+    maxWidth: '960px',
+    aspectRatio: '16 / 9',
+    backgroundColor: '#000',
+    boxShadow: '0 0 20px rgba(0,0,0,0.5)',
+  };
 
-const closeButtonStyle = {
-  position: 'absolute',
-  top: '10px',
-  right: '15px',
-  fontSize: '2rem',
-  color: '#fff',
-  background: 'transparent',
-  border: 'none',
-  cursor: 'pointer',
-  zIndex: 2,
-};
+  const closeButtonStyle = {
+    position: 'absolute',
+    top: '10px',
+    right: '15px',
+    fontSize: '2rem',
+    color: '#fff',
+    background: 'transparent',
+    border: 'none',
+    cursor: 'pointer',
+    zIndex: 2,
+  };
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -70,7 +71,10 @@ const closeButtonStyle = {
           onStateChange: (event) => {
             if (event.data === 0) {
               // Video ended
-              setIsVideoEnded(true);
+              if (!user) {
+                setIsVideoEnded(true);
+              }
+
             }
           },
         },

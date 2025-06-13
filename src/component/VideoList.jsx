@@ -45,14 +45,13 @@ export default function VideoList({ videoList, totalItems, usertype, userId }) {
     const deleteMultipleRecords = async () => {
 
 
-        let deleteditem = [];
-        const checkboxlist = Array.from(document.querySelectorAll('.deleteinput'));
-        checkboxlist.map((item, i) => item.checked && deleteditem.push(videoLists[i].id))
-        setDeleteditems(deleteditem);
-
+        // let deleteditem = [];
+        // const checkboxlist = Array.from(document.querySelectorAll('.deleteinput'));
+        // checkboxlist.map((item, i) => item.checked && deleteditem.push(videoLists[i].id))
+        // setDeleteditems(deleteditem);
         const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/doctors/uploadVideo`, {
             method: "DELETE",
-            body: JSON.stringify({ deleteditem }),
+            body: JSON.stringify({ deleteditem:deleteditems }),
             headers: {
                 "Content-Type": "application/json"
             }
@@ -80,11 +79,11 @@ export default function VideoList({ videoList, totalItems, usertype, userId }) {
 
     const openPopup = () => {
 
-        let deleteditem = [];
-        const checkboxlist = Array.from(document.querySelectorAll('.deleteinput'));
-        checkboxlist.map((item, i) => item.checked && deleteditem.push(videoList[i].id))
-        setDeleteditems(deleteditem);
-        if (deleteditem.length === 0) {
+        // let deleteditem = [];
+        // const checkboxlist = Array.from(document.querySelectorAll('.deleteinput'));
+        // checkboxlist.map((item, i) => item.checked && deleteditem.push(videoList[i].id))
+        // setDeleteditems(deleteditem);
+        if (deleteditems.length === 0) {
             setMsg("Please select atleast one checkbox!")
         }
         else {
@@ -95,46 +94,30 @@ export default function VideoList({ videoList, totalItems, usertype, userId }) {
 
     }
 
+    const checkBox = () => {
+        let deleteditem = [];
+        const checkboxlist = Array.from(document.querySelectorAll('.deleteinput'));
+        checkboxlist.map((item, i) => item.checked && deleteditem.push(videoLists[i].id))
+        setDeleteditems(deleteditem);
+    }
+
     const selectAllcheckbox = () => {
 
+        let deleteditem = [];
         const parent = document.getElementById('selectall').checked;
         const checkboxlist = Array.from(document.querySelectorAll('.deleteinput'));
-        checkboxlist.forEach((box) => box.checked = parent);
-    }
-
-
-    // const openPopup = (menuId) => {
-
-    //     setDeleteview(1);
-    //     setId(menuId);
-    //     setPopup(true);
-    // }
-    const deleteRecords = async (videoId) => {
-
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/doctors/uploadVideo`, {
-            method: "DELETE",
-            body: JSON.stringify({ videoId }),
-            headers: {
-                "Content-Type": "application/json"
+        checkboxlist.forEach((box, i) => {
+            box.checked = parent
+            if (box.checked) {
+                deleteditem.push(videoLists[i].id);
             }
-        })
+        });
+        setDeleteditems(deleteditem);
 
-        const res = await response.json();
-        setDeleteview(0);
-        if (!res.status) {
-
-            setErrormsg(res.message);
-
-        }
-        else {
-
-            sessionStorage.setItem('successMsg', 'Video Deleted Successfully');
-            // setPopup(false);
-            // router.push(`/dashboard/videos/list`)
-            window.location.href = `/dashboard/doctors/videos/list`
-
-        }
     }
+
+
+
 
     const searching = async (idx, name) => {
 
@@ -201,7 +184,11 @@ export default function VideoList({ videoList, totalItems, usertype, userId }) {
                     <div className="row">
                         <div className="col-12">
                             <div className="page-title-box d-sm-flex align-items-center justify-content-between bg-galaxy-transparent">
-                                <h4 className="mb-sm-0">videos List</h4>
+                                <h4 className="mb-sm-0">Videos List</h4>
+                                {
+                                    msg !== "" && <div style={{ color: 'red' }}>{msg}</div>
+
+                                }
 
                             </div>
                         </div>
@@ -220,13 +207,13 @@ export default function VideoList({ videoList, totalItems, usertype, userId }) {
 
                             <div className="col-sm">
                                 <div className="d-flex justify-content-sm-end" style={{ display: 'flex', gap: '1rem' }}>
-                                    <div className="search-box ms-2">
+                                    {deleteditems.length === 0 && <div className="search-box ms-2">
                                         <input type="text" className="form-control search" placeholder="Search..." onChange={(e) => searching(idx, e.target.value)} />
                                         <i className="ri-search-line search-icon" />
-                                    </div>
-                                    <button class="btn btn-sm btn-danger remove-item-btn deleteBtn" type="button" onClick={openPopup}
+                                    </div>}
+                                    {deleteditems.length > 0 && <button class="btn btn-sm btn-danger remove-item-btn deleteBtn" type="button" onClick={openPopup}
 
-                                    >Remove</button>
+                                    >Remove</button>}
                                 </div>
 
 
@@ -237,14 +224,16 @@ export default function VideoList({ videoList, totalItems, usertype, userId }) {
 
                         <div className="card-body"><div><div className="table-responsive table-card"><table className="table align-middle table-nowrap" id="invoiceTable"><thead className="text-muted"><tr>  <th
                             data-column-id="id"
-                            className="gridjs-th"
+
                             style={{ width: 5 }}
                         >
                             <div className="gridjs-th-content" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}> <input
                                 className="form-check-input"
-                                id="checkAll"
+                                id="selectall"
                                 type="checkbox"
                                 defaultValue="option"
+                                onChange={selectAllcheckbox}
+                                checked={deleteditems.length > 0 ? true : false}
 
                             /></div>
                         </th><th className=" text-uppercase" data-sort="invoice_id">videos Id</th><th className="text-uppercase" data-sort="customer_name">Video Title</th><th className=" text-uppercase" data-sort="email">Specialization</th><th className=" text-uppercase" data-sort="email">Published Date</th><th className=" text-uppercase" data-sort="country">Status</th><th className=" text-uppercase" data-sort="action">Action</th></tr></thead>
@@ -255,8 +244,9 @@ export default function VideoList({ videoList, totalItems, usertype, userId }) {
                             }}>
                                 <div className="gridjs-th-content" > <input
                                     className="form-check-input checkbox-input deleteinput"
-                                    id="checkAll"
+                                    // id="checkAll"
                                     type="checkbox"
+                                    onChange={checkBox}
 
                                 /></div>
                             </td><td className="id"><a href="javascript:throw new Error('React has blocked a javascript: URL as a security precaution.')" data-id={25000351} className="fw-medium link-primary">{item.videoId} </a></td><td className="customer_name"><div className="d-flex align-items-center"><img className="avatar-xs rounded-circle me-2" src={item.thumbnailImage} alt='not found' />{item.videoTitle} </div></td><td className="email">{item.specialization}</td><td className="email">{item.publishedDate}</td><td className="status"><span className={item.videoStatus ? "badge bg-success-subtle text-success text-uppercase" : "badge bg-warning-subtle text-warning text-uppercase"}>{item.videoStatus ? 'active' : 'inactive'}</span></td>

@@ -21,7 +21,7 @@ export async function GET(request) {
             const { rows, count } = await journal.findAndCountAll({
 
                 limit: 10,
-                offset: (page - 1) * 10,
+                offset: name==="" ? (page - 1) * 10 : 0,
                 where: { [Op.or]: { journalsName: { [Op.iLike]: `%${name}%` }, journalsId: { [Op.iLike]: `%${name}%` } }, journalStatus: 'approved' },
                 order: [['createdAt', 'DESC']]
             })
@@ -33,7 +33,7 @@ export async function GET(request) {
             const { rows, count } = await journal.findAndCountAll({
 
                 limit: 10,
-                offset: (page - 1) * 10,
+                offset: name==="" ? (page - 1) * 10 : 0,
                 where: { userId, [Op.or]: { journalsName: { [Op.iLike]: `%${name}%` }, journalsId: { [Op.iLike]: `%${name}%` } }, journalStatus: 'approved' },
                 order: [['createdAt', 'DESC']]
             })

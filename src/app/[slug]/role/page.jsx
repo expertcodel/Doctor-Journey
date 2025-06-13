@@ -4,6 +4,7 @@ import { useEffect } from 'react'
 import axios from 'axios'
 import Roles from '../../../component/Roles'
 import { UniversalContext } from '../../../component/context'
+import Tooltip from '../../../component/Tooltip'
 function Page() {
 
     const [roles, setRoles] = useState([]);
@@ -14,9 +15,26 @@ function Page() {
     const [Message, setMessage] = useState("");
     const [succMessage, setSuccmessage] = useState(-1);
     const [loading, setLoading] = useState(false);
-    const [deleterole,setDeleterole]=useState(false);
-    const [addrole,setAddrole]=useState(false);
-    const {updateRole,setUpdaterole}=UniversalContext()
+    const [deleterole, setDeleterole] = useState(false);
+    const [addrole, setAddrole] = useState(false);
+    const { updateRole, setUpdaterole } = UniversalContext();
+    const [message, setmessage] = useState(typeof window !== 'undefined' && sessionStorage.getItem('successMsg') ? sessionStorage.getItem('successMsg') : "")
+
+
+    useEffect(() => {
+
+
+        if (message !== "") {
+            const timer = setTimeout(() => {
+                setmessage("");
+                sessionStorage.removeItem('successMsg');
+            }, 3000);
+
+            return () => clearTimeout(timer);
+        }
+
+    }, [])
+
 
     useEffect(() => {
 
@@ -34,7 +52,7 @@ function Page() {
         }
 
         fetching()
-    }, [addrole,deleterole])
+    }, [addrole, deleterole])
 
     const managePermissions = (permission) => {
 
@@ -58,14 +76,13 @@ function Page() {
 
         const response = await axios.request(option);
         setLoading(false);
-        if (response.data.status) 
-        {
+        if (response.data.status) {
             setAddrole(!addrole)
             setSuccmessage(1);
             setMessage(response.data.message);
 
         }
-        else{
+        else {
 
             setSuccmessage(0);
             setMessage(response.data.message);
@@ -74,9 +91,8 @@ function Page() {
 
     }
 
-    const deleteRole=async(usertype,status)=>
-    {
-         
+    const deleteRole = async (usertype, status) => {
+
         const option =
         {
             method: 'DELETE',
@@ -86,12 +102,11 @@ function Page() {
                 status
             }
         }
-        
+
         const response = await axios.request(option);
-        if(response.data.status)
-        {
-           setDeleterole(!deleterole);
-           setUpdaterole(!updateRole);
+        if (response.data.status) {
+            setDeleterole(!deleterole);
+            setUpdaterole(!updateRole);
         }
 
     }
@@ -103,146 +118,159 @@ function Page() {
         <div className="main-content" >
 
             <div className="page-content" >
-                 
-                 {
-                
-                !rolePage?
-                <div style={{ marginBottom: '20px' }}><button className='btn btn-dark btn-rounded remove-item-btn' data-bs-toggle="modal"
-                data-bs-target="#deletetable">+Add Role</button></div>:
-                <div style={{ marginBottom: '20px' }}><button className='btn btn-dark btn-rounded remove-item-btn'  onClick={()=>setRolepage(false)}>Back</button></div>
-                 }
 
-                {!rolePage ?
+                <div className="container-fluid">
 
-                    <table className="table table-borderless align-middle table-nowrap mb-0 " style={{backgroundColor:"#fff"}}>
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Date</th>
-                                <th scope="col">Permissions</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Action</th>
-                            </tr>
-                        </thead>
-                        {
-
-                            roles.length > 0 &&
-                            roles.map((item, i) =>
-                                <tbody key={item.id}>
-                                    <tr>
-                                        <th scope="row">{i + 1}</th>
-                                        <td>{item.usertype}</td>
-                                        <td>{item.date}</td>
-                                        <td><button type="button" className="btn btn-primary" data-mdb-ripple-init onClick={() => managePermissions(item)}>Manage</button></td>
-                                        <td >
-                                            {
-                                                item.status ?
-                                                <span className="badge bg-success-subtle text-success" >Active</span> :
-                                                <span className="badge bg-danger-subtle text-danger" >Disabled</span>
-                                            }
-                                        </td>
-                                        <td>
-                                            <div className="hstack gap-3 fs-15">
-                                                <a href="javascript:void(0);" className="link-primary">
-                                                    <i className="ri-settings-4-line" />
-                                                </a>
-                                                <a href="javascript:void(0);" className="link-danger">
-                                                    <i className="ri-delete-bin-5-line" onClick={()=>deleteRole(item.usertype,item.status)}/>
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                </tbody>
-                            )}
-                    </table>
-
-                    : <Roles permissions={permissions} setPermissions={setPermissions} usertype={usertype} />
-                }
-
-            </div>
-
-            {/* {
-                updateRole && */}
-            <div
-                className="modal fade zoomIn"
-                id="deletetable"
-           >
-                <div className="modal-dialog modal-dialog-centered">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <button
-                                type="button"
-                                className="btn-close"
-                                data-bs-dismiss="modal"
+                    {
+                        message!=="" && <Tooltip message={message}/>
+                    }
 
 
-                            />
-                        </div>
-                        <div className="modal-body">
-                            <div className="mt-2 text-center">
+                    {
 
-                                <i className="ri-home-line ri-pencil-fill" style={{ fontSize: 'x-large' }}></i>
-                                <div className="mt-4 pt-2 fs-15 mx-4 mx-sm-5">
+                        !rolePage ?
+                            <div style={{ marginBottom: '20px' }}><button className='btn btn-dark btn-rounded remove-item-btn' data-bs-toggle="modal"
+                                data-bs-target="#deletetable">+Add Role</button></div> :
+                            <div style={{ marginBottom: '20px' }}><button className='btn btn-dark btn-rounded remove-item-btn' onClick={() => setRolepage(false)}>Back</button></div>
+                    }
 
+                    {!rolePage ?
 
-                                    <div className="mb-3">
-                                        <label htmlFor="useremail" className="form-label">
-                                            Role Name <span className="text-danger">**</span>
-                                        </label>
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            placeholder="Enter name"
-                                            required
-                                            onChange={(e) => setRole(e.target.value)}
+                        <table className="table table-borderless align-middle table-nowrap mb-0 " style={{ backgroundColor: "#fff" }}>
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Permissions</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            {
 
-                                        />
-                                        <div className="invalid-feedback">Please enter name</div>
-                                    </div>
-                                    <div className="d-flex gap-2 justify-content-center mt-4 mb-2">
-                                        <button
-                                            type="button"
-                                            className="btn w-sm btn-light"
-                                            data-bs-dismiss="modal"
-                                        >
-                                            Close
-                                        </button>
-
-                                        {
-                                            loading ? <div style={{ display: 'flex', justifyContent: 'center' }}><div className="spinner-border text-success" role="status">
-                                                <span className="sr-only">Loading...</span>
-                                            </div> </div> :
-                                                <>
-                                                <button
-                                                    type="button"
-                                                    className="btn w-sm btn-danger "
-                                                    onClick={addRole}
-                                                >
-                                                    submit
-                                                </button>
+                                roles.length > 0 &&
+                                roles.map((item, i) =>
+                                    <tbody key={item.id}>
+                                        <tr>
+                                            <th scope="row">{i + 1}</th>
+                                            <td>{item.usertype}</td>
+                                            <td>{item.date}</td>
+                                            <td><button type="button" className="btn btn-primary" data-mdb-ripple-init onClick={() => managePermissions(item)}>Manage</button></td>
+                                            <td >
                                                 {
-                                                    succMessage === 1 ?
-                                                    <div style={{ color: 'green',display:'flex',alignItems:'center',justifyContent:'center'}}>{Message}</div> :
-                                                    <div style={{ color: 'red',display:'flex',alignItems:'center',justifyContent:'center' }}>{Message}</div>
+                                                    item.status ?
+                                                        <span className="badge bg-success-subtle text-success" >Active</span> :
+                                                        <span className="badge bg-danger-subtle text-danger" >Disabled</span>
                                                 }
-                                               
-                                                </>
+                                            </td>
+                                            <td>
+                                                <div className="hstack gap-3 fs-15">
+                                                    <a href="javascript:void(0);" className="link-primary">
+                                                        <i className="ri-settings-4-line" />
+                                                    </a>
+                                                    <a href="javascript:void(0);" className="link-danger">
+                                                        <i className="ri-delete-bin-5-line" onClick={() => deleteRole(item.usertype, item.status)} />
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
 
-                                        }
+                                    </tbody>
+                                )}
+                        </table>
 
+                        : <Roles permissions={permissions} setPermissions={setPermissions} usertype={usertype} />
+                    }
+
+                </div>
+
+                <div
+                    className="modal fade zoomIn"
+                    id="deletetable"
+                >
+                    <div className="modal-dialog modal-dialog-centered">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <button
+                                    type="button"
+                                    className="btn-close"
+                                    data-bs-dismiss="modal"
+
+
+                                />
+                            </div>
+                            <div className="modal-body">
+                                <div className="mt-2 text-center">
+
+                                    <i className="ri-home-line ri-pencil-fill" style={{ fontSize: 'x-large' }}></i>
+                                    <div className="mt-4 pt-2 fs-15 mx-4 mx-sm-5">
+
+
+                                        <div className="mb-3">
+                                            <label htmlFor="useremail" className="form-label">
+                                                Role Name <span className="text-danger">**</span>
+                                            </label>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                placeholder="Enter name"
+                                                required
+                                                onChange={(e) => setRole(e.target.value)}
+
+                                            />
+                                            <div className="invalid-feedback">Please enter name</div>
+                                        </div>
+                                        <div className="d-flex gap-2 justify-content-center mt-4 mb-2">
+                                            <button
+                                                type="button"
+                                                className="btn w-sm btn-light"
+                                                data-bs-dismiss="modal"
+                                            >
+                                                Close
+                                            </button>
+
+                                            {
+                                                loading ? <div style={{ display: 'flex', justifyContent: 'center' }}><div className="spinner-border text-success" role="status">
+                                                    <span className="sr-only">Loading...</span>
+                                                </div> </div> :
+                                                    <>
+                                                        <button
+                                                            type="button"
+                                                            className="btn w-sm btn-danger "
+                                                            onClick={addRole}
+                                                        >
+                                                            submit
+                                                        </button>
+                                                        {
+                                                            succMessage === 1 ?
+                                                                <div style={{ color: 'green', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{Message}</div> :
+                                                                <div style={{ color: 'red', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{Message}</div>
+                                                        }
+
+                                                    </>
+
+                                            }
+
+
+                                        </div>
 
                                     </div>
-
                                 </div>
+
+
                             </div>
-
-
                         </div>
                     </div>
                 </div>
+
             </div>
+
+
+
+            {/* {
+                updateRole && */}
+
             {/* } */}
         </div>
 

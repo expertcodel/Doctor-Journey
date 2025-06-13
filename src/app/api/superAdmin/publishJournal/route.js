@@ -10,13 +10,13 @@ export async function POST(request)
 
    
     const recievedData=await request.json();
-    const{volume,issue,publishDate,journalsId,imageUrl,editorialDetails,journalTitle,price,check}=recievedData;
+    const{volume,issue,publishDate,journalsId,imageUrl,editorialDetails,journalsUrl,price,check}=recievedData;
     
     const publishJournal=await publishJournalmodel();
     const journalmodel=await journalsModel();
     const articlemodel=await articleModel();
     
-    if(!publishJournal || !articlemodel)
+    if(!publishJournal)
     {
        return NextResponse.json({status:false,message:"database error occured!"});
     }

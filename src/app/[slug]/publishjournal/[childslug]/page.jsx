@@ -5,12 +5,13 @@ import { useParams } from 'next/navigation'
 const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false })
 import axios from 'axios'
 import Image from 'next/image'
-
+import { useRouter } from 'next/navigation'
 
 function Page() {
 
 
     const { slug } = useParams();
+    const router = useRouter();
     const [succMessage, setSuccmessage] = useState("");
     const [uploadMessage, setUploadmessage] = useState("");
     const [loading, setLoading] = useState(false)
@@ -69,41 +70,7 @@ function Page() {
         readonly: false,
         toolbar: true,
         uploader: {
-
-            //insertImageAsBase64URI: false,
-            // format:'json',
-            url: '/api/uploadImage',
-            isSuccess: async (response) => {
-
-                console.log(response.files[0].url);
-                // editor.insertImage(await response.files[0].url);
-                return await response.status;
-            },
-            // defaultHandlerSuccess:async(response,editor)=>{
-
-            //    // console.log(await response);
-            //    await jodit.s.insertImage(response.files[0].url);
-
-
-            //         // if(await response.status)
-            //         // {
-            //         //     editor.s.insertImage(await response.files[0].url);
-            //         // }
-            // },
-            // filebrowser:{
-
-            //     process:async(response)=>{
-
-            //         console.log(await response);
-            //         return await response
-
-
-            //     },
-
-            // },
-
-
-
+            insertImageAsBase64URI: true,
         },
         wordcount: true,
         minHeight: 300
@@ -131,8 +98,13 @@ function Page() {
         setLoading(true);
         const response = await axios.request(option);
         setLoading(false);
-        setSuccmessage(response.data.message);
-
+        if (response.data.status) {
+            sessionStorage.setItem('successMsg', 'Journal Published Successfully');
+            router.push(`/dashboard/journal/publishedjournals`);
+        }
+        else {
+            setSuccmessage(response.data.message);
+        }
 
     }
 
@@ -266,13 +238,13 @@ function Page() {
                                 <input type="text" className="form-control" placeholder='Search articles' onChange={searchArticles} />
 
 
-                                <div className="form-control" style={{ marginTop: '17px', cursor: 'pointer', overflow: 'hidden', border: 'none', height: '180px' }}>
+                                <div className="form-control" style={{ marginTop: '17px', cursor: 'pointer', overflow: 'auto', border: 'none', height: '180px', overflowX: 'hidden' }}>
 
                                     {
 
 
 
-                                        <div className="table-responsive table-card">
+                                        <div className="table-responsive table-card" >
                                             <table className="table table-nowrap mb-0">
                                                 <thead className="table-light">
                                                     <tr>

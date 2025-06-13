@@ -184,7 +184,7 @@ export default  function Menubar({data}) {
                                   {
                                     data.map((item, i) => {
 
-                                      // if (item.allowed) {
+                                       if (item.allowed) {
 
 
                                         {
@@ -213,7 +213,7 @@ export default  function Menubar({data}) {
                                                 {
                                                   item?.child?.map((item1, i) =>
                                                     <ul className="nav nav-sm flex-column" key={i}>
-                                                      {item1.path === 'scroll' ?
+                                                     { item1.allowed && item1.path === 'scroll' ?
                                                         <li className="nav-item" >
                                                           <Link
                                                             href={`#sidebarCalendar${i}`}
@@ -235,7 +235,7 @@ export default  function Menubar({data}) {
 
                                                                   item1?.child?.map((item2, i) =>
 
-                                                                    <ul className="nav nav-sm flex-column" key={i}>
+                                                                   {item2.allowed && <ul className="nav nav-sm flex-column" key={i}>
                                                                       <li className="nav-item">
                                                                         <Link
                                                                           href={item2.path}
@@ -247,7 +247,7 @@ export default  function Menubar({data}) {
                                                                         </Link>
                                                                       </li>
 
-                                                                    </ul>
+                                                                    </ul>}
 
                                                                   )
                                                                 }
@@ -291,7 +291,7 @@ export default  function Menubar({data}) {
                                               </Link>
                                             </li>
                                         }
-                                      // }
+                                       }
                                     })}
 
 

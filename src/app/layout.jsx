@@ -94,9 +94,9 @@ export default async function RootLayout({ children }) {
           <body data-aos-easing="ease-out-back" data-aos-duration="1000" data-aos-delay="0"
             className="">
 
-
-            {children}
-
+            <AuthProvider>
+              {children}
+            </AuthProvider>
             <Script src="/assets/libs/bootstrap/js/bootstrap.bundle.min.js" />
             <Script src="/assets/libs/simplebar/simplebar.min.js" />
             <Script src="/assets/libs/node-waves/waves.min.js" />

@@ -83,7 +83,7 @@ export default function CreateArticle({userList}) {
     if (res.status) {
 
       sessionStorage.setItem('successMsg', 'Article Created Successfully');
-      router.push(`/${userData.usertype}/articlelist`);
+      router.push(`/dashboard/articlelist`);
 
     }
  

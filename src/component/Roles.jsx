@@ -38,10 +38,8 @@ function Roles({ permissions, setPermissions, usertype }) {
 
     const flattenPermissions = (permissions) => {
         return permissions.flatMap(p => {
-            const all = [{ role: p.role, allowed: p.allowed }];
-            if (p.child) {
-                all.push(...p.child.map(c => ({ role: `${p.role} > ${c.role}`, allowed: c.allowed })));
-            }
+            const all = [{ role: p.role, allowed: p.allowed, path: p.path, child: p.child }];
+
             return all;
         });
     };
@@ -57,7 +55,9 @@ function Roles({ permissions, setPermissions, usertype }) {
         };
         const response = await axios.request(option);
         if (response.data.status) {
-            setUpdateRole(!updateRole);
+            // setUpdateRole(!updateRole);
+            sessionStorage.setItem('successMsg','Role Updated Successfully');
+            window.location.href='/dashboard/role';
         }
     };
 
