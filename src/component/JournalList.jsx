@@ -82,7 +82,15 @@ function JournalList({ journalLists, totalItems, usertype, userId }) {
             }
 
             const response = await axios.request(option);
-            setMessage(response.data.message);
+            if (response.data.status) {
+                sessionStorage.setItem('successMsg', 'Journal approved successfully');
+                window.location.href = `/dashboard/journal/journalslist`
+            }
+            else {
+                setMessage(response.data.message);
+            }
+
+             
         } catch (error) {
 
             console.log("error", error);

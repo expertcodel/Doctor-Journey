@@ -28,13 +28,13 @@ export const journalsModel = async () => {
 
         },
         journalsName: {
-            
+
             type: DataTypes.STRING,
             allowNull: false
         },
         journalsIsbn: {
             type: DataTypes.STRING,
-            unique:true,
+            unique: true,
             allowNull: false
         },
         publisherName: {
@@ -55,14 +55,50 @@ export const journalsModel = async () => {
             defaultValue: true
 
         },
-        journalStatus:{
+        journalStatus: {
 
             type: DataTypes.STRING,
             defaultValue: 'pending'
         },
-        frequency:{
-            
-            type:DataTypes.STRING
+        frequency: {
+
+            type: DataTypes.STRING
+        },
+        journalsUrl: {
+
+            type: DataTypes.STRING,
+         
+        },
+        volume: {
+            type: DataTypes.INTEGER,
+          
+        },
+        issue: {
+
+            type: DataTypes.INTEGER,
+          
+        },
+        publishDate: {
+
+            type: DataTypes.STRING,
+          
+        },
+        imageUrl: {
+
+            type: DataTypes.STRING
+        },
+        price: {
+
+            type: DataTypes.STRING
+        },
+        coverSummary: {
+            type: DataTypes.JSONB
+        },
+        editorialDetails: {
+            type: DataTypes.JSONB
+        },
+        subscription: {
+            type: DataTypes.JSONB
         }
 
 

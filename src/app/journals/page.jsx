@@ -37,10 +37,10 @@ export default async function Journals() {
       sliderList = res.sliderlist;
       offerList = res.offerlist;
       doctorProfile = res.doctorlist
-      journalList=res.journallist[0]
-      journalLeftlist=res.journalleftlist;
-      journalCenterlist=res.journalcenterlist;
-      journalRightlist=res.journalrightlist;
+      journalList = res.journallist
+      journalLeftlist = res.journalleftlist;
+      journalCenterlist = res.journalcenterlist;
+      journalRightlist = res.journalrightlist;
 
     }
 
@@ -190,7 +190,7 @@ export default async function Journals() {
                   {/***** jrShortCard *****/}
                   <div className="col-lg-2 col-md-3 col-12 jrShortCard">
                     {/*** card */}
-                   {journalLeftlist.map((journal)=><div className="card" key={journal.journalsId}>
+                    {journalLeftlist.map((journal) => <div className="card" key={journal.journalsId}>
                       <div className="card-body">
                         <div className="cat-item">
                           <Link href={`/journals/${journal.journalsUrl}`} />
@@ -199,7 +199,7 @@ export default async function Journals() {
                           </div>
                           <div className="cat-desc">
                             <h5>
-                              Walk into the Shadow
+                              {journal.journalsName}
                             </h5>
                             <small className="badge">
                               INR {journal.price}/
@@ -210,7 +210,7 @@ export default async function Journals() {
                     </div>)}
                   </div>
 
-                 { journalCenterlist.map((journal)=><div className="col-lg-4 col-md-3 col-12 jrLargeCard" key={journal.journalsId}>
+                  {journalCenterlist.map((journal) => <div className="col-lg-4 col-md-3 col-12 jrLargeCard" key={journal.journalsId}>
                     {/*** card */}
                     <div className="card">
                       <div className="card-body">
@@ -221,7 +221,7 @@ export default async function Journals() {
                           </div>
                           <div className="cat-desc">
                             <h5>
-                              Walk into the Shadow
+                              {journal.journalsName}
                             </h5>
                             <small className="badge">
                               INR {journal.price}/
@@ -235,7 +235,7 @@ export default async function Journals() {
                   {/***** jrShortCard *****/}
                   <div className="col-lg-2 col-md-3 col-12 jrShortCard">
                     {/*** card */}
-                     {journalRightlist.map((journal)=><div className="card" key={journal.journalsId}>
+                    {journalRightlist.map((journal) => <div className="card" key={journal.journalsId}>
                       <div className="card-body">
                         <div className="cat-item">
                           <Link href={`/journals/${journal.journalsUrl}`} />
@@ -244,7 +244,7 @@ export default async function Journals() {
                           </div>
                           <div className="cat-desc">
                             <h5>
-                              Walk into the Shadow
+                              {journal.journalsName}
                             </h5>
                             <small className="badge">
                               INR {journal.price}/

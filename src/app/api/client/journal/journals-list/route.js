@@ -1,13 +1,13 @@
 import { extractErrorMessage } from '../../../../../utils/errorMessage'
 import { NextResponse } from 'next/server'
-import { publishJournalmodel } from '../../../../models/publish_journal_model'
+import { journalsModel } from '../../../../models/journals.model'
 import { Op } from 'sequelize';
 export async function GET(request) {
 
     const input = new URL(request.url).searchParams;
     const name = input.get('name');
     const page = input.get('page');
-    const journalmodel = await publishJournalmodel();
+    const journalmodel = await journalsModel();
     if (!journalmodel) {
         return NextResponse.json({ status: false, message: "database error occured" });
     }
@@ -23,26 +23,7 @@ export async function GET(request) {
             order: [['createdAt', 'DESC']]
         })
 
-//      ` SELECT
-//         public."Publishjournals"."journalsId",
-//             public."Publishjournals"."journalsUrl",
-//                 public."Journals"."journalsName",
-//                     public."Publishjournals"."price",
-//                         public."Publishjournals"."imageUrl",
-//                             public."Publishjournals"."publishDate",
-//                                 public."Publishjournals"."coverSummary",
-//                                     public."Journals"."publisherName"
-//         FROM
-//         public."Publishjournals"
-// INNER JOIN
-//         public."Journals"
-//         ON
-//         public."Publishjournals"."journalsId" = public."Journals"."journalsId"
-//         WHERE
-//         public."Publishjournals"."name" ILIKE '%searchTerm%' 
-// ORDER BY
-//         public."Publishjournals"."createdAt" DESC
-// LIMIT 10 OFFSET 20;`
+       
 
 
         return NextResponse.json({ status: true, journallist: rows, totalItems: count });

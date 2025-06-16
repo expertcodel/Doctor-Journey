@@ -17,7 +17,7 @@ export default async function JournalsDetails({ params }) {
 
             method: 'POST',
             cache: 'no-store',
-            body: JSON.stringify({ journalsUrl: slug })
+            body: JSON.stringify({ journalsUrl: `/${slug}` })
         })
 
         if (!response.ok) throw new error(`Failed to fetch: ${response.status}`);

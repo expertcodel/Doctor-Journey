@@ -7,10 +7,11 @@ import axios from 'axios'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
+
 function Page() {
 
 
-    const { slug } = useParams();
+    const { childslug } = useParams();
     const router = useRouter();
     const [succMessage, setSuccmessage] = useState("");
     const [uploadMessage, setUploadmessage] = useState("");
@@ -50,19 +51,16 @@ function Page() {
 
     const handleImageupload = async (file) => {
 
-        const formData = new FormData();
-        formData.append('file', file);
-        const response = await fetch('http://localhost:3000/api/superAdmin/uploadFile', {
-            method: 'POST',
-            body: formData
-        })
-
-        // console.log(response);
-
-        //editor?.insertImage('/images/Untitled_design_(1).png');
+        const thumbnailImage = document.getElementById('project-thumbnail-img').files[0];
+        const imagePreview = document.getElementById('imagePreview');
+        const imageurl = URL.createObjectURL(thumbnailImage);
+        imagePreview.src = imageurl
+        setImageurl(thumbnailImage);
 
 
     }
+
+
 
     const jodit = useRef(null);
     const config = {
@@ -85,20 +83,16 @@ function Page() {
         const details = Array.from(document.querySelectorAll('.jodit-wysiwyg'));
         let editorialDetails = [];
         details.map((item) => editorialDetails.push(item.innerHTML));
-        const option = {
-
-            method: "POST",
-            url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/publishJournal`,
-            data: {
-                volume: e.target.Journalvolume.value.trim(), issue: e.target.Issue.value.trim(), publishDate: e.target.Publishdate.value.trim(), journalsId: slug, imageUrl, editorialDetails, price: e.target.Price.value.trim(), journalsUrl: e.target.Journalsurl.value.trim(), check
-            }
-
+        const formData = new FormData();
+        const data = {
+            volume: e.target.Journalvolume.value.trim(), issue: e.target.Issue.value.trim(), publishDate: e.target.Publishdate.value.trim(), journalsId: childslug, editorialDetails, price: e.target.Price.value.trim(), journalsUrl: e.target.Journalsurl.value.trim(), check
         }
-
+        formData.append('data', JSON.stringify(data));
+        formData.append('file', imageUrl);
         setLoading(true);
-        const response = await axios.request(option);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/publishJournal`, { method: 'POST', body: formData })
         setLoading(false);
-        if (response.data.status) {
+        if (response.status) {
             sessionStorage.setItem('successMsg', 'Journal Published Successfully');
             router.push(`/dashboard/journal/publishedjournals`);
         }
@@ -108,33 +102,33 @@ function Page() {
 
     }
 
-    const uploadImage = async (e) => {
+    // const uploadImage = async (e) => {
 
-        e.preventDefault();
-        const file = document.getElementById('UploadImage').files[0];
-        const formdata = new FormData();
-        formdata.append('file', file);
+    //     e.preventDefault();
+    //     const file = document.getElementById('UploadImage').files[0];
+    //     const formdata = new FormData();
+    //     formdata.append('file', file);
 
-        if (file) {
+    //     if (file) {
 
-            setImLoading(true);
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/uploadFile`, {
-                method: 'POST',
-                body: formdata
-            })
-            const { status, message, imageUrl } = await response.json();
-            if (status) {
-                setImageurl(imageUrl);
-            }
-            setUploadmessage(message);
-            setImLoading(false);
+    //         setImLoading(true);
+    //         const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/uploadFile`, {
+    //             method: 'POST',
+    //             body: formdata
+    //         })
+    //         const { status, message, imageUrl } = await response.json();
+    //         if (status) {
+    //             setImageurl(imageUrl);
+    //         }
+    //         setUploadmessage(message);
+    //         setImLoading(false);
 
-        }
-        else {
+    //     }
+    //     else {
 
-            setUploadmessage("Please select image!");
-        }
-    }
+    //         setUploadmessage("Please select image!");
+    //     }
+    // }
 
     const searchArticles = async (e) => {
 
@@ -371,30 +365,13 @@ function Page() {
                         />
                     </div>
                     <div className="col-md-6">
-                        <label htmlFor="fullnameInput" className="form-label">
-                            Upload Cover Image
-                        </label>
-                        <input className="form-control" type='file' id='UploadImage' />
-
-
+                        <label className="form-label" htmlFor="project-thumbnail-img">Upload Cover Image</label>
+                        <input className="form-control" id="project-thumbnail-img" type="file" name='image' accept="image/*" onChange={handleImageupload} />
+                        <div style={{ marginTop: '10px' }}>Choose 1920 x 970 Dimension</div>
+                        <Image priority width={imageUrl && 100} height={imageUrl && 100} id='imagePreview' />
 
                     </div>
-                    <div className="col-12">
-                        <div className="text-end">
-                            {
 
-                                !imLoading ?
-
-                                    <button type="button" className="btn btn-primary" onClick={uploadImage}>
-                                        Upload
-                                    </button> : <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}><div className="spinner-border text-success" role="status">
-                                        <span className="sr-only">Loading...</span>
-                                    </div> </div>}
-
-                            {uploadMessage !== "" && <div>{uploadMessage}</div>}
-
-                        </div>
-                    </div>
 
 
                     {/* <div className="col-md-6">

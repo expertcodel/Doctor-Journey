@@ -39,7 +39,7 @@ function Page() {
             const option = {
 
                 method: 'GET',
-                url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/publishJournal`,
+                url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/publishJournal/?page=1&name=`,
             }
 
             const response = await axios.request(option);
@@ -399,7 +399,7 @@ function Page() {
                                                                             </span>
                                                                         </td>
                                                                         <td data-column-id="name" className="gridjs-td">
-                                                                            {item.journalTitle}
+                                                                            {item.journalsName}
                                                                         </td>
                                                                         <td data-column-id="date" className="gridjs-td">
                                                                             {item.volume}

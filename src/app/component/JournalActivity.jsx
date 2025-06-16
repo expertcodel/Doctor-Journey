@@ -129,7 +129,7 @@ export default function JournalActivity({ journalCard, totalItems }) {
                                         </div>
                                         <div className="cat-desc">
                                             <h5>
-                                                Walk into the Shadow
+                                                {journal.journalsName}
                                             </h5>
                                             <small className="badge">
                                                 INR {journal.price}/
