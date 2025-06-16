@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { UniversalContext } from '@/component/context';
+import { UniversalContext } from '../../../component/context';
 import { useRouter } from 'next/navigation';
 
 function Page() {

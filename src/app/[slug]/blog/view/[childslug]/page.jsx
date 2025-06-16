@@ -1,6 +1,6 @@
 
 
-import Blogupdate from '@/component/Blogupdate.jsx'
+import Blogupdate from '../../../../../component/Blogupdate.jsx'
 export default async function Page({ params }) {
 
     const { childslug } =await params;

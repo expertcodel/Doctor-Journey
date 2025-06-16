@@ -2,7 +2,7 @@
 import React from 'react'
 import dynamic from 'next/dynamic';
 const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
-import AdminFooter from '@/component/AdminFooter.jsx'
+import AdminFooter from '../component/AdminFooter.jsx'
 import Image from 'next/image';
 import { useState,useRef } from 'react';
 import { useRouter } from 'next/navigation';

@@ -2,7 +2,7 @@ import { UserModel } from "../../../models/user.model";
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import jwt from 'jsonwebtoken'
-import { activityModel } from "@/app/models/activity.model";
+import { activityModel } from "../../../../app/models/activity.model";
 export async function POST(request) {
 
     

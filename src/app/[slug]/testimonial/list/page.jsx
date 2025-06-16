@@ -1,5 +1,5 @@
 import React from 'react'
-import Testimonials from '@/component/Testimonials.jsx'
+import Testimonials from '../../../../component/Testimonials.jsx'
 export default async function Page() {
 
 

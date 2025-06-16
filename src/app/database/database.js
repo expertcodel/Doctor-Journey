@@ -15,7 +15,7 @@ export const connectTodb=async()=>{
                     dialectModule:pg
                 });
     
-                if(process.env.NODE_ENV==='development')
+                if(process.env.NODE_ENV==='production')
                 {
                     global.sequelizeInstance=connection;
                 }

@@ -1,6 +1,6 @@
-import { blogModel } from "@/app/models/blog.model";
+import { blogModel } from "../../../../app/models/blog.model";
 import { NextResponse } from "next/server";
-import { fileUploader } from "@/utils/fileUploader";
+import { fileUploader } from "../../../../utils/fileUploader";
 import { extractErrorMessage } from "../../../../utils/errorMessage";
 import { Op } from "sequelize";
 export async function POST(request) {

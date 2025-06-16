@@ -7,12 +7,17 @@ export async function middleware(request) {
 
   const { pathname } = request.nextUrl;
   const token = request.cookies.get('token');
-  // const userdata = request.cookies.get('userData');
+  const userdata = request.cookies.get('userData');
   const response = NextResponse.next();
   response.headers.set('x-pathname', pathname);
 
 
   if (!token) {
+
+    if(userdata)
+    {
+        await cookies().delete('userData');
+    }
 
     if (pathname.startsWith('/user-dashboard')) {
       return NextResponse.redirect(new URL('/login', request.url));
@@ -35,7 +40,8 @@ export async function middleware(request) {
       return NextResponse.redirect(new URL('/user-dashboard', request.url));
     }
 
-    response.cookies.set('userData', JSON.stringify(verifiedtoken.payload), { maxAge: 3600 })
+
+    response.cookies.set('userData', JSON.stringify(verifiedtoken.payload))
     //  console.log('path',pathname);
     // for (let i = 0; i < verifiedtoken.payload.length; i++) {
     //  let allowed=verifiedtoken.payload[i].allowed;

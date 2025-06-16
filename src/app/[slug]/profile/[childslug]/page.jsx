@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
 import { useState, useEffect } from 'react';
-import { UniversalContext } from '@/component/context';
+import { UniversalContext } from '../../../../component/context';
 import axios from 'axios';
 export default function Page() {
 

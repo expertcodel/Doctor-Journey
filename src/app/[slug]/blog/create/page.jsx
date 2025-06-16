@@ -6,9 +6,9 @@ import axios from 'axios';
 import Image from 'next/image';
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
-import AdminFooter from '@/component/AdminFooter.jsx'
+import AdminFooter from '../../../../component/AdminFooter.jsx'
 import { useRouter } from 'next/navigation';
-import { UniversalContext } from '@/component/context';
+import { UniversalContext } from '../../../../component/context';
 
 export default function Page() {
 

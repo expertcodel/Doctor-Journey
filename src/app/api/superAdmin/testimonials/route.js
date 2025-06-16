@@ -1,6 +1,6 @@
 import { extractErrorMessage } from "../../../../utils/errorMessage";
 import { NextResponse } from "next/server";
-import { testimonialModel } from "@/app/models/testimonials.model";
+import { testimonialModel } from "../../../../app/models/testimonials.model";
 import { fileUploader } from "../../../../utils/fileUploader";
 import { Op } from "sequelize";
 

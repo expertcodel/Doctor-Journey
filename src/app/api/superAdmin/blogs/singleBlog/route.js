@@ -1,5 +1,5 @@
 "use server"
-import { blogModel } from "@/app/models/blog.model";
+import { blogModel } from "../../../../../app/models/blog.model";
 // import { categoryModel } from '../../models/category.model'
 import { NextResponse } from "next/server";
 export async function POST(request)
