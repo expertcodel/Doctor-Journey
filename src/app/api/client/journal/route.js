@@ -18,7 +18,7 @@ export async function GET() {
             where: { status: true },
             order: [['createdAt', 'DESC']]
 
-        }), dataModel[2].findAll({ limit: 8, order: [['createdAt', 'DESC']], attributes: ['profileImage', 'qualification', 'doctorId', 'doctorName'], where: { status: true } }), dataModel[3].findAll({limit:10,order:[['createdAt','DESC']]}), dataModel[4].findAll({ limit: 4, offset: 0, attributes: ['imageUrl', 'price', 'journalsUrl', 'journalsId', 'journalsName'] }), dataModel[4].findAll({ limit: 2, order: [['createdAt', 'DESC']], attributes: ['imageUrl', 'price', 'journalsUrl', 'journalsId', 'journalsName'] }), dataModel[4].findAll({ limit: 4, offset: 0, attributes: ['imageUrl', 'price', 'journalsUrl', 'journalsId', 'journalsName'] })])
+        }), dataModel[2].findAll({ limit: 8, order: [['createdAt', 'DESC']], attributes: ['profileImage', 'qualification', 'doctorId', 'doctorName'], where: { status: true } }), dataModel[3].findAll({limit:10,order:[['createdAt','DESC']],where:{journalStatus:'published'}}), dataModel[4].findAll({ limit: 4, offset: 0, attributes: ['imageUrl', 'price', 'journalsUrl', 'journalsId', 'journalsName'] ,where:{journalStatus:'published'}}), dataModel[4].findAll({ limit: 2, order: [['createdAt', 'DESC']], attributes: ['imageUrl', 'price', 'journalsUrl', 'journalsId', 'journalsName'],where:{journalStatus:'published'} }), dataModel[4].findAll({ limit: 4, offset: 0, attributes: ['imageUrl', 'price', 'journalsUrl', 'journalsId', 'journalsName'],where:{journalStatus:'published'} })])
 
         return NextResponse.json({ status: true, sliderlist: dataList[0], offerlist: dataList[1], doctorlist: dataList[2], journallist: dataList[3], journalleftlist: dataList[4], journalcenterlist: dataList[5], journalrightlist: dataList[6] });
 
@@ -43,7 +43,7 @@ export async function POST(request) {
     try {
 
 
-        const journaldata = await Promise.all([journalmodel.findOne({where:{journalsUrl}}), journalmodel.findAll({ limit: 4 })]);
+        const journaldata = await Promise.all([journalmodel.findOne({where:{journalsUrl}}), journalmodel.findAll({ limit: 4 ,where:{journalStatus:'published'}})]);
         return NextResponse.json({ status: true, journaldetail: journaldata[0], journallist: journaldata[1] });
 
     } catch (error) {

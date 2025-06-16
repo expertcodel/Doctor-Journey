@@ -67,21 +67,21 @@ export const journalsModel = async () => {
         journalsUrl: {
 
             type: DataTypes.STRING,
-         
+
         },
         volume: {
             type: DataTypes.INTEGER,
-          
+
         },
         issue: {
 
             type: DataTypes.INTEGER,
-          
+
         },
         publishDate: {
 
             type: DataTypes.STRING,
-          
+
         },
         imageUrl: {
 
@@ -99,10 +99,10 @@ export const journalsModel = async () => {
         },
         subscription: {
             type: DataTypes.JSONB
+        },
+        journalsAuthor: {
+            type: DataTypes.JSONB,
         }
-
-
-
     })
 
     await connection.sync();

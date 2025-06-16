@@ -113,10 +113,6 @@ export default function CreateArticle({userList}) {
       setSearchedlist(response.userlist);
     }
 
-
-
-
-
   }
 
   const searchArticles1 = async (e) => {

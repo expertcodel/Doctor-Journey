@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useMemo } from 'react'
 import dynamic from 'next/dynamic'
 import { useParams } from 'next/navigation'
 const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false })
@@ -13,17 +13,20 @@ function Page() {
 
     const { childslug } = useParams();
     const router = useRouter();
+
     const [succMessage, setSuccmessage] = useState("");
     const [uploadMessage, setUploadmessage] = useState("");
     const [loading, setLoading] = useState(false)
     const [imageUrl, setImageurl] = useState("")
     const [imLoading, setImLoading] = useState(false);
     const [searchedList, setSearchedlist] = useState([]);
+    const [searchedUser, setSearcheduser] = useState([]);
     const [articleList, setarticleList] = useState([]);
     const [primaryAuth, setPrimaryauth] = useState(false);
     const [articleId, setArticleid] = useState('');
     const [sarticle, setsarticle] = useState([]);
     const [check, setCheck] = useState([]);
+    const [userList, setUserlist] = useState([]);
 
     useEffect(() => {
 
@@ -63,16 +66,18 @@ function Page() {
 
 
     const jodit = useRef(null);
-    const config = {
+    const config = useMemo(() => {
+        return {
 
-        readonly: false,
-        toolbar: true,
-        uploader: {
-            insertImageAsBase64URI: true,
-        },
-        wordcount: true,
-        minHeight: 300
-    }
+            readonly: false,
+            toolbar: true,
+            uploader: {
+                insertImageAsBase64URI: true,
+            },
+            wordcount: true,
+            minHeight: 300
+        }
+    })
 
 
 
@@ -102,33 +107,7 @@ function Page() {
 
     }
 
-    // const uploadImage = async (e) => {
 
-    //     e.preventDefault();
-    //     const file = document.getElementById('UploadImage').files[0];
-    //     const formdata = new FormData();
-    //     formdata.append('file', file);
-
-    //     if (file) {
-
-    //         setImLoading(true);
-    //         const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/uploadFile`, {
-    //             method: 'POST',
-    //             body: formdata
-    //         })
-    //         const { status, message, imageUrl } = await response.json();
-    //         if (status) {
-    //             setImageurl(imageUrl);
-    //         }
-    //         setUploadmessage(message);
-    //         setImLoading(false);
-
-    //     }
-    //     else {
-
-    //         setUploadmessage("Please select image!");
-    //     }
-    // }
 
     const searchArticles = async (e) => {
 
@@ -168,6 +147,40 @@ function Page() {
 
         setCheck((prev) => prev.filter((item, i) => i !== idx));
     }
+
+    const removeItems1 = (idx) => {
+
+        setUserlist((prev) => prev.filter((item, i) => i !== idx));
+    }
+
+    const searchUsers = async (e) => {
+
+        e.preventDefault();
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users/getUsers/?name=${e.target.value}`, { method: 'GET' });
+        const response = await res.json();
+        if (response.status) {
+            setSearchedlist(response.userlist);
+        }
+
+    }
+
+    const addUsers = async (authorId) => {
+
+        let flag = true;
+        userList.map((item) => {
+            if (item.userId === authorId) {
+                flag = false
+
+            }
+            return item;
+        })
+
+        if (flag) {
+            setUserlist((prev) => [...prev, { userId: authorId }]);
+        }
+
+    }
+
 
 
 
@@ -372,6 +385,110 @@ function Page() {
 
                     </div>
 
+
+                    <div className="col-md-6" >
+                        <label htmlFor="inputAddress2" className="form-label">
+                            Add authors
+                        </label>
+
+
+                        <div className="form-select" style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', alignItems: 'center', height: '40px' }} onClick={() => setPrimaryauth(!primaryAuth)}>
+                            {
+                                userList.map((item, i) => <div key={i} style={{ backgroundColor: '#405189', color: 'white', borderRadius: '5px', padding: '3px', display: 'flex', gap: '0.5rem' }}>{item.userId}
+                                    <span><i class="ri-home-line ri-scissors-line" onClick={() => removeItems1(i)}></i></span>
+                                </div>)
+                            }
+                        </div>
+
+                        {
+
+                            primaryAuth &&
+
+                            <div className="form-control" style={{ position: 'absolute', zIndex: '99', marginTop: '10px', width: '98.5%', overflow: 'auto' }}>
+
+
+
+                                <input type="text" className="form-control" placeholder='Search users' onChange={searchUsers} />
+
+
+                                <div className="form-control" style={{ marginTop: '17px', cursor: 'pointer', border: 'none', height: '180px' }}>
+
+                                    {
+
+
+
+                                        <div className="table-responsive table-card">
+                                            <table className="table table-nowrap mb-0">
+                                                <thead className="table-light">
+                                                    <tr>
+                                                        <th scope="col">
+                                                            <div className="form-check">
+                                                                <input
+                                                                    className="form-check-input"
+                                                                    type="checkbox"
+                                                                    defaultValue=""
+                                                                    id="cardtableCheck"
+                                                                />
+                                                                <label className="form-check-label" htmlFor="cardtableCheck" />
+                                                            </div>
+                                                        </th>
+                                                        <th scope="col">User Id</th>
+                                                        <th scope="col">Name</th>
+                                                        <th scope="col">Usertype</th>
+
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {
+                                                        searchedList.length > 0 &&
+                                                        searchedList.map((item, i) =>
+                                                            <tr key={i} >
+                                                                <td>
+                                                                    <div className="form-check">
+
+                                                                        <button
+                                                                            type="button"
+                                                                            className="btn btn-success add-btn"
+                                                                            style={{ height: '50px' }}
+                                                                            onClick={() => addUsers(item.userId)}
+                                                                        >
+                                                                            Add
+                                                                        </button>
+                                                                        <label className="form-check-label" htmlFor="cardtableCheck01" />
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    {item.userId}
+                                                                </td>
+                                                                <td>{item.name.substr(0, 30)} {item.name.length > 30 && '...'}</td>
+                                                                <td>{item.usertype}</td>
+
+
+                                                            </tr>
+
+                                                        )
+                                                    }
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+
+
+
+
+                                    }
+                                </div>
+
+
+
+                            </div>
+
+                        }
+
+
+                    </div>
 
 
                     {/* <div className="col-md-6">

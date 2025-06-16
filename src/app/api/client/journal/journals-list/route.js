@@ -19,7 +19,7 @@ export async function GET(request) {
 
             limit: 9,
             offset: (page - 1) * 9,
-            where: { [Op.or]: { journalsId: { [Op.iLike]: `%${name}%` }, journalsUrl: { [Op.iLike]: `%${name}%` } } },
+            where: { journalStatus:'published',[Op.or]: { journalsId: { [Op.iLike]: `%${name}%` }, journalsUrl: { [Op.iLike]: `%${name}%` } } },
             order: [['createdAt', 'DESC']]
         })
 
