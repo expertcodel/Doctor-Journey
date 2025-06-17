@@ -4,7 +4,36 @@ import { faCheck, faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 
-export default function MySubscription() {
+export default async function MySubscription() {
+
+    let subscriptionList=[];
+
+    try {
+
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/subscription/getSubscription`, {
+
+            method: 'GET',
+            cache: 'no-store',
+            // body: JSON.stringify({ videoId })
+        })
+
+        if (!response.ok) throw new error(`Failed to fetch: ${response.status}`);
+
+        const res = await response.json();
+
+        if (res.status) {
+          
+            subscriptionList=res.subscriptionlist
+        }
+
+
+    } catch (error) {
+
+        console.log("fetching failed", error);
+
+
+    }
+
     return (
         <>
             {/*Breadcrumb*/}
@@ -25,19 +54,19 @@ export default function MySubscription() {
                                 </div>
                                 <div className="card-body">
                                 <div className="row g-3">
-                                        <div className="col-lg-4 col-md-6 col-12">
+                                      {  subscriptionList.map((item)=><div className="col-lg-4 col-md-6 col-12" key={item.subscriptionId}>
                                             <div className="pricingTable bg-white advance-pricing">
                                                 <div className="price-value">
-                                                    $0.0
-                                                    <span className="month">Monthly</span>
+                                                    &#8377;{item.price}
+                                                    <span className="month">{item.subscriptionType}</span>
                                                 </div>
-                                                <h3 className="title">Business</h3>
+                                                <h3 className="title">{item.subscriptionName}</h3>
                                                 <ul className="pricing-content">
                                                     <li>
                                                     <strong>4</strong> Ads
                                                     </li>
                                                     <li>
-                                                        <FontAwesomeIcon icon={faCheck} className="text-success me-2" /> 30 days
+                                                        <FontAwesomeIcon icon={faCheck} className="text-success me-2" /> {item.duration} days
                                                     </li>
                                                     <li>
                                                         <FontAwesomeIcon icon={faX} className="text-danger me-2" /> Private Messages
@@ -50,9 +79,9 @@ export default function MySubscription() {
                                                     Choose plan
                                                 </a>
                                             </div>
-                                        </div>
+                                        </div>)}
 
-                                        <div className="col-lg-4 col-md-6 col-12">
+                                        {/* <div className="col-lg-4 col-md-6 col-12">
                                             <div className="pricingTable bg-white">
                                                 <div className="price-value">
                                                     $65
@@ -104,7 +133,7 @@ export default function MySubscription() {
                                                     Choose plan
                                                 </a>
                                             </div>
-                                        </div>
+                                        </div> */}
                                     </div>
 
                                     <div className="table-responsive border-top mt-5">

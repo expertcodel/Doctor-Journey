@@ -13,9 +13,10 @@ export default function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-   const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [country, setCountry] = useState("");
+  
   const [errors, setErrors] = useState({ email: "", password: "" });
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const nameRegex = /^[A-Za-z\s]{2,}$/;
@@ -86,41 +87,20 @@ export default function Register() {
 
     if (!validateInputs()) return; // Stop execution if validation fails
 
-    // Simulated API login response (Replace with your API call)
-    // const fakeUserData = { email };
-    // login(fakeUserData); // Call login from context
-
-    // // Simulated API login response (Replace with your API call)
-    // const fakeToken = "123456"; 
-    // document.cookie = `authToken=${fakeToken}; path=/; max-age=86400;`; // Store token in cookie
 
     try {
-      // const response = await fetch("/api/send-otp", {
-      //   method: "POST",
-      //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify({ name, email, phoneNumber, password, country }),
-      // });
 
-      // const result = await response.json();
-
-      // if (result.success) {
-      //   localStorage.setItem("tempEmail", email);
-      //   localStorage.setItem("tempPhone", phoneNumber);
-      //   router.push('/verify-otp', {
-      //     state: { email, phoneNumber },
-      //   });
-      // } else {
-      //   alert("Failed to send OTP. Try again.");
-      // }
+      const data = { name: name.trim().toLowerCase(), email: email.trim().toLowerCase(), password: password.trim(), number: phoneNumber.trim() }
 
       const option = {
 
         method: 'POST',
-        url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/users/register`,
-        data: { name: name.trim().toLowerCase(), email: email.trim().toLowerCase(), password: password.trim(), number: phoneNumber.trim() },
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/otpCreate`,
+        data: {email: email.trim().toLowerCase(),name:name.trim().toLowerCase()},
         headers: {
 
-          'api_key': process.env.NEXT_PUBLIC_SECRET_KEY
+          'api_key': process.env.NEXT_PUBLIC_SECRET_KEY,
+          'Content-Type': 'application/json'
 
         }
 
@@ -130,8 +110,10 @@ export default function Register() {
       setLoading(false);
       if (res.data.status === 1) {
 
-        sessionStorage.setItem('successMsg', 'User Profile Created Successfully');
-        router.push('/login')
+        setMessage("");
+        sessionStorage.setItem('data', JSON.stringify(data));
+        // sessionStorage.setItem('successMsg', 'User Profile Created Successfully');
+         router.push('/verify-otp');
 
       }
       else {
@@ -248,7 +230,7 @@ export default function Register() {
                     </div> */}
                     <div className="submit">
 
-                       <button className="btn btn-primary btn-block" type="submit">
+                      <button className="btn btn-primary btn-block" type="submit">
                         {loading ? <div className="spinner-border text-white" role="status">
                           <span className="visually-hidden">Loading...</span>
                         </div> : 'Register'}
@@ -256,7 +238,7 @@ export default function Register() {
                       {
                         Message !== "" && <div className="text-danger text-start mt-2">{Message}</div>
                       }
-                    
+
                     </div>
                     <p className="text-dark mb-0">
                       Do you have account?

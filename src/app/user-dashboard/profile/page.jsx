@@ -16,10 +16,7 @@ import PublisherForm from '../../../component/PublisherForm'
 import Tooltip from "../../../component/Tooltip";
 export default function Profile() {
 
-
     const { user } = useAuth();
-    console.log(user, "proohh");
-
     const [userType, setUsertype] = useState({ 'readers': false, 'author': false, 'doctor': false, 'publisher': false, 'organization': false });
 
     const [message, setMessage] = useState(typeof window !== 'undefined' && sessionStorage.getItem('successMsg') ? sessionStorage.getItem('successMsg') : "")
@@ -94,19 +91,19 @@ export default function Profile() {
                                                     <div className="col-md-4 col-12">
                                                         <div className="mb-3">
                                                             <label className="form-label">Full Name</label>
-                                                            <input type="text" className="form-control" placeholder="Full Name" />
+                                                            <input type="text" className="form-control" placeholder="Full Name" defaultValue={user?.name}/>
                                                         </div>
                                                     </div>
                                                     <div className="col-md-4 col-12">
                                                         <div className="mb-3">
                                                             <label className="form-label">Email address</label>
-                                                            <input type="email" className="form-control" placeholder="Email" />
+                                                            <input type="email" className="form-control" placeholder="Email" defaultValue={user?.email}/>
                                                         </div>
                                                     </div>
                                                     <div className="col-md-4 col-12">
                                                         <div className="mb-3">
                                                             <label className="form-label">Phone Number</label>
-                                                            <input type="number" className="form-control" placeholder="Number" />
+                                                            <input type="text" className="form-control" placeholder="Number" defaultValue={user?.mobile_number}/>
                                                         </div>
                                                     </div>
                                                     <div className="col-md-12">
@@ -203,7 +200,7 @@ export default function Profile() {
                                                                 <figure>
                                                                     <Image src="/images/upgrade-icons/author.png" width={60} height={60} alt="user" />
                                                                     <figcaption>
-                                                                        Apply for <span>Author</span>
+                                                                       Upgrade for <span>Author</span>
                                                                     </figcaption>
                                                                 </figure>
                                                             </div>
@@ -231,7 +228,7 @@ export default function Profile() {
                                                                 <figure>
                                                                     <Image src="/images/upgrade-icons/doctor.png" width={60} height={60} alt="user" />
                                                                     <figcaption>
-                                                                        Apply for <span>Doctor</span>
+                                                                       Upgrade for <span>Doctor</span>
                                                                     </figcaption>
                                                                 </figure>
                                                             </div>
@@ -259,7 +256,7 @@ export default function Profile() {
                                                                 <figure>
                                                                     <Image src="/images/upgrade-icons/publisher.png" width={60} height={60} alt="user" />
                                                                     <figcaption>
-                                                                        Apply for <span>Publisher</span>
+                                                                       Upgrade for <span>Publisher</span>
                                                                     </figcaption>
                                                                 </figure>
                                                             </div>
@@ -285,7 +282,7 @@ export default function Profile() {
                                                                 <figure>
                                                                     <Image src="/images/upgrade-icons/organization.png" width={60} height={60} alt="user" />
                                                                     <figcaption>
-                                                                        Apply for <span>Organization</span>
+                                                                       Upgrade for <span>Organization</span>
                                                                     </figcaption>
                                                                 </figure>
                                                             </div>
@@ -307,7 +304,7 @@ export default function Profile() {
                                 </div>
                             </div>
 
-                            {/* apply cards */}
+                            {/*Upgrade cards */}
                             <div className="card mt-3 mb-0">
                                 <div className="tab-content">
                                     <div className="tab-pane" id="applyDoctor">
