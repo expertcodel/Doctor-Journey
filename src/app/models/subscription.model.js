@@ -25,10 +25,11 @@ export const subscriptionModel = async () => {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        planId: {
+        subscriptionsId: {
             type: DataTypes.STRING,
             allowNull: false,
         },
+
         subscriptionName: {
 
             type: DataTypes.STRING,
@@ -36,7 +37,7 @@ export const subscriptionModel = async () => {
         },
         subscriptionPrice: {
 
-            type: DataTypes.STRING,
+            type: DataTypes.INTEGER,
             allowNull: false
         },
         status: {
@@ -45,10 +46,15 @@ export const subscriptionModel = async () => {
             defaultValue: false
 
         },
-        subscriptionDate: {
+        startDate: {
 
             type: DataTypes.STRING,
             defaultValue: new Date().toLocaleDateString()
+        },
+        endDate: {
+
+            type: DataTypes.STRING,
+            allowNull: false
         },
         subscriptionDuration: {
 

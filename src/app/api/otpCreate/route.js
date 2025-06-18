@@ -46,8 +46,10 @@ async function sendEmail(email, otp, name) {
                                                             </tr>
                                                             <tr style="align-items: center;font-family:'Roboto',sans-serif;box-sizing:border-box;font-size:14px;margin:0;display: flex;/* align-content: center; */">
                                                                 <td style="font-family:'Roboto',sans-serif;color:#878a99;line-height:1.5;box-sizing:border-box;font-size:15px;vertical-align:top;margin:0;padding:0 0 24px;text-align:center" valign="top">
-                                                                   Thank you for your interest in exploring properties with Doctor's Journey
-To proceed, please enter the one-time password (OTP) <b>${otp}</b> to verify your identity and confirm your interest in the selected property.
+
+                                                                Thank you for your interest in exploring medical resources with DoctorsJourney.
+To proceed, please enter the one-time password (OTP)  <b>${otp}</b> to verify your identity and confirm your access to the selected journal or resource.  
+                                                                  
                                                                 </td>
                                                             </tr>
                                                            
@@ -86,7 +88,7 @@ const generateOtp = () => {
 
 export async function POST(request) {
 
-    const { email,name } = await request.json();
+    const { email, name } = await request.json();
     const api_key = new Headers(request.headers).get('api_key');
     if (api_key !== process.env.NEXT_PUBLIC_SECRET_KEY) {
         return NextResponse.json({ status: 0, message: "Unauthorized user!" });
@@ -98,7 +100,7 @@ export async function POST(request) {
     }
 
     const otp = generateOtp();
-    const sent = sendEmail(email, otp,name);
+    const sent = sendEmail(email, otp, name);
     if (!sent) {
         return NextResponse.json({ status: 0, message: "some error occured!" });
     }

@@ -169,7 +169,7 @@ export default function VerifyOtp() {
                             <div className="col-md-4 d-block mx-auto">
                                 <div className="wrapper wrapper2 border">
                                     <h4 class="otpMSZ">
-                                        We have sent you the OTP on email: <span>{sessionExist?.email || "—"}</span> and phone no.: <span>{sessionExist?.number || "—"}</span>
+                                        We have sent you the OTP on email: <span>{sessionExist?.email || "—"}</span>
                                     </h4>
                                     <form autoComplete="off" noValidate className="card-body" tabIndex={500} onSubmit={handleVerify}>
                                         <div className="country">

@@ -39,7 +39,7 @@ export const subscriptionsModel = async () => {
             type: DataTypes.INTEGER,
             autoIncrement: true
         },
-        subscriptionId: {
+        subscriptionsId: {
             type: DataTypes.STRING,
             defaultValue: randomGenerator(),
             primaryKey: true,

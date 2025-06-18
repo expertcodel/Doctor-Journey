@@ -61,8 +61,11 @@ export default async function RootLayout({ children }) {
                 <Footer />
               </main>
             </AuthProvider>
+            <Script src="https://checkout.razorpay.com/v1/checkout.js" />
 
           </body>
+
+
           <BootstrapClient />
         </html> :
 

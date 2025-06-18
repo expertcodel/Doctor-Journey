@@ -4,6 +4,8 @@ import { otpModel } from '../../models/otp.model'
 import { NextResponse } from 'next/server';
 import { UserModel } from '../../../app/models/user.model';
 import bcrypt from 'bcrypt'
+import {sendEmail } from '../../../utils/welcomeMail.js'
+
 export async function POST(request) {
     const { data, otp } = await request.json();
     const otpmodel = await otpModel();
@@ -35,6 +37,7 @@ export async function POST(request) {
 
         })
 
+        await sendEmail(data.name,data.email);
         return NextResponse.json({ status: true, message: "User created successfully!" });
 
 

@@ -81,7 +81,7 @@ export async function PUT(request) {
 
             price, status
 
-        }, { where: { subscriptionId } });
+        }, { where: { subscriptionsId:subscriptionId } });
 
         return NextResponse.json({ status: true, message: 'Successfull!' });
 
@@ -112,7 +112,7 @@ export async function GET(request) {
 
             limit: 10,
             offset: name === "" ? (page - 1) * 10 : 0,
-            where: { [Op.or]: { subscriptionName: { [Op.iLike]: `%${name}%` }, subscriptionId: { [Op.iLike]: `%${name}%` } } },
+            where: { [Op.or]: { subscriptionName: { [Op.iLike]: `%${name}%` }, subscriptionsId: { [Op.iLike]: `%${name}%` } } },
             order: [['createdAt', 'DESC']]
         })
 
@@ -139,7 +139,7 @@ export async function DELETE(request) {
 
 
         await subscriptionsmodel.destroy({
-            where: { subscriptionId }
+            where: { subscriptionsId:subscriptionId}
         })
 
         return NextResponse.json({ status: true, message: "subscription deleted successfully!" });
