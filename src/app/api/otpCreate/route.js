@@ -1,6 +1,6 @@
 "use server"
 import { NextResponse } from "next/server";
-import { otpModel } from "../../models/otp.model";
+import bcrypt from 'bcrypt'
 import { UserModel } from "../../models/user.model";
 import nodemailer from 'nodemailer'
 
@@ -91,11 +91,7 @@ const generateOtp = () => {
 
 export async function POST(request) {
 
-    const { email, name } = await request.json();
-    const api_key = new Headers(request.headers).get('api_key');
-    if (api_key !== process.env.NEXT_PUBLIC_SECRET_KEY) {
-        return NextResponse.json({ status: 0, message: "Unauthorized user!" });
-    }
+    const { email, name, password, number, country, countryCode } = await request.json();
     const usermodel = await UserModel();
     const isExisteduser = await usermodel.findOne({ where: { email } });
     if (isExisteduser) {
@@ -108,22 +104,19 @@ export async function POST(request) {
         return NextResponse.json({ status: 0, message: "some error occured!" });
     }
 
-    const otpmodel = await otpModel();
-    if (!otpmodel) {
-        return NextResponse.json({ status: 0, message: "some error occured!" });
-    }
+    const salt = bcrypt.genSaltSync(10);
+    const hashedPassword = bcrypt.hashSync(password, salt);
 
-    const isExist = await otpmodel.findOne({ where: { email: email } });
-    if (!isExist) {
-        await otpmodel.create({
-            email: email,
-            otp: otp
-        })
-    }
-    else {
-
-        await isExist.update({ otp: otp });
-    }
+    await usermodel.create({
+        name,
+        email,
+        password: hashedPassword,
+        mobile_number: number,
+        userOtp: otp,
+        country, countryCode,
+        joining_date: new Date().toLocaleDateString(),
+        userId: String(Date.now())
+    })
 
     return NextResponse.json({ status: 1, message: "otp sent successfully!" });
 

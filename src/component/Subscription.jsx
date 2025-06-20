@@ -45,7 +45,7 @@ export default function Subscription({ subscriptionList, totalItems }) {
 
     const setIndividualdata = (item) => {
 
-        setUserdata({ name: item.subscriptionName, price: item.price, subscriptionId: item.subscriptionId })
+        setUserdata({ name: item.subscriptionName, price: item.price, subscriptionId: item.subscriptionsId })
 
         if (item.status === true) {
             setStatus('active')
@@ -197,7 +197,7 @@ export default function Subscription({ subscriptionList, totalItems }) {
 
                         <div className="card-body"><div><div className="table-responsive table-card"><table className="table align-middle table-nowrap" id="invoiceTable"><thead className="text-muted"><tr><th className=" text-uppercase" data-sort="invoice_id">ID</th><th className=" text-uppercase" data-sort="invoice_id">Subscription Name</th><th className="text-uppercase" data-sort="customer_name">Type</th><th className="text-uppercase" data-sort="customer_name">Duration</th><th className=" text-uppercase" data-sort="country">Price</th><th className=" text-uppercase" data-sort="status">Status</th><th className=" text-uppercase" data-sort="action">Action</th></tr></thead>
 
-                            {subscriptionLists.length > 0 && subscriptionLists.map((item, i) => <tbody key={item.subscriptionId} className="list form-check-all"><tr><td className="customer_name"><div className="d-flex align-items-center">{item.subscriptionId} </div></td><td className="id"><a href="javascript:throw new Error('React has blocked a javascript: URL as a security precaution.')" data-id={25000351} className="fw-medium link-primary">{item.subscriptionName} </a></td><td className="country">{item.subscriptionType}</td><td className="customer_name"><div className="d-flex align-items-center">{item.duration} </div></td><td className="country">{item.price}</td><td className="status"><span className={item.status ? "badge bg-success-subtle text-success text-uppercase" : "badge bg-warning-subtle text-warning text-uppercase"}>{item.status ? 'active' : 'inactive'}</span></td>
+                            {subscriptionLists.length > 0 && subscriptionLists.map((item, i) => <tbody key={item.subscriptionId} className="list form-check-all"><tr><td className="customer_name"><div className="d-flex align-items-center">{item.subscriptionsId} </div></td><td className="id"><a href="javascript:throw new Error('React has blocked a javascript: URL as a security precaution.')" data-id={25000351} className="fw-medium link-primary">{item.subscriptionName} </a></td><td className="country">{item.subscriptionType}</td><td className="customer_name"><div className="d-flex align-items-center">{item.duration} </div></td><td className="country">{item.price}</td><td className="status"><span className={item.status ? "badge bg-success-subtle text-success text-uppercase" : "badge bg-warning-subtle text-warning text-uppercase"}>{item.status ? 'active' : 'inactive'}</span></td>
                                 <td>
                                     <div class="d-flex gap-2">
                                         <button

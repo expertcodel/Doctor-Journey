@@ -17,7 +17,7 @@ export async function POST(request) {
    const usermodel = await UserModel();
    //const cookie = await cookies();
    // const activitymodel=await activityModel();
-  // const role = await roleModel();
+   // const role = await roleModel();
 
    const isValiduser = await usermodel.findOne({ where: { email } });
    if (!isValiduser) {
@@ -38,6 +38,10 @@ export async function POST(request) {
       return NextResponse.json({ status: 0, message: "Wrong Password!" });
    }
 
+   if (!isValiduser.emailVerified) {
+      return NextResponse.json({ status: 0, message: "Email not verified!", name: isValiduser.name });
+   }
+
    try {
 
       const token = jwt.sign({ userData: isValiduser }, process.env.AUTHENTICATION_KEY, { expiresIn: '1h' })
@@ -53,11 +57,10 @@ export async function POST(request) {
       // })
 
       let flag = false;
-      if(typeof(isValiduser.usertype)==='string')
-      {
+      if (typeof (isValiduser.usertype) === 'string') {
          flag = true;
       }
-      
+
       await cookies().set('token', token, { httpOnly: true, maxAge: 3600, path: '/' });
 
       //  const response= NextResponse.json({ status: 1, message: "Verified user!", url: `/${isValiduser.usertype}` });

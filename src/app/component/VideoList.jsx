@@ -5,6 +5,8 @@ import Select2Component from "../component/Select2Component";
 import { useState } from "react";
 import DaysCalculator from '../component/DaysCalculator';
 import Pagination from './Pagination';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {  faEye } from "@fortawesome/free-solid-svg-icons";
 export default function VideoList({ doctorCard, totalItems }) {
 
 
@@ -124,18 +126,25 @@ export default function VideoList({ doctorCard, totalItems }) {
                                     <div className="card-body">
                                         <div className="item7-card-desc d-flex">
                                             <Link href={`/doctors/${card.videoId}`} className="text-dark">
-                                            <h4 className="font-weight-semibold">{card.doctorName}</h4>
-                                        </Link>
+                                                <h4 className="font-weight-semibold">{card.doctorName}</h4>
+                                            </Link>
                                             <div className="ms-auto">
-                                               
+
                                                 <span> <DaysCalculator targetDate={card.publishedDate} today={new Date().toLocaleDateString()} /></span>
                                                 {/* <span></span> */}
                                             </div>
                                         </div>
-                                        
+
                                         <p>{card.specialization}</p>
                                         <div className="item7-card-desc d-flex">
                                             <span>{card.videoTitle}</span>
+                                        </div>
+                                        <div className="item7-card-desc d-flex">
+                                            <div className="ms-auto">
+
+                                                <span className="me-0"> <FontAwesomeIcon icon={faEye} /> {card.views}</span>
+
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -147,7 +156,7 @@ export default function VideoList({ doctorCard, totalItems }) {
                         <div className="col-12">
                             <div className="center-block text-center d-flex justify-content-center">
                                 {
-                                    button > 1 && 
+                                    button > 1 &&
                                     <Pagination
                                         currentPage={idx}
                                         totalPages={button}

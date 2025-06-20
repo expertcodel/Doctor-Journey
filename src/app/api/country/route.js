@@ -15,5 +15,5 @@ export async function GET()
         attributes:["id", "name", "nicename", "iso", "iso3", "numcode", "phonecode"]
     });
     
-    return NextResponse.json({status:true,list:countryList});
+    return NextResponse.json({status:true,country:countryList});
 }

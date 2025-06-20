@@ -67,7 +67,7 @@ export default function Header() {
                                         {
                                             user ? (
                                                 <li className="dropdown">
-                                                    <Link href="javascript:void(0);" className="" data-bs-toggle="dropdown">
+                                                    <Link href="" className="" data-bs-toggle="dropdown">
                                                         <FontAwesomeIcon icon={faHome} className="me-1" />
                                                         <span className="me-1">My Dashboard</span>
                                                         <FontAwesomeIcon icon={faChevronDown} />

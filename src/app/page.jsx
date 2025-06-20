@@ -2,7 +2,7 @@ import Image from "next/image";
 import styles from "./page.module.css";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCreditCard, faEuro, faEuroSign, faStar } from "@fortawesome/free-solid-svg-icons";
+import { faCreditCard, faEuro, faEuroSign, faStar, faEye } from "@fortawesome/free-solid-svg-icons";
 import Select2Component from "./component/Select2Component";
 import ThumbnailSearchCarousel from "./component/ThumbnailSearchCarousel";
 import ThumbnailSponsorCarousel from "./component/ThumbnailSponsorCarousel";
@@ -17,8 +17,8 @@ export default async function Home() {
 
   let blogList = [];
   let testimonialList = [];
-  let doctorProfile =[];
-   let doctorCards = [];
+  let doctorProfile = [];
+  let doctorCards = [];
 
   try {
 
@@ -34,9 +34,9 @@ export default async function Home() {
 
     if (res.status) {
       blogList = res.bloglist;
-      testimonialList=res.testimoniallist;
-      doctorProfile=res.doctorprofile
-      doctorCards=res.videolist;
+      testimonialList = res.testimoniallist;
+      doctorProfile = res.doctorprofile
+      doctorCards = res.videolist;
     }
 
 
@@ -179,34 +179,41 @@ export default async function Home() {
             </div>
           </div>
 
-        <div className="row g-md-4 g-3">
+          <div className="row g-md-4 g-3">
             {doctorCards.map((card) => (
               <div className="col-md-4 col-12 drCard" key={card.videoId}>
                 <div className="card mb-0">
-                    <div className="item7-card-img">
-                        <Link href={`/doctors/${card.videoId}`} />
-                        <Image src={card.thumbnailImage} fill alt="img" className="cover-image" unoptimized />
-                        <div className="play-button">
-                            <span className="triangle"></span>
-                        </div>
+                  <div className="item7-card-img">
+                    <Link href={`/doctors/${card.videoId}`} />
+                    <Image src={card.thumbnailImage} fill alt="img" className="cover-image" unoptimized />
+                    <div className="play-button">
+                      <span className="triangle"></span>
                     </div>
-                    <div className="card-body">
-                        <div className="item7-card-desc d-flex">
-                            <Link href={`/doctors/${card.videoId}`} className="text-dark">
-                            <h4 className="font-weight-semibold">{card.doctorName}</h4>
-                        </Link>
-                            <div className="ms-auto">
-                                
-                                <span> <DaysCalculator targetDate={card.publishedDate} today={new Date().toLocaleDateString()} /></span>
-                                {/* <span></span> */}
-                            </div>
-                        </div>
-                        
-                        <p>{card.specialization}</p>
-                        <div className="item7-card-desc d-flex">
-                            <span>{card.videoTitle}</span>
-                        </div>
+                  </div>
+                  <div className="card-body">
+                    <div className="item7-card-desc d-flex">
+                      <Link href={`/doctors/${card.videoId}`} className="text-dark">
+                        <h4 className="font-weight-semibold">{card.doctorName}</h4>
+                      </Link>
+                      <div className="ms-auto">
+
+                        <span> <DaysCalculator targetDate={card.publishedDate} today={new Date().toLocaleDateString()} /></span>
+
+                      </div>
                     </div>
+
+                    <p>{card.specialization}</p>
+                    <div className="item7-card-desc d-flex">
+                      <span>{card.videoTitle}</span>
+                    </div>
+                    <div className="item7-card-desc d-flex">
+                      <div className="ms-auto">
+
+                        <span className="me-0"> <FontAwesomeIcon icon={faEye} /> {card.views}</span>
+
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             ))}
@@ -325,7 +332,7 @@ export default async function Home() {
                       <div className="cat-item">
                         <Link href={`/doctor-profile/${item.doctorId}`} />
                         <div className="cat-img bg-primary-transparent brround">
-                          <Image  unoptimized src={item.profileImage} className="img-fluid" fill alt=""  />
+                          <Image unoptimized src={item.profileImage} className="img-fluid" fill alt="" />
                         </div>
                         <div className="cat-desc">
                           <h5>
@@ -376,7 +383,7 @@ export default async function Home() {
 
           <div className="row g-md-4 g-3">
             <div className="col-md-8 offset-md-2 col-12">
-              <TestimonialsCarousel testimonialList={testimonialList}/>
+              <TestimonialsCarousel testimonialList={testimonialList} />
             </div>
           </div>
         </div>
@@ -396,7 +403,7 @@ export default async function Home() {
 
           <div className="row g-md-4 g-3">
             <div className="col-12">
-              <ThumbnailBlogsCarousel blogList={blogList}/>
+              <ThumbnailBlogsCarousel blogList={blogList} />
             </div>
           </div>
         </div>

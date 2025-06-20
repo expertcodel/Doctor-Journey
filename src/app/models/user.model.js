@@ -31,7 +31,7 @@ export const UserModel = async () => {
         name: {
 
             type: DataTypes.STRING,
-            //  allowNull:false
+            allowNull: false
 
         },
         email: {
@@ -53,8 +53,8 @@ export const UserModel = async () => {
         mobile_number: {
 
             type: DataTypes.STRING,
-            // unique:true,
-            // allowNull:false
+            unique: true,
+            allowNull: false
         },
         api_key: {
 
@@ -69,6 +69,23 @@ export const UserModel = async () => {
 
             type: DataTypes.BOOLEAN,
             defaultValue: true
+        },
+        emailVerified: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        },
+        userOtp: {
+            type: DataTypes.INTEGER,
+        },
+        mobileOtp: {
+            type: DataTypes.INTEGER,
+        },
+        country: {
+            type: DataTypes.STRING
+        },
+        countryCode: {
+
+            type: DataTypes.INTEGER
         },
         joining_date: {
 

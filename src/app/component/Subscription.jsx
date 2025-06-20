@@ -12,10 +12,13 @@ export default function Subscription({ subscriptionList, subscriptionsList }) {
     const [loading, setLoading] = useState("");
     const { user } = useAuth();
     const [message, setMessage] = useState(typeof window !== 'undefined' && sessionStorage.getItem('successMsg') ? sessionStorage.getItem('successMsg') : "")
-
+    const [map,setMap]=useState(new Map());
+    // const map = new Map();
 
     useEffect(() => {
 
+
+        subscriptionList.forEach((plan) => map.set(plan.subscriptionsId, 1))
 
         if (message !== "") {
             const timer = setTimeout(() => {
@@ -113,10 +116,14 @@ export default function Subscription({ subscriptionList, subscriptionsList }) {
                                                         <FontAwesomeIcon icon={faX} className="text-danger me-2" /> Urgent Ads
                                                     </li>
                                                 </ul>
-                                                <button onClick={() => handlePayment(item.price, item.subscriptionsId, item.subscriptionName, item.subscriptionType, item.duration)} className="pricingTable-signup" style={{ border: 'none' }}>
+                                                {
+                                                    console.log(map.get(item.subscriptionsId),"hj")
+                                                    
+                                                }
+                                                <button onClick={() => handlePayment(item.price, item.subscriptionsId, item.subscriptionName, item.subscriptionType, item.duration)} className="pricingTable-signup" style={{ border: 'none' }} disabled={map.get(item.subscriptionsId)}>
                                                     {loading === item.subscriptionsId ? <div className="spinner-border text-white" role="status">
                                                         <span className="visually-hidden">Loading...</span>
-                                                    </div> : 'Choose plan'}
+                                                    </div> : <>{map.get(item.subscriptionsId)?'Activated':'Choose plan'}</>}
 
                                                 </button>
                                             </div>

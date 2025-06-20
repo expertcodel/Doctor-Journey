@@ -1,11 +1,14 @@
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
-const LazyYoutube = ({ videoId, isOpen, setIsOpen }) => {
+import { useParams } from 'next/navigation';
+const LazyYoutube = ({ videoId, isOpen, setIsOpen, setViews }) => {
   // Lock scroll and close on ESC key
   const { user } = useAuth();
   const playerRef = useRef(null);
   const [isVideoEnded, setIsVideoEnded] = useState(false);
+  const { id } = useParams();
+
 
   const overlayStyle = {
     position: 'fixed',
@@ -41,7 +44,34 @@ const LazyYoutube = ({ videoId, isOpen, setIsOpen }) => {
     zIndex: 2,
   };
 
+  const hasRun = useRef(false);
   useEffect(() => {
+
+    const incrementCount = async () => {
+
+      if (hasRun.current) return;
+      hasRun.current = true;
+
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/client/videos`, {
+        method: 'PATCH',
+        body: JSON.stringify({ videoId: id }),
+      });
+
+      const res = await response.json();
+      if (res.status) {
+        setViews(res.views);
+        console.log(res.views,"views");
+        
+      }
+    };
+
+    incrementCount();
+
+  }, [])
+
+
+  useEffect(() => {
+
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
         setIsOpen(false);
@@ -49,6 +79,8 @@ const LazyYoutube = ({ videoId, isOpen, setIsOpen }) => {
     };
 
     if (isOpen) {
+
+
       const originalOverflow = document.body.style.overflow;
       document.body.style.overflow = 'hidden';
       window.addEventListener('keydown', handleKeyDown);

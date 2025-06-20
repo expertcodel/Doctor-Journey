@@ -21,26 +21,26 @@ export async function POST(request) {
 
         const videodetail = await videomodel.findOne({
             where: { videoId }
-           
+
         })
 
         const doctordetail = await doctormodel.findOne({
-            where: { userId:videodetail.userId },
-            attributes: ['profileImage', 'doctorName', 'shortDescription','doctorId','qualification']
-           
+            where: { userId: videodetail.userId },
+            attributes: ['profileImage', 'doctorName', 'shortDescription', 'doctorId', 'qualification']
+
         })
 
 
         const videolist = await videomodel.findAll({
             limit: 15,
-            where: {videoStatus: true,userId:videodetail.userId},
+            where: { videoStatus: true, userId: videodetail.userId },
             order: [['createdAt', 'DESC']],
-            attributes: ['publishedDate', 'thumbnailImage', 'videoId', 'videoTitle','videoUrl']
+            attributes: ['publishedDate', 'thumbnailImage', 'videoId', 'videoTitle', 'videoUrl']
         })
 
-        const specialization=await connection.query(`SELECT public."Doctors"."specialization" , COUNT(*) FROM public."Doctors" GROUP BY public."Doctors"."specialization" ORDER BY  public."Doctors"."specialization" ASC`)
+        const specialization = await connection.query(`SELECT public."Doctors"."specialization" , COUNT(*) FROM public."Doctors" GROUP BY public."Doctors"."specialization" ORDER BY  public."Doctors"."specialization" ASC`)
 
-        return NextResponse.json({ status: true, videodetail, videolist,doctordetail,specialization});
+        return NextResponse.json({ status: true, videodetail, videolist, doctordetail, specialization });
 
 
     } catch (error) {
@@ -69,7 +69,7 @@ export async function GET(request) {
             limit: 9,
             offset: (page - 1) * 9,
             where: { [Op.or]: { videoTitle: { [Op.iLike]: `%${name}%` }, videoId: { [Op.iLike]: `%${name}%` } } },
-            order: [['createdAt', 'DESC']]
+            order: [['views', 'DESC'], ['createdAt', 'DESC']]
         })
 
         return NextResponse.json({ status: true, videolist: rows, totalItems: count });
@@ -78,6 +78,34 @@ export async function GET(request) {
     } catch (error) {
 
         const message = extractErrorMessage(error);
+        return NextResponse.json({ status: false, message });
+    }
+}
+
+
+export async function PATCH(request) {
+    const { videoId } = await request.json();
+    const videomodel = await videoModel();
+    if (!videomodel) {
+        return NextResponse.json({ status: false, message: "database error occured" });
+    }
+
+    try {
+
+        const result = await videomodel.increment('views', {
+            by: 1,
+            where: { videoId },
+            returning: true
+        });
+
+
+        return NextResponse.json({ status: true, views: result[0][0][0].views });
+
+
+    } catch (error) {
+
+        const message = extractErrorMessage(error);
+        console.log(error);
         return NextResponse.json({ status: false, message });
     }
 }

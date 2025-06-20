@@ -5,17 +5,20 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Breadcrumb from "../../app/component/Breadcrumb";
 import Tooltip from "../../component/Tooltip";
+import OtpPage from "../component/OtpPage";
 export default function Login() {
   //const { user, login } = useAuth();
   const router = useRouter();
   // Local state for email and password
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [errors, setErrors] = useState({ email: "", password: "" });
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const [Message, setmessage] = useState(typeof window !== 'undefined' && sessionStorage.getItem('successMsg') ? sessionStorage.getItem('successMsg') : "")
+  const [otpPage, setOtppage] = useState(false);
 
 
   useEffect(() => {
@@ -32,7 +35,7 @@ export default function Login() {
 
   }, [])
 
- 
+
 
   // Function to validate email
 
@@ -84,17 +87,22 @@ export default function Login() {
     if (res.status) {
 
       if (res.url === '/dashboard') {
-        window.location.href=res.url;
+        window.location.href = res.url;
       }
       else {
         router.push(res.url);
       }
-    
+
     }
     else {
 
-      setMessage(res.message);
-
+      if (res.message === 'Email not verified!') {
+        setOtppage(true);
+        setName(res.name);
+      }
+      else {
+        setMessage(res.message);
+      }
     }
 
 
@@ -125,10 +133,10 @@ export default function Login() {
 
         Message !== "" && <Tooltip message={Message} />
       }
-      <Breadcrumb title="Login" />
+      <Breadcrumb title={otpPage ? "Verify OTP" : "Login"} />
 
       {/*Login-Section*/}
-      <section className="sptb loginSec">
+      {!otpPage ? <section className="sptb loginSec">
         <div className="container customerpage">
           <div className="row">
             <div className="single-page">
@@ -180,7 +188,7 @@ export default function Login() {
             </div>
           </div>
         </div>
-      </section>
+      </section> : <OtpPage name={name} email={email.trim()} />}
       {/*/Login-Section*/}
     </>
   );
