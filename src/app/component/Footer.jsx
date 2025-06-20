@@ -14,62 +14,17 @@ export default function Footer() {
             <div className="footer-main">
                 <div className="container">
                     <div className="row">
-                        <div className="col-lg-2 col-md-12">
-                            <h6>Job Categories</h6>
+                        <div className="col-lg-4 col-md-12">
+                            <h6>Disclaimer</h6>
                             <hr className="deep-purple  accent-2 mb-4 mt-0 d-inline-block mx-auto" />
                             <ul className="list-unstyled mb-0">
                                 <li>
-                                    <Link href="/">Developement</Link>
-                                </li>
-                                <li>
-                                    <Link href="/">Designing</Link>
-                                </li>
-                                <li>
-                                    <Link href="/">Marketing</Link>
-                                </li>
-                                <li>
-                                    <Link href="/">Others</Link>
-                                </li>
-                            </ul>
-                        </div>
-                        <div className="col-lg-2 col-md-12">
-                            <h6>Job Type</h6>
-                            <hr className="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" />
-                            <ul className="list-unstyled mb-0">
-                                <li>
-                                    <Link href="/">Work from home</Link>
-                                </li>
-                                <li>
-                                    <Link href="/">Internship</Link>
-                                </li>
-                                <li>
-                                    <Link href="/">Part time</Link>
-                                </li>
-                                <li>
-                                    <Link href="/">Full time</Link>
-                                </li>
-                            </ul>
-                        </div>
-                        <div className="col-lg-2 col-md-12">
-                            <h6>Resources</h6>
-                            <hr className="deep-purple  accent-2 mb-4 mt-0 d-inline-block mx-auto" />
-                            <ul className="list-unstyled mb-0">
-                                <li>
-                                    <Link href="/">Support</Link>
-                                </li>
-                                <li>
-                                    <Link href="/">FAQ</Link>
-                                </li>
-                                <li>
-                                    <Link href="/">Terms of Service</Link>
-                                </li>
-                                <li>
-                                    <Link href="/">Contact Details</Link>
+                                    The content provided on the DoctorsJourney platform is for informational and educational purposes only. It is not intended as a substitute for professional medical advice, diagnosis, or treatment. Always consult a qualified healthcare provider with any questions regarding a medical condition. DoctorsJourney does not endorse or guarantee the accuracy of third-party content or publications linked through our platform.
                                 </li>
                             </ul>
                         </div>
                         <div className="col-lg-3 col-md-12">
-                            <h6>Popular Ads</h6>
+                            <h6>Popular Links</h6>
                             <hr className="deep-purple  accent-2 mb-4 mt-0 d-inline-block mx-auto" />
                             <ul className="list-unstyled mb-0">
                                 <li>
@@ -91,6 +46,21 @@ export default function Footer() {
                                     <Link href="/">
                                         <FontAwesomeIcon icon={faCaretRight} /> BPO Online In Bangalore
                                     </Link>
+                                </li>
+                            </ul>
+                        </div>
+                        <div className="col-lg-2 col-md-12">
+                            <h6>Help</h6>
+                            <hr className="deep-purple  accent-2 mb-4 mt-0 d-inline-block mx-auto" />
+                            <ul className="list-unstyled mb-0">
+                                <li>
+                                    <Link href="/">Support</Link>
+                                </li>
+                                <li>
+                                    <Link href="/">FAQ</Link>
+                                </li>
+                                <li>
+                                    <Link href="/">Contact</Link>
                                 </li>
                             </ul>
                         </div>

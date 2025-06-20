@@ -34,7 +34,7 @@ export default async function MySubscription() {
 
     return (
         <>
-            {subscriptionList.length > 0 && <Subscription subscriptionList={subscriptionList} subscriptionsList={subscriptionsList} />}
+            {<Subscription subscriptionList={subscriptionList} subscriptionsList={subscriptionsList} />}
         </>
     )
 }

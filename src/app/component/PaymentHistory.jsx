@@ -1,7 +1,7 @@
 "use client"
 import Breadcrumb from "./Breadcrumb";
 import UserProfileSidebar from "./UserProfileSidebar";
-import { faEye } from "@fortawesome/free-solid-svg-icons";
+import { faExclamationCircle, faEye, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { useState } from "react";
@@ -111,57 +111,70 @@ export default function PaymentHistory({ totalItems, paymentList, userId }) {
                                 </div>
                             </div>
 
+                            
                             <div className="card mb-0">
                                 <div className="card-header">
                                     <h3 className="card-title">Payment List</h3>
                                 </div>
-                                <div className="card-body">
-                                    <div className="table-responsive border-top">
-                                        <table className="table table-bordered table-hover text-nowrap">
-                                            <thead>
-                                                <tr>
-                                                    <th>Payment ID</th>
-                                                    <th>Name</th>
-                                                    <th>Date</th>
-                                                    <th>Price</th>
-                                                    <th>Duration</th>
-                                                    <th>Status</th>
-                                                    <th>&nbsp;</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {paymentLists.map((payment) => <tr>
-                                                    <td className="text-primary">{payment.paymentId}</td>
-                                                    <td>{payment.paymentName}</td>
-                                                    <td>{payment.paymentDate}</td>
-                                                    <td className="font-weight-semibold fs-16">&#8377;{payment.paymentPrice}</td>
-                                                    <td>{payment.paymentDuration}</td>
-                                                    <td>
-                                                        <span className={payment.status ? "badge bg-success" : "badge bg-danger"}>
-                                                            {payment.status ? "Recieved" : "Pending"}
-                                                        </span>
-                                                    </td>
-                                                    <td className="text-center">
-                                                        <Link href="/" class="btn btn-primary btn-sm text-white">
-                                                            <FontAwesomeIcon icon={faEye} />
-                                                        </Link>
-                                                    </td>
-                                                </tr>)}
+                                {
+                                    paymentList.length > 0 ? (
+                                        <>
+                                            <div className="card-body">
+                                                <div className="table-responsive border-top">
+                                                    <table className="table table-bordered table-hover text-nowrap">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Payment ID</th>
+                                                                <th>Name</th>
+                                                                <th>Date</th>
+                                                                <th>Price</th>
+                                                                <th>Duration</th>
+                                                                <th>Status</th>
+                                                                <th>&nbsp;</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {paymentLists.map((payment) => <tr>
+                                                                <td className="text-primary">{payment.paymentId}</td>
+                                                                <td>{payment.paymentName}</td>
+                                                                <td>{payment.paymentDate}</td>
+                                                                <td className="font-weight-semibold fs-16">&#8377;{payment.paymentPrice}</td>
+                                                                <td>{payment.paymentDuration}</td>
+                                                                <td>
+                                                                    <span className={payment.status ? "badge bg-success" : "badge bg-danger"}>
+                                                                        {payment.status ? "Recieved" : "Pending"}
+                                                                    </span>
+                                                                </td>
+                                                                <td className="text-center">
+                                                                    <Link href="/" class="btn btn-primary btn-sm text-white">
+                                                                        <FontAwesomeIcon icon={faEye} />
+                                                                    </Link>
+                                                                </td>
+                                                            </tr>)}
 
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    {button > 1 && <ul class="pagination d-flex justify-content-center mt-3">
-                                        <li class={idx === 1 ? "page-item page-prev disabled" : "page-item page-prev"}>
-                                            <button class="page-link" onClick={() => pagination(idx - 1)} tabindex="-1">Prev</button>
-                                        </li>
-                                        {Array.from({ length: button }, (_, i) => <li class={i + 1 === idx ? "page-item active" : "page-item"}><button class="page-link" onClick={() => pagination(i + 1)}>{i + 1}</button></li>)}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                {button > 1 && <ul class="pagination d-flex justify-content-center mt-3">
+                                                    <li class={idx === 1 ? "page-item page-prev disabled" : "page-item page-prev"}>
+                                                        <button class="page-link" onClick={() => pagination(idx - 1)} tabindex="-1">Prev</button>
+                                                    </li>
+                                                    {Array.from({ length: button }, (_, i) => <li class={i + 1 === idx ? "page-item active" : "page-item"}><button class="page-link" onClick={() => pagination(i + 1)}>{i + 1}</button></li>)}
 
-                                        <li class="page-item page-next">
-                                            <button class="page-link" onClick={() => pagination(idx + 1)}>Next</button>
-                                        </li>
-                                    </ul>}
-                                </div>
+                                                    <li class="page-item page-next">
+                                                        <button class="page-link" onClick={() => pagination(idx + 1)}>Next</button>
+                                                    </li>
+                                                </ul>}
+                                            </div>
+                                        </>
+                                    ) : (
+                                        <div className="card-body text-center">
+                                            <FontAwesomeIcon icon={faSearch} size="lg" beat />
+                                            <h3>No Data Found</h3>
+                                        </div>
+                                    )
+                                }
+                                
                             </div>
                         </div>
                     </div>

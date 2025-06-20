@@ -15101,7 +15101,7 @@ a.chip:hover {
 
     .header-main .top-bar-right .custom li {
         margin-bottom: 0;
-        padding: 10px 12px;
+        padding: 6px 12px;
     }
 
     .header-main .top-bar-right .custom li:first-child {
@@ -16676,7 +16676,7 @@ dd {
     }
 
     .bannerimg {
-        padding: 3rem 0 3rem 0 !important;
+        padding: 3rem 0 3rem 0;
         background-size: cover;
     }
 
@@ -16822,6 +16822,11 @@ dd {
 .bannerimg .header-text h1 {
     margin-bottom: 0.75rem;
     font-family: "Quicksand", sans-serif;
+}
+.bannerimg.customBreadcrumb{padding: .5rem 0;}
+.bannerimg.customBreadcrumb .customBreadcrumbText{display: flex; align-items: center; justify-content: space-between;}
+.bannerimg.customBreadcrumb .customBreadcrumbText h1.title{
+    font-size: 1.4rem; margin: 0 .8rem 0 0; color: var(--bs-body-bg); text-transform: uppercase;
 }
 
 .about-1 {
@@ -18420,12 +18425,12 @@ body .modal-open {
     .header-main .top-bar-right .custom li {
         margin-right: 9px;
         padding-right: 12px;
-        padding: 10px 12px;
+        padding: 6px 12px;
         padding-left: 0;
     }
 
     .top-bar .top-bar-left .socials li {
-        padding: 9px 12px;
+        padding: 6px 12px;
     }
 
     .h1,
@@ -24381,7 +24386,7 @@ body.fixed-header .header {
     font-size: 15px;
     margin: 0px 0px;
     border-left: 1px solid rgba(255, 255, 255, 0.15);
-    padding: 9px 15px;
+    padding: 6px 15px;
     line-height: 1.7;
 }
 
@@ -24453,7 +24458,7 @@ body.fixed-header .header {
     margin-right: 15px;
     border-right: 1px solid rgba(255, 255, 255, 0.15);
     padding-right: 15px;
-    padding: 10px 15px;
+    padding: 6px 15px;
     padding-left: 0;
     line-height: 1.7;
 }
@@ -24672,7 +24677,7 @@ body.fixed-header .header {
 
 @media (max-width: 375px) {
     .top-bar .top-bar-left .socials li {
-        padding: 9px 12px;
+        padding: 6px 12px;
     }
 
     .header-main .top-bar-right .custom li {
@@ -27196,6 +27201,10 @@ video {
 }
 .item7-card-desc a,
 .item7-card-desc span{color: var(--bs-dark-text-emphasis);}
+.item7-card-desc span.shareIcon{
+    cursor: pointer; font-size: 14px;
+}
+.item7-card-desc span.viewIcon{padding-left: 8px; margin-left: 4px; border-left: 1px solid var(--bs-dark-text-emphasis);}
 
 .item7-card-desc a:first-child {
     margin-right: 1rem;

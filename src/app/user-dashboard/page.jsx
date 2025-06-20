@@ -23,7 +23,6 @@ export default async function UserDashboard() {
         const res = await response.json();
 
         if (res.status) {
-
             paymentList = res.paymentlist;
 
         }
@@ -59,12 +58,12 @@ export default async function UserDashboard() {
                                         <div className="nav upgradeCard userDashboardCard">
                                             {/* card */}
                                             <div className="card">
-                                                <Link href="/" />
+                                                <Link href="/user-dashboard/profile" />
                                                 <div className="cardBody">
                                                     <figure>
                                                         <FontAwesomeIcon icon={faPlus} />
                                                         <figcaption>
-                                                            Create <span>Profile</span>
+                                                            My <span>Profile</span>
                                                         </figcaption>
                                                     </figure>
                                                 </div>
@@ -98,48 +97,55 @@ export default async function UserDashboard() {
                                 </div>
                             </div>
 
-                            <div className="card mb-0">
-                                <div className="card-header">
-                                    <h3 className="card-title">Recent Payment history</h3>
-                                </div>
-                                <div className="card-body">
-                                    <div className="table-responsive border-top">
-                                        <table className="table table-bordered table-hover text-nowrap">
-                                            <thead>
-                                                <tr>
-                                                    <th>Payment ID</th>
-                                                    <th>Name</th>
-                                                    <th>Date</th>
-                                                    <th>Price</th>
-                                                    <th>Duration</th>
-                                                    <th>Status</th>
-                                                    <th>&nbsp;</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {paymentList.map((payment) => <tr>
-                                                    <td className="text-primary">{payment.paymentId}</td>
-                                                    <td>{payment.paymentName}</td>
-                                                    <td>{payment.paymentDate}</td>
-                                                    <td className="font-weight-semibold fs-16">&#8377;{payment.paymentPrice}</td>
-                                                    <td>{payment.paymentDuration}</td>
-                                                    <td>
-                                                        <span className={payment.status ? "badge bg-success" : "badge bg-danger"}>
-                                                            {payment.status ? "Activated" : "Pending"}
-                                                        </span>
-                                                    </td>
-                                                    <td className="text-center">
-                                                        <Link href="/" class="btn btn-primary btn-sm text-white">
-                                                            <FontAwesomeIcon icon={faEye} />
-                                                        </Link>
-                                                    </td>
-                                                </tr>)}
+                            {
+                                (paymentList.length > 0) && (
+                                    <>
+                                        <div className="card mb-0">
+                                            <div className="card-header">
+                                                <h3 className="card-title">Recent Payment history</h3>
+                                            </div>
+                                            <div className="card-body">
+                                                <div className="table-responsive border-top">
+                                                    <table className="table table-bordered table-hover text-nowrap">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Payment ID</th>
+                                                                <th>Name</th>
+                                                                <th>Date</th>
+                                                                <th>Price</th>
+                                                                <th>Duration</th>
+                                                                <th>Status</th>
+                                                                <th>&nbsp;</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {paymentList.map((payment) => <tr>
+                                                                <td className="text-primary">{payment.paymentId}</td>
+                                                                <td>{payment.paymentName}</td>
+                                                                <td>{payment.paymentDate}</td>
+                                                                <td className="font-weight-semibold fs-16">&#8377;{payment.paymentPrice}</td>
+                                                                <td>{payment.paymentDuration}</td>
+                                                                <td>
+                                                                    <span className={payment.status ? "badge bg-success" : "badge bg-danger"}>
+                                                                        {payment.status ? "Activated" : "Pending"}
+                                                                    </span>
+                                                                </td>
+                                                                <td className="text-center">
+                                                                    <Link href="/" class="btn btn-primary btn-sm text-white">
+                                                                        <FontAwesomeIcon icon={faEye} />
+                                                                    </Link>
+                                                                </td>
+                                                            </tr>)}
 
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </>
+                                )
+                            }
+                            
                         </div>
                     </div>
                 </div>

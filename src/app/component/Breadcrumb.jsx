@@ -5,11 +5,11 @@ import Link from "next/link";
 export default function Breadcrumb({ title = "Page Title" }) {
   return (
     <section>
-      <div className="bannerimg cover-image bg-background3" data-image-src="../assets/images/banners/banner2.jpg">
+      <div className="bannerimg customBreadcrumb cover-image bg-background3" data-image-src="../assets/images/banners/banner2.jpg">
         <div className="header-text mb-0">
           <div className="container">
-            <div className="text-center text-white">
-              <h1 className="">{title}</h1>
+            <div className="customBreadcrumbText">
+              {/* <h1 className="title">{title}</h1> */}
               <ol className="breadcrumb text-center">
                 <li className="breadcrumb-item">
                   <Link href="/">Home</Link>

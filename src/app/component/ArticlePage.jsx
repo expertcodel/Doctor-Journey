@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, { useEffect } from 'react'
 // import articleCards from '../../data/articleCards.json'
 import { faCalendar, faComment, faEye, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,36 +8,26 @@ import Link from "next/link";
 import { useState } from 'react';
 import LazyYoutube from './LazyYoutube.jsx'
 import DaysCalculator from './DaysCalculator'
+import Breadcrumb from './Breadcrumb.jsx';
+import { faFacebook, faLinkedin, faTwitter } from '@fortawesome/free-brands-svg-icons';
 export default function ArticlePage({ articledetail, articleList }) {
 
     const [isOpen, setIsOpen] = useState(false);
 
     const openModal = () => setIsOpen(true);
+    const [currentUrl, setCurrentUrl] = useState('');
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+        setCurrentUrl(window.location.href);
+        }
+    }, []);
 
 
     return (
         <>
             {/*Breadcrumb*/}
-            <section>
-                <div className="bannerimg cover-image bg-background3" data-image-src="../assets/images/banners/banner2.jpg">
-                    <div className="header-text mb-0">
-                        <div className="container">
-                            <div className="text-center text-white">
-                                <h1 className="">{articledetail?.articleTitle}</h1>
-                                <ol className="breadcrumb text-center">
-                                    <li className="breadcrumb-item">
-                                        <Link href="/articles">articles</Link>
-                                    </li>
-                                    <li className="breadcrumb-item active text-white" aria-current="page">
-                                        {articledetail?.articleTitle}
-                                    </li>
-                                </ol>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            {/*Breadcrumb*/}
+            <Breadcrumb title={articledetail?.articleTitle} />
 
             {/* article Details*/}
             <section className="sptb">
@@ -56,14 +46,38 @@ export default function ArticlePage({ articledetail, articleList }) {
                                         </div>
                                     </div>
                                     <div className="item7-card-desc d-flex mb-2 mt-3">
-                                        <span>
-                                            {articledetail.publishedDate}
+                                        <span className='me-2'>
+                                            <FontAwesomeIcon icon={faCalendar} /> {articledetail.publishedDate}
                                         </span>
-                                        <span>
+                                        <span className='me-2'>
                                             <FontAwesomeIcon icon={faUser} /> {articledetail?.articleTitle}
                                         </span>
                                         <div className="ms-auto">
-                                            <span className="me-0">
+                                            <span className="me-2">
+                                                Share:
+                                            </span>
+                                            <span className="me-2 shareIcon">
+                                                <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`}
+                                                target="_blank" className='m-0'
+                                                rel="noopener noreferrer">
+                                                    <FontAwesomeIcon icon={faFacebook} />
+                                                </a>
+                                            </span>
+                                            <span className="me-2 shareIcon">
+                                                <a href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(currentUrl)}&text=${encodeURIComponent("Check this out!")}`}
+                                                target="_blank" className='m-0'
+                                                rel="noopener noreferrer">
+                                                    <FontAwesomeIcon icon={faTwitter} />
+                                                </a>
+                                            </span>
+                                            <span className="me-2 shareIcon">
+                                                <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(currentUrl)}`}
+                                                target="_blank" className='m-0'
+                                                rel="noopener noreferrer">
+                                                    <FontAwesomeIcon icon={faLinkedin} />
+                                                </a>
+                                            </span>
+                                            <span className="me-0 viewIcon">
                                                 <FontAwesomeIcon icon={faEye} />{articledetail?.views}
                                             </span>
                                         </div>

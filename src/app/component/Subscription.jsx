@@ -1,7 +1,7 @@
 "use client"
 import Breadcrumb from "./Breadcrumb";
 import UserProfileSidebar from "./UserProfileSidebar";
-import { faCheck, faX } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faSearch, faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { useAuth } from "../../context/AuthContext";
@@ -125,6 +125,8 @@ export default function Subscription({ subscriptionList, subscriptionsList }) {
 
                                     </div>
 
+
+                                    
                                     <div className="table-responsive border-top mt-5">
                                         <table className="table table-bordered table-hover text-nowrap">
                                             <thead>
@@ -137,23 +139,39 @@ export default function Subscription({ subscriptionList, subscriptionsList }) {
                                                     <th>Status</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                                {subscriptionList.map((subscription) => <tr>
-                                                    <td className="text-primary">{subscription.subscriptionId}</td>
-                                                    <td>{subscription.subscriptionName}</td>
-                                                    <td>{subscription.startDate}</td>
-                                                    <td className="font-weight-semibold fs-16">&#8377;{subscription.subscriptionPrice}</td>
-                                                    <td>{subscription.subscriptionDuration}</td>
-                                                    <td>
-                                                        <span className={subscription.status ? "badge bg-success" : "badge bg-danger"}>
-                                                            {subscription.status ? "Activated" : "Expired"}
-                                                        </span>
-                                                    </td>
-                                                </tr>)}
+                                            {
+                                                subscriptionList.length > 0 ? (
+                                                    <>
+                                                        <tbody>
+                                                            {subscriptionList.map((subscription) => <tr>
+                                                                <td className="text-primary">{subscription.subscriptionId}</td>
+                                                                <td>{subscription.subscriptionName}</td>
+                                                                <td>{subscription.startDate}</td>
+                                                                <td className="font-weight-semibold fs-16">&#8377;{subscription.subscriptionPrice}</td>
+                                                                <td>{subscription.subscriptionDuration}</td>
+                                                                <td>
+                                                                    <span className={subscription.status ? "badge bg-success" : "badge bg-danger"}>
+                                                                        {subscription.status ? "Activated" : "Expired"}
+                                                                    </span>
+                                                                </td>
+                                                            </tr>)}
 
-                                            </tbody>
+                                                        </tbody>
+                                                    </>
+                                                ) : (
+                                                    <tbody>
+                                                        <tr>
+                                                        <td className="card-body text-center" colSpan={6}>
+                                                            <FontAwesomeIcon icon={faSearch} size="lg" beat />
+                                                            <h3>No Data Found</h3>
+                                                        </td>
+                                                        </tr>
+                                                    </tbody>
+                                                )
+                                            }
                                         </table>
                                     </div>
+                                    
                                 </div>
                             </div>
                         </div>

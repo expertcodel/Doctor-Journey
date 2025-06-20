@@ -33,7 +33,7 @@ export default async function Page() {
     return (
         <>
             {
-                paymentList.length > 0 && < PaymentHistory paymentList={paymentList} totalItems={totalItems} userId={userId}/>
+                < PaymentHistory paymentList={paymentList} totalItems={totalItems} userId={userId}/>
             }
         </>
     )

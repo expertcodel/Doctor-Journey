@@ -6,9 +6,8 @@ import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 export default function Tooltip({ message }) {
     return (
         <div className="tooltipSec success">
-            <span><FontAwesomeIcon icon={faThumbsUp} /></span>
+            <span><FontAwesomeIcon icon={faThumbsUp} beat /></span>
             {message}
-
         </div>
     )
 }

@@ -2346,7 +2346,7 @@ body {
 }
 .interviewCard .card-body .interviewCardBody > *{flex: 1;}
 .interviewCard .card-body .interviewCardBody figure{
-    height: 80px; width: 96px; overflow: hidden; position: relative; margin: 0 8px 0 0; flex: none; border-radius: 8px;
+    height: 80px; width: 120px; overflow: hidden; position: relative; margin: 0 8px 0 0; flex: none; border-radius: 8px;
     display: flex; align-items: center; justify-content: center;
 }
 /* .interviewCard .card-body .interviewCardBody figure img{
@@ -2354,9 +2354,9 @@ body {
     min-width: 100%; display: block; padding: 0; max-width: 100%; transition: ease all .5s; -webkit-transition: ease all .5s;
 } */
 .interviewCard .card-body .interviewCardBody figure img{transition: ease all .5s; -webkit-transition: ease all .5s;}
-.interviewCard .card-body .interviewCardBody figure .play-button{width: 40px; height: 40px;}
+.interviewCard .card-body .interviewCardBody figure .play-button{width: 30px; height: 30px;}
 .interviewCard .card-body .interviewCardBody figure .play-button .triangle{
-    border-left: 14px solid var(--bs-body-bg); border-top: 8px solid transparent; border-bottom: 8px solid transparent;
+    border-left: 10px solid var(--bs-body-bg); border-top: 6px solid transparent; border-bottom: 6px solid transparent;
 }
 .interviewCard .card-body .interviewCardBody .interviewCardDetails > *{margin: 0;}
 .interviewCard .card-body .interviewCardBody .interviewCardDetails > *:not(:last-child){margin-bottom: 4px;}
@@ -2695,14 +2695,14 @@ body {
 
 /****** tooltipSec ******/
 .tooltipSec{
-    position: fixed; top: 16px; left: 50%; transform: translateX(-50%); width: auto; border-radius: 8px; display: flex; flex-direction: column;
-    background: rgba(0,0,0,.6); padding: 8px 16px; font-size: 18px; color: var(--bs-body-bg); z-index: 9999; align-items: center;
+    position: fixed; top: 36px; right: 16px; width: auto; border-radius: 8px; display: flex; flex-direction: column;
+    background: rgba(0,0,0,.8); padding: 8px 16px; font-size: 18px; color: var(--bs-body-bg); z-index: 9999; align-items: center;
     justify-content: center; text-align: center;
 }
 .tooltipSec span{
-    display: block; width: 100%; font-size: 20px; text-transform: uppercase; margin-bottom: 8px; line-height: 12px;
+    display: block; width: 100%; font-size: 20px; text-transform: uppercase; margin-bottom: 4px; line-height: 12px;
 }
-.tooltipSec.success{background: rgba(25, 135, 84, .6);}
+.tooltipSec.success{background: rgba(25, 135, 84, .8);}
 
 .navbar-menu .navbar-nav .nav-sm .nav-link{text-transform: capitalize;}
 
@@ -2762,6 +2762,9 @@ body {
     .journalsMain .row > *:not(:first-child){
         border-top: 1px solid var(--bs-border-color); border-left: 0; margin-top: 16px; padding-top: 16px;
     }
+
+    .bannerimg.customBreadcrumb .customBreadcrumbText{flex-direction: column; justify-content: center;}
+    .bannerimg.customBreadcrumb .customBreadcrumbText h1.title{margin: 0 0 .2rem 0 !important; font-size: 1.2rem;}
 }
 
 @media (max-width: 568px) {

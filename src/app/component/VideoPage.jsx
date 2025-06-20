@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, { useEffect } from 'react'
 // import doctorCards from '../../data/doctorCards.json'
 import { faCalendar, faComment, faEye, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,36 +8,26 @@ import Link from "next/link";
 import { useState } from 'react';
 import LazyYoutube from './LazyYoutube.jsx'
 import DaysCalculator from './DaysCalculator'
+import Breadcrumb from './Breadcrumb.jsx';
+import { faFacebook, faInstagram, faLinkedin, faTwitter } from '@fortawesome/free-brands-svg-icons';
 export default function VideoPage({ doctordetail, videoList, doctor,specialization }) {
 
     const [isOpen, setIsOpen] = useState(false);
 
     const openModal = () => setIsOpen(true);
+    const [currentUrl, setCurrentUrl] = useState('');
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+        setCurrentUrl(window.location.href);
+        }
+    }, []);
    
     
     return (
         <>
             {/*Breadcrumb*/}
-            <section>
-                <div className="bannerimg cover-image bg-background3" data-image-src="../assets/images/banners/banner2.jpg">
-                    <div className="header-text mb-0">
-                        <div className="container">
-                            <div className="text-center text-white">
-                                <h1 className="">{doctor?.videoTitle}</h1>
-                                <ol className="breadcrumb text-center">
-                                    <li className="breadcrumb-item">
-                                        <Link href="/doctors">Doctors</Link>
-                                    </li>
-                                    <li className="breadcrumb-item active text-white" aria-current="page">
-                                        {doctor?.videoTitle}
-                                    </li>
-                                </ol>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            {/*Breadcrumb*/}
+            <Breadcrumb title={doctor?.videoTitle} />
 
             {/* Doctor Details*/}
             <section className="sptb">
@@ -65,7 +55,31 @@ export default function VideoPage({ doctordetail, videoList, doctor,specializati
                                             <FontAwesomeIcon icon={faUser} /> {doctor?.doctorName}
                                         </span>
                                         <div className="ms-auto">
-                                            <span className="me-0">
+                                            <span className="me-2">
+                                                Share:
+                                            </span>
+                                            <span className="me-2 shareIcon">
+                                                <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`}
+                                                target="_blank" className='m-0'
+                                                rel="noopener noreferrer">
+                                                    <FontAwesomeIcon icon={faFacebook} />
+                                                </a>
+                                            </span>
+                                            <span className="me-2 shareIcon">
+                                                <a href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(currentUrl)}&text=${encodeURIComponent("Check this out!")}`}
+                                                target="_blank" className='m-0'
+                                                rel="noopener noreferrer">
+                                                    <FontAwesomeIcon icon={faTwitter} />
+                                                </a>
+                                            </span>
+                                            <span className="me-2 shareIcon">
+                                                <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(currentUrl)}`}
+                                                target="_blank" className='m-0'
+                                                rel="noopener noreferrer">
+                                                    <FontAwesomeIcon icon={faLinkedin} />
+                                                </a>
+                                            </span>
+                                            <span className="me-0 viewIcon">
                                                 <FontAwesomeIcon icon={faEye} /> {doctor?.views}
                                             </span>
                                         </div>
