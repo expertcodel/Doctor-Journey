@@ -14,7 +14,6 @@ export default function VideoPage({ doctordetail, videoList, doctor,specializati
 
     const [isOpen, setIsOpen] = useState(false);
     const openModal = () => setIsOpen(true);
-<<<<<<< Updated upstream
     const [currentUrl, setCurrentUrl] = useState('');
 
     useEffect(() => {
@@ -23,9 +22,7 @@ export default function VideoPage({ doctordetail, videoList, doctor,specializati
         }
     }, []);
    
-=======
     const [views,setViews]=useState(doctor.views);
->>>>>>> Stashed changes
     
     return (
         <>
@@ -58,7 +55,6 @@ export default function VideoPage({ doctordetail, videoList, doctor,specializati
                                             <FontAwesomeIcon icon={faUser} /> {doctor?.doctorName}
                                         </span>
                                         <div className="ms-auto">
-<<<<<<< Updated upstream
                                             <span className="me-2">
                                                 Share:
                                             </span>
@@ -85,10 +81,9 @@ export default function VideoPage({ doctordetail, videoList, doctor,specializati
                                             </span>
                                             <span className="me-0 viewIcon">
                                                 <FontAwesomeIcon icon={faEye} /> {doctor?.views}
-=======
+                                            </span>
                                             <span className="me-0">
                                                 <FontAwesomeIcon icon={faEye} /> {views}
->>>>>>> Stashed changes
                                             </span>
                                         </div>
                                     </div>
