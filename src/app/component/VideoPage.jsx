@@ -80,9 +80,6 @@ export default function VideoPage({ doctordetail, videoList, doctor,specializati
                                                 </a>
                                             </span>
                                             <span className="me-0 viewIcon">
-                                                <FontAwesomeIcon icon={faEye} /> {doctor?.views}
-                                            </span>
-                                            <span className="me-0">
                                                 <FontAwesomeIcon icon={faEye} /> {views}
                                             </span>
                                         </div>
