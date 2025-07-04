@@ -180,6 +180,7 @@ export default function Header() {
                                     <Link href="/"
                                         className={`link ${pathName === '/' ? 'active' : ''
                                             }`}
+                                        onClick={toggleMenu}
                                     >
                                         Home
                                     </Link>
@@ -188,6 +189,7 @@ export default function Header() {
                                     <Link href="/about-us"
                                         className={`link ${pathName === '/about-us' ? 'active' : ''
                                             }`}
+                                        onClick={toggleMenu}
                                     >
                                         About Us
                                     </Link>
@@ -196,6 +198,7 @@ export default function Header() {
                                     <Link href="/journals"
                                         className={`link ${pathName === '/journals' ? 'active' : ''
                                             }`}
+                                        onClick={toggleMenu}
                                     >
                                         Journals
                                     </Link>
@@ -204,6 +207,7 @@ export default function Header() {
                                     <Link href="/journey"
                                         className={`link ${pathName === '/journey' ? 'active' : ''
                                             }`}
+                                        onClick={toggleMenu}
                                     >
                                         Journey
                                     </Link>
@@ -212,6 +216,7 @@ export default function Header() {
                                     <Link href="/events"
                                         className={`link ${pathName === '/events' ? 'active' : ''
                                             }`}
+                                        onClick={toggleMenu}
                                     >
                                         Events
                                     </Link>
@@ -220,6 +225,7 @@ export default function Header() {
                                     <Link href="/contact-us"
                                         className={`link ${pathName === '/contact-us' ? 'active' : ''
                                             }`}
+                                        onClick={toggleMenu}
                                     >
                                         Contact Us
                                     </Link>

@@ -10,7 +10,7 @@ export default function Footer() {
     return (
         <>
         {/*Footer Section*/}
-        <footer className="bg-dark text-white cover-image footerMain" data-image-src="../assets/images/banners/banner3.jpg">
+        <footer className="bg-dark text-white footerMain" data-image-src="../assets/images/banners/banner3.jpg">
             <div className="footer-main">
                 <div className="container">
                     <div className="row">

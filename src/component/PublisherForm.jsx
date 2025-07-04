@@ -1063,9 +1063,12 @@ export default function publisherForm() {
                                     </div>
 
                                     <div className="col-lg-12">
-
-                                        <div className="hstack gap-2 justify-content-end">
-                                            <div className='col-auto' style={{ color: 'red' }}>{errorMsg !== "" && errorMsg}</div>
+                                        {
+                                            errorMsg && (
+                                                <div className='col-auto text-center mb-2' style={{ color: 'red' }}>{errorMsg !== "" && errorMsg}</div>
+                                            )
+                                        }
+                                        <div className="hstack gap-2 justify-content-center">
                                             <button type="button" className="btn btn-primary" onClick={() => manageTabforward("first")}>
                                                 Next
                                             </button>
@@ -1201,11 +1204,13 @@ export default function publisherForm() {
                                         </div>)}
                                     </div>
                                     <div className="col-lg-12">
-
-                                        <div className="hstack gap-2 justify-content-end">
-                                            <div className='col-auto' style={{ color: 'red' }}>{errorMsg !== "" && errorMsg}</div>
-
-                                            <button type="submit" className="btn btn-primary" onClick={() => manageTabbackward("second")}>
+                                        {
+                                            errorMsg && (
+                                                <div className='col-auto text-center mb-2' style={{ color: 'red' }}>{errorMsg !== "" && errorMsg}</div>
+                                            )
+                                        }
+                                        <div className="hstack gap-2 justify-content-center">
+                                            <button type="submit" className="btn btn-warning" onClick={() => manageTabbackward("second")}>
                                                 Previous
                                             </button>
                                             <button type="button" className="btn btn-primary" onClick={() => manageTabforward("second")}>
@@ -1272,10 +1277,10 @@ export default function publisherForm() {
 
                                 </div>
 
-                                <div className="hstack gap-2 justify-content-end">
+                                <div className="hstack gap-2 justify-content-center">
 
                                     {message.document !== "" && <span style={{ color: 'red' }}>{message.document}</span>}
-                                    <button type="submit" className="btn btn-primary" onClick={() => manageTabbackward("third")}>
+                                    <button type="submit" className="btn btn-warning" onClick={() => manageTabbackward("third")}>
                                         Previous
                                     </button>
                                     <button type="button" className="btn btn-primary" onClick={() => manageTabforward("third")}>
@@ -1455,10 +1460,13 @@ export default function publisherForm() {
                                     </div>
 
                                     <div className="col-lg-12">
-
-                                        <div className="hstack gap-2 justify-content-end">
-                                            <div className='col-auto' style={{ color: 'red' }}>{errorMsg !== "" && errorMsg}</div>
-                                            <button type="submit" className="btn btn-primary" onClick={() => manageTabbackward("fourth")}>
+                                        {
+                                            errorMsg && (
+                                                <div className='col-auto text-center mb-2' style={{ color: 'red' }}>{errorMsg !== "" && errorMsg}</div>
+                                            )
+                                        }
+                                        <div className="hstack gap-2 justify-content-center">
+                                            <button type="submit" className="btn btn-warning" onClick={() => manageTabbackward("fourth")}>
                                                 Previous
                                             </button>
                                             <button type="submit" className="btn btn-primary">

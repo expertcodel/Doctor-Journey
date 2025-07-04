@@ -298,26 +298,34 @@ export default function Profile() {
                                                         }
                                                     </div>
                                                 </div>
+
+                                                {/*Upgrade cards */}
+                                                
+                                                <div className="tab-content">
+                                                    <div className="tab-pane" id="applyDoctor">
+                                                        <div className="card mt-3 mb-0">
+                                                            <DoctorForm />
+                                                        </div>
+                                                    </div>
+                                                    <div className="tab-pane" id="applyAuthor">
+                                                        <div className="card mt-3 mb-0">
+                                                            <AuthorForm />
+                                                        </div>
+                                                    </div>
+                                                    <div className="tab-pane" id="applyPublisher">
+                                                        <div className="card mt-3 mb-0">
+                                                            <PublisherForm />
+                                                        </div>
+                                                    </div>
+                                                    <div className="tab-pane" id="applyOrganization">
+                                                        <div className="card mt-3 mb-0">
+                                                            <OrganizationForm />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/*Upgrade cards */}
-                            <div className="card mt-3 mb-0">
-                                <div className="tab-content">
-                                    <div className="tab-pane" id="applyDoctor">
-                                        <DoctorForm />
-                                    </div>
-                                    <div className="tab-pane" id="applyAuthor">
-                                        <AuthorForm />
-                                    </div>
-                                    <div className="tab-pane" id="applyPublisher">
-                                        <PublisherForm />
-                                    </div>
-                                    <div className="tab-pane" id="applyOrganization">
-                                        <OrganizationForm />
                                     </div>
                                 </div>
                             </div>

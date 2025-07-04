@@ -8,10 +8,10 @@ import ThumbnailSearchCarousel from "./component/ThumbnailSearchCarousel";
 import ThumbnailSponsorCarousel from "./component/ThumbnailSponsorCarousel";
 import ThumbnailBlogsCarousel from "./component/ThumbnailBlogsCarousel";
 import TestimonialsCarousel from "./component/Testimonials";
-import DaysCalculator from '../app/component/DaysCalculator'
+import DaysCalculator from '../app/component/DaysCalculator';
+import DrJourneyBanner from './component/DrJourneyBanner';
 // import doctorCards from "@/data/doctorCards.json";
 //  import doctorProfile from "@/data/doctorProfile.json";
-
 export default async function Home() {
 
 
@@ -49,38 +49,8 @@ export default async function Home() {
 
   return (
     <section>
-      {/* heroBanner */}
-      <section className="heroBanner">
-        <div className="container">
-          <div className="row align-items-center">
-            <div className="col-md-6 col-12 bodyContent">
-              <h1>
-                <span>DOCTOR'S  JOURNEY SPECIALS</span>
-                CURING CANCER
-                <em>NEW RELEASE</em>
-              </h1>
-              <ul className="list-unstyled">
-                <li>
-                  2024
-                </li>
-                <li>
-                  Season 1
-                </li>
-                <li>
-                  Hindi/English
-                </li>
-              </ul>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas dictum efficitur ligula, sit amet iaculis magna vehicula eu. Sed quis gravida magna, vel sodales elit. Mauris ac lacus fermentum, finibus lorem ac, volutpat ligula. Suspendisse orci orci, egestas sit amet posuere eget, malesuada eget tortor. In eget aliquam dolor. Praesent sit amet odio ex. Vestibulum aliquam convallis nisl, quis finibus dolor bibendum eget.
-              </p>
-              <Link className="btn btn-primary mt-2 float-md-end" href="/">
-                Subscribe to watch
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
+      <DrJourneyBanner />
+      
       {/* search engine */}
       <section className="banner-1 cover-image sptb-3 pb-14 sptb-tab bg-background2"
         data-image-src="../assets/images/banners/banner1.jpg">
@@ -197,7 +167,8 @@ export default async function Home() {
                       </Link>
                       <div className="ms-auto">
 
-                        <span> <DaysCalculator targetDate={card.publishedDate} today={new Date().toLocaleDateString()} /></span>
+                        <span className="me-2"><DaysCalculator targetDate={card.publishedDate} today={new Date().toLocaleDateString()} /></span>
+                        <span> <FontAwesomeIcon icon={faEye} /> {card.views}</span>
 
                       </div>
                     </div>
@@ -206,13 +177,13 @@ export default async function Home() {
                     <div className="item7-card-desc d-flex">
                       <span>{card.videoTitle}</span>
                     </div>
-                    <div className="item7-card-desc d-flex">
+                    {/* <div className="item7-card-desc d-flex">
                       <div className="ms-auto">
 
                         <span className="me-0"> <FontAwesomeIcon icon={faEye} /> {card.views}</span>
 
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>

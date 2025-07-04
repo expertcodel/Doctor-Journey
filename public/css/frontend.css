@@ -21059,6 +21059,10 @@ footer,
     display: none;
 }
 
+.tab-content>.tab-pane .row div[class*="col-"] .hstack button.btn{
+    width: 130px; font-size: 20px;
+}
+
 .tab-content>.active {
     display: block;
 }
