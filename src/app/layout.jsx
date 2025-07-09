@@ -7,7 +7,7 @@ import 'animate.css';
 import "./custom.scss";
 //  import "../../public/css/color10.css";
 import { headers } from 'next/headers'
-// import "./globals.css";
+import "./globals.css";
 import BootstrapClient from "../app/component/bootstrap-client";
 import { AuthProvider } from "../context/AuthContext";
 
@@ -35,14 +35,13 @@ export default async function RootLayout({ children }) {
   const headersList = await headers();
   const path = headersList.get('x-pathname');
 
-
   //  path.startsWith(['/about-us','/contact-us','doctor-profile','/doctors','/forgot-password','/register','/user-dashboard','/verify-otp','/login'])
 
 
   return (
 
     <>
-      {['/about-us', '/articles', '/contact-us', '/doctor-profile', '/doctors', '/forgot-password', '/journals', '/journals-activity', '/login', '/privacy-policy', '/register', '/terms-condition', '/user-dashboard', '/verify-otp'].some(prefix => path.startsWith(prefix)) || path === '/' ?
+      {path && ['/about-us', '/articles', '/contact-us', '/doctor-profile', '/doctors', '/forgot-password', '/journals', '/journals-activity', '/login', '/privacy-policy', '/register', '/terms-condition', '/user-dashboard', '/verify-otp'].some(prefix => path.startsWith(prefix)) || path === '/' ?
 
         <html lang="en">
           <head>

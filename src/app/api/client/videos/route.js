@@ -66,9 +66,9 @@ export async function GET(request) {
 
         const { rows, count } = await videomodel.findAndCountAll({
 
+            where: { videoStatus: true, [Op.or]: { videoTitle: { [Op.iLike]: `%${name}%` }, videoId: { [Op.iLike]: `%${name}%` } } },
             limit: 9,
             offset: (page - 1) * 9,
-            where: { [Op.or]: { videoTitle: { [Op.iLike]: `%${name}%` }, videoId: { [Op.iLike]: `%${name}%` } } },
             order: [['views', 'DESC'], ['createdAt', 'DESC']]
         })
 

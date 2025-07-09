@@ -23,9 +23,10 @@ export async function GET(request) {
         if (usertype === 'string') {
             const { rows, count } = await articlemodel.findAndCountAll({
 
+                where: { [Op.or]: { articleTitle: { [Op.iLike]: `%${name}%` }, articleId: { [Op.iLike]: `%${name}%` } }, articleStatus: 'approved' },
                 limit: 10,
-                offset: name==="" ? (page - 1) * 10 : 0,
-                where: { [Op.or]: { articleTitle: { [Op.iLike]: `%${name}%` }, articleId: { [Op.iLike]: `%${name}%` } },articleStatus:'approved' },
+                offset: name === "" ? (page - 1) * 10 : 0,
+
                 order: [['createdAt', 'DESC']]
             })
 
@@ -35,9 +36,10 @@ export async function GET(request) {
 
             const { rows, count } = await articlemodel.findAndCountAll({
 
+                where: { userId, [Op.or]: { articleTitle: { [Op.iLike]: `%${name}%` }, articleId: { [Op.iLike]: `%${name}%` } }, articleStatus: 'approved' },
                 limit: 10,
-                offset: name==="" ? (page - 1) * 10 : 0,
-                where: { userId,[Op.or]: { articleTitle: { [Op.iLike]: `%${name}%` }, articleId: { [Op.iLike]: `%${name}%` } },articleStatus:'approved'},
+                offset: name === "" ? (page - 1) * 10 : 0,
+
                 order: [['createdAt', 'DESC']]
             })
 

@@ -57,7 +57,7 @@ export default async function Layoutchild({ children,params }) {
 
   // const menuItem = JSON.parse(data.value).menubar;
 
-  console.log(userData);
+  // console.log(userData);
 
   // const menuItem={}
   // const userData ={}

@@ -22,7 +22,7 @@ export async function GET() {
             order: [['blogSerial', 'ASC']],
             attributes: ['blogImage', 'publishedDate', 'blogDescription', 'blogTitle', 'blogUrl', 'blogId'],
             where: { blogStatus: true }
-        }), testimonialmodel.findAll(), doctormodel.findAll({ limit: 8, order: [['createdAt', 'DESC']], attributes: ['profileImage', 'qualification', 'doctorId', 'doctorName'], where: { status: true } }), videomodel.findAll({
+        }), testimonialmodel.findAll({where:{status:true},order:[['createdAt', 'DESC']]}), doctormodel.findAll({ limit: 8, order: [['createdAt', 'DESC']], attributes: ['profileImage', 'qualification', 'doctorId', 'doctorName'], where: { status: true } }), videomodel.findAll({
             limit: 6, order: [
                 ['views', 'DESC'],
                 ['createdAt', 'DESC']

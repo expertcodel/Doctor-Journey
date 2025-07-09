@@ -53,10 +53,11 @@ export async function GET(request) {
 
         const { rows, count } = await articlemodel.findAndCountAll({
 
+            where: { articleStatus:'published',[Op.or]: { articleTitle: { [Op.iLike]: `%${name}%` }, articleId: { [Op.iLike]: `%${name}%` } } },
+            order: [['createdAt', 'DESC']],
             limit: 9,
             offset: (page - 1) * 9,
-            where: { [Op.or]: { articleTitle: { [Op.iLike]: `%${name}%` }, articleId: { [Op.iLike]: `%${name}%` } } },
-            order: [['createdAt', 'DESC']],
+
             attributes: ['articleSummary', 'thumbnailImage', 'articleId', 'articleTitle', 'publishedDate', 'price']
         })
 

@@ -18,7 +18,7 @@ export async function POST(request) {
     const { organizationName, specialization, qualification, email, number, shortDescription, address, location, experience, city, country, zip, branchAddress, branchName, bankName, ifsc, accountNumber, license, identityName, document, gstNumber, accountType, accountName, userId } = JSON.parse(input.get('data'));
     const organizationmodel = await organizationModel();
     const connection = await connectTodb();
-     const usermodel = await UserModel();
+    const usermodel = await UserModel();
 
     if (!organizationmodel) {
         return NextResponse.json({ status: false, message: "database error occured" });
@@ -172,9 +172,10 @@ export async function GET(request) {
 
         const { rows, count } = await organizationmodel.findAndCountAll({
 
+            where: { [Op.or]: { organizationName: { [Op.iLike]: `%${name}%` }, organizationId: { [Op.iLike]: `%${name}%` } } },
             limit: 10,
             offset: (page - 1) * 10,
-            where: { [Op.or]: { organizationName: { [Op.iLike]: `%${name}%` }, organizationId: { [Op.iLike]: `%${name}%` } } },
+
             order: [['createdAt', 'DESC']]
         })
 

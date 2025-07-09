@@ -108,9 +108,9 @@ export async function GET(request) {
 
             const { rows, count } = await videomodel.findAndCountAll({
 
-                limit: 10,
-                offset: name==="" ? (page - 1) * 10 : 0,
                 where: { [Op.or]: { videoTitle: { [Op.iLike]: `%${name}%` }, videoId: { [Op.iLike]: `%${name}%` } } },
+                limit: 10,
+                offset: (page - 1) * 10,
                 order: [['createdAt', 'DESC']]
             })
             return NextResponse.json({ status: true, videolist: rows, totalItems: count });
@@ -120,9 +120,9 @@ export async function GET(request) {
 
             const { rows, count } = await videomodel.findAndCountAll({
 
-                limit: 10,
-                offset: name==="" ? (page - 1) * 10 : 0,
                 where: { userId, [Op.or]: { videoTitle: { [Op.iLike]: `%${name}%` }, videoId: { [Op.iLike]: `%${name}%` } } },
+                limit: 10,
+                offset: (page - 1) * 10,
                 order: [['createdAt', 'DESC']]
             })
             return NextResponse.json({ status: true, videolist: rows, totalItems: count });

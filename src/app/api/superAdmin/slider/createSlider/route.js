@@ -144,12 +144,13 @@ export async function GET(request) {
 
         const { rows, count } = await slidermodel.findAndCountAll({
 
-            limit: 10,
-            offset: (page - 1) * 10,
             where: {
 
                 [Op.or]: [{ url: { [Op.iLike]: `%${name}%` } }]
             },
+            limit: 10,
+            offset: (page - 1) * 10,
+
             order: [['sliderSerial', 'ASC']]
 
         })

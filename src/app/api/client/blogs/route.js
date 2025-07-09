@@ -7,7 +7,7 @@ export async function POST(request) {
 
     const { blogUrl } = await request.json();
     const blogmodel = await blogModel();
-   
+
     if (!blogmodel) {
         return NextResponse.json({ status: false, message: "database error occured!" });
     }
@@ -18,7 +18,7 @@ export async function POST(request) {
             where: { blogUrl }
         })
 
-      
+
         return NextResponse.json({ status: true, blogdetail });
 
     } catch (error) {
@@ -109,9 +109,9 @@ export async function GET(request) {
 
         const { rows, count } = await blogmodel.findAndCountAll({
 
+            where: { blogStatus: true, [Op.or]: { blogTitle: { [Op.iLike]: `%${name}%` } } },
             limit: url === '/' ? 3 : 9,
             offset: url === '/' ? (page - 1) * 3 : (page - 1) * 9,
-            where: { [Op.or]: { blogTitle: { [Op.iLike]: `%${name}%` } } },
             order: [['blogSerial', 'ASC']]
         })
 

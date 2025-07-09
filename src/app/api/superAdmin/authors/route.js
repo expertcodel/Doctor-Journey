@@ -173,9 +173,9 @@ export async function GET(request) {
 
         const { rows, count } = await authormodel.findAndCountAll({
 
+            where: { [Op.or]: { authorName: { [Op.iLike]: `%${name}%` }, authorId: { [Op.iLike]: `%${name}%` } } },
             limit: 10,
             offset: (page - 1) * 10,
-            where: { [Op.or]: { authorName: { [Op.iLike]: `%${name}%` }, authorId: { [Op.iLike]: `%${name}%` } } },
             order: [['createdAt', 'DESC']]
         })
 

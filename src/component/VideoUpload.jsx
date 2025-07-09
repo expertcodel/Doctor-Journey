@@ -1,14 +1,32 @@
 "use client"
 
-import axios from 'axios'
+
 import { useState, useRef } from 'react';
 import { UniversalContext } from './context.js';
 import dynamic from 'next/dynamic';
 import AdminFooter from './AdminFooter.jsx'
 const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
 import { useRouter } from 'next/navigation';
-export default function Page({ doctorList ,doctorDetail}) {
+import FabricCropper from './FabricCropper'
+export default function Page({ doctorList, doctorDetail }) {
 
+    const [image, setImage] = useState(null)
+    const [croppedUrl, setCroppedUrl] = useState(null)
+
+    const handleFileChange = (e) => {
+        const file = e.target.files[0]
+        if (file) {
+            const reader = new FileReader()
+            reader.onload = () => setImage(reader.result)
+            reader.readAsDataURL(file)
+        }
+    }
+
+    const handleCrop = (blob) => {
+        const url = URL.createObjectURL(blob);
+        setImageurl(blob);
+        setCroppedUrl(url)
+    }
 
     const { userData } = UniversalContext();
     const router = useRouter();
@@ -46,7 +64,7 @@ export default function Page({ doctorList ,doctorDetail}) {
             doctorName = JSON.parse(e.target.doctor.value).name.trim();
             specialization = JSON.parse(e.target.doctor.value).specialization.trim();
         }
-        else{
+        else {
 
             userId = doctorDetail.userId;
             doctorName = doctorDetail.doctorName;
@@ -54,7 +72,7 @@ export default function Page({ doctorList ,doctorDetail}) {
 
         }
 
-        
+
 
 
         if (videoTitle === "") {
@@ -130,17 +148,7 @@ export default function Page({ doctorList ,doctorDetail}) {
 
     }
 
-    const fileUpload = () => {
-
-
-        const thumbnailImage = document.getElementById('project-thumbnail-img').files[0];
-        const imagePreview = document.getElementById('imagePreview');
-        const imageurl = URL.createObjectURL(thumbnailImage);
-        imagePreview.src = imageurl
-        setImageurl(thumbnailImage);
-
-
-    }
+   
 
     return (
         <div className="main-content">
@@ -190,9 +198,19 @@ export default function Page({ doctorList ,doctorDetail}) {
 
                                         <div className="mb-3">
                                             <label className="form-label" htmlFor="project-thumbnail-img">Thumbnail Image</label>
-                                            <input className="form-control" id="project-thumbnail-img" type="file" name='image' accept="image/*" onChange={fileUpload} style={{ border: formValidation.image === 0 && '1px solid red' }} />
-                                            <div style={{ marginTop: '10px' }}>Choose 300 x 300 Dimension</div>
-                                            {!success && <img width={imageUrl && 100} height={imageUrl && 100} id='imagePreview' alt='' />}
+                                           
+
+                                            <input className="form-control" id="project-thumbnail-img" type="file" name='image' accept="image/*" onChange={handleFileChange} style={{ border: formValidation.image === 0 && '1px solid red' }} />
+
+                                            {image && <FabricCropper imageSrc={image} onCrop={handleCrop} />}
+
+                                            {croppedUrl && (
+                                                <div className="mt-4">
+                                                    <h3 className="text-lg font-medium">Cropped Preview:</h3>
+                                                    <img src={croppedUrl} width={150} height={150} alt="Cropped result" />
+                                                </div>
+                                            )}
+                                          
 
                                         </div>
 
@@ -200,7 +218,7 @@ export default function Page({ doctorList ,doctorDetail}) {
 
 
 
-                                        <div className="mb-3">
+                                        <div className="mb-3" style={{ zIndex: '0' }}>
                                             <label className="form-label">Description</label>
 
 
@@ -239,7 +257,7 @@ export default function Page({ doctorList ,doctorDetail}) {
             </div>
             {/* End Page-content */}
             <AdminFooter />
-            
+
         </div>
     )
 }

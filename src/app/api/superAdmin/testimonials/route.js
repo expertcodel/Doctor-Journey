@@ -26,16 +26,16 @@ export async function POST(request) {
 
         await testimonialmodel.create({
 
-            description, name, designation,image:image&&image
+            description, name, designation, image: image && image
         })
 
-       return NextResponse.json({ status: true, message: "testimonial created successfully!" });
+        return NextResponse.json({ status: true, message: "testimonial created successfully!" });
 
-} catch (error) {
+    } catch (error) {
 
-    const message = extractErrorMessage(error);
-    return NextResponse.json({ status: false, message });
-}
+        const message = extractErrorMessage(error);
+        return NextResponse.json({ status: false, message });
+    }
 }
 
 export async function GET(request) {
@@ -54,12 +54,12 @@ export async function GET(request) {
 
         const { rows, count } = await testimonialmodel.findAndCountAll({
 
-            limit: 10,
-            offset: (page - 1) * 10,
             where: {
 
                 [Op.or]: [{ name: { [Op.iLike]: `%${name}%` } }]
             },
+            limit: 10,
+            offset: (page - 1) * 10,
             order: [['createdAt', 'DESC']]
 
         })
@@ -115,10 +115,10 @@ export async function PUT(request) {
         if (file !== 'null') {
             image = await fileUploader(file);
         }
-       
+
         await testimonialmodel.update({
 
-            description,name,designation,image: image && image
+            description, name, designation, image: image && image
         }, { where: { testimonialId } })
 
         return NextResponse.json({ status: true, message: "testimonial updated successfully!" });

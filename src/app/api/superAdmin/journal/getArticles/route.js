@@ -12,9 +12,11 @@ export async function GET(request) {
     try {
 
         const { rows, count } = await articlemodel.findAndCountAll({
+
+            where: { [Op.or]: { articleTitle: { [Op.iLike]: `%${name}%` }, articleId: { [Op.iLike]: `%${name}%` } }, articleStatus: 'approved' },
             limit: 10,
-            attributes:['articleId','articleStatus','articleTitle','publishedDate'],
-            where: { [Op.or]: { articleTitle: { [Op.iLike]: `%${name}%` }, articleId: { [Op.iLike]: `%${name}%` } }, articleStatus: 'approved' }
+            attributes: ['articleId', 'articleStatus', 'articleTitle', 'publishedDate'],
+
         });
 
         return NextResponse.json({ status: true, response: rows });

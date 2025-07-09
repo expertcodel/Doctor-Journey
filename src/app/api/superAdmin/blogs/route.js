@@ -50,7 +50,7 @@ export async function PUT(request) {
 
     const input = await request.formData();
     const file = input.get('file');
-    const { blogId,blogTitle, blogDescription, blogContent, metaDescriptions, metaKeywords, metaTitle, blogSerial, blogUrl,blogStatus } = JSON.parse(input.get('data'));
+    const { blogId, blogTitle, blogDescription, blogContent, metaDescriptions, metaKeywords, metaTitle, blogSerial, blogUrl, blogStatus } = JSON.parse(input.get('data'));
     const blogmodel = await blogModel();
 
     if (!blogmodel) {
@@ -63,10 +63,10 @@ export async function PUT(request) {
         if (file !== 'null') {
             blogImage = await fileUploader(file);
         }
-       
+
         await blogmodel.update({
-            blogTitle,blogImage:blogImage && blogImage, blogDescription, blogContent, metaDescriptions, metaKeywords, metaTitle, blogSerial, blogUrl,blogStatus
-        },{where:{blogId}})
+            blogTitle, blogImage: blogImage && blogImage, blogDescription, blogContent, metaDescriptions, metaKeywords, metaTitle, blogSerial, blogUrl, blogStatus
+        }, { where: { blogId } })
 
         return NextResponse.json({ status: true, message: "blog updated successfully!" });
 
@@ -83,8 +83,8 @@ export async function PUT(request) {
 
 
 export async function DELETE(request) {
-    
-    const {blogId} = await request.json();
+
+    const { blogId } = await request.json();
     const blogmodel = await blogModel();
     if (!blogmodel) {
         return NextResponse.json({ status: false, message: "database error occured" });
@@ -92,9 +92,9 @@ export async function DELETE(request) {
 
     try {
 
-       
+
         await blogmodel.destroy({
-           where:{blogId}
+            where: { blogId }
         })
 
         return NextResponse.json({ status: true, message: "blog deleted successfully!" });
@@ -108,11 +108,11 @@ export async function DELETE(request) {
 }
 
 export async function GET(request) {
-    
+
     const input = new URL(request.url).searchParams;
-    const name= input.get('name');
+    const name = input.get('name');
     //const id= input.get('id');
-    const page= input.get('page');
+    const page = input.get('page');
     const blogmodel = await blogModel();
     if (!blogmodel) {
         return NextResponse.json({ status: false, message: "database error occured" });
@@ -120,16 +120,17 @@ export async function GET(request) {
 
     try {
 
-       
-        const {rows,count}=await blogmodel.findAndCountAll({
-        
-           limit:10,
-           offset:(page-1)*10,
-           where:{[Op.or]:{blogTitle:{[Op.iLike]:`%${name}%`},blogId:{[Op.iLike]:`%${name}%`}}},
-           order:[['createdAt','DESC']]
+
+        const { rows, count } = await blogmodel.findAndCountAll({
+
+            where: { [Op.or]: { blogTitle: { [Op.iLike]: `%${name}%` }, blogId: { [Op.iLike]: `%${name}%` } } },
+            limit: 10,
+            offset: (page - 1) * 10,
+
+            order: [['createdAt', 'DESC']]
         })
 
-        return NextResponse.json({status:true,bloglist:rows,totalItems:count});
+        return NextResponse.json({ status: true, bloglist: rows, totalItems: count });
 
 
     } catch (error) {

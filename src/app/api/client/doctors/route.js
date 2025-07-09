@@ -62,9 +62,9 @@ export async function GET(request) {
 
         const { rows, count } = await doctormodel.findAndCountAll({
 
+            where: { status: true, [Op.or]: { doctorName: { [Op.iLike]: `%${name}%` }, doctorId: { [Op.iLike]: `%${name}%` } } },
             limit: 10,
             offset: (page - 1) * 10,
-            where: { [Op.or]: { doctorName: { [Op.iLike]: `%${name}%` }, doctorId: { [Op.iLike]: `%${name}%` } } },
             order: [['createdAt', 'DESC']],
             attributes: ['shortDescription', 'profileImage', 'doctorId', 'doctorName', 'specialization', 'zip']
         })

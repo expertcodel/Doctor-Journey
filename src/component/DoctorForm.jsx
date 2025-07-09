@@ -9,6 +9,7 @@ import { UniversalContext } from './context';
 import { usePathname } from 'next/navigation';
 import {country} from '../utils/country.js'
 import { useAuth } from '../context/AuthContext';
+import FabricCropper from './FabricCropper'
 export default function DoctorForm() {
 
     const path = usePathname();

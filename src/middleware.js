@@ -40,7 +40,8 @@ export async function middleware(request) {
       return NextResponse.redirect(new URL('/user-dashboard', request.url));
     }
 
-
+   
+    
     response.cookies.set('userData', JSON.stringify(verifiedtoken.payload))
     //  console.log('path',pathname);
     // for (let i = 0; i < verifiedtoken.payload.length; i++) {

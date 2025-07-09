@@ -17,13 +17,14 @@ export async function GET(request) {
 
         const { rows, count } = await journalmodel.findAndCountAll({
 
+            where: { journalStatus: 'published', [Op.or]: { journalsId: { [Op.iLike]: `%${name}%` }, journalsUrl: { [Op.iLike]: `%${name}%` } } },
             limit: 9,
             offset: (page - 1) * 9,
-            where: { journalStatus:'published',[Op.or]: { journalsId: { [Op.iLike]: `%${name}%` }, journalsUrl: { [Op.iLike]: `%${name}%` } } },
+
             order: [['createdAt', 'DESC']]
         })
 
-       
+
 
 
         return NextResponse.json({ status: true, journallist: rows, totalItems: count });

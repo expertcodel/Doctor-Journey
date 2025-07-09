@@ -17,7 +17,7 @@ export async function POST(request) {
 
     const { publisherName, specialization, qualification, email, number, shortDescription, address, location, experience, city, country, zip, branchAddress, branchName, bankName, ifsc, accountNumber, license, identityName, document, gstNumber, accountType, accountName, userId } = JSON.parse(input.get('data'));
     const publishermodel = await publisherModel();
-      const usermodel = await UserModel();
+    const usermodel = await UserModel();
     const connection = await connectTodb();
 
     if (!publishermodel) {
@@ -62,7 +62,7 @@ export async function POST(request) {
 
         const isValiduser = await usermodel.findOne({ where: { userId } });
         const token = jwt.sign({ userData: isValiduser }, process.env.AUTHENTICATION_KEY, { expiresIn: '1h' })
-        await cookies().set('token',token,{httpOnly: true, maxAge: 3600, path: '/'});
+        await cookies().set('token', token, { httpOnly: true, maxAge: 3600, path: '/' });
         return NextResponse.json({ status: true, message: "publisher created successfully!" });
 
 
@@ -171,9 +171,10 @@ export async function GET(request) {
 
         const { rows, count } = await publishermodel.findAndCountAll({
 
+            where: { [Op.or]: { publisherName: { [Op.iLike]: `%${name}%` }, publisherId: { [Op.iLike]: `%${name}%` } } },
             limit: 10,
             offset: (page - 1) * 10,
-            where: { [Op.or]: { publisherName: { [Op.iLike]: `%${name}%` }, publisherId: { [Op.iLike]: `%${name}%` } } },
+
             order: [['createdAt', 'DESC']]
         })
 

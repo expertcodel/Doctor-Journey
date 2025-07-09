@@ -18,7 +18,7 @@ export async function POST(request) {
     const { doctorName, specialization, qualification, email, number, shortDescription, address, location, experience, city, country, zip, branchAddress, branchName, bankName, ifsc, accountNumber, license, identityName, document, gstNumber, accountType, accountName, userId } = JSON.parse(input.get('data'));
     const doctormodel = await doctorModel();
     const connection = await connectTodb();
-     const usermodel = await UserModel();
+    const usermodel = await UserModel();
     console.log(userId, 'userid');
     if (!doctormodel) {
         return NextResponse.json({ status: false, message: "database error occured" });
@@ -173,9 +173,9 @@ export async function GET(request) {
 
         const { rows, count } = await doctormodel.findAndCountAll({
 
+            where: { [Op.or]: { doctorName: { [Op.iLike]: `%${name}%` }, doctorId: { [Op.iLike]: `%${name}%` } } },
             limit: 10,
             offset: (page - 1) * 10,
-            where: { [Op.or]: { doctorName: { [Op.iLike]: `%${name}%` }, doctorId: { [Op.iLike]: `%${name}%` } } },
             order: [['createdAt', 'DESC']]
         })
 
