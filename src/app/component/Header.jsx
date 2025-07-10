@@ -1,7 +1,7 @@
 "use client"
 import { useAuth } from "../../context/AuthContext"
 import { faFacebook, faGooglePlus, faLinkedin, faTwitter } from "@fortawesome/free-brands-svg-icons";
-import { faAnglesDown, faArrowAltCircleDown, faChevronDown, faClipboardCheck, faClipboardList, faHome, faPowerOff, faSignIn, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faAnglesDown, faArrowAltCircleDown, faChevronDown, faClipboardCheck, faClipboardList, faHome, faList, faPowerOff, faSignIn, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import axios from 'axios'
@@ -229,6 +229,61 @@ export default function Header() {
                                     >
                                         Contact Us
                                     </Link>
+                                </li>
+                                <li className="dropdown dashboardDropdown">
+                                    <button className="btn btn-warning dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <FontAwesomeIcon icon={faList} />
+                                    </button>
+                                    <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+                                        <li>
+                                            <a className="dropdown-item" href="#">
+                                                <figure>
+                                                    <Image
+                                                        src="/images/icons/doctor.png"
+                                                        className=""
+                                                        alt="doctor" width={40} height={40}
+                                                    />
+                                                </figure>
+                                                Doctor
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a className="dropdown-item" href="#">
+                                                <figure>
+                                                    <Image
+                                                        src="/images/icons/author.png"
+                                                        className=""
+                                                        alt="Author" width={40} height={40}
+                                                    />
+                                                </figure>
+                                                Author
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a className="dropdown-item" href="#">
+                                                <figure>
+                                                    <Image
+                                                        src="/images/icons/publisher.png"
+                                                        className=""
+                                                        alt="Publisher" width={40} height={40}
+                                                    />
+                                                </figure>
+                                                Publisher
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a className="dropdown-item" href="#">
+                                                <figure>
+                                                    <Image
+                                                        src="/images/icons/organisation.png"
+                                                        className=""
+                                                        alt="Organisation" width={40} height={40}
+                                                    />
+                                                </figure>
+                                                Organisation
+                                            </a>
+                                        </li>
+                                    </ul>
                                 </li>
                             </ul>
 

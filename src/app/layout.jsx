@@ -4,6 +4,7 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import 'animate.css';
+import 'cropperjs/dist/cropper.css';
 import "./custom.scss";
 //  import "../../public/css/color10.css";
 import { headers } from 'next/headers'
@@ -41,7 +42,7 @@ export default async function RootLayout({ children }) {
   return (
 
     <>
-      {path && ['/about-us', '/articles', '/contact-us', '/doctor-profile', '/doctors', '/forgot-password', '/journals', '/journals-activity', '/login', '/privacy-policy', '/register', '/terms-condition', '/user-dashboard', '/verify-otp'].some(prefix => path.startsWith(prefix)) || path === '/' ?
+      {path && ['/about-us', '/articles', '/contact-us', '/doctor-profile', '/doctors', '/events', '/forgot-password', '/journals', '/journals-activity', '/login', '/privacy-policy', '/register', '/terms-condition', '/user-dashboard', '/verify-otp'].some(prefix => path.startsWith(prefix)) || path === '/' ?
 
         <html lang="en">
           <head>

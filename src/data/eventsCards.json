@@ -1,0 +1,86 @@
+[
+    {
+        "eventId": "1",
+        "eventTitle": "Medical Event, USA",
+        "eventTitle2": "A breast tumor could be removed by a surgical oncologist",
+        "description": [
+            "Ophthalmologist; Orthopedist; Otolaryngologist; Osteopath; Pathologist; Pediatrician; Physician executive; Plastic surgeon; Podiatrist; Psychiatrist",
+            "An oncologist specialises in diagnosing and treating cancer. Anaesthesiologist: A medical professional who administers anaesthesia"
+        ],
+        "author": "Dr. Peter Schwartzstein",
+        "views": "18k Views",
+        "eventDate": "July 10 2025",
+        "thumbnailImage": "/images/events/event-1.webp",
+        "galleryImage": "/images/events/event-gallery-1.webp"
+    },
+    {
+        "eventId": "2",
+        "eventTitle": "Canadian medical Events",
+        "eventTitle2": "a dermatologist—finds, prevents, and treats diseases of the skin",
+        "description": [
+            "Another physician will perform the biopsy (e.g., dermatologist or surgeon) and then give it to the pathologist for review. Radiology — Radiologists",
+            "Allergist/immunologist; Anesthesiologist; Cardiologist; Dermatologist; Endocrinologist; Family physician; Gastroenterologist; Geneticist; Hematologist"
+        ],
+        "author": "Dr. Alice Kim",
+        "views": "12k Views",
+        "eventDate": "July 10 2025",
+        "thumbnailImage": "/images/events/event-2.webp",
+        "galleryImage": "/images/events/event-gallery-2.webp"
+    },
+    {
+        "eventId": "3",
+        "eventTitle": "Medical Event, Canada",
+        "eventTitle2": "a hepatologist is a gastroenterologist who specializes in diseases of the liver",
+        "description": [
+            "a hepatologist is a gastroenterologist who specializes in diseases of the liver. Gastroenterologists can also perform invasive procedures",
+            "When tummy troubles escalate to something more, it may be time to involve a gastroenterologist, sometimes called a gastrologist."
+        ],
+        "author": "Dr. Alice Kim",
+        "views": "12k Views",
+        "eventDate": "July 10 2025",
+        "thumbnailImage": "/images/events/event-3.webp",
+        "galleryImage": "/images/events/event-gallery-3.webp"
+    },
+    {
+        "eventId": "4",
+        "eventTitle": "Medical Event, USA",
+        "eventTitle2": "A neurologist treats conditions of the nerves, spine, and brain",
+        "description": [
+            "neurologist. Encephalitis, meningitis, and brain abscesses are examples. Cardiothoracic Surgeon. A cardiothoracic surgeon performs on the human body's chest",
+            "A neurologist specialises in diagnosing and treating conditions of the nervous system, including the brain, spinal cord, and nerves."
+        ],
+        "author": "Dr. Alice Kim",
+        "views": "12k Views",
+        "eventDate": "July 10 2025",
+        "thumbnailImage": "/images/events/event-2.webp",
+        "galleryImage": "/images/events/event-gallery-1.webp"
+    },
+    {
+        "eventId": "5",
+        "eventTitle": "Canadian medical Events",
+        "eventTitle2": "A breast tumor could be removed by a surgical oncologist",
+        "description": [
+            "Ophthalmologist; Orthopedist; Otolaryngologist; Osteopath; Pathologist; Pediatrician; Physician executive; Plastic surgeon; Podiatrist; Psychiatrist",
+            "An oncologist specialises in diagnosing and treating cancer. Anaesthesiologist: A medical professional who administers anaesthesia"
+        ],
+        "author": "Dr. Alice Kim",
+        "views": "12k Views",
+        "eventDate": "July 10 2025",
+        "thumbnailImage": "/images/events/event-1.webp",
+        "galleryImage": "/images/events/event-gallery-3.webp"
+    },
+    {
+        "eventId": "6",
+        "eventTitle": "Medical Event, Canada",
+        "eventTitle2": "a dermatologist—finds, prevents, and treats diseases of the skin",
+        "description": [
+            "Another physician will perform the biopsy (e.g., dermatologist or surgeon) and then give it to the pathologist for review. Radiology — Radiologists",
+            "Allergist/immunologist; Anesthesiologist; Cardiologist; Dermatologist; Endocrinologist; Family physician; Gastroenterologist; Geneticist; Hematologist"
+        ],
+        "author": "Dr. Alice Kim",
+        "views": "12k Views",
+        "eventDate": "July 10 2025",
+        "thumbnailImage": "/images/events/event-2.webp",
+        "galleryImage": "/images/events/event-gallery-2.webp"
+    }
+]
