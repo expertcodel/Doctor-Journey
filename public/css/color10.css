@@ -2099,6 +2099,15 @@ body {
     font-size: 16px; font-weight: 500; color: var(--bs-secondary-color); line-height: 28px;
 }
 .aboutMain .aboutBody h3{font-size: 48px; font-weight: 500; color: var(--bs-body-color);}
+.aboutMain .aboutBody h4{font-size: 20px; font-weight: 600; color: var(--primary-09); text-transform: capitalize;}
+.aboutMain .aboutBody h5{
+    font-size: 24px; font-weight: 600; color: var(--bs-black);
+}
+.aboutMain .aboutBody h5 span{
+    font-size: 16px; font-weight: 700; color: var(--secondary-color); margin-top: 16px; line-height: 1.3; display: block;
+}
+.aboutMain .aboutBody .btn{font-size: 16px;}
+.aboutMain .upcomingEventsBox .aboutBody p{font-size: 14px; color: var(--bs-dark-text-emphasis);}
 
 /*** common css *****/
 .form-control:focus{box-shadow: none;}
@@ -2775,6 +2784,94 @@ body {
 .eventGallery-slider .swiper-wrapper .swiper-slide.swiper-slide-active{z-index: 2;}
 .eventGallery-slider .swiper-wrapper .swiper-slide.swiper-slide-active img{transform: scale(1.2);}
 
+/********** upcomingEventsBox ********/
+.upcomingEventsBox{
+    padding: 16px 24px; border: 1px solid var(--bs-border-color); border-radius: 8px;
+}
+.upcomingEventsBox .eventDetailImg{
+    width: 100%; height: 100%; padding: 0 80px 0 0;
+}
+.upcomingEventsBox .eventDetailImg figure{position: relative; width: 100%; height: 100%;}
+
+/******* customInputWrapper *********/
+.customInputWrapper {
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.05); width: 100%;
+}
+.customInputWrapper .input-group .input-group-text{position: relative; padding-left: 4px; width: 30px;}
+.customInputWrapper .input-group .input-group-text::after{
+    content: ""; position: absolute; top: 0; right: 0; width: 1px; height: 100%; background: var(--bs-border-color);
+    transition: ease all .5s; -webkit-transition: ease all .5s; opacity: 1; z-index: 9;
+}
+
+/********** CountDownBoxMain *********/
+.CountDownBoxMain{position: absolute; top: 86px; right: 30px; z-index: 9;}
+.CountDownBoxMain .countdownBox {
+  background-color: var(--secondary-color); width: 120px; padding: 32px 16px;
+}
+.CountDownBoxMain .countdownBox .dotSeparator {
+  border: none; border-top: 4px dotted var(--bs-body-bg); width: 100%; margin: 8px auto 0;
+}
+
+/******* participateSidebar ********/
+.participateSidebar{
+    position: relative; display: flex; flex-direction: column; align-items: center; height: 100%;
+    background: var(--lt-color-gray-300); padding: 80px 24px; text-align: center;
+    transition: ease all .5s; -webkit-transition: ease all .5s;
+}
+.participateSidebar.stickSideBar{
+    position: fixed; top: 0; width: 376px;
+}
+.participateSidebar > *{margin: 0; transition: ease all .5s; -webkit-transition: ease all .5s;}
+.participateSidebar > *:not(:last-child){margin-bottom: 32px;}
+.participateSidebar figure{
+    width: 150px; height: 150px; position: relative; border-radius: 100%; background: var(--bs-body-bg); padding: 24px;
+    --circle-angle: 0deg;
+}
+.participateSidebar figure::before,
+.participateSidebar figure::after {
+  content: ""; position: absolute; width: 20px; height: 20px; border-radius: 100%;
+  background: linear-gradient(to right, var(--primary-09), var(--secondary-06) 100%); transform: rotate(var(--circle-angle));
+  transition: transform 0.2s linear;
+}
+.participateSidebar figure::before{
+    top: 0; left: 50%; transform: translate(-50%, 0) rotate(var(--circle-angle)); transform-origin: center 80px;
+}
+.participateSidebar figure::after{
+    bottom: 0; right: 50%; transform: translate(50%, 0) rotate(var(--circle-angle)); transform-origin: center -62px;
+}
+.participateSidebar h4{
+    font-size: 32px; color: var(--bs-black); position: relative; font-weight: 600;
+}
+.participateSidebar h4 span{font-size: 16px; color: var(--lt-color-gray-600); display: block; margin-bottom: 16px; font-weight: 500;}
+.participateSidebar p{font-size: 16px; color: var(--bs-dark-text-emphasis);}
+.participateSidebar .btn{font-size: 20px;}
+
+/**** logoSecMain *****/
+.logoSecMain .row div[class*="col-"] > div{width: 100%;}
+.logoSecMain .row div[class*="col-"] > div .card-body{
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.logoSecMain .row div[class*="col-"] > div .card-body > *{margin: 0;}
+.logoSecMain .row div[class*="col-"] > div .card-body > *:not(:last-child){margin-bottom: 16px;}
+.logoSecMain .row div[class*="col-"] > div .card-body > div{
+    position: relative; width: 280px; height: 280px; border-radius: 12px; padding: 16px;
+}
+.logoSecMain .row div[class*="col-"] > div .card-body > div figure{
+    width: 100%; height: 100%; border-radius: inherit; overflow: hidden; margin: 0; position: relative;
+}
+.logoSecMain .row div[class*="col-"] > div .card-body .card-title{
+    font-size: 16px; color: var(--bs-black); font-weight: 500; text-transform: capitalize;
+}
+
+@media only screen and (max-width: 1280px) {
+    .upcomingEventsBox .eventDetailImg{margin-bottom: 16px;}
+
+    /******* logoSecMain ****/
+    .logoSecMain .row div[class*="col-"] > div .card-body{padding: 16px 8px;}
+    .logoSecMain .row div[class*="col-"] > div .card-body > div{width: 200px; height: 200px;}
+    .logoSecMain .row div[class*="col-"] > div .card-body .card-title{font-size: 14px;}
+}
+
 @media only screen and (max-width: 991px) {
     /******** mobileToggleHeading ********/
     .horizontalMenu .horizontalMenu-list li.mobileToggleHeading{
@@ -2782,6 +2879,14 @@ body {
     }
     .horizontalMenu .horizontalMenu-list li.mobileToggleHeading > *{margin: 0; border: none;}
     .horizontalMenu .horizontalMenu-list li.mobileToggleHeading > *:not(:last-child){margin-right: 16px;}
+
+    /******** participateSidebar ********/
+    .participateSidebar.stickSideBar{
+        position: relative; top: 0; width: 100%;
+    }
+
+    /****** metterAnimationBox *******/
+    .metterAnimationBox div[class*="col-"] .counter-status.sptb{padding-bottom: 1rem; padding-top: 1rem;}
 }
 
 @media (max-width: 767px) {
@@ -2854,6 +2959,13 @@ body {
         border-color: var(--secondary-color); background: var(--secondary-color); color: var(--bs-body-bg);
     }
     .userViewCard .card .nav .nav-item .nav-link.active::after{opacity: 1;}
+
+    .upcomingEventsBox{padding: 16px;}
+    .upcomingEventsBox .eventDetailImg{padding: 0 48px 0 0; margin: 0;}
+
+    .CountDownBoxMain{top: 16px; right: 8px;}
+    .CountDownBoxMain .countdownBox{width: 80px;}
+    .CountDownBoxMain .countdownBox .countdown-item h2{font-size: 24px;}
 }
 
 @media (max-width: 568px) {

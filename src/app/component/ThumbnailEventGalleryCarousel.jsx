@@ -22,7 +22,7 @@ export default function ThumbnailEventGalleryCarousel() {
       slidesPerView={3}
       centeredSlides={true}
       breakpoints={{
-        320: { slidesPerView: 1, spaceBetween: 0 },
+        320: { slidesPerView: 1.5, spaceBetween: 0 },
         768: { slidesPerView: 3, spaceBetween: 0 },
         1280: { slidesPerView: 3, spaceBetween: 0 },
       }}

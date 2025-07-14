@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "title": "Do You Want to Find a Job?",
+    "img": "/images/svgs/jobs/find.svg"
+  },
+  {
+    "id": 2,
+    "title": "Are You Looking For A Candidate?",
+    "img": "/images/svgs/jobs/work.svg"
+  },
+  {
+    "id": 3,
+    "title": "Discover Remote Opportunities",
+    "img": "/images/svgs/jobs/work.svg"
+  },
+  {
+    "id": 4,
+    "title": "Post Your Vacancy Today!",
+    "img": "/images/svgs/jobs/find.svg"
+  },
+  {
+    "id": 5,
+    "title": "Discover Remote Opportunities",
+    "img": "/images/svgs/jobs/work.svg"
+  },
+  {
+    "id": 6,
+    "title": "Post Your Vacancy Today!",
+    "img": "/images/svgs/jobs/find.svg"
+  }
+]

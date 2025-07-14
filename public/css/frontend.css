@@ -15737,14 +15737,15 @@ a.chip:hover {
     display: inline-flex;
     width: 4rem;
     height: 4rem;
-    padding: 1.3rem 1.4rem;
+    padding: .8rem;
     border-radius: 50%;
-    text-align: center;
+    text-align: center; justify-content: center; align-items: center;
     background: rgba(0, 0, 0, 0.15);
 }
 
-.counter-icon i {
-    font-size: 1.2rem;
+.counter-icon i,
+.counter-icon svg {
+    font-size: 1.5rem;
 }
 
 .get-contact a {

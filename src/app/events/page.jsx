@@ -7,8 +7,11 @@ import ThumbnailSearchCarousel from "../component/ThumbnailSearchCarousel";
 import ThumbnailEventsCarousel from "../component/ThumbnailEventsCarousel";
 import eventsCards from "../../data/eventsCards.json";
 import ThumbnailEventGalleryCarousel from "../component/ThumbnailEventGalleryCarousel";
+import AnimatedCounter from "../component/AnimatedCounter";
+import ParticipateOrganisation from "../component/ParticipateOrganisation";
+import UpcomingEventsCarousel from "../component/UpcomingEventsCarousel";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarAlt, faEye, faFaceSmile, faGlobe, faHeadphones, faMapMarkerAlt, faUserCheck } from '@fortawesome/free-solid-svg-icons';
 export default function Events() {
     return (
         <section>
@@ -88,15 +91,21 @@ export default function Events() {
         
                     <div className="row g-md-4 g-3">
                         <div className='col-12'>
-                            <div className="aboutJoinBox">
-                                <div className="row g-md-4 g-3">
-                                    <div className='col-lg-5 col-md-6 col-12'>
-                                        <figure>
-                                            <Image src="/images/events/event-gallery-1.webp" fill alt="img" className="cover-image" unoptimized />
-                                        </figure>
+                            <div className="upcomingEventsBox">
+                                {/* <div className="row g-md-4 g-3">
+                                    <div className='col-xl-5 offset-xl-0 col-lg-8 offset-lg-2 col-12'>
+                                        <div className='eventDetailImg'>
+                                            <figure>
+                                                <Image src="/images/events/dummy-event-detail.jpg" width={1808} height={2315} alt="img" className="img-fluid" />
+                                            </figure>
+
+                                            <div className='CountDownBoxMain'>
+                                                <CountdownTimer />
+                                            </div>
+                                        </div>
                                     </div>
 
-                                    <div className='col-lg-7 col-md-6 col-12'>
+                                    <div className='col-xl-7 col-lg-12 col-12'>
                                         <div className='aboutBody'>
                                             <h4>
                                                 Upcoming Events
@@ -110,6 +119,22 @@ export default function Events() {
                                             <p>
                                                 International Association of Scientists and Researchers (IASR) in collaboration with the University of Philippines Manila, University of Baguio, Holy Angel University, Tarlac State University brings the 17th IASR International Conference on Forensic Science and the 7th International Forensic Science Conference to be held on 2nd–5th December 2026 in New Delhi, India. The International Conference on Forensic Science serves as a premier platform for experts, researchers, and practitioners in the field to exchange knowledge, explore innovations, and discuss advancements in forensic methodologies.
                                             </p>
+                                            <div className="customInputWrapper p-3 rounded-4 border border-secondary-subtle bg-white">
+                                                
+                                                <div className="input-group mb-3">
+                                                    <span className="input-group-text bg-white border-0">
+                                                        <FontAwesomeIcon icon={faMapMarkerAlt} />
+                                                    </span>
+                                                    <input type="text" className="form-control border-0" defaultValue="Vallabhbhai Patel Chest Institute. New Delhi" disabled readOnly="" />
+                                                </div>
+                                                
+                                                <div className="input-group">
+                                                    <span className="input-group-text bg-white border-0">
+                                                        <FontAwesomeIcon icon={faCalendarAlt} />
+                                                    </span>
+                                                    <input type="text" className="form-control border-0" defaultValue="02 December, 2025" disabled readOnly="" />
+                                                </div>
+                                            </div>
 
                                             <div className='d-flex'>
                                                 <Link className="btn btn-primary me-2" href="/">
@@ -121,7 +146,9 @@ export default function Events() {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> */}
+
+                                <UpcomingEventsCarousel />
                             </div>
                         </div>
                     </div>
@@ -142,7 +169,7 @@ export default function Events() {
         
                     <div className="row g-md-4 g-3">
                         {eventsCards.map((card) => (
-                            <div className="col-md-4 col-12 drCard" key={card.eventId}>
+                            <div className="col-xl-4 col-lg-6 col-12 drCard" key={card.eventId}>
                                 <div className="card mb-0">
                                     <div className="item7-card-img">
                                         <Link href={`/events/${card.eventId}`} />
@@ -182,10 +209,101 @@ export default function Events() {
                 </div>
             </section>
 
-            {/* organization Events */}
+            <section className="sptb bg-white">
+                <div className="container">
+                    <ParticipateOrganisation />
+                </div>
+            </section>
+
+            {/* Events Gallery */}
             <section className="sectionSpace sptb bg-white">
                 <ThumbnailEventGalleryCarousel />
             </section>
+
+            {/*animation metter*/}
+            <section className="sptb bg-white">
+                <div className="container">
+                    <div className="section-title center-block text-center">
+                        <h1>JOURNEY AT A GLANCE</h1>
+                        <p>
+                            Enthusiasts dedicated to building remarkable program!
+                        </p>
+                    </div>
+
+                    <div className="row text-center no-gutters metterAnimationBox">
+                        <div className="col-lg-3 col-md-6 col-6">
+                            <div className="counter-status md-mb-0 sptb mt-5 mt-md-0">
+                                <div className="counter-icon">
+                                    <FontAwesomeIcon icon={faUserCheck} />
+                                </div>
+                                <h5>EVENTS COMPLETED</h5>
+                                <AnimatedCounter target={2569} />
+                            </div>
+                        </div>
+                        <div className="col-lg-3 col-md-6 col-6">
+                            <div className="counter-status status-1 md-mb-0 sptb">
+                                <div className="counter-icon text-warning">
+                                    <FontAwesomeIcon icon={faFaceSmile} />
+                                </div>
+                                <h5>HAPPY PARTICIPANTS</h5>
+                                <AnimatedCounter target={1765} />
+                            </div>
+                        </div>
+                        <div className="col-lg-3 col-md-6 col-6">
+                            <div className="counter-status status md-mb-0 sptb">
+                                <div className="counter-icon text-primary">
+                                    <FontAwesomeIcon icon={faGlobe} />
+                                </div>
+                                <h5>COUNTRIES REACH</h5>
+                                <AnimatedCounter target={846} />
+                            </div>
+                        </div>
+                        <div className="col-lg-3 col-md-6 col-6">
+                            <div className="counter-status status sptb">
+                                <div className="counter-icon text-success">
+                                    <FontAwesomeIcon icon={faHeadphones} />
+                                </div>
+                                <h5>EMINENT SPEAKERS</h5>
+                                <AnimatedCounter target={7253} />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            {/*animation metter*/}
+
+            {/*post section*/}
+            <section>
+                <div className="cover-image sptb bg-background-color" data-image-src="../assets/images/banners/banner4.jpg">
+                    <div className="content-text mb-0">
+                        <div className="content-text mb-0">
+                            <div className="container">
+                                <div className="text-center text-white section-title">
+                                    <h1 className="mb-2">Verify Certificate</h1>
+                                    <p className="fs-16">
+                                        Do you have a valid certificate?
+                                    </p>
+                                    <div className="row">
+                                        <div className="col-lg-8 mx-auto d-block">
+                                            <div className="mt-5">
+                                                <div className="input-group sub-input mt-1">
+                                                    <input type="text" className="form-control input-lg " placeholder="Enter your certificate number" />
+                                                    <div className="">
+                                                        <button type="button" className="btn btn-secondary  btn-lg br-tr-3  br-br-3">
+                                                            Validate
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            {/*/post section*/}
         </section>
     )
 }
