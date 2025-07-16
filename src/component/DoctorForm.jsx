@@ -12,6 +12,16 @@ import { useAuth } from '../context/AuthContext';
 import FabricCropper from './FabricCropper'
 export default function DoctorForm() {
 
+    const [image, setImage] = useState(null)
+    const [croppedUrl, setCroppedUrl] = useState(null)
+
+    
+    const handleCrop = (blob) => {
+        const url = URL.createObjectURL(blob);
+        setImageurl(blob);
+        setCroppedUrl(url)
+    }
+
     const path = usePathname();
     // const { userData } = UniversalContext();
      const {user}=useAuth();
@@ -281,9 +291,12 @@ export default function DoctorForm() {
         const { name, value } = e.target;
         let tabData = { ...tabsdata };
         if (name === 'image') {
-            const imageurl = URL.createObjectURL(profileImg.current.files[0]);
-            setImageurl(profileImg.current.files[0]);
-            tabData[name] = imageurl;
+           const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader()
+                reader.onload = () => setImage(reader.result)
+                reader.readAsDataURL(file)
+            }
 
         }
         else {
@@ -975,7 +988,14 @@ export default function DoctorForm() {
                                             {message.image !== "" && <span style={{ color: 'red' }}>{message.image}</span>}
                                         </div>
                                         <div className="mb-3">
-                                            <Image id='imagePreview' className='showBrowseImg' width={tabsdata.image && 100} height={tabsdata.image && 100} ref={previewImg} alt='' src={tabsdata.image} />
+                                            {image && <FabricCropper imageSrc={image} onCrop={handleCrop} />}
+
+                                            {croppedUrl && (
+                                                <div className="mt-4">
+                                                    <h3 className="text-lg font-medium">Cropped Preview:</h3>
+                                                    <img src={croppedUrl} width={150} height={150} alt="Cropped result" />
+                                                </div>
+                                            )}
                                         </div>
 
                                     </div>

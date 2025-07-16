@@ -7,9 +7,27 @@ import Image from 'next/image';
 import { useState,useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { UniversalContext } from './context';
-
+import FabricCropper from './FabricCropper'
 export default function Page({blogdata, Metadescriptions,Categorylist,Blogstatus,Blogstatus1,blogDescription}) {
 
+
+    const [image, setImage] = useState(blogdata.blogImage)
+    const [croppedUrl, setCroppedUrl] = useState(null)
+
+    const handleFileChange = (e) => {
+        const file = e.target.files[0]
+        if (file) {
+            const reader = new FileReader()
+            reader.onload = () => setImage(reader.result)
+            reader.readAsDataURL(file)
+        }
+    }
+
+    const handleCrop = (blob) => {
+        const url = URL.createObjectURL(blob);
+        setImageurl(blob);
+        setCroppedUrl(url)
+    }
 
     const router=useRouter();
     const {userData}=UniversalContext();
@@ -29,43 +47,7 @@ export default function Page({blogdata, Metadescriptions,Categorylist,Blogstatus
     const [blogStatus1,setBlogstatus1]=useState(Blogstatus1);
     const [formValidation, setFormvalidation] = useState({ blogTitle: -1, blogContent: -1, blogDescription: -1, blogImage: -1,metaDescriptions:-1,metaKeywords:-1,metaTitle:-1,blogSerial:-1,blogCategory:-1 })
 
-    // useEffect(() => {
-
-    //     const getBlog = async () => {
-
-    //         const option = {
-    //             method: "POST",
-    //             url: `${process.env.NEXT_PUBLIC_BASE_URL}/singleBlog`,
-    //             data: {
-    //                 blogId: slug
-    //             },
-    //             headers: {
-    //                 'api_key': process.env.NEXT_PUBLIC_SECRET_KEY,
-    //             }
-    //         }
-
-    //         const response = await axios.request(option);
-    //         if (response.data.status) {
-    //             setBlogdata(response.data.blogdetail);
-    //             setDescription(response.data.blogdetail.blogDescription);
-    //             setImageurl(response.data.blogdetail.blogImage);
-    //             if(response.data.blogdetail.blogStatus)
-    //             {
-    //                setBlogstatus('active')
-    //                setBlogstatus1('active')
-    //             }
-    //             else{
-    //                 setBlogstatus('inactive')
-    //                 setBlogstatus1('inactive')
-    //             }
-    //             setMetadescriptions(response.data.blogdetail.metaDescriptions);
-    //             setCategorylist(response.data.category);
-    //         }
-
-    //     }
-
-    //     getBlog();
-    // }, [])
+   
 
     const editBlog = async (e) => {
 
@@ -169,7 +151,7 @@ export default function Page({blogdata, Metadescriptions,Categorylist,Blogstatus
             if (res.status) {
 
                 sessionStorage.setItem('successMsg','Blogs Updated Successfully');
-                router.push(`/${userData.usertype}/blog`);
+                router.push(`/dashboard/blog`);
                 
 
             }
@@ -247,11 +229,16 @@ export default function Page({blogdata, Metadescriptions,Categorylist,Blogstatus
                                         </div>
                                         <div className="mb-3">
                                             <label className="form-label" htmlFor="project-thumbnail-img">Blog Image</label>
-                                            <input className="form-control" id="project-thumbnail-img" type="file" name='image' accept="image/*" onChange={fileUpload} style={{ border: formValidation.blogImage === 0 && '1px solid red' }} />
+                                            <input className="form-control" id="project-thumbnail-img" type="file" name='image' accept="image/*" onChange={handleFileChange} style={{ border: formValidation.blogImage === 0 && '1px solid red' }} />
 
-                                            <div style={{marginTop:'10px'}}>Choose 723 x 489 Dimension</div>
-                                            
-                                            <img src={imageUrl1} priority width={ 100} height={100} id='imagePreview' alt=''  style={{ marginTop: '10px' }}/> 
+                                            {image && <FabricCropper imageSrc={image} onCrop={handleCrop} />}
+
+                                            {croppedUrl && (
+                                                <div className="mt-4">
+                                                    <h3 className="text-lg font-medium">Cropped Preview:</h3>
+                                                    <img src={croppedUrl} width={150} height={150} alt="Cropped result" />
+                                                </div>
+                                            )}
                                         </div>
                                         <div className="mb-3">
                                             <label className="form-label" htmlFor="project-thumbnail-img">Blog Description</label>
@@ -395,7 +382,7 @@ export default function Page({blogdata, Metadescriptions,Categorylist,Blogstatus
                                 <h4>Well done !</h4>
                                 <p className="text-muted mx-4">Aww yeah, you successfully updated your Blog.</p>
                                 <div className="mt-4">
-                                    <a href="/admin/blog" className="btn btn-success w-100">Back to Dashboard</a>
+                                    <a href="/dashboard/blog" className="btn btn-success w-100">Back to Dashboard</a>
                                 </div>
                             </div>
                         </div>

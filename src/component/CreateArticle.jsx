@@ -5,10 +5,28 @@ import { useMemo, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { UniversalContext } from './context.js';
-export default function CreateArticle({userList}) {
+import FabricCropper from './FabricCropper'
+export default function CreateArticle({ userList }) {
 
+  const [image, setImage] = useState(null)
+  const [croppedUrl, setCroppedUrl] = useState(null)
 
-  const router=useRouter();
+  const handleFileChange = (e) => {
+    const file = e.target.files[0]
+    if (file) {
+      const reader = new FileReader()
+      reader.onload = () => setImage(reader.result)
+      reader.readAsDataURL(file)
+    }
+  }
+
+  const handleCrop = (blob) => {
+    const url = URL.createObjectURL(blob);
+    setImageurl(blob);
+    setCroppedUrl(url)
+  }
+
+  const router = useRouter();
   const { userData } = UniversalContext();
   const [primaryAuth, setPrimaryauth] = useState(false);
   const [primaryAuthlist, setPrimaryauthList] = useState([]);
@@ -21,22 +39,6 @@ export default function CreateArticle({userList}) {
   const [searchedList1, setSearchedlist1] = useState(userList);
   const [check1, setCheck1] = useState([]);
   const [imageUrl, setImageurl] = useState(null);
-  // const [content, setContent] = useState([]);
-  // const [abstract, setAbstract] = useState("");
-  // const [keywords, setKeywords] = useState("");
-  // const [introduction, setIntroduction] = useState("");
-  // const [methods, setMethods] = useState("");
-  // const [results, setResults] = useState("");
-  // const [discussion, setDiscussion] = useState("");
-  // const [conclusion, setConclusion] = useState("");
-  // const [references, setReferences] = useState("");
-  // const [abbreviations, setAbbreviations] = useState("");
-  // const [copyright, setCopyright] = useState("");
-  // const [editor, setEditor] = useState([{ text: 'Abstract', open: true }, { text: 'Keywords', open: false }, { text: 'Introduction', open: false }, { text: 'Methods', open: false }, { text: 'Results', open: false }, { text: 'Discussion', open: false }, { text: 'Conclusion', open: false }, { text: 'References', open: false }, { text: 'Abbreviations', open: false }, { text: 'Copyright', open: false }]);
-
-
-
-
   const config = useMemo(() => {
     return {
       readonly: false,
@@ -86,7 +88,7 @@ export default function CreateArticle({userList}) {
       router.push(`/dashboard/articlelist`);
 
     }
- 
+
   }
 
   const removeItems = (idx) => {
@@ -215,9 +217,15 @@ export default function CreateArticle({userList}) {
 
           <div className="col-md-6">
             <label className="form-label" htmlFor="project-thumbnail-img">Article Thumbnail</label>
-            <input className="form-control" id="project-thumbnail-img" type="file" name='image' accept="image/*" onChange={fileUpload} />
-            <div style={{ marginTop: '10px' }}>Choose 1920 x 970 Dimension</div>
-            <Image priority width={imageUrl && 100} height={imageUrl && 100} id='imagePreview' />
+            <input className="form-control" id="project-thumbnail-img" type="file" name='image' accept="image/*" onChange={handleFileChange} />
+            {image && <FabricCropper imageSrc={image} onCrop={handleCrop} />}
+
+            {croppedUrl && (
+              <div className="mt-4">
+                <h3 className="text-lg font-medium">Cropped Preview:</h3>
+                <img src={croppedUrl} width={150} height={150} alt="Cropped result" />
+              </div>
+            )}
 
           </div>
 
@@ -390,7 +398,7 @@ export default function CreateArticle({userList}) {
 
               primaryAuth &&
 
-              <div className="form-control" style={{ position: 'absolute', zIndex: '99', marginTop: '10px', width: '98.5%' ,overflow:'auto'}}>
+              <div className="form-control" style={{ position: 'absolute', zIndex: '99', marginTop: '10px', width: '98.5%', overflow: 'auto' }}>
 
 
 
@@ -495,7 +503,7 @@ export default function CreateArticle({userList}) {
 
               secondaryAuth &&
 
-              <div className="form-control" style={{ position: 'absolute', zIndex: '99', marginTop: '10px', width: '98.5%',overflow:'auto' }}>
+              <div className="form-control" style={{ position: 'absolute', zIndex: '99', marginTop: '10px', width: '98.5%', overflow: 'auto' }}>
 
 
 

@@ -96,6 +96,7 @@ FROM all_access;
 
 
 `)
+
     return NextResponse.json({ status: true, menubar: menubar[0][0].merged_access });
 
   } catch (error) {

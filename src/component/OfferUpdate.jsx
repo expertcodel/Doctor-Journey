@@ -7,8 +7,27 @@ import dynamic from 'next/dynamic';
 import AdminFooter from './AdminFooter.jsx'
 const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
 import { useRouter } from 'next/navigation';
+import FabricCropper from './FabricCropper'
 export default function Page({ offerDetail }) {
 
+
+    const [image, setImage] = useState(offerDetail.offerImage)
+    const [croppedUrl, setCroppedUrl] = useState(null)
+
+    const handleFileChange = (e) => {
+        const file = e.target.files[0]
+        if (file) {
+            const reader = new FileReader()
+            reader.onload = () => setImage(reader.result)
+            reader.readAsDataURL(file)
+        }
+    }
+
+    const handleCrop = (blob) => {
+        const url = URL.createObjectURL(blob);
+        setImageurl(blob);
+        setCroppedUrl(url)
+    }
 
 
     const router = useRouter();
@@ -16,8 +35,7 @@ export default function Page({ offerDetail }) {
     const [success, setSuccess] = useState(false);
     const [errorMsg, setErrormsg] = useState("");
     const [imageUrl, setImageurl] = useState(null);
-     const [imageUrl1, setImageurl1] = useState(offerDetail.offerImage);
-
+  
     const config = {
         readonly: false,
         toolbar: true,
@@ -66,7 +84,7 @@ export default function Page({ offerDetail }) {
 
             const data = {
 
-                offerContent, offerDiscount,offerId:offerDetail.offerId
+                offerContent, offerDiscount, offerId: offerDetail.offerId
             }
 
             const formData = new FormData();
@@ -103,17 +121,7 @@ export default function Page({ offerDetail }) {
 
     }
 
-    const fileUpload = () => {
-
-
-        const thumbnailImage = document.getElementById('project-thumbnail-img').files[0];
-        const imageurl = URL.createObjectURL(thumbnailImage);
-        //imagePreview.src = imageurl
-        setImageurl(thumbnailImage);
-        setImageurl1(imageurl);
-
-
-    }
+  
 
     return (
         <div className="main-content">
@@ -143,12 +151,18 @@ export default function Page({ offerDetail }) {
 
 
 
-                                     
+
                                         <div className="mb-3">
                                             <label className="form-label" htmlFor="project-thumbnail-img">Offer Image</label>
-                                            <input className="form-control" id="project-thumbnail-img" type="file" name='image' accept="image/*" onChange={fileUpload} style={{ border: formValidation.image === 0 && '1px solid red' }} />
-                                            <div style={{ marginTop: '10px' }}>Choose 300 x 300 Dimension</div>
-                                            {!success && <img width={imageUrl1 && 100} height={imageUrl1 && 100} id='imagePreview' alt='' src={imageUrl1}/>}
+                                            <input className="form-control" id="project-thumbnail-img" type="file" name='image' accept="image/*" onChange={handleFileChange} style={{ border: formValidation.image === 0 && '1px solid red' }} />
+                                          {image && <FabricCropper imageSrc={image} onCrop={handleCrop} />}
+
+                                            {croppedUrl && (
+                                                <div className="mt-4">
+                                                    <h3 className="text-lg font-medium">Cropped Preview:</h3>
+                                                    <img src={croppedUrl} width={150} height={150} alt="Cropped result" />
+                                                </div>
+                                            )}
 
                                         </div>
 

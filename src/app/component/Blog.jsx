@@ -1,36 +1,28 @@
 "use client"
 import Image from "next/image";
 import Link from "next/link";
-import Breadcrumb from "../../app/component/Breadcrumb";
+import Select2Component from "../component/Select2Component";
 import { useState } from "react";
+import DaysCalculator from '../component/DaysCalculator';
+import Pagination from './Pagination';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCreditCard, faEuro, faEuroSign, faStar } from "@fortawesome/free-solid-svg-icons";
-import Select2Component from "../../app/component/Select2Component";
-import ThumbnailSearchCarousel from "../../app/component/ThumbnailSearchCarousel";
-import ThumbnailSponsorCarousel from "../../app/component/ThumbnailSponsorCarousel";
-import ThumbnailBlogsCarousel from "../../app/component/ThumbnailBlogsCarousel";
-import TestimonialsCarousel from "../../app/component/Testimonials";
-import JournalsThumbCarousel from "../component/JournalsThumbCarousel";
-//  import doctorProfile from "@/data/doctorProfile.json";
-
-export default function JournalActivity({ journalCard, totalItems }) {
-
-
+import { faEye } from "@fortawesome/free-solid-svg-icons";
+export default function blogList({ blogCard, totalItems }) {
 
 
     const [button, setButton] = useState(totalItems);
     const [idx, setIdx] = useState(1);
-    const [journalList, setjournalList] = useState(journalCard);
+    const [blogLists, setblogLists] = useState(blogCard);
     const [name, setName] = useState("");
     const searching = async (idx, name) => {
 
 
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/client/journal/journals-list/?page=${1}&name=${name}`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/client/blogs/?page=${idx}&name=${name}`)
         setName(name);
-setIdx(1);
+        setIdx(1);
         const res = await response.json();
         if (res.status) {
-            setjournalList(res.journallist);
+            setblogLists(res.bloglist);
             setButton(Math.ceil(res.totalItems / 9));
         }
 
@@ -39,11 +31,11 @@ setIdx(1);
     const pagination = async (idx) => {
 
         if (idx > 0 && idx <= button) {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/client/journal/journals-list/?page=${idx}&name=${name}`);
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/client/blogs/?page=${idx}&name=${name}`);
             setIdx(idx);
             const res = await response.json();
             if (res.status) {
-                setjournalList(res.journallist);
+                setblogLists(res.bloglist);
                 setButton(Math.ceil(res.totalItems / 9));
             }
 
@@ -54,12 +46,9 @@ setIdx(1);
 
 
 
-
     return (
-        <section>
-            {/*Breadcrumb*/}
-            {/* <Breadcrumb title="Journals Activities" /> */}
-
+        <>
+            {/* search engine */}
             <section className="cover-image sptb-1 bg-background2"
                 data-image-src="../assets/images/banners/banner1.jpg">
                 <div className="header-text1 mb-0">
@@ -68,7 +57,7 @@ setIdx(1);
                             <div className="col-xl-10 col-lg-12 col-md-12 d-block mx-auto">
                                 <div className="text-center text-white ">
                                     <h1 className="mb-5">
-                                        Search Your favourite journals
+                                        Search Your favourite Blog
                                     </h1>
                                 </div>
                                 <div className="search-background bg-transparent">
@@ -112,78 +101,85 @@ setIdx(1);
                 </div>
             </section>
 
-            {/* users JOURNEY */}
+            {/* blog JOURNEY */}
             <section className="sectionSpace sptb bg-white">
                 <div className="container">
-
-                    <div className="row g-3">
-                        {/* jrLargeCard */}
-                        {journalList.map((journal) => <div className="col-md-4 col-12 jrLargeCard" key={journal.journalsId}>
-                            {/*** card */}
-                            <div className="card">
-                                <div className="card-body">
-                                    <div className="cat-item">
-                                        <Link href={`/journals/${journal.journalsUrl}`} />
-                                        <div className="cat-img bg-primary-transparent">
-                                            <Image unoptimized src={journal.imageUrl} className="img-fluid" fill alt="" />
-                                        </div>
-                                        <div className="cat-desc">
-                                            <h5>
-                                                {journal.journalsName}
-                                            </h5>
-                                            <small className="badge">
-                                                INR {journal.price}/
-                                            </small>
-                                            <div className="catFooter">
-                                                <Link href={`/journals/${journal.journalsUrl}`} className="btn btn-warning">
-                                                    Read Now
-                                                </Link>
-                                                <Link href={`/journals/${journal.journalsUrl}`} className="btn btn-primary">
-                                                    Buy Now
-                                                </Link>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>)}
-                        {/* jrLargeCard */}
-
-                        {/* jrLargeCard */}
-
-                        {/* jrLargeCard */}
-
-                        {/* jrLargeCard */}
-
+                    <div className="row">
+                        <div className="col-12">
+                            <h4 className="mainHeading">
+                                New from blog's journey
+                            </h4>
+                        </div>
                     </div>
 
+                    <div className="row g-md-4 g-3">
+                        {blogLists.map((card) => (
+                            <div className="col-md-4 col-12 drCard" key={card.blogId}>
+                                <div className="card mb-0">
+                                    <div className="item7-card-img">
+                                        <Link href={`/blogs/${card.blogUrl}`} />
+                                        <Image src={card.blogImage} fill alt="img" className="cover-image" unoptimized />
+
+                                    </div>
+                                    {/* <div className="card-body">
+                                        <div className="item7-card-desc d-flex mb-2">
+                                            <Link href={`/blogs/${card.blogUrl}`} className="text-dark">
+                                                <h4 className="font-weight-semibold">{card.blogTitle}</h4>
+                                            </Link>
+                                            <div className="ms-auto">
+
+                                                <span> <DaysCalculator targetDate={card.publishedDate} today={new Date().toLocaleDateString()} /></span>
+                                              
+                                            </div>
+                                        </div>
+
+                                        <p>{card.specialization}</p>
+                                        <div className="item7-card-desc d-flex">
+                                            <span>{card.blogTitle}</span>
+                                        </div>
+                                     
+                                    </div> */}
+                                    <div className="card-body">
+                                        <Link href={`/blogs/${card.blogUrl}`} className="text-dark text-decoration-none">
+                                            <h4 className="font-weight-semibold text-break mb-2">{card.blogTitle}</h4>
+                                        </Link>
+
+                                        <div className="item7-card-desc d-flex justify-content-between align-items-center mb-2">
+                                            <p className="mb-0">{card.specialization}</p>
+                                            <span className="small text-muted">
+                                                <DaysCalculator
+                                                    targetDate={card.publishedDate}
+                                                    today={new Date().toLocaleDateString()}
+                                                />
+                                            </span>
+                                        </div>
+
+                                        <div className="item7-card-desc">
+                                            <span className="text-break">{card.blogTitle}</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        ))}
+                    </div>
 
                     <div className="row g-md-4 g-3">
                         <div className="col-12">
                             <div className="center-block text-center d-flex justify-content-center">
-                                {button > 1 && <ul className="pagination mb-5 mb-lg-0">
-                                    <li className="page-item page-prev">
-                                        <button className="page-link" onClick={() => pagination(idx - 1)} tabIndex={-1}>
-                                            Prev
-                                        </button>
-                                    </li>
-                                    {Array.from({ length: button }, (_, i) => <li className="page-item active" key={i}>
-                                        <button className="page-link" onClick={() => pagination(i + 1)} style={{ backgroundColor: idx === i + 1 && 'orange' }}>
-                                            {i + 1}
-                                        </button>
-                                    </li>)}
-
-                                    <li className="page-item page-next">
-                                        <button className="page-link" onClick={() => pagination(idx + 1)}>
-                                            Next
-                                        </button>
-                                    </li>
-                                </ul>}
+                                {
+                                    button > 1 &&
+                                    <Pagination
+                                        currentPage={idx}
+                                        totalPages={button}
+                                        onPageChange={pagination}
+                                    />
+                                }
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
-        </section>
-    );
+        </>
+    )
 }

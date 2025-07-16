@@ -9,39 +9,39 @@ import Link from 'next/link';
 import AdminFooter from '../../../../component/AdminFooter.jsx'
 import { useRouter } from 'next/navigation';
 import { UniversalContext } from '../../../../component/context';
-
+import FabricCropper from '../../../../component/FabricCropper.js'
 export default function Page() {
 
-    const {userData}=UniversalContext()
-    const router=useRouter();
+    const [image, setImage] = useState(null)
+    const [croppedUrl, setCroppedUrl] = useState(null)
+
+    const handleFileChange = (e) => {
+        const file = e.target.files[0]
+        if (file) {
+            const reader = new FileReader()
+            reader.onload = () => setImage(reader.result)
+            reader.readAsDataURL(file)
+        }
+    }
+
+    const handleCrop = (blob) => {
+        const url = URL.createObjectURL(blob);
+        setImageurl(blob);
+        setCroppedUrl(url)
+    }
+
+    const { userData } = UniversalContext()
+    const router = useRouter();
     const [imageUrl, setImageurl] = useState(null);
     const [category, setCategory] = useState("");
     const [categoryList, setCategorylist] = useState([]);
     const editor = useRef(null);
     const [success, setSuccess] = useState(false);
     const [errorMsg, setErrormsg] = useState("");
-   
-    const [formValidation, setFormvalidation] = useState({ blogTitle: -1, blogContent: -1, blogDescription: -1, blogImage: -1, metaDescriptions: -1, metaKeywords: -1, metaTitle: -1, blogSerial: -1,blogUrl:-1 })
 
-    // useEffect(() => {
+    const [formValidation, setFormvalidation] = useState({ blogTitle: -1, blogContent: -1, blogDescription: -1, blogImage: -1, metaDescriptions: -1, metaKeywords: -1, metaTitle: -1, blogSerial: -1, blogUrl: -1 })
 
-    //     const fetching = async () => {
-
-    //         const config = {
-    //             method: 'GET',
-    //             url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/blogs`
-    //         }
-    //         const response = await axios.request(config);
-    //         if (response.data.status) {
-    //             setCategorylist(response.data.category);
-    //         }
-
-    //     }
-
-    //     fetching();
-
-    // }, [])
-
+    
     const config = {
         readonly: false,
         toolbar: true,
@@ -67,11 +67,11 @@ export default function Page() {
         const metaKeywords = e.target.metakeywords.value.trim();
         const metaTitle = e.target.metatitle.value.trim();
         const blogSerial = e.target.serial.value.trim();
-        const blogUrl=e.target.url.value.trim();
+        const blogUrl = e.target.url.value.trim();
         const blogCategory = category;
 
 
-        if (blogTitle==="") {
+        if (blogTitle === "") {
             arr[0] = 0;
             flag = false;
         }
@@ -79,7 +79,7 @@ export default function Page() {
             arr[1] = 0;
             flag = false;
         }
-        if (blogDescription==="") {
+        if (blogDescription === "") {
             arr[2] = 0;
             flag = false;
 
@@ -115,7 +115,7 @@ export default function Page() {
         //     flag = false;
         // }
 
-        if (blogUrl==="") {
+        if (blogUrl === "") {
             arr[9] = 0;
             flag = false;
 
@@ -124,8 +124,8 @@ export default function Page() {
 
         if (flag) {
 
-            setFormvalidation({ blogTitle: arr[0], blogImage: arr[1], blogDescription: arr[2], blogContent: arr[3], metaDescriptions: arr[4], metaKeywords: arr[5], metaTitle: arr[6], blogSerial: arr[7], blogCategory: arr[8],blogUrl:arr[9] });
-            
+            setFormvalidation({ blogTitle: arr[0], blogImage: arr[1], blogDescription: arr[2], blogContent: arr[3], metaDescriptions: arr[4], metaKeywords: arr[5], metaTitle: arr[6], blogSerial: arr[7], blogCategory: arr[8], blogUrl: arr[9] });
+
             const data = {
                 blogTitle, blogDescription, blogContent, metaDescriptions, metaKeywords, metaTitle, blogSerial, blogUrl
             }
@@ -134,7 +134,7 @@ export default function Page() {
             formData.append('data', JSON.stringify(data));
             formData.append('file', imageUrl);
 
-         
+
 
             const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/blogs`, { method: 'POST', body: formData })
 
@@ -142,9 +142,9 @@ export default function Page() {
 
             if (res.status) {
 
-                sessionStorage.setItem('successMsg','Blogs Created Successfully');
-                router.push(`/${userData.usertype}/blog`);
-                
+                sessionStorage.setItem('successMsg', 'Blogs Created Successfully');
+                router.push(`/dashboard/blog`);
+
 
             }
             else {
@@ -155,7 +155,7 @@ export default function Page() {
         }
         else {
 
-            setFormvalidation({ blogTitle: arr[0], blogImage: arr[1], blogDescription: arr[2], blogContent: arr[3], metaDescriptions: arr[4], metaKeywords: arr[5], metaTitle: arr[6], blogSerial: arr[7], blogCategory: arr[8],blogUrl:arr[9] });
+            setFormvalidation({ blogTitle: arr[0], blogImage: arr[1], blogDescription: arr[2], blogContent: arr[3], metaDescriptions: arr[4], metaKeywords: arr[5], metaTitle: arr[6], blogSerial: arr[7], blogCategory: arr[8], blogUrl: arr[9] });
 
         }
 
@@ -166,30 +166,7 @@ export default function Page() {
 
     }
 
-
-    const fileUpload = async () => {
-
-
-        const thumbnailImage = document.getElementById('project-thumbnail-img').files[0];
-        const imagePreview = document.getElementById('imagePreview');
-        const imageurl = URL.createObjectURL(thumbnailImage);
-        imagePreview.src = imageurl
-        setImageurl(thumbnailImage);
-
-
-
-
-    }
-
-
-
-
-
-
-
-
-
-    return (
+ return (
         <div className="main-content">
             <div className="page-content">
                 <div className="container-fluid">
@@ -218,9 +195,15 @@ export default function Page() {
                                         </div>
                                         <div className="mb-3">
                                             <label className="form-label" htmlFor="project-thumbnail-img">Blog Image</label>
-                                            <input className="form-control" id="project-thumbnail-img" type="file" name='image' accept="image/*" onChange={fileUpload} style={{ border: formValidation.blogImage === 0 && '1px solid red' }} />
-                                            <div style={{marginTop:'10px'}}>Choose 723 x 489 Dimension</div>
-                                            {!success && <Image priority width={imageUrl && 100} height={imageUrl && 100} id='imagePreview' alt='' style={{ marginTop: '10px' }} />}
+                                            <input className="form-control" id="project-thumbnail-img" type="file" name='image' accept="image/*" onChange={handleFileChange} style={{ border: formValidation.blogImage === 0 && '1px solid red' }} />
+                                            {image && <FabricCropper imageSrc={image} onCrop={handleCrop} />}
+
+                                            {croppedUrl && (
+                                                <div className="mt-4">
+                                                    <h3 className="text-lg font-medium">Cropped Preview:</h3>
+                                                    <img src={croppedUrl} width={150} height={150} alt="Cropped result" />
+                                                </div>
+                                            )}
 
                                         </div>
                                         <div className="mb-3">
@@ -264,7 +247,7 @@ export default function Page() {
 
                                             <button type="submit" className="btn btn-success w-sm">Create</button>
 
-                                           
+
                                         </div>
                                         {
                                             errorMsg !== "" && <div style={{ color: 'red' }}>{errorMsg}</div>
@@ -315,7 +298,7 @@ export default function Page() {
                 {/* container-fluid */}
             </div>
             {/* End Page-content */}
-            <AdminFooter/>
+            <AdminFooter />
             <div
                 className={success ? "modal fade zoomIn show" : "modal fade zoomIn"}
                 id="deletetable"
@@ -349,7 +332,7 @@ export default function Page() {
                                 <h4>Well done !</h4>
                                 <p className="text-muted mx-4">Aww yeah, you successfully created your Blog.</p>
                                 <div className="mt-4">
-                                    <a href="/admin/blog" className="btn btn-success w-100">Back to Dashboard</a>
+                                    <a href="/dashboard/blog" className="btn btn-success w-100">Back to Dashboard</a>
                                 </div>
                             </div>
                         </div>

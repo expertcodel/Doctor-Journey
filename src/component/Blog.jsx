@@ -51,7 +51,7 @@ export default function Blog({ buttons, blogList, totalPages }) {
     if (res.status) {
 
       sessionStorage.setItem('successMsg', 'Blog deleted Successfully');
-      window.location.href = "/admin/blog"
+      window.location.href = "/dashboard/blog"
 
 
     }
@@ -61,9 +61,9 @@ export default function Blog({ buttons, blogList, totalPages }) {
   const searching = async (idx, name) => {
 
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/blogs/?page=${idx}&name=${name}`,{method:'GET'});
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/blogs/?page=${1}&name=${name}`,{method:'GET'});
     setName(name);
-
+setIdx(1);
     const res = await response.json();
     if (res.status) {
       setBloglists(res.bloglist);
@@ -125,7 +125,7 @@ export default function Blog({ buttons, blogList, totalPages }) {
           <div className="row g-4 mb-3">
             <div className="col-sm-auto">
               <div>
-                <Link href="/admin/blog/create" className="btn btn-success"><i className="ri-add-line align-bottom me-1" /> Add New</Link>
+                <Link href="/dashboard/blog/create" className="btn btn-success"><i className="ri-add-line align-bottom me-1" /> Add New</Link>
               </div>
             </div>
             <div className="col-sm">
@@ -172,7 +172,7 @@ export default function Blog({ buttons, blogList, totalPages }) {
                     </div>{/*end col*/}
                     <div className="col-xxl-9 col-lg-7">
                       <p className="mb-2 text-primary text-uppercase">{item.blogCategory}</p>
-                      <Link href={`/admin/blog/view${item.blogUrl}`}>
+                      <Link href={`/dashboard/blog/view${item.blogUrl}`}>
                         <h5 className="fs-15 fw-semibold">{item.blogTitle}</h5>
                       </Link>
                       <div className="d-flex align-items-center gap-2 mb-3 flex-wrap">
@@ -185,7 +185,7 @@ export default function Blog({ buttons, blogList, totalPages }) {
                           <div className="edit">
                             <Link
                               className="btn btn-sm btn-success edit-item-btn"
-                              href={`/admin/blog/view${item.blogUrl}`}
+                              href={`/dashboard/blog/view${item.blogUrl}`}
                             >
                               Edit
                             </Link>

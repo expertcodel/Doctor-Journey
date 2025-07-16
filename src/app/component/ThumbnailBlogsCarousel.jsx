@@ -8,7 +8,7 @@ import Swiper from "swiper";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/navigation";
-
+import DaysCalculator from "./DaysCalculator";
 export default function ThumbnailBlogsCarousel({blogList}) {
   const swiperRef = useRef(null);
 
@@ -44,279 +44,38 @@ export default function ThumbnailBlogsCarousel({blogList}) {
       {/* Thumbnail Slider */}
       <div className="swiper blogsSlider customSwiper">
         <div className="swiper-wrapper">
-          <div className="swiper-slide item">
-            <div className="card mb-0">
-                <div className="item7-card-img">
-                    <Link href="javascript:void(0);" />
-                    <Image src="/images/doctor-profile/profile-1.jpg" fill alt="img" className="cover-image" />
-                </div>
-                <div className="card-body p-4">
-                    <div className="item7-card-desc d-flex mb-2">
-                        <Link href="javascript:void(0);">
-                            <FontAwesomeIcon icon={faCalendar} /> Dec-03-2018
-                        </Link>
-                        <div className="ms-auto">
-                            <Link href="javascript:void(0);">
-                                <FontAwesomeIcon icon={faComment} /> 4 Comments
-                            </Link>
-                        </div>
-                    </div>
-                    <Link href="/" className="text-dark">
-                        <h4 className="font-weight-semibold">Excepteur occaecat cupidatat</h4>
-                    </Link>
-                    <p>
-                        Ut enim ad minima veniam, quis exercitationem, enim ad minima veniam, quis nostrum exercitationem{" "}
-                    </p>
-                    <div className="d-flex align-items-center pt-2 mt-auto">
-                        <figure>
-                            <Image src="/images/clients/2.png" width={40} height={40} alt="avatar-img" />
-                        </figure>
-                        <div>
-                            <Link href="/" className="text-default">
-                                Joanne Nash
-                            </Link>
-                            <small className="d-block text-muted">1 day ago</small>
-                        </div>
-                        <div className="ms-auto text-muted">
-                            <Link href="/" className="icon d-none d-md-inline-block ms-3">
-                                <FontAwesomeIcon icon={faHeart} />
-                            </Link>
-                            <Link href="/" className="icon d-none d-md-inline-block ms-3">
-                                <FontAwesomeIcon icon={faThumbsUp} />
-                            </Link>
-                        </div>
-                    </div>
-                </div>
-            </div>
-          </div>
+         
        
         { blogList.map((blog)=><div key={blog.blogId} className="swiper-slide">
             <div className="card mb-0">
                 <div className="item7-card-img">
-                    <Link href="javascript:void(0);" />
+                    <Link href={`/blog${blog.blogUrl}`} />
                     <Image unoptimized src={blog.blogImage} fill alt="img" className="cover-image" />
                 </div>
                 <div className="card-body p-4">
                     <div className="item7-card-desc d-flex mb-2">
-                        <Link href="javascript:void(0);">
+                        <Link href={`/blog${blog.blogUrl}`}>
                             <FontAwesomeIcon icon={faCalendar} /> {blog.publishedDate}
                         </Link>
                         <div className="ms-auto">
-                            <Link href="javascript:void(0);">
-                                <FontAwesomeIcon icon={faComment} /> 4 Comments
+                            <Link href={`/blog${blog.blogUrl}`}>
+                                    <small className="d-block text-muted"><DaysCalculator targetDate={blog.publishedDate} today={new Date().toLocaleDateString()}/></small>
                             </Link>
                         </div>
                     </div>
-                    <Link href="/" className="text-dark">
+                    <Link href={`/blog${blog.blogUrl}`} className="text-dark">
                         <h4 className="font-weight-semibold">{blog.blogTitle}</h4>
                     </Link>
                     <p>
                         {blog.blogDescription.substr(0,50)}...{" "}
                     </p>
-                    <div className="d-flex align-items-center pt-2 mt-auto">
-                        <figure>
-                            <Image src="/images/clients/2.png" width={40} height={40} alt="avatar-img" />
-                        </figure>
-                        <div>
-                            <Link href="/" className="text-default">
-                                Joanne Nash
-                            </Link>
-                            <small className="d-block text-muted">1 day ago</small>
-                        </div>
-                        <div className="ms-auto text-muted">
-                            <Link href="/" className="icon d-none d-md-inline-block ms-3">
-                                <FontAwesomeIcon icon={faHeart} />
-                            </Link>
-                            <Link href="/" className="icon d-none d-md-inline-block ms-3">
-                                <FontAwesomeIcon icon={faThumbsUp} />
-                            </Link>
-                        </div>
-                    </div>
+                   
                 </div>
             </div>
           </div>)}
 
 
-          <div className="swiper-slide">
-            <div className="card mb-0">
-                <div className="item7-card-img">
-                    <Link href="javascript:void(0);" />
-                    <Image src="/images/doctor-profile/profile-1.jpg" fill alt="img" className="cover-image" />
-                </div>
-                <div className="card-body p-4">
-                    <div className="item7-card-desc d-flex mb-2">
-                        <Link href="javascript:void(0);">
-                            <FontAwesomeIcon icon={faCalendar} /> Dec-03-2018
-                        </Link>
-                        <div className="ms-auto">
-                            <Link href="javascript:void(0);">
-                                <FontAwesomeIcon icon={faComment} /> 4 Comments
-                            </Link>
-                        </div>
-                    </div>
-                    <Link href="/" className="text-dark">
-                        <h4 className="font-weight-semibold">Excepteur occaecat cupidatat</h4>
-                    </Link>
-                    <p>
-                        Ut enim ad minima veniam, quis exercitationem, enim ad minima veniam, quis nostrum exercitationem{" "}
-                    </p>
-                    <div className="d-flex align-items-center pt-2 mt-auto">
-                        <figure>
-                            <Image src="/images/clients/2.png" width={40} height={40} alt="avatar-img" />
-                        </figure>
-                        <div>
-                            <Link href="/" className="text-default">
-                                Joanne Nash
-                            </Link>
-                            <small className="d-block text-muted">1 day ago</small>
-                        </div>
-                        <div className="ms-auto text-muted">
-                            <Link href="/" className="icon d-none d-md-inline-block ms-3">
-                                <FontAwesomeIcon icon={faHeart} />
-                            </Link>
-                            <Link href="/" className="icon d-none d-md-inline-block ms-3">
-                                <FontAwesomeIcon icon={faThumbsUp} />
-                            </Link>
-                        </div>
-                    </div>
-                </div>
-            </div>
-          </div>
-          <div className="swiper-slide">
-            <div className="card mb-0">
-                <div className="item7-card-img">
-                    <Link href="javascript:void(0);" />
-                    <Image src="/images/doctor-profile/profile-1.jpg" fill alt="img" className="cover-image" />
-                </div>
-                <div className="card-body p-4">
-                    <div className="item7-card-desc d-flex mb-2">
-                        <Link href="javascript:void(0);">
-                            <FontAwesomeIcon icon={faCalendar} /> Dec-03-2018
-                        </Link>
-                        <div className="ms-auto">
-                            <Link href="javascript:void(0);">
-                                <FontAwesomeIcon icon={faComment} /> 4 Comments
-                            </Link>
-                        </div>
-                    </div>
-                    <Link href="/" className="text-dark">
-                        <h4 className="font-weight-semibold">Excepteur occaecat cupidatat</h4>
-                    </Link>
-                    <p>
-                        Ut enim ad minima veniam, quis exercitationem, enim ad minima veniam, quis nostrum exercitationem{" "}
-                    </p>
-                    <div className="d-flex align-items-center pt-2 mt-auto">
-                        <figure>
-                            <Image src="/images/clients/2.png" width={40} height={40} alt="avatar-img" />
-                        </figure>
-                        <div>
-                            <Link href="/" className="text-default">
-                                Joanne Nash
-                            </Link>
-                            <small className="d-block text-muted">1 day ago</small>
-                        </div>
-                        <div className="ms-auto text-muted">
-                            <Link href="/" className="icon d-none d-md-inline-block ms-3">
-                                <FontAwesomeIcon icon={faHeart} />
-                            </Link>
-                            <Link href="/" className="icon d-none d-md-inline-block ms-3">
-                                <FontAwesomeIcon icon={faThumbsUp} />
-                            </Link>
-                        </div>
-                    </div>
-                </div>
-            </div>
-          </div>
-          <div className="swiper-slide">
-            <div className="card mb-0">
-                <div className="item7-card-img">
-                    <Link href="javascript:void(0);" />
-                    <Image src="/images/doctor-profile/profile-1.jpg" fill alt="img" className="cover-image" />
-                </div>
-                <div className="card-body p-4">
-                    <div className="item7-card-desc d-flex mb-2">
-                        <Link href="javascript:void(0);">
-                            <FontAwesomeIcon icon={faCalendar} /> Dec-03-2018
-                        </Link>
-                        <div className="ms-auto">
-                            <Link href="javascript:void(0);">
-                                <FontAwesomeIcon icon={faComment} /> 4 Comments
-                            </Link>
-                        </div>
-                    </div>
-                    <Link href="/" className="text-dark">
-                        <h4 className="font-weight-semibold">Excepteur occaecat cupidatat</h4>
-                    </Link>
-                    <p>
-                        Ut enim ad minima veniam, quis exercitationem, enim ad minima veniam, quis nostrum exercitationem{" "}
-                    </p>
-                    <div className="d-flex align-items-center pt-2 mt-auto">
-                        <figure>
-                            <Image src="/images/clients/2.png" width={40} height={40} alt="avatar-img" />
-                        </figure>
-                        <div>
-                            <Link href="/" className="text-default">
-                                Joanne Nash
-                            </Link>
-                            <small className="d-block text-muted">1 day ago</small>
-                        </div>
-                        <div className="ms-auto text-muted">
-                            <Link href="/" className="icon d-none d-md-inline-block ms-3">
-                                <FontAwesomeIcon icon={faHeart} />
-                            </Link>
-                            <Link href="/" className="icon d-none d-md-inline-block ms-3">
-                                <FontAwesomeIcon icon={faThumbsUp} />
-                            </Link>
-                        </div>
-                    </div>
-                </div>
-            </div>
-          </div>
-          <div className="swiper-slide">
-            <div className="card mb-0">
-                <div className="item7-card-img">
-                    <Link href="javascript:void(0);" />
-                    <Image src="/images/doctor-profile/profile-1.jpg" fill alt="img" className="cover-image" />
-                </div>
-                <div className="card-body p-4">
-                    <div className="item7-card-desc d-flex mb-2">
-                        <Link href="javascript:void(0);">
-                            <FontAwesomeIcon icon={faCalendar} /> Dec-03-2018
-                        </Link>
-                        <div className="ms-auto">
-                            <Link href="javascript:void(0);">
-                                <FontAwesomeIcon icon={faComment} /> 4 Comments
-                            </Link>
-                        </div>
-                    </div>
-                    <Link href="/" className="text-dark">
-                        <h4 className="font-weight-semibold">Excepteur occaecat cupidatat</h4>
-                    </Link>
-                    <p>
-                        Ut enim ad minima veniam, quis exercitationem, enim ad minima veniam, quis nostrum exercitationem{" "}
-                    </p>
-                    <div className="d-flex align-items-center pt-2 mt-auto">
-                        <figure>
-                            <Image src="/images/clients/2.png" width={40} height={40} alt="avatar-img" />
-                        </figure>
-                        <div>
-                            <Link href="/" className="text-default">
-                                Joanne Nash
-                            </Link>
-                            <small className="d-block text-muted">1 day ago</small>
-                        </div>
-                        <div className="ms-auto text-muted">
-                            <Link href="/" className="icon d-none d-md-inline-block ms-3">
-                                <FontAwesomeIcon icon={faHeart} />
-                            </Link>
-                            <Link href="/" className="icon d-none d-md-inline-block ms-3">
-                                <FontAwesomeIcon icon={faThumbsUp} />
-                            </Link>
-                        </div>
-                    </div>
-                </div>
-            </div>
-          </div>
+        
         </div>
       </div>
     </>

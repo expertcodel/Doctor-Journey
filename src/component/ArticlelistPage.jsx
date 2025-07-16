@@ -99,9 +99,9 @@ function ArticlelistPage({ articleList, totalItems, usertype, userId }) {
     const searching = async (idx, name) => {
 
 
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/createArticle/?page=${idx}&name=${name}&userId=${userId}&usertype=${typeof (usertype)}`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/createArticle/?page=${1}&name=${name}&userId=${userId}&usertype=${typeof (usertype)}`);
         setName(name);
-
+setIdx(1);
         const res = await response.json();
         if (res.status) {
             setArticlelists(res.articlelist);

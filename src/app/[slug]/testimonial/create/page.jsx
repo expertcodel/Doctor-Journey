@@ -5,29 +5,48 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image'
 import AdminFooter from '../../../../component/AdminFooter.jsx'
 import { useRouter } from 'next/navigation';
+import FabricCropper from '../../../../component/FabricCropper'
 export default function Page() {
 
 
 
-    const router=useRouter();
+    const [image, setImage] = useState(null)
+    const [croppedUrl, setCroppedUrl] = useState(null)
+
+    const handleFileChange = (e) => {
+        const file = e.target.files[0]
+        if (file) {
+            const reader = new FileReader()
+            reader.onload = () => setImage(reader.result)
+            reader.readAsDataURL(file)
+        }
+    }
+
+    const handleCrop = (blob) => {
+        const url = URL.createObjectURL(blob);
+        setImageurl(blob);
+        setCroppedUrl(url)
+    }
+
+    const router = useRouter();
     const [success, setSuccess] = useState(false);
     const [errorMsg, setErrormsg] = useState("");
     const [imageUrl, setImageurl] = useState(null);
 
-    const [formValidation, setFormvalidation] = useState({name:-1,image:-1,serial:-1,description:-1})
+    const [formValidation, setFormvalidation] = useState({ name: -1, image: -1, serial: -1, description: -1 })
     const createTestimonials = async (e) => {
 
         e.preventDefault();
         let arr = [1, 1, 1, 1];
         let flag = true;
         const name = e.target.name.value.trim();
-        const image= imageUrl;
+        const image = imageUrl;
         const serial = e.target.serial.value.trim();
         const description = e.target.description.value.trim();
-       
 
 
-        if (name.length <= 2 ) {
+
+        if (name.length <= 2) {
             arr[0] = 0;
             flag = false;
 
@@ -36,7 +55,7 @@ export default function Page() {
 
         if (!image) {
             arr[1] = 0;
-           // flag = false;
+            // flag = false;
         }
 
         if (serial === "") {
@@ -46,7 +65,7 @@ export default function Page() {
         }
 
 
-        if (description.length <  10) {
+        if (description.length < 10) {
             arr[3] = 0;
             flag = false;
         }
@@ -55,12 +74,12 @@ export default function Page() {
 
         if (flag) {
 
-            setFormvalidation({name:arr[0],image:arr[1],serial:arr[2],description:arr[3]});
+            setFormvalidation({ name: arr[0], image: arr[1], serial: arr[2], description: arr[3] });
 
 
             const data = {
 
-                name,designation:serial,description
+                name, designation: serial, description
             }
 
             const formData = new FormData();
@@ -76,9 +95,9 @@ export default function Page() {
 
             if (res.status) {
 
-                sessionStorage.setItem('successMsg','Testimonial Created Successfully');
+                sessionStorage.setItem('successMsg', 'Testimonial Created Successfully');
                 router.push("/admin/testimonial/list");
-               
+
             }
             else {
 
@@ -88,7 +107,7 @@ export default function Page() {
         }
         else {
 
-            setFormvalidation({name:arr[0],image:arr[1],serial:arr[2],description:arr[3]});
+            setFormvalidation({ name: arr[0], image: arr[1], serial: arr[2], description: arr[3] });
 
         }
 
@@ -138,9 +157,15 @@ export default function Page() {
 
                                         <div className="mb-3">
                                             <label className="form-label" htmlFor="project-thumbnail-img">Image</label>
-                                            <input className="form-control" id="project-thumbnail-img" type="file" name='image' accept="image/*" onChange={fileUpload} style={{ border: formValidation.image === 0 && '1px solid red' }} />
-                                            <div style={{marginTop:'10px'}}>Choose 300 x 300 Dimension</div>
-                                            {!success && <img  width={imageUrl && 100} height={imageUrl && 100} id='imagePreview' alt='' />}
+                                            <input className="form-control" id="project-thumbnail-img" type="file" name='image' accept="image/*" onChange={handleFileChange} style={{ border: formValidation.image === 0 && '1px solid red' }} />
+                                            {image && <FabricCropper imageSrc={image} onCrop={handleCrop} />}
+
+                                            {croppedUrl && (
+                                                <div className="mt-4">
+                                                    <h3 className="text-lg font-medium">Cropped Preview:</h3>
+                                                    <img src={croppedUrl} width={150} height={150} alt="Cropped result" />
+                                                </div>
+                                            )}
 
                                         </div>
 
@@ -183,7 +208,7 @@ export default function Page() {
                 {/* container-fluid */}
             </div>
             {/* End Page-content */}
-            <AdminFooter/>
+            <AdminFooter />
             <div
                 className={success ? "modal fade zoomIn show" : "modal fade zoomIn"}
                 id="deletetable"

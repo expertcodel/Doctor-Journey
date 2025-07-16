@@ -5,44 +5,63 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image'
 import AdminFooter from './AdminFooter.jsx'
 import { useRouter } from 'next/navigation';
-export default function TestimonialUpdate({testimonial}) {
+import FabricCropper from './FabricCropper'
+export default function TestimonialUpdate({ testimonial }) {
 
 
+    const [image, setImage] = useState(testimonial.image)
+    const [croppedUrl, setCroppedUrl] = useState(null)
 
-    const router=useRouter();
+    const handleFileChange = (e) => {
+        const file = e.target.files[0]
+        if (file) {
+            const reader = new FileReader()
+            reader.onload = () => setImage(reader.result)
+            reader.readAsDataURL(file)
+        }
+    }
+
+    const handleCrop = (blob) => {
+        const url = URL.createObjectURL(blob);
+        setImageurl(blob);
+        setCroppedUrl(url)
+    }
+
+
+    const router = useRouter();
     const [success, setSuccess] = useState(false);
     const [errorMsg, setErrormsg] = useState("");
     const [imageUrl, setImageurl] = useState(null);
     const [imageUrl1, setImageurl1] = useState(testimonial.image);
 
-    const [formValidation, setFormvalidation] = useState({name:-1,image:-1,serial:-1,description:-1})
+    const [formValidation, setFormvalidation] = useState({ name: -1, image: -1, serial: -1, description: -1 })
     const createTestimonials = async (e) => {
 
         e.preventDefault();
         let arr = [1, 1, 1, 1];
         let flag = true;
         const name = e.target.name.value.trim();
-        const image= imageUrl;
+        const image = imageUrl;
         const designation = e.target.serial.value.trim();
         const description = e.target.description.value.trim();
-       
 
 
-        if (name.length <= 2 ) {
+
+        if (name.length <= 2) {
             arr[0] = 0;
             flag = false;
 
         }
 
 
-       if (designation === "") {
+        if (designation === "") {
             arr[2] = 0;
             flag = false;
 
         }
 
 
-        if (description.length <  10) {
+        if (description.length < 10) {
             arr[3] = 0;
             flag = false;
         }
@@ -51,12 +70,12 @@ export default function TestimonialUpdate({testimonial}) {
 
         if (flag) {
 
-            setFormvalidation({name:arr[0],image:arr[1],serial:arr[2],description:arr[3]});
+            setFormvalidation({ name: arr[0], image: arr[1], serial: arr[2], description: arr[3] });
 
 
             const data = {
 
-                name,designation,description,testimonialId:testimonial.testimonialId
+                name, designation, description, testimonialId: testimonial.testimonialId
             }
 
             const formData = new FormData();
@@ -72,9 +91,9 @@ export default function TestimonialUpdate({testimonial}) {
 
             if (res.status) {
 
-                sessionStorage.setItem('successMsg','Testimonial Updated Successfully');
+                sessionStorage.setItem('successMsg', 'Testimonial Updated Successfully');
                 router.push("/dashboard/testimonial/list");
-               
+
             }
             else {
 
@@ -84,7 +103,7 @@ export default function TestimonialUpdate({testimonial}) {
         }
         else {
 
-            setFormvalidation({name:arr[0],image:arr[1],serial:arr[2],description:arr[3]});
+            setFormvalidation({ name: arr[0], image: arr[1], serial: arr[2], description: arr[3] });
 
         }
 
@@ -94,16 +113,7 @@ export default function TestimonialUpdate({testimonial}) {
 
     }
 
-    const fileUpload = () => {
-
-
-        const thumbnailImage = document.getElementById('project-thumbnail-img').files[0];
-        const imageurl = URL.createObjectURL(thumbnailImage);
-        setImageurl1(imageurl)
-        setImageurl(thumbnailImage);
-
-
-    }
+    
 
     return (
         <div className="main-content">
@@ -128,14 +138,20 @@ export default function TestimonialUpdate({testimonial}) {
 
                                         <div className="mb-3">
                                             <label className="form-label" htmlFor="menu-title-input">Name</label>
-                                            <input type="text" className="form-control" id="menu-title-input" placeholder="Enter Name" name='name' style={{ border: formValidation.name === 0 && '1px solid red' }} defaultValue={testimonial.name}/>
+                                            <input type="text" className="form-control" id="menu-title-input" placeholder="Enter Name" name='name' style={{ border: formValidation.name === 0 && '1px solid red' }} defaultValue={testimonial.name} />
                                         </div>
 
                                         <div className="mb-3">
                                             <label className="form-label" htmlFor="project-thumbnail-img">Image</label>
-                                            <input className="form-control" id="project-thumbnail-img" type="file" name='image' accept="image/*" onChange={fileUpload} style={{ border: formValidation.image === 0 && '1px solid red' }} />
-                                            <div style={{marginTop:'10px'}}>Choose 300 x 300 Dimension</div>
-                                            <img  width={ 100} height={ 100} id='imagePreview' alt='' src={imageUrl1}/>
+                                            <input className="form-control" id="project-thumbnail-img" type="file" name='image' accept="image/*" onChange={handleFileChange} style={{ border: formValidation.image === 0 && '1px solid red' }} />
+                                            {image && <FabricCropper imageSrc={image} onCrop={handleCrop} />}
+
+                                            {croppedUrl && (
+                                                <div className="mt-4">
+                                                    <h3 className="text-lg font-medium">Cropped Preview:</h3>
+                                                    <img src={croppedUrl} width={150} height={150} alt="Cropped result" />
+                                                </div>
+                                            )}
 
                                         </div>
 
@@ -143,12 +159,12 @@ export default function TestimonialUpdate({testimonial}) {
 
                                         <div className="mb-3">
                                             <label className="form-label" htmlFor="menu-serial-input">Designation</label>
-                                            <input type="text" className="form-control" id="menu-serial-input" placeholder="Enter review link" name='serial' style={{ border: formValidation.serial === 0 && '1px solid red' }} defaultValue={testimonial.designation}/>
+                                            <input type="text" className="form-control" id="menu-serial-input" placeholder="Enter review link" name='serial' style={{ border: formValidation.serial === 0 && '1px solid red' }} defaultValue={testimonial.designation} />
                                         </div>
 
                                         <div className="mb-3">
                                             <label className="form-label" htmlFor="project-thumbnail-img">Description</label>
-                                            <textarea className="form-control" rows={4} placeholder='type...' name='description' style={{ border: formValidation.description === 0 && '1px solid red' }} defaultValue={testimonial.description}/>
+                                            <textarea className="form-control" rows={4} placeholder='type...' name='description' style={{ border: formValidation.description === 0 && '1px solid red' }} defaultValue={testimonial.description} />
 
                                         </div>
 
@@ -178,7 +194,7 @@ export default function TestimonialUpdate({testimonial}) {
                 {/* container-fluid */}
             </div>
             {/* End Page-content */}
-            <AdminFooter/>
+            <AdminFooter />
             <div
                 className={success ? "modal fade zoomIn show" : "modal fade zoomIn"}
                 id="deletetable"

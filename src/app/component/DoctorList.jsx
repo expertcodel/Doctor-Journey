@@ -19,9 +19,9 @@ export default function DoctorList({ doctorProfile, totalItems }) {
     const searching = async (idx, name) => {
 
 
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/client/doctors/?page=${idx}&name=${name}`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/client/doctors/?page=${1}&name=${name}`);
         setName(name);
-
+setIdx(1);
         const res = await response.json();
         if (res.status) {
             setdoctorLists(res.doctorlist);

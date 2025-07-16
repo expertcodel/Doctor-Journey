@@ -126,7 +126,6 @@ export async function GET(request) {
             where: { [Op.or]: { blogTitle: { [Op.iLike]: `%${name}%` }, blogId: { [Op.iLike]: `%${name}%` } } },
             limit: 10,
             offset: (page - 1) * 10,
-
             order: [['createdAt', 'DESC']]
         })
 

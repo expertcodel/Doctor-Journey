@@ -34,9 +34,9 @@ function ApprovedJournals({ journalLists, totalItems, usertype, userId }) {
     const searching = async (idx, name) => {
 
 
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/getJournal/?page=${idx}&name=${name}&userId=${userId}&usertype=${typeof (usertype)}`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/getJournal/?page=${1}&name=${name}&userId=${userId}&usertype=${typeof (usertype)}`);
         setName(name);
-
+setIdx(1);
         const res = await response.json();
         if (res.status) {
             setJournallist(res.journallist);

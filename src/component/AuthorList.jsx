@@ -75,9 +75,9 @@ export default function AuthorList({ authorList, totalItems }) {
     const searching = async (idx, name) => {
 
 
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/authors/?page=${idx}&name=${name}`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/authors/?page=${1}&name=${name}`);
         setName(name);
-
+setIdx(1);
         const res = await response.json();
         if (res.status) {
             setauthorLists(res.authorlist);

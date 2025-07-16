@@ -14,9 +14,8 @@ export async function middleware(request) {
 
   if (!token) {
 
-    if(userdata)
-    {
-        await cookies().delete('userData');
+    if (userdata) {
+      await cookies().delete('userData');
     }
 
     if (pathname.startsWith('/user-dashboard')) {
@@ -33,25 +32,30 @@ export async function middleware(request) {
 
     const verifiedtoken = await jwtVerify(token.value, new TextEncoder().encode(process.env.AUTHENTICATION_KEY));
     if (!verifiedtoken) {
-      return NextResponse.redirect(new URL('/login', request.url));
+      if (pathname === '/login') {
+        return response
+      }
+      else {
+        return NextResponse.redirect(new URL('/login', request.url));
+      }
     }
 
     if (pathname.startsWith('/login')) {
       return NextResponse.redirect(new URL('/user-dashboard', request.url));
     }
 
-   
-    
+
+
     response.cookies.set('userData', JSON.stringify(verifiedtoken.payload))
     //  console.log('path',pathname);
     // for (let i = 0; i < verifiedtoken.payload.length; i++) {
     //  let allowed=verifiedtoken.payload[i].allowed;
     //   for (let j = 0; j < verifiedtoken.payload[i].child.length; i++) {
-        
+
     //     if (verifiedtoken.payload[i].child[j].path === pathname) {
     //       if (!allowed) {
     //         console.log(allowed,'hello','hhh',pathname);
-            
+
     //         return NextResponse.redirect(new URL('/dashboard/notFound', request.url));
     //       }
     //     }
@@ -61,8 +65,14 @@ export async function middleware(request) {
     return response;
 
   } catch (error) {
-    console.log(error);
-    return NextResponse.redirect(new URL('/login', request.url));
+    console.log(error, "errorjfnf");
+    if (pathname !== '/login') {
+
+
+      NextResponse.redirect(new URL('/login', request.url));
+    }
+
+    return response
   }
 
 

@@ -13,14 +13,14 @@ import { UniversalContext } from "./context.js";
 
 
 
-export default  function Menubar({data}) {
+export default function Menubar({ data }) {
 
- // const { data } = UniversalContext();
-  
+  // const { data } = UniversalContext();
+
   // useEffect(() => {
   //   console.log( data,"menbar");
   // }, [])
-  
+
   return (
     < div className="app-menu navbar-menu" >
       {/* LOGO */}
@@ -184,7 +184,7 @@ export default  function Menubar({data}) {
                                   {
                                     data.map((item, i) => {
 
-                                       if (item.allowed) {
+                                      if (item.allowed) {
 
 
                                         {
@@ -213,7 +213,7 @@ export default  function Menubar({data}) {
                                                 {
                                                   item?.child?.map((item1, i) =>
                                                     <ul className="nav nav-sm flex-column" key={i}>
-                                                     { item1.allowed && item1.path === 'scroll' ?
+                                                      {item1.allowed && item1.path === 'scroll' ?
                                                         <li className="nav-item" >
                                                           <Link
                                                             href={`#sidebarCalendar${i}`}
@@ -233,21 +233,25 @@ export default  function Menubar({data}) {
 
                                                                 {
 
-                                                                  item1?.child?.map((item2, i) =>
-
-                                                                   {item2.allowed && <ul className="nav nav-sm flex-column" key={i}>
+                                                                  item1?.child?.map((item2, i) => {
+                                                                    item2.allowed && <ul className="nav nav-sm flex-column" key={i}>
                                                                       <li className="nav-item">
                                                                         <Link
                                                                           href={item2.path}
                                                                           className="nav-link"
                                                                           data-key="t-main-calender"
+                                                                          data-bs-toggle="collapse"
+                                                                          role="button"
+                                                                          aria-expanded="false"
+                                                                          aria-controls={`sidebarCalendar${i}`}
                                                                         >
                                                                           {" "}
                                                                           {item2.role}{" "}
                                                                         </Link>
                                                                       </li>
 
-                                                                    </ul>}
+                                                                    </ul>
+                                                                  }
 
                                                                   )
                                                                 }
@@ -291,7 +295,7 @@ export default  function Menubar({data}) {
                                               </Link>
                                             </li>
                                         }
-                                       }
+                                      }
                                     })}
 
 
@@ -342,7 +346,7 @@ export default  function Menubar({data}) {
                         </div>
                       </ul>
                     </div>
-                   
+
                   </div>
 
 

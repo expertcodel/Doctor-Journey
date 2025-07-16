@@ -367,7 +367,7 @@ export default async function Home() {
             <div className="col-12">
               <h4 className="mainHeading">
                 Our Blogs
-                <Link href="/">Browse all activity</Link>
+                <Link href="/blog">Browse all activity</Link>
               </h4>
             </div>
           </div>

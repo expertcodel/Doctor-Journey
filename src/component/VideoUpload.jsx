@@ -148,7 +148,7 @@ export default function Page({ doctorList, doctorDetail }) {
 
     }
 
-   
+
 
     return (
         <div className="main-content">
@@ -198,7 +198,7 @@ export default function Page({ doctorList, doctorDetail }) {
 
                                         <div className="mb-3">
                                             <label className="form-label" htmlFor="project-thumbnail-img">Thumbnail Image</label>
-                                           
+
 
                                             <input className="form-control" id="project-thumbnail-img" type="file" name='image' accept="image/*" onChange={handleFileChange} style={{ border: formValidation.image === 0 && '1px solid red' }} />
 
@@ -210,7 +210,7 @@ export default function Page({ doctorList, doctorDetail }) {
                                                     <img src={croppedUrl} width={150} height={150} alt="Cropped result" />
                                                 </div>
                                             )}
-                                          
+
 
                                         </div>
 
