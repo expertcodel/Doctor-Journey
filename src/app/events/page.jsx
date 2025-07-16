@@ -84,7 +84,7 @@ export default function Events() {
                         <div className="col-12">
                             <h4 className="mainHeading">
                                 Our upcoming events
-                                <Link href="/doctors">See all</Link>
+                                <Link href="/events-list">See all</Link>
                             </h4>
                         </div>
                     </div>
@@ -92,62 +92,6 @@ export default function Events() {
                     <div className="row g-md-4 g-3">
                         <div className='col-12'>
                             <div className="upcomingEventsBox">
-                                {/* <div className="row g-md-4 g-3">
-                                    <div className='col-xl-5 offset-xl-0 col-lg-8 offset-lg-2 col-12'>
-                                        <div className='eventDetailImg'>
-                                            <figure>
-                                                <Image src="/images/events/dummy-event-detail.jpg" width={1808} height={2315} alt="img" className="img-fluid" />
-                                            </figure>
-
-                                            <div className='CountDownBoxMain'>
-                                                <CountdownTimer />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className='col-xl-7 col-lg-12 col-12'>
-                                        <div className='aboutBody'>
-                                            <h4>
-                                                Upcoming Events
-                                            </h4>
-                                            <h5>
-                                                International Conference on Forensic Science 2026
-                                                <span>
-                                                    Organized by International Association of Scientists & Researchers & AGHAM Forensika
-                                                </span>
-                                            </h5>
-                                            <p>
-                                                International Association of Scientists and Researchers (IASR) in collaboration with the University of Philippines Manila, University of Baguio, Holy Angel University, Tarlac State University brings the 17th IASR International Conference on Forensic Science and the 7th International Forensic Science Conference to be held on 2nd–5th December 2026 in New Delhi, India. The International Conference on Forensic Science serves as a premier platform for experts, researchers, and practitioners in the field to exchange knowledge, explore innovations, and discuss advancements in forensic methodologies.
-                                            </p>
-                                            <div className="customInputWrapper p-3 rounded-4 border border-secondary-subtle bg-white">
-                                                
-                                                <div className="input-group mb-3">
-                                                    <span className="input-group-text bg-white border-0">
-                                                        <FontAwesomeIcon icon={faMapMarkerAlt} />
-                                                    </span>
-                                                    <input type="text" className="form-control border-0" defaultValue="Vallabhbhai Patel Chest Institute. New Delhi" disabled readOnly="" />
-                                                </div>
-                                                
-                                                <div className="input-group">
-                                                    <span className="input-group-text bg-white border-0">
-                                                        <FontAwesomeIcon icon={faCalendarAlt} />
-                                                    </span>
-                                                    <input type="text" className="form-control border-0" defaultValue="02 December, 2025" disabled readOnly="" />
-                                                </div>
-                                            </div>
-
-                                            <div className='d-flex'>
-                                                <Link className="btn btn-primary me-2" href="/">
-                                                    More About
-                                                </Link>
-                                                <Link className="btn btn-info" href="/">
-                                                    Register
-                                                </Link>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> */}
-
                                 <UpcomingEventsCarousel />
                             </div>
                         </div>
@@ -162,7 +106,7 @@ export default function Events() {
                         <div className="col-12">
                             <h4 className="mainHeading">
                                 organization Events
-                                <Link href="/doctors">See all</Link>
+                                <Link href="/events-list">See all</Link>
                             </h4>
                         </div>
                     </div>
@@ -200,7 +144,7 @@ export default function Events() {
                         <div className="col-12">
                             <h4 className="mainHeading">
                                 Our archives Events
-                                <Link href="/doctors">See all</Link>
+                                <Link href="/events-list">See all</Link>
                             </h4>
                         </div>
                     </div>
@@ -272,7 +216,7 @@ export default function Events() {
             </section>
             {/*animation metter*/}
 
-            {/*post section*/}
+            {/*Verify Certificate*/}
             <section>
                 <div className="cover-image sptb bg-background-color" data-image-src="../assets/images/banners/banner4.jpg">
                     <div className="content-text mb-0">
@@ -303,7 +247,7 @@ export default function Events() {
                     </div>
                 </div>
             </section>
-            {/*/post section*/}
+            {/*/Verify Certificate*/}
         </section>
     )
 }

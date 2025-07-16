@@ -15813,6 +15813,7 @@ a.chip:hover {
     height: 60px;
 }
 
+.product-filter-desc .product-filter-icons > *:not(:last-child){margin-right: 8px;}
 .product-filter-desc .product-filter-icons a {
     width: 2.5em;
     height: 2.5em;
@@ -24444,7 +24445,7 @@ body.fixed-header .header {
     border-radius: 3px;
 }
 
-.header-main{position: relative; z-index: 3;}
+.header-main{position: relative; z-index: 3; box-shadow: 0 2px 8px rgba(0,0,0,.15);}
 .header-main .top-bar .contact {
     padding-left: 0;
 }
