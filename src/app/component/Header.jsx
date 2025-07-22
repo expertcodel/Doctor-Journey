@@ -1,6 +1,6 @@
 "use client"
 import { useAuth } from "../../context/AuthContext"
-import { faFacebook, faGooglePlus, faLinkedin, faTwitter } from "@fortawesome/free-brands-svg-icons";
+import { faFacebook, faGooglePlus, faLinkedin, faTwitter, faWindows } from "@fortawesome/free-brands-svg-icons";
 import { faAnglesDown, faArrowAltCircleDown, faChevronDown, faClipboardCheck, faClipboardList, faHome, faList, faPowerOff, faSignIn, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
@@ -24,10 +24,23 @@ export default function Header() {
     // }
     const { user, logout} = useAuth();
     const pathName = usePathname();
+    const [userType, setUsertype] = useState({ 'readers': false, 'author': false, 'doctor': false, 'publisher': false, 'organization': false });
 
     const toggleMenu = () => {
         setIsMenuVisible(!isMenuVisible);
     }
+    useEffect(() => {
+        if (user) {
+
+            let usertype = { ...userType };
+            user.usertype.map((user) => {
+                usertype[user] = true;
+            })
+            setUsertype(usertype);
+
+        }
+
+    }, [user])
 
     return (
         <>
@@ -64,6 +77,81 @@ export default function Header() {
                             <div className="col-xl-5 col-lg-5 col-sm-8 col-5">
                                 <div className="top-bar-right">
                                     <ul className="custom">
+                                        {
+                                            user && (userType.doctor || userType.author || userType.publisher || userType.organization) && (
+                                                <li className="dropdown dashboardDropdown">
+                                                    <button className="btn btn-info p-0 dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <FontAwesomeIcon icon={faWindows} />
+                                                    </button>
+                                                    <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+                                                        {
+                                                            userType.doctor && (
+                                                                <li>
+                                                                    <a className="dropdown-item" href="#">
+                                                                        <figure>
+                                                                            <Image
+                                                                                src="/images/upgrade-icons/doctor.png"
+                                                                                className=""
+                                                                                alt="doctor" width={40} height={40}
+                                                                            />
+                                                                        </figure>
+                                                                        Doctor
+                                                                    </a>
+                                                                </li>
+                                                            )
+                                                        }
+                                                        {
+                                                            userType.author && (
+                                                                <li>
+                                                                    <a className="dropdown-item" href="#">
+                                                                        <figure>
+                                                                            <Image
+                                                                                src="/images/upgrade-icons/author.png"
+                                                                                className=""
+                                                                                alt="Author" width={40} height={40}
+                                                                            />
+                                                                        </figure>
+                                                                        Author
+                                                                    </a>
+                                                                </li>
+                                                            )
+                                                        }
+                                                        {
+                                                            userType.publisher && (
+                                                                <li>
+                                                                    <a className="dropdown-item" href="#">
+                                                                        <figure>
+                                                                            <Image
+                                                                                src="/images/upgrade-icons/publisher.png"
+                                                                                className=""
+                                                                                alt="Publisher" width={40} height={40}
+                                                                            />
+                                                                        </figure>
+                                                                        Publisher
+                                                                    </a>
+                                                                </li>
+                                                            )
+                                                        }
+                                                        {
+                                                            userType.organization && (
+                                                                <li>
+                                                                    <a className="dropdown-item" href="#">
+                                                                        <figure>
+                                                                            <Image
+                                                                                src="/images/upgrade-icons/organization.png"
+                                                                                className=""
+                                                                                alt="Organisation" width={40} height={40}
+                                                                            />
+                                                                        </figure>
+                                                                        Organisation
+                                                                    </a>
+                                                                </li>
+                                                            )
+                                                        }
+                                                    </ul>
+                                                </li>
+                                            )
+                                        }
                                         {
                                             user ? (
                                                 <li className="dropdown">
@@ -177,15 +265,6 @@ export default function Header() {
                                     </a>
                                 </li>
                                 <li>
-                                    <Link href="/"
-                                        className={`link ${pathName === '/' ? 'active' : ''
-                                            }`}
-                                        onClick={toggleMenu}
-                                    >
-                                        Home
-                                    </Link>
-                                </li>
-                                <li>
                                     <Link href="/about-us"
                                         className={`link ${pathName === '/about-us' ? 'active' : ''
                                             }`}
@@ -204,21 +283,21 @@ export default function Header() {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/journey"
-                                        className={`link ${pathName === '/journey' ? 'active' : ''
-                                            }`}
-                                        onClick={toggleMenu}
-                                    >
-                                        Journey
-                                    </Link>
-                                </li>
-                                <li>
                                     <Link href="/events"
                                         className={`link ${pathName === '/events' ? 'active' : ''
                                             }`}
                                         onClick={toggleMenu}
                                     >
                                         Events
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/blog"
+                                        className={`link ${pathName === '/blog' ? 'active' : ''
+                                            }`}
+                                        onClick={toggleMenu}
+                                    >
+                                        Blogs
                                     </Link>
                                 </li>
                                 <li>
@@ -229,61 +308,6 @@ export default function Header() {
                                     >
                                         Contact Us
                                     </Link>
-                                </li>
-                                <li className="dropdown dashboardDropdown">
-                                    <button className="btn btn-warning dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <FontAwesomeIcon icon={faList} />
-                                    </button>
-                                    <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
-                                        <li>
-                                            <a className="dropdown-item" href="#">
-                                                <figure>
-                                                    <Image
-                                                        src="/images/icons/doctor.png"
-                                                        className=""
-                                                        alt="doctor" width={40} height={40}
-                                                    />
-                                                </figure>
-                                                Doctor
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a className="dropdown-item" href="#">
-                                                <figure>
-                                                    <Image
-                                                        src="/images/icons/author.png"
-                                                        className=""
-                                                        alt="Author" width={40} height={40}
-                                                    />
-                                                </figure>
-                                                Author
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a className="dropdown-item" href="#">
-                                                <figure>
-                                                    <Image
-                                                        src="/images/icons/publisher.png"
-                                                        className=""
-                                                        alt="Publisher" width={40} height={40}
-                                                    />
-                                                </figure>
-                                                Publisher
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a className="dropdown-item" href="#">
-                                                <figure>
-                                                    <Image
-                                                        src="/images/icons/organisation.png"
-                                                        className=""
-                                                        alt="Organisation" width={40} height={40}
-                                                    />
-                                                </figure>
-                                                Organisation
-                                            </a>
-                                        </li>
-                                    </ul>
                                 </li>
                             </ul>
 

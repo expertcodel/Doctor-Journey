@@ -122,14 +122,10 @@ export default function Register({ countryList }) {
                 validateStatus: () => true
 
             }
-            console.log("Sending payload:", data);
-            console.log("API URL:", process.env.NEXT_PUBLIC_BASE_URL);
-            console.log("API KEY:", process.env.NEXT_PUBLIC_SECRET_KEY);
             setLoading(true)
             const res = await axios.request(option)
             setLoading(false);
             if (res.data.status === 1) {
-                console.log("Going to OTP Page with", email, name);
                 setMessage("");
                 // sessionStorage.setItem('data', JSON.stringify(data));
                 // sessionStorage.setItem('successMsg', 'User Profile Created Successfully');
