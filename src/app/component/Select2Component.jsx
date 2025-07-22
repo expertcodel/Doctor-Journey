@@ -5,7 +5,7 @@ import $ from "jquery";
 import "select2/dist/css/select2.min.css";
 import "select2/dist/js/select2.full.min.js";
 
-export default function Select2Component({ id, options, select2Options = {}, showSearch = false }) {
+export default function Select2Component({ id, options, select2Options = {}, showSearch = false, onChange, }) {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const $select = $(`#${id}`).select2({
@@ -34,6 +34,11 @@ export default function Select2Component({ id, options, select2Options = {}, sho
             $(".select2-container--open .select2-search--hide").removeClass("select2-search--hide");
           }, 10);
         }
+      });
+
+      $select.on("change", function (e) {
+        const selectedValue = $(this).val();
+        onChange?.(selectedValue); // ✅ optional call
       });
     }
 

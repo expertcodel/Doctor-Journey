@@ -5,7 +5,8 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Breadcrumb from "../../app/component/Breadcrumb";
 import axios from "axios";
-import OtpPage from '../component/OtpPage'
+import OtpPage from '../component/OtpPage';
+import Select2Component from "../component/Select2Component";
 export default function Register({ countryList }) {
     const { user, login } = useAuth();
     const router = useRouter();
@@ -23,6 +24,10 @@ export default function Register({ countryList }) {
     const nameRegex = /^[A-Za-z\s]{2,}$/;
     const phoneRegex = /^\d{10}$/;
     const [otpPage, setOtppage] = useState(false);
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [selectedCountryValue, setSelectedCountryValue] = useState("");
+
+
 
     useEffect(() => {
         if (user) {
@@ -35,7 +40,8 @@ export default function Register({ countryList }) {
         document.getElementById("email").value = "";
         document.getElementById("password").value = "";
         document.getElementById("phoneNumber").value = "";
-        //document.getElementById("country").value = "";
+        // document.getElementById("country").value = "";
+        document.getElementById("confirmPassword").value = "";
     }, []);
 
     // Function to validate inputs
@@ -67,6 +73,15 @@ export default function Register({ countryList }) {
             isValid = false;
         }
 
+        if (!confirmPassword.trim()) {
+            newErrors.confirmPassword = "Confirm Password is required";
+            isValid = false;
+        } else if (password !== confirmPassword) {
+            newErrors.confirmPassword = "Passwords do not match";
+            isValid = false;
+        }
+
+
         if (!phoneNumber.trim()) {
             newErrors.phoneNumber = "Phone number is required";
             isValid = false;
@@ -75,7 +90,7 @@ export default function Register({ countryList }) {
             isValid = false;
         }
 
-        if (country.trim() === "") {
+        if (!selectedCountryValue) {
             newErrors.country = "Country is required";
             isValid = false;
         }
@@ -91,7 +106,6 @@ export default function Register({ countryList }) {
 
 
         try {
-
             const data = { name: name.trim().toLowerCase(), email: email.trim().toLowerCase(), password: password.trim(), number: phoneNumber.trim(), country, countryCode }
 
             const option = {
@@ -104,14 +118,18 @@ export default function Register({ countryList }) {
                     'api_key': process.env.NEXT_PUBLIC_SECRET_KEY,
                     'Content-Type': 'application/json'
 
-                }
+                },
+                validateStatus: () => true
 
             }
+            console.log("Sending payload:", data);
+            console.log("API URL:", process.env.NEXT_PUBLIC_BASE_URL);
+            console.log("API KEY:", process.env.NEXT_PUBLIC_SECRET_KEY);
             setLoading(true)
             const res = await axios.request(option)
             setLoading(false);
             if (res.data.status === 1) {
-
+                console.log("Going to OTP Page with", email, name);
                 setMessage("");
                 // sessionStorage.setItem('data', JSON.stringify(data));
                 // sessionStorage.setItem('successMsg', 'User Profile Created Successfully');
@@ -128,7 +146,8 @@ export default function Register({ countryList }) {
 
 
         } catch (error) {
-            console.error("Error sending OTP:", error);
+            // console.error("Error sending OTP:", error);
+            console.error("Error sending OTP:", error?.response?.data || error.message);
         }
     };
 
@@ -138,9 +157,11 @@ export default function Register({ countryList }) {
             if (field === "email") setEmail(value);
             if (field === "password") setPassword(value);
             if (field === "phoneNumber") setPhoneNumber(value);
+            if (field === "confirmPassword") setConfirmPassword(value);
             // console.log(JSON.parse(value).country,"count");
 
             if (field === "country") {
+                setSelectedCountryValue(value);
                 setCountry(JSON.parse(value).country);
                 setCountrycode(JSON.parse(value).countryCode);
             }
@@ -165,8 +186,12 @@ export default function Register({ countryList }) {
         if (field === "phoneNumber" && phoneNumber.trim() && !phoneRegex.test(phoneNumber)) {
             newErrors.phoneNumber = "Phone number must be at least 10 characters";
         }
+        if (field === "confirmPassword" && confirmPassword && password !== confirmPassword) {
+            newErrors.confirmPassword = "Passwords do not match";
+        }
         setErrors(newErrors);
     };
+
 
     return (
         <>
@@ -187,6 +212,7 @@ export default function Register({ countryList }) {
                                                 onChange={(e) => handleInputChange("name", e.target.value)}
                                                 onBlur={() => handleBlur("name")}
                                                 autoComplete="off"
+                                                placeholder="Enter Name"
                                             />
                                             <label>Full name</label>
                                             {errors.name && <p className="text-danger text-start mt-2">{errors.name}</p>}
@@ -197,6 +223,7 @@ export default function Register({ countryList }) {
                                                 onChange={(e) => handleInputChange("email", e.target.value)}
                                                 onBlur={() => handleBlur("email")}
                                                 autoComplete="off"
+                                                placeholder="Enter Email"
                                             />
                                             <label>Email Id</label>
                                             {errors.email && <p className="text-danger text-start mt-2">{errors.email}</p>}
@@ -207,24 +234,52 @@ export default function Register({ countryList }) {
                                                 onChange={(e) => handleInputChange("password", e.target.value)}
                                                 onBlur={() => handleBlur("password")}
                                                 autoComplete="new-password"
+                                                placeholder="Enter Password"
                                             />
                                             <label>Password</label>
                                             {errors.password && <p className="text-danger text-start mt-2">{errors.password}</p>}
                                         </div>
-                                        <div className="country">
-                                            <select
-                                                id="country"
-                                                // value={country}
-                                                onChange={(e) => handleInputChange("country", e.target.value)}
-                                                onBlur={() => handleBlur("country")}
-                                                autoComplete="new-country"
-                                            >
-                                                <option value={JSON.stringify({ country: "", countryCode: "" })} selected={country === "" ? true : false}>Select Country</option>
-                                                {countryList.map((item, i) => <option value={JSON.stringify({ country: item.name, countryCode: item.phonecode })} key={i} selected={country === item.name ? true : false}>{item.name}</option>)}
+                                        <div className="passwd">
+                                            <input
+                                                type="password"
+                                                value={confirmPassword}
+                                                id="confirmPassword"
+                                                onChange={(e) => handleInputChange("confirmPassword", e.target.value)}
+                                                onBlur={() => handleBlur("confirmPassword")}
+                                                autoComplete="new-password"
+                                                placeholder="Confirm Password"
+                                            />
+                                            <label>Confirm Password</label>
+                                            {errors.confirmPassword && <p className="text-danger text-start mt-2">{errors.confirmPassword}</p>}
+                                        </div>
 
-                                                {/* Add more countries as needed */}
-                                            </select>
+                                        <div className="country">
                                             <label>Country</label>
+                                            <Select2Component
+                                                id="country"
+                                                value={selectedCountryValue} // ✅ controlled value
+                                                options={countryList.map((item) => ({
+                                                    value: JSON.stringify({ country: item.name, countryCode: item.phonecode }),
+                                                    label: item.name,
+                                                }))}
+                                                select2Options={{ placeholder: "Select Country", allowClear: true }}
+                                                showSearch={true}
+                                                onChange={(value) => {
+                                                    if (value) {
+                                                    const parsed = JSON.parse(value);
+                                                    setSelectedCountryValue(value); // ✅ save the full string
+                                                    setCountry(parsed.country);
+                                                    setCountrycode(parsed.countryCode);
+                                                    setErrors((prevErrors) => ({ ...prevErrors, country: "" }));
+                                                    } else {
+                                                    setSelectedCountryValue("");
+                                                    setCountry("");
+                                                    setCountrycode("");
+                                                    }
+                                                }}
+                                                onBlur={() => handleBlur("country")}
+                                            />
+
                                             {errors.country && <p className="text-danger text-start mt-2">{errors.country}</p>}
                                         </div>
 
@@ -241,6 +296,7 @@ export default function Register({ countryList }) {
                                                 onBlur={() => handleBlur("phoneNumber")}
                                                 autoComplete="new-phoneNumber"
                                                 maxLength={10}
+                                                placeholder="Enter Pnone Number"
                                             />
                                             <label>Phone Number</label>
                                             {errors.phoneNumber && <p className="text-danger text-start mt-2">{errors.phoneNumber}</p>}

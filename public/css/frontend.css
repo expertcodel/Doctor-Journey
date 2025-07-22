@@ -37194,8 +37194,9 @@ select.form-control:focus::-ms-value {
 }
 
 .select2-results__option {
-    font-size: 13px;
+    font-size: 13px; text-transform: lowercase;
 }
+.select2-results__option::first-letter{text-transform: uppercase;}
 
 .my-select .select2-container--default .select2-selection--single .select2-selection__arrow {
     height: 100%;
@@ -37232,7 +37233,11 @@ select.form-control:focus::-ms-value {
 }
 
 .select2-container .select2-selection--single .select2-selection__rendered {
-    padding-right: 30px !important;
+    padding-right: 30px !important; padding-left: 0.95rem; text-align: left; text-transform: lowercase;
+}
+.select2-container .select2-selection--single .select2-selection__rendered::first-letter{text-transform: uppercase;}
+.select2-container .select2-selection--single .select2-selection__rendered .select2-selection__placeholder{
+    color: #7e7e7e;
 }
 
 .top-bar .select-country .select2-container--default .select2-selection--single .select2-selection__arrow b {
