@@ -4,7 +4,7 @@ import Link from "next/link";
 import Breadcrumb from "../../app/component/Breadcrumb";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCreditCard, faEuro, faEuroSign, faStar } from "@fortawesome/free-solid-svg-icons";
+import { faBarsStaggered, faCreditCard, faEuro, faEuroSign, faStar } from "@fortawesome/free-solid-svg-icons";
 import Select2Component from "../../app/component/Select2Component";
 import ThumbnailSearchCarousel from "../../app/component/ThumbnailSearchCarousel";
 import ThumbnailSponsorCarousel from "../../app/component/ThumbnailSponsorCarousel";
@@ -12,7 +12,7 @@ import ThumbnailBlogsCarousel from "../../app/component/ThumbnailBlogsCarousel";
 import TestimonialsCarousel from "../../app/component/Testimonials";
 import JournalsThumbCarousel from "../component/JournalsThumbCarousel";
 //  import doctorProfile from "@/data/doctorProfile.json";
-
+import RangeSlider from "./RangeSlider";
 export default function JournalActivity({ journalCard, totalItems }) {
 
 
@@ -58,7 +58,6 @@ setIdx(1);
     return (
         <section>
             {/*Breadcrumb*/}
-            {/* <Breadcrumb title="Journals Activities" /> */}
 
             <section className="cover-image sptb-1 bg-background2"
                 data-image-src="../assets/images/banners/banner1.jpg">
@@ -115,6 +114,143 @@ setIdx(1);
             {/* users JOURNEY */}
             <section className="sectionSpace sptb bg-white">
                 <div className="container">
+
+                    <div className="row">
+                        <div className="col-12 item2-gl">
+                            <div className="p-md-5 p-3 bg-white item2-gl-nav d-sm-flex d-block">
+                                <h6 className="mb-0 mt-3">
+                                    Showing <b>1 to 10</b> of 30 Entries
+                                </h6>
+                                <ul className="nav item2-gl-menu mt-1 ms-auto">
+                                    {/* <li className="d-flex align-items-center">
+                                        <button className="active" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                                            <FontAwesomeIcon className="active" icon={faBarsStaggered} /> FIlter
+                                        </button>
+                                    </li> */}
+                                </ul>
+                                <div className="d-flex align-items-center">
+                                    <span className="customFilter">
+                                        <button className="active" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                                            <FontAwesomeIcon className="active" icon={faBarsStaggered} /> FIlter
+                                        </button>
+                                    </span>
+                                    <label className="me-2 mt-2 mb-sm-1">Sort By:</label>
+                                    <Select2Component id="select1" options={[{ value: "1", label: "Relavant" }, { value: "2", label: "Newest First" }, { value: "3", label: "Highest Paid" }, { value: "4", label: "Lowest Paid" }, { value: "5", label: "High Ratings" }, {
+                                        value: "6", label:
+                                            "Popular"
+                                    },]} select2Options={{ placeholder: "Select a fruit", allowClear: true }} showSearch={false} />
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div className="offcanvas offcanvas-end filterMainSec" tabIndex={-1} id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+                            <div className="offcanvas-header">
+                                <h5 id="offcanvasRightLabel">Select Filter</h5>
+                                <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close" />
+                            </div>
+                            <div className="offcanvas-body">
+                                <div className="card">
+                                    <div className="card-header">
+                                        <h3 className="card-title">Specialization</h3>
+                                    </div>
+                                    <div className="card-body">
+                                        <div className="" id="container">
+                                            <div className="filter-product-checkboxs">
+                                                <label className="custom-control form-checkbox mb-3">
+                                                    <input type="checkbox" className="custom-control-input" name="checkbox1" defaultValue="option1" />
+                                                    <span className="custom-control-label">
+                                                        Cardiacsurgeon
+                                                        <span className="label label-secondary float-end">
+                                                            14
+                                                        </span>
+                                                    </span>
+                                                </label>
+                                                <label className="custom-control form-checkbox mb-3">
+                                                    <input type="checkbox" className="custom-control-input" name="checkbox2" defaultValue="option2" />
+                                                    <span className="custom-control-label">
+                                                        Dermatologist
+                                                        <span className="label label-secondary float-end">
+                                                            14
+                                                        </span>
+                                                    </span>
+                                                </label>
+                                                <label className="custom-control form-checkbox mb-3">
+                                                    <input type="checkbox" className="custom-control-input" name="checkbox3" defaultValue="option3" />
+                                                    <span className="custom-control-label">
+                                                        Gastroenterologist
+                                                        <span className="label label-secondary float-end">
+                                                            10
+                                                        </span>
+                                                    </span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="card-header border-top">
+                                        <h3 className="card-title">Views</h3>
+                                    </div>
+                                    <div className="card-body">
+                                        <h6>
+                                            <label htmlFor="price">Views:</label>
+                                            <RangeSlider />
+                                        </h6>
+                                        {/* <div id="mySlider" /> */}
+                                    </div>
+                                    <div className="card-header border-top">
+                                        <h3 className="card-title">Rating</h3>
+                                    </div>
+                                    <div className="card-body">
+                                        <div className="filter-product-checkboxs">
+                                            <label className="custom-control form-checkbox mb-2">
+                                                <input type="checkbox" className="custom-control-input" name="checkbox1" defaultValue="option1" />
+                                                <span className="custom-control-label">Any</span>
+                                            </label>
+                                            <label className="custom-control form-checkbox mb-2">
+                                                <input type="checkbox" className="custom-control-input" name="checkbox2" defaultValue="option2" />
+                                                <span className="custom-control-label">3.5</span>
+                                            </label>
+                                            <label className="custom-control form-checkbox mb-2">
+                                                <input type="checkbox" className="custom-control-input" name="checkbox2" defaultValue="option2" />
+                                                <span className="custom-control-label">4.0</span>
+                                            </label>
+                                            <label className="custom-control form-checkbox mb-0">
+                                                <input type="checkbox" className="custom-control-input" name="checkbox2" defaultValue="option2" />
+                                                <span className="custom-control-label">4.5</span>
+                                            </label>
+                                            <label className="custom-control form-checkbox mb-0">
+                                                <input type="checkbox" className="custom-control-input" name="checkbox2" defaultValue="option2" />
+                                                <span className="custom-control-label">5</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div className="card-header border-top">
+                                        <h3 className="card-title">Location</h3>
+                                    </div>
+                                    <div className="card-body">
+                                        <div className="filter-product-checkboxs">
+                                            <label className="custom-control form-checkbox mb-2">
+                                                <input type="checkbox" className="custom-control-input" name="checkbox1" defaultValue="option1" />
+                                                <span className="custom-control-label">Delhi</span>
+                                            </label>
+                                            <label className="custom-control form-checkbox mb-2">
+                                                <input type="checkbox" className="custom-control-input" name="checkbox2" defaultValue="option2" />
+                                                <span className="custom-control-label">Noida</span>
+                                            </label>
+                                            <label className="custom-control form-checkbox mb-2">
+                                                <input type="checkbox" className="custom-control-input" name="checkbox2" defaultValue="option2" />
+                                                <span className="custom-control-label">Gurugram</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div className="card-footer">
+                                        <button type="submit" className="btn btn-warning btn-block">
+                                            Apply Filter
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <div className="row g-3">
                         {/* jrLargeCard */}

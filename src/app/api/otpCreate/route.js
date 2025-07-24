@@ -95,7 +95,11 @@ export async function POST(request) {
     const usermodel = await UserModel();
     const isExisteduser = await usermodel.findOne({ where: { email } });
     if (isExisteduser) {
-        return NextResponse.json({ status: 0, message: "User already existed!" });
+        return NextResponse.json({ status: 0, message: "This email id is already exist!" });
+    }
+    const isExisteduserMobile = await usermodel.findOne({ where: { mobile_number: number } });
+    if (isExisteduserMobile) {
+        return NextResponse.json({ status: 0, message: "This number is already exist!" });
     }
 
     const otp = generateOtp();

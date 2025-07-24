@@ -7,6 +7,9 @@ import Breadcrumb from "../../app/component/Breadcrumb";
 import axios from "axios";
 import OtpPage from '../component/OtpPage';
 import Select2Component from "../component/Select2Component";
+import Image from "next/image";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 export default function Register({ countryList }) {
     const { user, login } = useAuth();
     const router = useRouter();
@@ -26,6 +29,8 @@ export default function Register({ countryList }) {
     const [otpPage, setOtppage] = useState(false);
     const [confirmPassword, setConfirmPassword] = useState("");
     const [selectedCountryValue, setSelectedCountryValue] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
+    const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
 
 
 
@@ -197,126 +202,164 @@ export default function Register({ countryList }) {
             {/*Login-Section*/}
             {!otpPage ? <section className="sptb loginSec">
                 <div className="container customerpage">
-                    <div className="row">
-                        <div className="single-page">
-                            <div className="col-md-4 d-block mx-auto">
-                                <div className="wrapper wrapper2 border">
-                                    <form id="login" autoComplete="off" noValidate className="card-body" tabIndex={500} onSubmit={handleRegister}>
-                                        <div className="mail">
-                                            <input type="text" value={name}
-                                                id="name"
-                                                onChange={(e) => handleInputChange("name", e.target.value)}
-                                                onBlur={() => handleBlur("name")}
-                                                autoComplete="off"
-                                                placeholder="Enter Name"
-                                            />
-                                            <label>Full name</label>
-                                            {errors.name && <p className="text-danger text-start mt-2">{errors.name}</p>}
+                    <div className="card border-light-subtle shadow-sm">
+                        <div className="row g-0">
+                            <div className="col-12 col-md-6 pe-md-0">
+                                <div className="leftSec text-bg-primary">
+                                    <div className="d-flex align-items-center justify-content-center h-100">
+                                        <div className="col-11 text-center py-3">
+                                            <Image className="img-fluid rounded mb-4 d-block m-auto" loading="lazy" src="/images/login-process.png" width={300} height={300} alt="Login Process" />
+                                            <hr className="border-primary-subtle mb-4" />
+                                            <h3 className="h1 mb-4">
+                                                We make digital products that drive you to stand out.
+                                            </h3>
+                                            <p className="lead m-0">
+                                                We write words, take photos, make videos, and interact with artificial intelligence.
+                                            </p>
                                         </div>
-                                        <div className="mail">
-                                            <input type="text" value={email}
-                                                id="email"
-                                                onChange={(e) => handleInputChange("email", e.target.value)}
-                                                onBlur={() => handleBlur("email")}
-                                                autoComplete="off"
-                                                placeholder="Enter Email"
-                                            />
-                                            <label>Email Id</label>
-                                            {errors.email && <p className="text-danger text-start mt-2">{errors.email}</p>}
-                                        </div>
-                                        <div className="passwd">
-                                            <input type="password" value={password}
-                                                id="password"
-                                                onChange={(e) => handleInputChange("password", e.target.value)}
-                                                onBlur={() => handleBlur("password")}
-                                                autoComplete="new-password"
-                                                placeholder="Enter Password"
-                                            />
-                                            <label>Password</label>
-                                            {errors.password && <p className="text-danger text-start mt-2">{errors.password}</p>}
-                                        </div>
-                                        <div className="passwd">
-                                            <input
-                                                type="password"
-                                                value={confirmPassword}
-                                                id="confirmPassword"
-                                                onChange={(e) => handleInputChange("confirmPassword", e.target.value)}
-                                                onBlur={() => handleBlur("confirmPassword")}
-                                                autoComplete="new-password"
-                                                placeholder="Confirm Password"
-                                            />
-                                            <label>Confirm Password</label>
-                                            {errors.confirmPassword && <p className="text-danger text-start mt-2">{errors.confirmPassword}</p>}
-                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                                        <div className="country">
-                                            <label>Country</label>
-                                            <Select2Component
-                                                id="country"
-                                                value={selectedCountryValue} // ✅ controlled value
-                                                options={countryList.map((item) => ({
-                                                    value: JSON.stringify({ country: item.name, countryCode: item.phonecode }),
-                                                    label: item.name,
-                                                }))}
-                                                select2Options={{ placeholder: "Select Country", allowClear: true }}
-                                                showSearch={true}
-                                                onChange={(value) => {
-                                                    if (value) {
-                                                    const parsed = JSON.parse(value);
-                                                    setSelectedCountryValue(value); // ✅ save the full string
-                                                    setCountry(parsed.country);
-                                                    setCountrycode(parsed.countryCode);
-                                                    setErrors((prevErrors) => ({ ...prevErrors, country: "" }));
-                                                    } else {
-                                                    setSelectedCountryValue("");
-                                                    setCountry("");
-                                                    setCountrycode("");
-                                                    }
-                                                }}
-                                                onBlur={() => handleBlur("country")}
-                                            />
+                            <div className="col-md-6 col-12 ps-md-0">
+                                <div className="rightSec single-page">
+                                    <div className="wrapper wrapper2">
+                                        <form id="login" autoComplete="off" noValidate className="card-body" tabIndex={500} onSubmit={handleRegister}>
+                                            <h3 className="pb-2">Register</h3>
+                                            <div className="mail">
+                                                <input type="text" value={name}
+                                                    id="name"
+                                                    onChange={(e) => handleInputChange("name", e.target.value)}
+                                                    onBlur={() => handleBlur("name")}
+                                                    autoComplete="off"
+                                                    placeholder="Enter Name"
+                                                />
+                                                <label>Full name</label>
+                                                {errors.name && <p className="text-danger text-start mt-2">{errors.name}</p>}
+                                            </div>
+                                            <div className="mail">
+                                                <input type="text" value={email}
+                                                    id="email"
+                                                    onChange={(e) => handleInputChange("email", e.target.value)}
+                                                    onBlur={() => handleBlur("email")}
+                                                    autoComplete="off"
+                                                    placeholder="Enter Email"
+                                                />
+                                                <label>Email Id</label>
+                                                {errors.email && <p className="text-danger text-start mt-2">{errors.email}</p>}
+                                            </div>
+                                            <div className="passwd">
+                                                <input type={showPassword ? "text" :"password"} value={password}
+                                                    id="password"
+                                                    onChange={(e) => handleInputChange("password", e.target.value)}
+                                                    onBlur={() => handleBlur("password")}
+                                                    autoComplete="new-password"
+                                                    placeholder="Enter Password"
+                                                />
+                                                {
+                                                    password && (
+                                                    <span className="eyeIconPass"
+                                                        onClick={() => setShowPassword(!showPassword)}
+                                                    >
+                                                        {showPassword ? <FontAwesomeIcon icon={faEyeSlash} /> : <FontAwesomeIcon icon={faEye} />}
+                                                    </span>
+                                                    )
+                                                }
+                                                <label>Password</label>
+                                                {errors.password && <p className="text-danger text-start mt-2">{errors.password}</p>}
+                                            </div>
+                                            <div className="passwd">
+                                                <input
+                                                    type={showPasswordConfirm ? "text" :"password"}
+                                                    value={confirmPassword}
+                                                    id="confirmPassword"
+                                                    onChange={(e) => handleInputChange("confirmPassword", e.target.value)}
+                                                    onBlur={() => handleBlur("confirmPassword")}
+                                                    autoComplete="new-password"
+                                                    placeholder="Confirm Password"
+                                                />
+                                                {
+                                                    confirmPassword && (
+                                                    <span className="eyeIconPass"
+                                                        onClick={() => setShowPasswordConfirm(!showPasswordConfirm)}
+                                                    >
+                                                        {showPasswordConfirm ? <FontAwesomeIcon icon={faEyeSlash} /> : <FontAwesomeIcon icon={faEye} />}
+                                                    </span>
+                                                    )
+                                                }
+                                                <label>Confirm Password</label>
+                                                {errors.confirmPassword && <p className="text-danger text-start mt-2">{errors.confirmPassword}</p>}
+                                            </div>
 
-                                            {errors.country && <p className="text-danger text-start mt-2">{errors.country}</p>}
-                                        </div>
+                                            <div className="country">
+                                                <label>Country</label>
+                                                <Select2Component
+                                                    id="country"
+                                                    value={selectedCountryValue} // ✅ controlled value
+                                                    options={countryList.map((item) => ({
+                                                        value: JSON.stringify({ country: item.name, countryCode: item.phonecode }),
+                                                        label: item.name,
+                                                    }))}
+                                                    select2Options={{ placeholder: "Select Country", allowClear: true }}
+                                                    showSearch={true}
+                                                    onChange={(value) => {
+                                                        if (value) {
+                                                        const parsed = JSON.parse(value);
+                                                        setSelectedCountryValue(value); // ✅ save the full string
+                                                        setCountry(parsed.country);
+                                                        setCountrycode(parsed.countryCode);
+                                                        setErrors((prevErrors) => ({ ...prevErrors, country: "" }));
+                                                        } else {
+                                                        setSelectedCountryValue("");
+                                                        setCountry("");
+                                                        setCountrycode("");
+                                                        }
+                                                    }}
+                                                    onBlur={() => handleBlur("country")}
+                                                />
+
+                                                {errors.country && <p className="text-danger text-start mt-2">{errors.country}</p>}
+                                            </div>
 
 
-                                        <div className="phoneNumber">
-                                            <input type="tel" value={phoneNumber}
-                                                id="phoneNumber"
-                                                onChange={(e) => {
-                                                    const onlyNums = e.target.value.replace(/\D/g, "");
-                                                    if (onlyNums.length <= 10) {
-                                                        handleInputChange("phoneNumber", onlyNums);
-                                                    }
-                                                }}
-                                                onBlur={() => handleBlur("phoneNumber")}
-                                                autoComplete="new-phoneNumber"
-                                                maxLength={10}
-                                                placeholder="Enter Pnone Number"
-                                            />
-                                            <label>Phone Number</label>
-                                            {errors.phoneNumber && <p className="text-danger text-start mt-2">{errors.phoneNumber}</p>}
-                                        </div>
+                                            <div className="phoneNumber">
+                                                <input type="tel" value={phoneNumber}
+                                                    id="phoneNumber"
+                                                    onChange={(e) => {
+                                                        const onlyNums = e.target.value.replace(/\D/g, "");
+                                                        if (onlyNums.length <= 10) {
+                                                            handleInputChange("phoneNumber", onlyNums);
+                                                        }
+                                                    }}
+                                                    onBlur={() => handleBlur("phoneNumber")}
+                                                    autoComplete="new-phoneNumber"
+                                                    maxLength={10}
+                                                    placeholder="Enter Pnone Number"
+                                                />
+                                                <label>Phone Number</label>
+                                                {errors.phoneNumber && <p className="text-danger text-start mt-2">{errors.phoneNumber}</p>}
+                                            </div>
 
-                                        <div className="submit">
+                                            <div className="submit">
 
-                                            <button className="btn btn-primary btn-block" type="submit">
-                                                {loading ? <div className="spinner-border text-white" role="status">
-                                                    <span className="visually-hidden">Loading...</span>
-                                                </div> : 'Register'}
-                                            </button>
-                                            {
-                                                Message !== "" && <div className="text-danger text-start mt-2">{Message}</div>
-                                            }
+                                                <button className="btn btn-primary btn-block" type="submit">
+                                                    {loading ? <div className="spinner-border text-white" role="status">
+                                                        <span className="visually-hidden">Loading...</span>
+                                                    </div> : 'Register'}
+                                                </button>
+                                                {
+                                                    Message !== "" && <div className="text-danger text-start mt-2">{Message}</div>
+                                                }
 
-                                        </div>
-                                        <p className="text-dark mb-0">
-                                            Do you have account?
-                                            <Link href="/login" className="text-primary ms-1">
-                                                Login
-                                            </Link>
-                                        </p>
-                                    </form>
+                                            </div>
+                                            <p className="text-dark mb-0">
+                                                Do you have account?
+                                                <Link href="/login" className="text-primary ms-1">
+                                                    Login
+                                                </Link>
+                                            </p>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>

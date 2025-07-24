@@ -141,7 +141,7 @@ export default function VideoList({ doctorCard, totalItems }) {
                             <div className="offcanvas-body">
                                 <div className="card">
                                     <div className="card-header">
-                                        <h3 className="card-title">Cuisines</h3>
+                                        <h3 className="card-title">Specialization</h3>
                                     </div>
                                     <div className="card-body">
                                         <div className="" id="container">
@@ -149,7 +149,7 @@ export default function VideoList({ doctorCard, totalItems }) {
                                                 <label className="custom-control form-checkbox mb-3">
                                                     <input type="checkbox" className="custom-control-input" name="checkbox1" defaultValue="option1" />
                                                     <span className="custom-control-label">
-                                                        South Indian
+                                                        Cardiacsurgeon
                                                         <span className="label label-secondary float-end">
                                                             14
                                                         </span>
@@ -158,16 +158,16 @@ export default function VideoList({ doctorCard, totalItems }) {
                                                 <label className="custom-control form-checkbox mb-3">
                                                     <input type="checkbox" className="custom-control-input" name="checkbox2" defaultValue="option2" />
                                                     <span className="custom-control-label">
-                                                        North Indian
+                                                        Dermatologist
                                                         <span className="label label-secondary float-end">
                                                             14
                                                         </span>
                                                     </span>
                                                 </label>
                                                 <label className="custom-control form-checkbox mb-3">
-                                                    <input type="checkbox" className="custom-control-input" name="checkbox2" defaultValue="option2" />
+                                                    <input type="checkbox" className="custom-control-input" name="checkbox3" defaultValue="option3" />
                                                     <span className="custom-control-label">
-                                                        African
+                                                        Gastroenterologist
                                                         <span className="label label-secondary float-end">
                                                             10
                                                         </span>
@@ -177,11 +177,11 @@ export default function VideoList({ doctorCard, totalItems }) {
                                         </div>
                                     </div>
                                     <div className="card-header border-top">
-                                        <h3 className="card-title">Price Range</h3>
+                                        <h3 className="card-title">Views</h3>
                                     </div>
                                     <div className="card-body">
                                         <h6>
-                                            <label htmlFor="price">Price Range:</label>
+                                            <label htmlFor="price">Views:</label>
                                             <RangeSlider />
                                         </h6>
                                         {/* <div id="mySlider" /> */}
@@ -214,41 +214,21 @@ export default function VideoList({ doctorCard, totalItems }) {
                                         </div>
                                     </div>
                                     <div className="card-header border-top">
-                                        <h3 className="card-title">More Filters</h3>
+                                        <h3 className="card-title">Location</h3>
                                     </div>
                                     <div className="card-body">
                                         <div className="filter-product-checkboxs">
                                             <label className="custom-control form-checkbox mb-2">
                                                 <input type="checkbox" className="custom-control-input" name="checkbox1" defaultValue="option1" />
-                                                <span className="custom-control-label">Wheelchair Accessible</span>
+                                                <span className="custom-control-label">Delhi</span>
                                             </label>
                                             <label className="custom-control form-checkbox mb-2">
                                                 <input type="checkbox" className="custom-control-input" name="checkbox2" defaultValue="option2" />
-                                                <span className="custom-control-label">Credit Card</span>
+                                                <span className="custom-control-label">Noida</span>
                                             </label>
                                             <label className="custom-control form-checkbox mb-2">
                                                 <input type="checkbox" className="custom-control-input" name="checkbox2" defaultValue="option2" />
-                                                <span className="custom-control-label">Buffet</span>
-                                            </label>
-                                            <label className="custom-control form-checkbox mb-2">
-                                                <input type="checkbox" className="custom-control-input" name="checkbox3" defaultValue="option3" />
-                                                <span className="custom-control-label">Sunday Brunch</span>
-                                            </label>
-                                            <label className="custom-control form-checkbox mb-2">
-                                                <input type="checkbox" className="custom-control-input" name="checkbox4" defaultValue="option4" />
-                                                <span className="custom-control-label">Desserts and Bakes</span>
-                                            </label>
-                                            <label className="custom-control form-checkbox mb-2">
-                                                <input type="checkbox" className="custom-control-input" name="checkbox5" defaultValue="option5" />
-                                                <span className="custom-control-label">Cafés</span>
-                                            </label>
-                                            <label className="custom-control form-checkbox mb-2">
-                                                <input type="checkbox" className="custom-control-input" name="checkbox6" defaultValue="option6" />
-                                                <span className="custom-control-label">Online bookings</span>
-                                            </label>
-                                            <label className="custom-control form-checkbox mb-2">
-                                                <input type="checkbox" className="custom-control-input" name="checkbox7" defaultValue="option7" />
-                                                <span className="custom-control-label">Hygiene Rated</span>
+                                                <span className="custom-control-label">Gurugram</span>
                                             </label>
                                         </div>
                                     </div>
@@ -280,21 +260,14 @@ export default function VideoList({ doctorCard, totalItems }) {
                                             </Link>
                                             <div className="ms-auto">
 
-                                                <span> <DaysCalculator targetDate={card.publishedDate} today={new Date().toLocaleDateString()} /></span>
-                                                {/* <span></span> */}
+                                                <span className="me-2"> <DaysCalculator targetDate={card.publishedDate} today={new Date().toLocaleDateString()} /></span>
+                                                <span> <FontAwesomeIcon icon={faEye} /> {card.views}</span>
                                             </div>
                                         </div>
 
                                         <p>{card.specialization}</p>
                                         <div className="item7-card-desc d-flex">
                                             <span>{card.videoTitle}</span>
-                                        </div>
-                                        <div className="item7-card-desc d-flex">
-                                            <div className="ms-auto">
-
-                                                <span className="me-0"> <FontAwesomeIcon icon={faEye} /> {card.views}</span>
-
-                                            </div>
                                         </div>
                                     </div>
                                 </div>

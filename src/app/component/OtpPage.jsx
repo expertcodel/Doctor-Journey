@@ -5,6 +5,7 @@ import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import Image from "next/image";
 
 export default function OtpPage({ name, email }) {
     // const [email, setEmail] = useState("");
@@ -203,67 +204,86 @@ export default function OtpPage({ name, email }) {
             {/*Login-Section*/}
             <section className="sptb loginSec otpScreen">
                 <div className="container customerpage">
-                    <div className="row">
-                        <div className="single-page">
-                            <div className="col-md-4 d-block mx-auto">
-                                <div className="wrapper wrapper2 border">
-                                    <h4 class="otpMSZ">
-                                        We have sent you the OTP on email: <span>{email || "—"}</span>
-                                    </h4>
-                                    <form autoComplete="off" noValidate className="card-body" tabIndex={500} onSubmit={handleVerify}>
-                                        <div className="country">
-                                            <label>
-                                                Enter Email OTP
-                                                {
-                                                    !showEmailResend ? (
-                                                        <span>{`0:${emailTimer.toString().padStart(2, "0")}`}</span>
-                                                    ) : (
-                                                        <span
-                                                            className="resendBtn"
-                                                            onClick={handleResendEmailOtp}
-                                                        >
-                                                            Resend OTP
-                                                        </span>
-                                                    )
-                                                }
-                                            </label>
-                                            <div className="d-flex gap-2 mb-3">
-                                                {emailOtp.map((digit, i) => (
-                                                    <input
-                                                        key={i}
-                                                        type="text"
-                                                        maxLength={1}
-                                                        className="otp-box"
-                                                        value={digit}
-                                                        ref={(el) => (emailRefs.current[i] = el)}
-                                                        onChange={(e) => handleInputChange("email", i, e.target.value)}
-                                                        onKeyDown={(e) => {
-                                                            if (e.key === "Backspace" && !digit && i > 0) {
-                                                                emailRefs.current[i - 1].focus();
-                                                            }
-                                                        }}
-                                                    />
-                                                ))}
+                    <div className="card border-light-subtle shadow-sm">
+                        <div className="row g-0">
+                            <div className="col-12 col-md-6 pe-md-0">
+                                <div className="leftSec text-bg-primary">
+                                    <div className="d-flex align-items-center justify-content-center h-100">
+                                        <div className="col-11 text-center py-3">
+                                            <Image className="img-fluid rounded mb-4 d-block m-auto" loading="lazy" src="/images/login-process.png" width={300} height={300} alt="Login Process" />
+                                            <hr className="border-primary-subtle mb-4" />
+                                            <h3 className="h1 mb-4">
+                                                We make digital products that drive you to stand out.
+                                            </h3>
+                                            <p className="lead m-0">
+                                                We write words, take photos, make videos, and interact with artificial intelligence.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="col-md-6 col-12 ps-md-0">
+                                <div className="rightSec single-page">
+                                    <div className="wrapper wrapper2">
+                                        <h4 className="otpMSZ">
+                                            We have sent you the OTP on email: <span>{email || "—"}</span>
+                                        </h4>
+                                        <form autoComplete="off" noValidate className="card-body otpBody" tabIndex={500} onSubmit={handleVerify}>
+                                            <div className="country">
+                                                <label>
+                                                    Enter Email OTP
+                                                    {
+                                                        !showEmailResend ? (
+                                                            <span>{`0:${emailTimer.toString().padStart(2, "0")}`}</span>
+                                                        ) : (
+                                                            <span
+                                                                className="resendBtn"
+                                                                onClick={handleResendEmailOtp}
+                                                            >
+                                                                Resend OTP
+                                                            </span>
+                                                        )
+                                                    }
+                                                </label>
+                                                <div className="d-flex gap-2 mb-3">
+                                                    {emailOtp.map((digit, i) => (
+                                                        <input
+                                                            key={i}
+                                                            type="text"
+                                                            maxLength={1}
+                                                            className="otp-box"
+                                                            value={digit}
+                                                            ref={(el) => (emailRefs.current[i] = el)}
+                                                            onChange={(e) => handleInputChange("email", i, e.target.value)}
+                                                            onKeyDown={(e) => {
+                                                                if (e.key === "Backspace" && !digit && i > 0) {
+                                                                    emailRefs.current[i - 1].focus();
+                                                                }
+                                                            }}
+                                                        />
+                                                    ))}
+                                                </div>
+                                                {emailError && <p className="text-danger text-start mt-2">{emailError}</p>}
                                             </div>
-                                            {emailError && <p className="text-danger text-start mt-2">{emailError}</p>}
-                                        </div>
 
-                                        <div className="submit">
+                                            <div className="submit">
 
-                                            <button className="btn btn-primary btn-block" type="submit" disabled={!isOtpComplete(emailOtp)}>
-                                                {loading ? <div className="spinner-border text-white" role="status">
-                                                    <span className="visually-hidden">Loading...</span>
-                                                </div> : 'Verify OTP'}
-                                            </button>
+                                                <button className="btn btn-primary btn-block" type="submit" disabled={!isOtpComplete(emailOtp) || showEmailResend}>
+                                                    {loading ? <div className="spinner-border text-white" role="status">
+                                                        <span className="visually-hidden">Loading...</span>
+                                                    </div> : 'Verify OTP'}
+                                                </button>
 
-                                        </div>
-                                        <p className="text-dark mb-0">
-                                            If you want to change your details <br />
-                                            <a href="/register" className="btn btn-info mt-2">
-                                                <FontAwesomeIcon icon={faArrowLeft} /> Back
-                                            </a>
-                                        </p>
-                                    </form>
+                                            </div>
+                                            <p className="text-dark mb-0">
+                                                If you want to change your details <br />
+                                                <a href="/register" className="btn btn-info mt-2">
+                                                    <FontAwesomeIcon icon={faArrowLeft} /> Back
+                                                </a>
+                                            </p>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -6,6 +6,10 @@ import Link from "next/link";
 import Breadcrumb from "../../app/component/Breadcrumb";
 import Tooltip from "../../component/Tooltip";
 import OtpPage from "../component/OtpPage";
+import Image from "next/image";
+import ReCAPTCHA from "react-google-recaptcha";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 export default function Login() {
   //const { user, login } = useAuth();
   const router = useRouter();
@@ -19,6 +23,9 @@ export default function Login() {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const [Message, setmessage] = useState(typeof window !== 'undefined' && sessionStorage.getItem('successMsg') ? sessionStorage.getItem('successMsg') : "")
   const [otpPage, setOtppage] = useState(false);
+  const [recaptchaToken, setRecaptchaToken] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
+
 
 
   useEffect(() => {
@@ -76,11 +83,16 @@ export default function Login() {
     e.preventDefault();
 
     if (!validateInputs()) return; // Stop execution if validation fails
+    if (!recaptchaToken) {
+      setMessage("Please complete the CAPTCHA");
+      return;
+    }
+
 
     // document.cookie = `authToken=${fakeToken}; path=/; max-age=86400;`; // Store token in cookie
 
     setLoading(true)
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users/login`, { method: 'POST', body: JSON.stringify({ email: email.trim(), password: password.trim() }), headers: { "Content-Type": "application/json" } })
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users/login`, { method: 'POST', body: JSON.stringify({ email: email.trim(), password: password.trim(), recaptchaToken }), headers: { "Content-Type": "application/json" } })
 
     const res = await response.json();
     setLoading(false);
@@ -138,51 +150,87 @@ export default function Login() {
       {/*Login-Section*/}
       {!otpPage ? <section className="sptb loginSec">
         <div className="container customerpage">
-          <div className="row">
-            <div className="single-page">
-              <div className="col-lg-5 col-xl-4 col-md-7 d-block mx-auto">
-                <div className="wrapper wrapper2 border">
-                  <form id="login" autoComplete="off" noValidate className="card-body" tabIndex={500} onSubmit={handleLogin}>
-                    <div className="mail">
-                      <input type="text" value={email}
-                        id="email"
-                        onChange={(e) => handleInputChange("email", e.target.value)}
-                        onBlur={() => handleBlur("email")}
-                        autoComplete="off"
-                      />
-                      <label>Email Id</label>
-                      {errors.email && <p className="text-danger text-start mt-2">{errors.email}</p>}
-                    </div>
-                    <div className="passwd">
-                      <input type="password" value={password}
-                        id="password"
-                        onChange={(e) => handleInputChange("password", e.target.value)}
-                        onBlur={() => handleBlur("password")}
-                        autoComplete="new-password"
-                      />
-                      <label>Password</label>
-                      {errors.password && <p className="text-danger text-start mt-2">{errors.password}</p>}
-                    </div>
-                    <div className="submit">
-                      <button className="btn btn-primary btn-block" type="submit">
-                        {loading ? <div className="spinner-border text-white" role="status">
-                          <span className="visually-hidden">Loading...</span>
-                        </div> : 'Login'}
-                      </button>
-                      {
-                        message !== "" && <div className="text-danger text-start mt-2">{message}</div>
-                      }
-                    </div>
-                    <p className="mb-2">
-                      <Link href="/forgot-password">Forgot Password</Link>
-                    </p>
-                    <p className="text-dark mb-0">
-                      Don't have account?
-                      <Link href="/register" className="text-primary ms-1">
-                        Register
-                      </Link>
-                    </p>
-                  </form>
+          <div className="card border-light-subtle shadow-sm">
+            <div className="row g-0">
+              <div className="col-12 col-md-6 pe-md-0">
+                <div className="leftSec text-bg-primary">
+                  <div className="d-flex align-items-center justify-content-center h-100">
+                      <div className="col-11 text-center py-3">
+                          <Image className="img-fluid rounded mb-4 d-block m-auto" loading="lazy" src="/images/login-process.png" width={300} height={300} alt="Login Process" />
+                          <hr className="border-primary-subtle mb-4" />
+                          <h3 className="h1 mb-4">
+                            We make digital products that drive you to stand out.
+                          </h3>
+                          <p className="lead m-0">
+                              We write words, take photos, make videos, and interact with artificial intelligence.
+                          </p>
+                      </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div className="col-md-6 col-12 ps-md-0">
+                <div className="rightSec single-page">
+                  <div className="wrapper wrapper2">
+                    <form id="login" autoComplete="off" noValidate className="card-body" tabIndex={500} onSubmit={handleLogin}>
+                      <h3 className="pb-2">Login</h3>
+                      <div className="mail">
+                        <input type="text" value={email}
+                          id="email"
+                          onChange={(e) => handleInputChange("email", e.target.value)}
+                          onBlur={() => handleBlur("email")}
+                          autoComplete="off"
+                        />
+                        <label>Email Id</label>
+                        {errors.email && <p className="text-danger text-start mt-2">{errors.email}</p>}
+                      </div>
+                      <div className="passwd">
+                        <input type={showPassword ? "text" : "password"} value={password}
+                          id="password"
+                          onChange={(e) => handleInputChange("password", e.target.value)}
+                          onBlur={() => handleBlur("password")}
+                          autoComplete="new-password"
+                        />
+                        {
+                          password && (
+                            <span className="eyeIconPass"
+                              onClick={() => setShowPassword(!showPassword)}
+                            >
+                              {showPassword ? <FontAwesomeIcon icon={faEyeSlash} /> : <FontAwesomeIcon icon={faEye} />}
+                            </span>
+                          )
+                        }
+                        <label>Password</label>
+                        {errors.password && <p className="text-danger text-start mt-2">{errors.password}</p>}
+                      </div>
+                      <div className="">
+                        <ReCAPTCHA
+                          sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+                          onChange={(token) => setRecaptchaToken(token)}
+                        />
+                      </div>
+                      <div className="submit">
+                        <button className="btn btn-primary btn-block" type="submit">
+                          {loading ? <div className="spinner-border text-white" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                          </div> : 'Login'}
+                        </button>
+                        {
+                          message !== "" && <div className="text-danger text-start mt-2">{message}</div>
+                        }
+                      </div>
+                      <p className="mb-2">
+                        <Link href="/forgot-password">Forgot Password</Link>
+                      </p>
+                      <p className="text-dark mb-0">
+                        Don't have account?
+                        <Link href="/register" className="text-primary ms-1">
+                          Register
+                        </Link>
+                      </p>
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>

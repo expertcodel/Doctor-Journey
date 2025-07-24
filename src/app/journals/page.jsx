@@ -10,6 +10,7 @@ import TestimonialsCarousel from "../component/Testimonials";
 // import doctorCards from "@/data/doctorCards.json";
 import JournalsThumbCarousel from "../component/JournalsThumbCarousel";
 import doctorProfile from "../../data/doctorProfile.json";
+import JournalsBanner from "../component/JournalsBanner";
 
 export default async function Journals() {
 
@@ -54,8 +55,11 @@ export default async function Journals() {
 
   return (
     <section>
+      
+      <JournalsBanner />
+
       {/* heroBanner */}
-      <section className="heroBanner withSliders">
+      {/* <section className="heroBanner withSliders">
         <div id="carouselExampleIndicators" className="carousel slide" data-bs-ride="carousel">
           <div className="carousel-indicators">
             {sliderList.map((_, i) => <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to={i} className={i === 0 && "active"} aria-current="true" aria-label={`Slide ${i + 1}`} />)}
@@ -68,7 +72,7 @@ export default async function Journals() {
 
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* search engine */}
       <section className="banner-1 cover-image sptb-3 pb-14 sptb-tab bg-background2"

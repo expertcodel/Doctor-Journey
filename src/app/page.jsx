@@ -177,13 +177,6 @@ export default async function Home() {
                     <div className="item7-card-desc d-flex">
                       <span>{card.videoTitle}</span>
                     </div>
-                    {/* <div className="item7-card-desc d-flex">
-                      <div className="ms-auto">
-
-                        <span className="me-0"> <FontAwesomeIcon icon={faEye} /> {card.views}</span>
-
-                      </div>
-                    </div> */}
                   </div>
                 </div>
               </div>
