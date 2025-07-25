@@ -44,12 +44,12 @@ export default function EventsDetails() {
                             <div className="tab-menu-heading">
                                 <div className="tabs-menu1">
                                     <ul className="nav">
-                                        {randomizedTabs.map((tab, index) => (
+                                        {ScheduleTabs.map((tab, index) => (
                                             <li key={tab.id}>
                                                 <Link
                                                 href={`#${tab.id}`}
                                                 data-bs-toggle="tab"
-                                                className={`nav-link text-white ${tab.bgClass} ${index === 0 ? 'active' : ''}`}
+                                                className={`nav-link text-white ${index === 0 ? 'active' : ''}`}
                                                 >
                                                     {tab.label} <span className="d-block small">{tab.date}</span>
                                                 </Link>

@@ -2097,6 +2097,7 @@ body {
 .heroBanner .carousel .carousel-inner .carousel-item{min-height: inherit; width: inherit;}
 
 /****** aboutMain *****/
+.aboutMain{position: relative; z-index: 1;}
 .aboutMain figure{margin: 0;}
 .aboutMain .aboutBody{
     display: flex; flex-direction: column; align-items: flex-start;
@@ -2106,7 +2107,7 @@ body {
 .aboutMain .aboutBody p{
     font-size: 16px; font-weight: 500; color: var(--bs-secondary-color); line-height: 28px;
 }
-.aboutMain .aboutBody h3{font-size: 48px; font-weight: 500; color: var(--bs-body-color);}
+.aboutMain .aboutBody h3{font-size: 32px; font-weight: 500; color: var(--bs-body-color);}
 .aboutMain .aboutBody h4{font-size: 20px; font-weight: 600; color: var(--primary-09); text-transform: capitalize;}
 .aboutMain .aboutBody h5{
     font-size: 24px; font-weight: 600; color: var(--bs-black);
@@ -2947,6 +2948,16 @@ body {
 .customScheduleTabs .wideget-user-tab .tab-menu-heading .nav li a{
     font-size: 20px; font-weight: 500; text-align: center; margin: 0; border: 2px solid transparent; border-bottom: 0;
 }
+.customScheduleTabs .wideget-user-tab .tab-menu-heading .nav li:nth-child(1) a{background: #0d6efd;}
+.customScheduleTabs .wideget-user-tab .tab-menu-heading .nav li:nth-child(2) a{background: #d63384;}
+.customScheduleTabs .wideget-user-tab .tab-menu-heading .nav li:nth-child(3) a{background: #6f42c1;}
+.customScheduleTabs .wideget-user-tab .tab-menu-heading .nav li:nth-child(4) a{background: #dc3545;}
+.customScheduleTabs .wideget-user-tab .tab-menu-heading .nav li:nth-child(5) a{background: #fd7e14;}
+.customScheduleTabs .wideget-user-tab .tab-menu-heading .nav li:nth-child(6) a{background: #198754;}
+.customScheduleTabs .wideget-user-tab .tab-menu-heading .nav li:nth-child(7) a{background: #13b987;}
+.customScheduleTabs .wideget-user-tab .tab-menu-heading .nav li:nth-child(8) a{background: #aa8515;}
+.customScheduleTabs .wideget-user-tab .tab-menu-heading .nav li:nth-child(9) a{background: #b90dfd;}
+.customScheduleTabs .wideget-user-tab .tab-menu-heading .nav li:nth-child(10) a{background: #fd0d91;}
 .customScheduleTabs .wideget-user-tab .tab-menu-heading .nav li a span{
     font-size: 16px; font-weight: 400; display: block; margin-top: 2px;
 }
@@ -2979,6 +2990,26 @@ body {
     display: flex; align-items: center; justify-content: center; padding: 24px; height: 100%;
 }
 .customerpage .rightSec .wrapper{box-shadow: none;}
+
+/******* about-image *******/
+.about-image {
+  overflow: hidden;
+  text-align: center;
+}
+.about-image .row {
+  margin-left: -5px;
+  margin-right: -5px;
+}
+.about-image .row .col-lg-6 {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.about-image .row .col-lg-6:nth-child(3) .image {
+  margin-top: -15px;
+}
+.about-image .row .col-lg-6:nth-child(2) .image {
+  margin-bottom: 20px;
+}
 
 @media only screen and (min-width: 1280px) {
     /******* eventDetailsOuter *********/
@@ -3019,6 +3050,10 @@ body {
 
     /****** metterAnimationBox *******/
     .metterAnimationBox div[class*="col-"] .counter-status.sptb{padding-bottom: 1rem; padding-top: 1rem;}
+
+    .about-image .image img {
+        width: 100%;
+    }
 }
 
 @media (max-width: 767px) {
@@ -3124,6 +3159,15 @@ body {
     .customerpage .rightSec{
         padding: 4px;
     }
+
+    .about-image .row .col-lg-6:nth-child(3) .image {
+        margin-top: 0;
+    }
+
+    /*********** start shape animation ************/
+    .shape1, .shape2,.shape3,.shape4,.shape5,.shape6,.shape7,.shape8,.shape9,.shape10,.shape11,
+    .shape12,.shape13,.shape14,.shape15,.shape16,.shape17,.shape18,.shape19,.shape20,.shape21,
+    .shape22,.shape23,.shape24{display: none;}
 }
 
 @media (max-width: 568px) {

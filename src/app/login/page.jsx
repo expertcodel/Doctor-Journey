@@ -1,6 +1,6 @@
 "use client";
 import { useAuth } from "../../context/AuthContext";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Breadcrumb from "../../app/component/Breadcrumb";
@@ -25,7 +25,7 @@ export default function Login() {
   const [otpPage, setOtppage] = useState(false);
   const [recaptchaToken, setRecaptchaToken] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
-
+  const recaptchaRef = useRef();
 
 
   useEffect(() => {
@@ -107,6 +107,10 @@ export default function Login() {
 
     }
     else {
+      if (recaptchaRef.current) {
+        recaptchaRef.current.reset();
+        setRecaptchaToken(null);
+      }
 
       if (res.message === 'Email not verified!') {
         setOtppage(true);
@@ -206,6 +210,7 @@ export default function Login() {
                       </div>
                       <div className="">
                         <ReCAPTCHA
+                          ref={recaptchaRef}
                           sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
                           onChange={(token) => setRecaptchaToken(token)}
                         />

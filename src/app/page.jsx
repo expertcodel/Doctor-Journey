@@ -10,8 +10,7 @@ import ThumbnailBlogsCarousel from "./component/ThumbnailBlogsCarousel";
 import TestimonialsCarousel from "./component/Testimonials";
 import DaysCalculator from '../app/component/DaysCalculator';
 import DrJourneyBanner from './component/DrJourneyBanner';
-// import doctorCards from "@/data/doctorCards.json";
-//  import doctorProfile from "@/data/doctorProfile.json";
+import AboutSection from './component/AboutSection';
 export default async function Home() {
 
 
@@ -112,30 +111,7 @@ export default async function Home() {
       </section>
 
       {/* about */}
-      <section className="sectionSpace aboutMain sptb bg-white">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-7 col-12 aboutBody order-md-1 order-2">
-              <h3>
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-              </h3>
-              <p>
-                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.Lorem Ipsum has .
-              </p>
-
-              <Link className="btn btn-primary mt-2 float-md-end" href="/">
-                See more
-              </Link>
-            </div>
-
-            <div className="col-md-5 col-12 order-md-2 order-1">
-              <figure>
-                <Image width={467} height={418} src="/images/index/about.jpg" alt="About Us" className="img-fluid" />
-              </figure>
-            </div>
-          </div>
-        </div>
-      </section>
+      <AboutSection />
 
       {/* doctor JOURNEY */}
       <section className="sectionSpace sptb bg-white">

@@ -24,7 +24,7 @@ export default function ThumbnailSponsorCarousel() {
       // Responsive breakpoints
       breakpoints: {
         320: {
-          slidesPerView: 1, // 1 slide for mobile
+          slidesPerView: 1.5, // 1 slide for mobile
           spaceBetween: 10
         },
         768: {

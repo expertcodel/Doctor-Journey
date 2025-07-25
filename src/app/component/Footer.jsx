@@ -9,12 +9,55 @@ import { useEffect } from "react"
 export default function Footer() {
     return (
         <>
+        {/*Subscribe section*/}
+            <section className="sptb shapeParentDiv subscribe-area">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-12 m-auto">
+                            <div className="section-title center-block text-center">
+                                <h2>Subscribe To Our Newsletter</h2>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-lg-8 offset-lg-2 col-md-10 offset-md-1 col-12">
+                            <form className="newsletter-form" data-toggle="validator">
+                                <div className="input-group sub-input mt-1">
+                                    <input type="text" className="form-control input-lg " placeholder="Enter your Email" />
+                                    <div className="">
+                                        <button type="button" className="btn btn-primary btn-lg br-tr-3  br-br-3">
+                                            Subscribe
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div className="shape4" data-speed="0.06" data-revert="true">
+                    <img src="/images/shape/banner-shape14.png" alt="image" />
+                </div>
+                <div className="shape13" data-speed="0.06" data-revert="true">
+                    <img src="/images/shape/shape6.png" alt="image" />
+                </div>
+                <div className="shape14" data-speed="0.06" data-revert="true">
+                    <img src="/images/shape/shape13.png" alt="image" />
+                </div>
+                <div className="shape15" data-speed="0.06" data-revert="true">
+                    <img src="/images/shape/shape14.png" alt="image" />
+                </div>
+            </section>
+        {/*Subscribe section*/}
+
         {/*Footer Section*/}
         <footer className="bg-dark text-white footerMain" data-image-src="../assets/images/banners/banner3.jpg">
             <div className="footer-main">
                 <div className="container">
                     <div className="row">
-                        <div className="col-lg-4 col-md-12">
+                        <div className="col-lg-5 col-md-12">
                             <h6>Disclaimer</h6>
                             <hr className="deep-purple  accent-2 mb-4 mt-0 d-inline-block mx-auto" />
                             <ul className="list-unstyled mb-0">
@@ -29,22 +72,17 @@ export default function Footer() {
                             <ul className="list-unstyled mb-0">
                                 <li>
                                     <Link href="/">
-                                        <FontAwesomeIcon icon={faCaretRight} /> Educational college Ads
+                                        <FontAwesomeIcon icon={faCaretRight} /> Journals
                                     </Link>
                                 </li>
                                 <li>
                                     <Link href="/">
-                                        <FontAwesomeIcon icon={faCaretRight} /> Free Lancer for Web Developer
+                                        <FontAwesomeIcon icon={faCaretRight} /> Events
                                     </Link>
                                 </li>
                                 <li>
                                     <Link href="/">
-                                        <FontAwesomeIcon icon={faCaretRight} /> Searching for Developer
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href="/">
-                                        <FontAwesomeIcon icon={faCaretRight} /> BPO Online In Bangalore
+                                        <FontAwesomeIcon icon={faCaretRight} /> About Us
                                     </Link>
                                 </li>
                             </ul>
@@ -54,28 +92,18 @@ export default function Footer() {
                             <hr className="deep-purple  accent-2 mb-4 mt-0 d-inline-block mx-auto" />
                             <ul className="list-unstyled mb-0">
                                 <li>
-                                    <Link href="/">Support</Link>
+                                    <Link href="/blog">Blogs</Link>
                                 </li>
                                 <li>
                                     <Link href="/">FAQ</Link>
                                 </li>
                                 <li>
-                                    <Link href="/">Contact</Link>
+                                    <Link href="/contact-us">Contact Us</Link>
                                 </li>
                             </ul>
                         </div>
-                        <div className="col-lg-3 col-md-12">
-                            <h6 className="mb-2">Subscribe</h6>
-                            <hr className="deep-purple  accent-2 mb-4 mt-0 d-inline-block mx-auto" />
-                            <div className="input-group w-100">
-                                <input type="text" className="form-control  border" placeholder="Email" />
-                                <div className="">
-                                    <button type="button" className="btn btn-primary ">
-                                        {" "} Subscribe{" "}
-                                    </button>
-                                </div>
-                            </div>
-                            <h6 className="mb-2 mt-5">Follow Us</h6>
+                        <div className="col-lg-2 col-md-12">
+                            <h6 className="mb-2">Follow Us</h6>
                             <hr className="deep-purple  accent-2 mb-4 mt-0 d-inline-block mx-auto" />
                             <ul className="payments mb-0">
                                 <li>

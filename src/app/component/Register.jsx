@@ -1,6 +1,6 @@
 "use client";
 import { useAuth } from "../../context/AuthContext";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Breadcrumb from "../../app/component/Breadcrumb";
@@ -10,6 +10,7 @@ import Select2Component from "../component/Select2Component";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import ReCAPTCHA from "react-google-recaptcha";
 export default function Register({ countryList }) {
     const { user, login } = useAuth();
     const router = useRouter();
@@ -31,6 +32,8 @@ export default function Register({ countryList }) {
     const [selectedCountryValue, setSelectedCountryValue] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
+    const [recaptchaToken, setRecaptchaToken] = useState(null);
+    const recaptchaRef = useRef();
 
 
 
@@ -108,6 +111,10 @@ export default function Register({ countryList }) {
         e.preventDefault();
 
         if (!validateInputs()) return; // Stop execution if validation fails
+        if (!recaptchaToken) {
+            setMessage("Please complete the CAPTCHA");
+            return;
+        }
 
 
         try {
@@ -139,7 +146,11 @@ export default function Register({ countryList }) {
 
             }
             else {
-
+                
+                if (recaptchaRef.current) {
+                    recaptchaRef.current.reset();
+                    setRecaptchaToken(null);
+                }
                 setMessage(res.data.message);
 
             }
@@ -338,6 +349,13 @@ export default function Register({ countryList }) {
                                                 />
                                                 <label>Phone Number</label>
                                                 {errors.phoneNumber && <p className="text-danger text-start mt-2">{errors.phoneNumber}</p>}
+                                            </div>
+                                            <div className="">
+                                                <ReCAPTCHA
+                                                    ref={recaptchaRef}
+                                                    sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+                                                    onChange={(token) => setRecaptchaToken(token)}
+                                                />
                                             </div>
 
                                             <div className="submit">

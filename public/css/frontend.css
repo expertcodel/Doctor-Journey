@@ -114,6 +114,7 @@
     --primary-095: rgba(22, 80, 226, 0.95);
     --primary-01: rgba(22, 80, 226, 0.1);
     --secondary-06: rgba(227, 66, 22, 0.6);
+    --bg-f5d4cd: #f5d4cd;
 }
 
 *,
@@ -41029,6 +41030,7 @@ button.bg-dark:hover {
 .bg-white {
     background-color: #fff !important;
 }
+.bg-f5d4cd{background-color: var(--bg-f5d4cd) !important;}
 
 .bg-dark-purple {
     background-color: #413558 !important;
@@ -46586,3 +46588,214 @@ a.text-light:hover {
   height: 100%;
   width: 100%;
 }
+
+.shapeParentDiv{position: relative; z-index: 1;}
+/*********** start shape animation ************/
+.shape1 {
+  position: absolute;
+  left: 12%;
+  top: 0;
+  z-index: -1;
+}
+.shape1 img {
+  animation: moveleftbounce 4s linear infinite;
+}
+
+.shape2 {
+  position: absolute;
+  left: 5%;
+  bottom: 8%;
+  z-index: -1;
+}
+.shape2 img {
+  animation: movebounce 5s linear infinite;
+}
+
+.shape3 {
+  position: absolute;
+  right: 9%;
+  bottom: 12%;
+  z-index: -1;
+}
+.shape3 img {
+  animation-name: rotateme;
+  animation-duration: 100s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+.shape4 {
+  position: absolute;
+  right: 5%;
+  bottom: 40%;
+  z-index: -1;
+}
+.shape4 img {
+  animation: movescale 4s linear infinite;
+}
+
+.shape13 {
+  position: absolute;
+  left: 22%;
+  bottom: 22%;
+  z-index: -2;
+}
+.shape13 img {
+  animation-name: rotateme;
+  animation-duration: 50s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+.shape14 {
+  position: absolute;
+  right: 11%;
+  bottom: 30%;
+  z-index: -1;
+}
+.shape14 img {
+  animation: movebounce 5s linear infinite;
+}
+
+.shape15 {
+  position: absolute;
+  right: 15%;
+  bottom: 15%;
+  z-index: -2;
+}
+.shape15 img {
+  animation-name: rotateme;
+  animation-duration: 50s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+.shape17 {
+  position: absolute;
+  z-index: -1;
+  top: -45px;
+  left: 160px;
+  right: 0;
+  text-align: center;
+}
+.shape17 img {
+  animation: moveleftbounce 4s linear infinite;
+}
+
+.shape18 {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: -150px;
+  right: 0;
+  text-align: center;
+}
+.shape18 img {
+  animation-name: rotateme;
+  animation-duration: 100s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+.shape19 {
+  position: absolute;
+  right: -15px;
+  top: 40%;
+}
+.shape19 img {
+  animation: movescale 4s linear infinite;
+}
+
+.shape20 {
+  position: absolute;
+  z-index: -1;
+  left: 7%;
+  top: 57%;
+}
+.shape20 img {
+  animation: movescale 4s linear infinite;
+}
+
+.shape21 {
+  position: absolute;
+  z-index: -1;
+  left: 11%;
+  bottom: 15%;
+}
+.shape21 img {
+  animation: movebounce 5s linear infinite;
+}
+
+.shape22 {
+  position: absolute;
+  z-index: -1;
+  left: 55%;
+  bottom: 10px;
+}
+.shape22 img {
+  animation-name: rotateme;
+  animation-duration: 50s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+.shape23 {
+  position: absolute;
+  z-index: -1;
+  right: 5%;
+  bottom: 5%;
+}
+.shape23 img {
+  animation-name: rotateme;
+  animation-duration: 100s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+.subscribe-area .shape4 {
+  right: auto;
+  bottom: 39%;
+  left: 25%;
+}
+@keyframes movebounce {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(20px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+@keyframes moveleftbounce {
+  0% {
+    transform: translateX(0px);
+  }
+  50% {
+    transform: translateX(20px);
+  }
+  100% {
+    transform: translateX(0px);
+  }
+}
+@keyframes rotateme {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes movescale {
+  0% {
+    transform: scale(0.9);
+  }
+  50% {
+    transform: scale(0.8);
+  }
+  100% {
+    transform: scale(0.9);
+  }
+}
+/*********** end shape animation ************/
