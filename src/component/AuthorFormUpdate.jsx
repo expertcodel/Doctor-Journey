@@ -5,11 +5,21 @@ import Image from 'next/image';
 import Tooltip from './Tooltip';
 import { extractErrorMessage } from '../utils/errorMessage';
 import { useRouter } from 'next/navigation';
+import ProfileCropper from './ProfileCropper'
 export default function AuthorForm({ authorDetail }) {
 
+    const [image, setImage] = useState(authorDetail.profileImage)
+    const [croppedUrl, setCroppedUrl] = useState(null)
+    const [imageUrl, setImageurl] = useState(null);
+
+    const handleCrop = (blob) => {
+        const url = URL.createObjectURL(blob);
+        setImageurl(blob);
+        setCroppedUrl(url)
+    }
     const [errorMsg, setErrormsg] = useState("");
     const [document, setDocument] = useState(authorDetail.document ? authorDetail.document : [{ documentName: "", documentFile: "" }]);
-    const [imageUrl, setImageurl] = useState(authorDetail.profileImage);
+
     const domRef = useRef(null);
     const imgRef = useRef([]);
     const profileImg = useRef(null);
@@ -117,7 +127,7 @@ export default function AuthorForm({ authorDetail }) {
             }
 
             const formData = new FormData();
-            formData.append('profileImage', profileImage);
+            formData.append('profileImage', imageUrl);
             for (let i = 0; i < document.length; i++) {
                 formData.append('documentImage', document[i].documentFile);
             }
@@ -133,7 +143,7 @@ export default function AuthorForm({ authorDetail }) {
             if (res.status) {
 
                 sessionStorage.setItem('successMsg', 'Author Profile Updated Successfully');
-                router.push("/admin/authors/list");
+                router.push("/dashboard/authors/list");
 
             }
             else {
@@ -152,9 +162,15 @@ export default function AuthorForm({ authorDetail }) {
     const fileUpload = () => {
 
 
-        const imageurl = URL.createObjectURL(profileImg.current.files[0]);
-        // previewImg.current.src = imageurl
-        setImageurl(imageurl);
+        // const imageurl = URL.createObjectURL(profileImg.current.files[0]);
+        // // previewImg.current.src = imageurl
+        // setImageurl(imageurl);
+
+        const file = profileImg.current.files[0];
+
+        const reader = new FileReader()
+        reader.onload = () => setImage(reader.result)
+        reader.readAsDataURL(file)
 
 
     }
@@ -297,7 +313,14 @@ export default function AuthorForm({ authorDetail }) {
                                             />
                                         </div>
                                         <div className="mb-3">
-                                            <img id='imagePreview' width={imageUrl && 100} height={imageUrl && 100} ref={previewImg} alt='' src={imageUrl} />
+                                            {image && <ProfileCropper imageSrc={image} onCrop={handleCrop} />}
+
+                                            {croppedUrl && (
+                                                <div className="mt-4">
+                                                    <h3 className="text-lg font-medium">Cropped Preview:</h3>
+                                                    <img src={croppedUrl} width={150} height={150} alt="Cropped result" />
+                                                </div>
+                                            )}
                                         </div>
 
                                     </div>
@@ -804,7 +827,7 @@ export default function AuthorForm({ authorDetail }) {
 
                                     <div className="col-lg-12">
                                         <div className="hstack gap-2 justify-content-end">
-                                        <div className='col-auto' style={{color:'red'}}>{errorMsg!=="" && errorMsg}</div>
+                                            <div className='col-auto' style={{ color: 'red' }}>{errorMsg !== "" && errorMsg}</div>
                                             <button type="submit" className="btn btn-primary">
                                                 Submit
                                             </button>

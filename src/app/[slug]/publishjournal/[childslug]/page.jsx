@@ -39,9 +39,11 @@ function Page() {
     const [imageUrl, setImageurl] = useState("")
     const [imLoading, setImLoading] = useState(false);
     const [searchedList, setSearchedlist] = useState([]);
+     const [searchedList1, setSearchedlist1] = useState([]);
     const [searchedUser, setSearcheduser] = useState([]);
     const [articleList, setarticleList] = useState([]);
     const [primaryAuth, setPrimaryauth] = useState(false);
+    const [secondaryAuth, setSecondaryauth] = useState(false);
     const [articleId, setArticleid] = useState('');
     const [sarticle, setsarticle] = useState([]);
     const [check, setCheck] = useState([]);
@@ -83,7 +85,7 @@ function Page() {
             wordcount: true,
             minHeight: 300
         }
-    })
+    },[])
 
 
 
@@ -165,7 +167,7 @@ function Page() {
         const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users/getUsers/?name=${e.target.value}`, { method: 'GET' });
         const response = await res.json();
         if (response.status) {
-            setSearchedlist(response.userlist);
+            setSearchedlist1(response.userlist);
         }
 
     }
@@ -404,7 +406,7 @@ function Page() {
                         </label>
 
 
-                        <div className="form-select" style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', alignItems: 'center', height: '40px' }} onClick={() => setPrimaryauth(!primaryAuth)}>
+                        <div className="form-select" style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', alignItems: 'center', height: '40px' }} onClick={() => setSecondaryauth(!secondaryAuth)}>
                             {
                                 userList.map((item, i) => <div key={i} style={{ backgroundColor: '#405189', color: 'white', borderRadius: '5px', padding: '3px', display: 'flex', gap: '0.5rem' }}>{item.userId}
                                     <span><i class="ri-home-line ri-scissors-line" onClick={() => removeItems1(i)}></i></span>
@@ -414,7 +416,7 @@ function Page() {
 
                         {
 
-                            primaryAuth &&
+                            secondaryAuth &&
 
                             <div className="form-control" style={{ position: 'absolute', zIndex: '99', marginTop: '10px', width: '98.5%', overflow: 'auto' }}>
 
@@ -453,8 +455,8 @@ function Page() {
                                                 </thead>
                                                 <tbody>
                                                     {
-                                                        searchedList.length > 0 &&
-                                                        searchedList.map((item, i) =>
+                                                        searchedList1.length > 0 &&
+                                                        searchedList1.map((item, i) =>
                                                             <tr key={i} >
                                                                 <td>
                                                                     <div className="form-check">

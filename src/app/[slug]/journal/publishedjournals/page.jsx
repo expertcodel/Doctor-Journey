@@ -420,7 +420,7 @@ function Page() {
                                                                             </span>
                                                                             {/* <span className="btn btn-sm btn-light" >
                                                                           
-                                                                          <Link href={`/admin/publishedjournals/${item.journalsId}`}>Details</Link>
+                                                                          <Link href={`/dashboard/publishedjournals/${item.journalsId}`}>Details</Link>
                                                                            
                                                                      
                                                                     </span> */}

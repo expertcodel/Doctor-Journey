@@ -101,7 +101,7 @@ export default function Page({ journalList }) {
             if (res.status) {
 
                 sessionStorage.setItem('successMsg', 'Offer Created Successfully');
-                router.push("/admin/journal/offer/list");
+                router.push("/dashboard/journal/offer/list");
 
             }
             else {
@@ -266,7 +266,7 @@ export default function Page({ journalList }) {
                                 <h4>Well done !</h4>
                                 <p className="text-muted mx-4">Aww yeah, you successfully created your testimonial.</p>
                                 <div className="mt-4">
-                                    <a href="/admin/testimonial/list" className="btn btn-success w-100">Back to Dashboard</a>
+                                    <a href="/dashboard/testimonial/list" className="btn btn-success w-100">Back to Dashboard</a>
                                 </div>
                             </div>
                         </div>

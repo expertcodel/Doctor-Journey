@@ -6,11 +6,23 @@ import Tooltip from './Tooltip';
 import { extractErrorMessage } from '../utils/errorMessage';
 import { useRouter } from 'next/navigation';
 import AdminFooter from './AdminFooter.jsx'
+import ProfileCropper from './ProfileCropper'
 export default function PublisherUpdate({ publisherDetail }) {
+
+    const [imageUrl, setImageurl] = useState(null);
+    const [image, setImage] = useState(publisherDetail.profileImage)
+    const [croppedUrl, setCroppedUrl] = useState(null)
+
+
+    const handleCrop = (blob) => {
+        const url = URL.createObjectURL(blob);
+        setImageurl(blob);
+        setCroppedUrl(url)
+    }
 
     const [errorMsg, setErrormsg] = useState("");
     const [document, setDocument] = useState(publisherDetail.document ? publisherDetail.document : [{ documentName: "", documentFile: "" }]);
-    const [imageUrl, setImageurl] = useState(publisherDetail.profileImage);
+
     const domRef = useRef(null);
     const imgRef = useRef([]);
     const profileImg = useRef(null);
@@ -105,7 +117,7 @@ export default function PublisherUpdate({ publisherDetail }) {
         const bankName = e.target.bankName.value.trim();
         const branchName = e.target.branchName.value.trim();
         const branchAddress = e.target.branchAddress.value.trim();
-        const profileImage = profileImg.current.files[0];
+        // const profileImage = profileImg.current.files[0];
 
         try {
 
@@ -115,7 +127,7 @@ export default function PublisherUpdate({ publisherDetail }) {
             }
 
             const formData = new FormData();
-            formData.append('profileImage', profileImage);
+            formData.append('profileImage', imageUrl);
             for (let i = 0; i < document.length; i++) {
                 formData.append('documentImage', document[i].documentFile);
             }
@@ -132,7 +144,7 @@ export default function PublisherUpdate({ publisherDetail }) {
             if (res.status) {
 
                 sessionStorage.setItem('successMsg', 'Publisher Profile Updated Successfully');
-                router.push("/admin/publisher/list");
+                router.push("/dashboard/publisher/list");
 
             }
             else {
@@ -151,9 +163,14 @@ export default function PublisherUpdate({ publisherDetail }) {
     const fileUpload = () => {
 
 
-        const imageurl = URL.createObjectURL(profileImg.current.files[0]);
-        // previewImg.current.src = imageurl
-        setImageurl(imageurl);
+        // const imageurl = URL.createObjectURL(profileImg.current.files[0]);
+        // // previewImg.current.src = imageurl
+        // setImageurl(imageurl);
+
+        const file = profileImg.current.files[0];
+        const reader = new FileReader()
+        reader.onload = () => setImage(reader.result)
+        reader.readAsDataURL(file)
 
 
     }
@@ -332,7 +349,14 @@ export default function PublisherUpdate({ publisherDetail }) {
                                                             />
                                                         </div>
                                                         <div className="mb-3">
-                                                            <img id='imagePreview' width={imageUrl && 100} height={imageUrl && 100} ref={previewImg} alt='' src={imageUrl} />
+                                                            {image && <ProfileCropper imageSrc={image} onCrop={handleCrop} />}
+
+                                                            {croppedUrl && (
+                                                                <div className="mt-4">
+                                                                    <h3 className="text-lg font-medium">Cropped Preview:</h3>
+                                                                    <img src={croppedUrl} width={150} height={150} alt="Cropped result" />
+                                                                </div>
+                                                            )}
                                                         </div>
 
                                                     </div>

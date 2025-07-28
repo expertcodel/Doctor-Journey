@@ -5,15 +5,15 @@ import Menubar from '../../component/Menu.jsx'
 import { cookies } from 'next/headers';
 import AdminLayout from '../../component/AdminLayout.jsx'
 import { notFound } from 'next/navigation';
-export default async function Layoutchild({ children,params }) {
+import { headers } from 'next/headers';
+export default async function Layoutchild({ children, params }) {
 
 
-  const {slug}=await params;
-  
-  
-  if(slug!=='dashboard')
-  {
-      return notFound();
+  const headerlist = headers();
+  const pathname = headerlist.get('x-pathname');
+  const { slug } = await params;
+  if (slug !== 'dashboard') {
+    return notFound();
   }
   const data = await cookies().get('userData');
   if (!data) {
@@ -21,9 +21,8 @@ export default async function Layoutchild({ children,params }) {
   }
 
   const userData = JSON.parse(data.value).userData;
-
   let menuItem = [];
-
+  let flag = -1;
   try {
 
     const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/role/getRole`, {
@@ -42,6 +41,23 @@ export default async function Layoutchild({ children,params }) {
 
       menuItem = res.menubar;
 
+      // for (let i = 0; i < menuItem.length; i++) {
+      //   if (menuItem[i].path === 'scroll') {
+      //     for (let j = 0; j < menuItem[i].child.length; j++) {
+      //       if (menuItem[i].child[j].path === pathname) {
+
+      //         flag = 1;
+      //         break;
+
+      //       }
+      //     }
+      //   }
+      // }
+
+      // if (flag === -1 && pathname !== '/dashboard') {
+      //   flag = 0;
+      // }
+
 
     }
 
@@ -53,30 +69,14 @@ export default async function Layoutchild({ children,params }) {
 
   }
 
+  // if (flag === 0) {
+  //   return notFound()
+  // }
 
-
-  // const menuItem = JSON.parse(data.value).menubar;
-
-  // console.log(userData);
-
-  // const menuItem={}
-  // const userData ={}
-
-
-  return (
+ return (
 
 
     <AdminLayout Children={children} data={menuItem} userData={userData} />
-
-    // <div id="layout-wrapper">
-    //   <Header userData={userData} />
-    //   <Menubar data={menuItem} />
-    //   {children}
-    // </div>
-
-
-
-
 
 
 

@@ -76,7 +76,7 @@ export default function SliderUpdate({sliderDetail}) {
                 if (res.status) {
     
                     sessionStorage.setItem('successMsg','Slider Updated Successfully');
-                    router.push("/admin/journal/slider/list");
+                    router.push("/dashboard/journal/slider/list");
                 
                  
                    
@@ -222,7 +222,7 @@ export default function SliderUpdate({sliderDetail}) {
                         <h4>Well done !</h4>
                         <p className="text-muted mx-4">Aww yeah, you successfully updated your Slider.</p>
                         <div className="mt-4">
-                            <a href="/admin/slider/list" className="btn btn-success w-100">Back to Dashboard</a>
+                            <a href="/dashboard/slider/list" className="btn btn-success w-100">Back to Dashboard</a>
                         </div>
                     </div>
                 </div>

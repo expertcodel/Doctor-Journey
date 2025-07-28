@@ -149,9 +149,9 @@ setIdx(1);
                       <img src={item.blogImage} alt="image not found" className="blog-img object-fit-cover" />
                     </div>
                     <div className="card-body">
-                      <h5 className="card-title"><a href={`/admin/blog/view/${item.blogId}`} className="text-reset">{item.blogTitle}</a></h5>
+                      <h5 className="card-title"><a href={`/dashboard/blog/view/${item.blogId}`} className="text-reset">{item.blogTitle}</a></h5>
                       <p className="text-muted mb-2">{item.blogDescription}</p>
-                      <a href={`/admin/blog/view/${item.blogId}`} className="link link-primary text-decoration-underline link-offset-1">Read Post <i className="ri-arrow-right-up-line" /></a>
+                      <a href={`/dashboard/blog/view/${item.blogId}`} className="link link-primary text-decoration-underline link-offset-1">Read Post <i className="ri-arrow-right-up-line" /></a>
                     </div>
                   </div>
                 </div>)}

@@ -83,10 +83,11 @@ export default function Login() {
     e.preventDefault();
 
     if (!validateInputs()) return; // Stop execution if validation fails
-    if (!recaptchaToken) {
-      setMessage("Please complete the CAPTCHA");
-      return;
-    }
+
+    // if (!recaptchaToken) {
+    //   setMessage("Please complete the CAPTCHA");
+    //   return;
+    // }
 
 
     // document.cookie = `authToken=${fakeToken}; path=/; max-age=86400;`; // Store token in cookie
@@ -159,16 +160,16 @@ export default function Login() {
               <div className="col-12 col-md-6 pe-md-0">
                 <div className="leftSec text-bg-primary">
                   <div className="d-flex align-items-center justify-content-center h-100">
-                      <div className="col-11 text-center py-3">
-                          <Image className="img-fluid rounded mb-4 d-block m-auto" loading="lazy" src="/images/login-process.png" width={300} height={300} alt="Login Process" />
-                          <hr className="border-primary-subtle mb-4" />
-                          <h3 className="h1 mb-4">
-                            We make digital products that drive you to stand out.
-                          </h3>
-                          <p className="lead m-0">
-                              We write words, take photos, make videos, and interact with artificial intelligence.
-                          </p>
-                      </div>
+                    <div className="col-11 text-center py-3">
+                      <Image className="img-fluid rounded mb-4 d-block m-auto" loading="lazy" src="/images/login-process.png" width={300} height={300} alt="Login Process" />
+                      <hr className="border-primary-subtle mb-4" />
+                      <h3 className="h1 mb-4">
+                        We make digital products that drive you to stand out.
+                      </h3>
+                      <p className="lead m-0">
+                        We write words, take photos, make videos, and interact with artificial intelligence.
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>

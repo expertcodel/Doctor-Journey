@@ -1,6 +1,5 @@
 "use server"
 import { NextResponse } from "next/server";
-import bcrypt from 'bcrypt'
 import { UserModel } from "../../models/user.model";
 import nodemailer from 'nodemailer'
 
@@ -91,38 +90,42 @@ const generateOtp = () => {
 
 export async function POST(request) {
 
-    const { email, name, password, number, country, countryCode } = await request.json();
+    const { email } = await request.json();
+    //  Validate CAPTCHA
+    const captchaRes = await fetch(
+       `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.NEXT_PUBLIC_RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`,
+       { method: "POST" }
+    );
+    const captchaData = await captchaRes.json();
+
+    if (!captchaData.success) {
+       return NextResponse.json({ status: 0, message: "CAPTCHA verification failed" });
+    }
     const usermodel = await UserModel();
     const isExisteduser = await usermodel.findOne({ where: { email } });
-    if (isExisteduser) {
-        return NextResponse.json({ status: 0, message: "This email id is already exist!" });
-    }
-    const isExisteduserMobile = await usermodel.findOne({ where: { mobile_number: number } });
-    if (isExisteduserMobile) {
-        return NextResponse.json({ status: 0, message: "This number is already exist!" });
+    if (!isExisteduser) {
+        return NextResponse.json({ status: 0, message: "This email doesn't exist!" });
     }
 
     const otp = generateOtp();
-    const sent = sendEmail(email, otp, name);
-    if (!sent) {
-        return NextResponse.json({ status: 0, message: "some error occured!" });
+    try {
+
+        const sent = sendEmail(email, otp, isExisteduser.name);
+        if (!sent) {
+            return NextResponse.json({ status: 0, message: "Please try again!" });
+        }
+
+        await usermodel.update({
+
+            userOtp: otp,
+
+        }, { where: { userId: isExisteduser.userId } })
+        return NextResponse.json({ status: 1, message: "otp sent successfully!" });
+
+    } catch (error) {
+
+        console.log(error);
+
     }
-
-    const salt = bcrypt.genSaltSync(10);
-    const hashedPassword = bcrypt.hashSync(password, salt);
-
-    await usermodel.create({
-        name,
-        email,
-        password: hashedPassword,
-        mobile_number: number,
-        userOtp: otp,
-        country, countryCode,
-        joining_date: new Date().toLocaleDateString(),
-        userId: String(Date.now())
-    })
-
-    return NextResponse.json({ status: 1, message: "otp sent successfully!" });
-
 
 }

@@ -170,7 +170,7 @@ export default function Page() {
                 <div className="flex-shrink-0">
                   <div className="d-flex gap-2 flex-wrap">
                     <button className="btn btn-primary" id="remove-actions" onclick="deleteMultiple()"><i className="ri-delete-bin-2-line" /></button>
-                    <a href="/admin/invoices-create" className="btn btn-danger"><i className="ri-add-line align-bottom me-1" /> Create Invoice</a>
+                    <a href="/dashboard/invoices-create" className="btn btn-danger"><i className="ri-add-line align-bottom me-1" /> Create Invoice</a>
                   </div>
                 </div>
               </div>
@@ -261,9 +261,9 @@ export default function Page() {
                                 <i className="ri-more-fill align-middle" />
                               </button>
                               <ul className="dropdown-menu dropdown-menu-end">
-                                <li><a  className="dropdown-item" href={`/admin/invoices-details/${item.buyerId}`} ><i className="ri-eye-fill align-bottom me-2 text-muted" />
+                                <li><a  className="dropdown-item" href={`/dashboard/invoices-details/${item.buyerId}`} ><i className="ri-eye-fill align-bottom me-2 text-muted" />
                                 View</a></li>
-                                <li><a className="dropdown-item" href={`/admin/invoices-edit/${item.buyerId}`} data-id={25000351}><i className="ri-pencil-fill align-bottom me-2 text-muted" />
+                                <li><a className="dropdown-item" href={`/dashboard/invoices-edit/${item.buyerId}`} data-id={25000351}><i className="ri-pencil-fill align-bottom me-2 text-muted" />
                                     Edit</a></li>
                                 <li><a className="dropdown-item" href="javascript:void(0);"><i className="ri-download-2-line align-bottom me-2 text-muted" />
                                     Download</a></li>

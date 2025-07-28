@@ -215,7 +215,7 @@ export default function AuthorUpdate({ authorDetail }) {
     //             if (res.status) {
 
     //                 sessionStorage.setItem('successMsg', 'author Profile Updated Successfully');
-    //                 router.push("/admin/authors/list");
+    //                 router.push("/dashboard/authors/list");
 
     //             }
     //             else {
@@ -531,7 +531,7 @@ export default function AuthorUpdate({ authorDetail }) {
                                 <h4>Well done !</h4>
                                 <p className="text-muted mx-4">Aww yeah, you successfully created your Slider.</p>
                                 <div className="mt-4">
-                                    <a href="/admin/slider/list" className="btn btn-success w-100">Back to Dashboard</a>
+                                    <a href="/dashboard/slider/list" className="btn btn-success w-100">Back to Dashboard</a>
                                 </div>
                             </div>
                         </div>

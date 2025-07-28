@@ -228,7 +228,7 @@ export default function TestimonialUpdate({ testimonial }) {
                                 <h4>Well done !</h4>
                                 <p className="text-muted mx-4">Aww yeah, you successfully created your testimonial.</p>
                                 <div className="mt-4">
-                                    <a href="/admin/testimonial/list" className="btn btn-success w-100">Back to Dashboard</a>
+                                    <a href="/dashboard/testimonial/list" className="btn btn-success w-100">Back to Dashboard</a>
                                 </div>
                             </div>
                         </div>

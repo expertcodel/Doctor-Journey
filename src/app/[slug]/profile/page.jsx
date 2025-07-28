@@ -87,7 +87,7 @@ export default function Page() {
   //                 </li>
   //               </ul>
   //               <div className="flex-shrink-0">
-  //                 <Link href="/admin/profile/id" className="btn btn-success">
+  //                 <Link href="/dashboard/profile/id" className="btn btn-success">
   //                 <i className="ri-edit-box-line align-bottom" />Edit Profile</Link>
   //               </div>
   //             </div>

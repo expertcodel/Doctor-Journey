@@ -705,7 +705,7 @@ export default function Page() {
         //                         <h4>Well done !</h4>
         //                         <p className="text-muted mx-4">Aww yeah, you successfully updated your profile.</p>
         //                         <div className="mt-4">
-        //                             <a href="/admin/profile/id" className="btn btn-success w-100">Back to Dashboard</a>
+        //                             <a href="/dashboard/profile/id" className="btn btn-success w-100">Back to Dashboard</a>
         //                         </div>
         //                     </div>
         //                 </div>

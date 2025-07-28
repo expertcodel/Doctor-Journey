@@ -63,7 +63,7 @@ export default function OfferList({ offerList, totalItems }) {
         else {
 
             sessionStorage.setItem('successMsg', 'Offer Removed Successfully');
-            window.location.href = "/admin/journal/offer/list"
+            window.location.href = "/dashboard/journal/offer/list"
           
         }
     }
@@ -124,7 +124,7 @@ setIdx(1);
                         <div className="card-body"><form><div className="row g-4 mb-3">
                             <div className="col-sm-auto">
                                 <div>
-                                    <Link href="/admin/journal/offer/create" className="btn btn-success"><i className="ri-add-line align-bottom me-1" /> Add New</Link>
+                                    <Link href="/dashboard/journal/offer/create" className="btn btn-success"><i className="ri-add-line align-bottom me-1" /> Add New</Link>
                                 </div>
                             </div>
 

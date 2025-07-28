@@ -13,16 +13,17 @@ import jwt from 'jsonwebtoken'
 export async function POST(request) {
 
    const { email, password, recaptchaToken } = await request.json();
-      // 1️⃣ Validate CAPTCHA
-      const captchaRes = await fetch(
-         `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.NEXT_PUBLIC_RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`,
-         { method: "POST" }
-      );
-      const captchaData = await captchaRes.json();
+    
+   // 1️⃣ Validate CAPTCHA
+      // const captchaRes = await fetch(
+      //    `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.NEXT_PUBLIC_RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`,
+      //    { method: "POST" }
+      // );
+      // const captchaData = await captchaRes.json();
 
-      if (!captchaData.success) {
-         return NextResponse.json({ status: 0, message: "CAPTCHA verification failed" });
-      }
+      // if (!captchaData.success) {
+      //    return NextResponse.json({ status: 0, message: "CAPTCHA verification failed" });
+      // }
       
    //  const api_key = new Headers(request.headers).get('api_key') + email;
    const usermodel = await UserModel();

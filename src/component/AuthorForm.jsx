@@ -9,7 +9,7 @@ import { UniversalContext } from './context';
 import { usePathname } from 'next/navigation';
 import { country } from '../utils/country.js'
 import { useAuth } from '../context/AuthContext';
-import FabricCropper from './FabricCropper'
+import ProfileCropper from './ProfileCropper'
 export default function authorForm() {
 
 
@@ -403,7 +403,7 @@ export default function authorForm() {
             }
 
 
-            if (!tabsdata.image) {
+            if (!image) {
                 validation['image'] = 0;
                 validationMessage['image'] = "This field can't be blank";
                 flag = false;
@@ -613,7 +613,7 @@ export default function authorForm() {
         }
 
 
-        if (!tabsdata.image) {
+        if (!image) {
             validation['image'] = 0;
             validationMessage['image'] = "This field can't be blank";
             flag = false;
@@ -748,7 +748,7 @@ export default function authorForm() {
         }
 
 
-        if (!tabsdata.image) {
+        if (!image) {
             validation['image'] = 0;
             validationMessage['image'] = "This field can't be blank";
             flag = false;
@@ -987,8 +987,8 @@ export default function authorForm() {
                                             {message.image !== "" && <span style={{ color: 'red' }}>{message.image}</span>}
                                         </div>
                                         <div className="mb-3">
-                                            {/* <Image id='imagePreview' className='showBrowseImg' width={tabsdata.image && 100} height={tabsdata.image && 100} ref={previewImg} alt='' src={tabsdata.image} /> */}
-                                            {image && <FabricCropper imageSrc={image} onCrop={handleCrop} />}
+                                            {/* <Image id='imagePreview' className='showBrowseImg' width={image && 100} height={image && 100} ref={previewImg} alt='' src={image} /> */}
+                                            {image && <ProfileCropper imageSrc={image} onCrop={handleCrop} />}
 
                                             {croppedUrl && (
                                                 <div className="mt-4">

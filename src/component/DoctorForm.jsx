@@ -9,7 +9,7 @@ import { UniversalContext } from './context';
 import { usePathname } from 'next/navigation';
 import {country} from '../utils/country.js'
 import { useAuth } from '../context/AuthContext';
-import FabricCropper from './FabricCropper'
+import ProfileCropper from './ProfileCropper'
 export default function DoctorForm() {
 
     const [image, setImage] = useState(null)
@@ -404,7 +404,7 @@ export default function DoctorForm() {
             }
 
 
-            if (!tabsdata.image) {
+            if (!image) {
                 validation['image'] = 0;
                 validationMessage['image'] = "This field can't be blank";
                 flag = false;
@@ -614,7 +614,7 @@ export default function DoctorForm() {
         }
 
 
-        if (!tabsdata.image) {
+        if (!image) {
             validation['image'] = 0;
             validationMessage['image'] = "This field can't be blank";
             flag = false;
@@ -749,7 +749,7 @@ export default function DoctorForm() {
         }
 
 
-        if (!tabsdata.image) {
+        if (!image) {
             validation['image'] = 0;
             validationMessage['image'] = "This field can't be blank";
             flag = false;
@@ -988,7 +988,7 @@ export default function DoctorForm() {
                                             {message.image !== "" && <span style={{ color: 'red' }}>{message.image}</span>}
                                         </div>
                                         <div className="mb-3">
-                                            {image && <FabricCropper imageSrc={image} onCrop={handleCrop} />}
+                                            {image && <ProfileCropper imageSrc={image} onCrop={handleCrop} />}
 
                                             {croppedUrl && (
                                                 <div className="mt-4">

@@ -54,7 +54,7 @@ export default function Testimonials({ testimonialList, totalItems }) {
         else {
 
             sessionStorage.setItem('successMsg', 'Testimonial deleted Successfully');
-            window.location.href = "/admin/testimonial/list"
+            window.location.href = "/dashboard/testimonial/list"
            
         }
     }
@@ -121,7 +121,7 @@ setIdx(1);
 
                             <div className="col-sm-auto">
                                 <div>
-                                    <Link href="/admin/testimonial/create" className="btn btn-success"><i className="ri-add-line align-bottom me-1" /> Add New</Link>
+                                    <Link href="/dashboard/testimonial/create" className="btn btn-success"><i className="ri-add-line align-bottom me-1" /> Add New</Link>
                                 </div>
                             </div>
 
@@ -141,7 +141,7 @@ setIdx(1);
                                 <td>
                                     <div class="d-flex gap-2">
                                         {/* <div class="edit">
-                                            <a class="btn btn-sm btn-success edit-item-btn" href={`/admin/testimonial/update/${item.testimonialId}`}>Edit</a>
+                                            <a class="btn btn-sm btn-success edit-item-btn" href={`/dashboard/testimonial/update/${item.testimonialId}`}>Edit</a>
                                         </div> */}
                                          <div className="edit">
                                             <Link class="btn btn-sm btn-success edit-item-btn" href={`/dashboard/testimonial/update/${item.testimonialId}`}>Edit</Link>

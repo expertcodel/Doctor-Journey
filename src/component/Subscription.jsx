@@ -264,7 +264,7 @@ export default function Subscription({ subscriptionList, totalItems }) {
                                 data-bs-dismiss="modal"
                                 aria-label="Close"
                                 id="close-modal"
-                            //  href='/admin/subscription/list'
+                            //  href='/dashboard/subscription/list'
                             > </button>
                         </div>
                         <form className="tablelist-form" autoComplete="off" onSubmit={updateDetails}>

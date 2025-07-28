@@ -24,7 +24,7 @@ function Page() {
     useEffect(() => {
 
         if (articlelist.length === 0) {
-            router.push('/admin/articlelist');
+            router.push('/dashboard/articlelist');
         }
         else {
 

@@ -236,7 +236,7 @@ export default function Page({blogdata, Metadescriptions,Categorylist,Blogstatus
                                             {croppedUrl && (
                                                 <div className="mt-4">
                                                     <h3 className="text-lg font-medium">Cropped Preview:</h3>
-                                                    <img src={croppedUrl} width={150} height={150} alt="Cropped result" />
+                                                    <img src={croppedUrl} width={274} height={185} alt="Cropped result" />
                                                 </div>
                                             )}
                                         </div>

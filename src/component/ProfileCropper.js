@@ -3,37 +3,41 @@
 // import Cropper from 'react-cropper'
 // // import 'cropperjs/dist/cropper.css'
 
-// export default function FabricCropper({ imageSrc, onCrop }) {
+// export default function ProfileCropper({ imageSrc, onCrop }) {
 //   const cropperRef = useRef(null)
 
 //   const handleCrop = () => {
 //     const cropper = cropperRef.current?.cropper
 //     if (cropper) {
-//       cropper.getCroppedCanvas({ width: 774, height: 485 }).toBlob((blob) => {
+//       cropper.getCroppedCanvas({
+//         width: 216,
+//         height: 216,
+//         fillColor: '#fff' // optional for PNG background
+//       }).toBlob((blob) => {
 //         if (blob) {
 //           onCrop(blob)
 //         }
-//       })
+//       }, 'image/png')
 //     }
 //   }
 
 //   const handleReady = () => {
 //     const cropper = cropperRef.current?.cropper
 //     if (cropper) {
-//       const containerData = cropper.getContainerData()
+//       setTimeout(() => {
+//         const containerData = cropper.getContainerData()
+//         const boxWidth = 216
+//         const boxHeight = 216
 
-//       // Center fixed-size crop box
-//       const boxWidth = 774
-//       const boxHeight = 485
+//         cropper.setCropBoxData({
+//           width: boxWidth,
+//           height: boxHeight,
+//           left: (containerData.width - boxWidth) / 2,
+//           top: (containerData.height - boxHeight) / 2
+//         })
 
-//       cropper.setCropBoxData({
-//         width: boxWidth,
-//         height: boxHeight,
-//         left: (containerData.width - boxWidth) / 2,
-//         top: (containerData.height - boxHeight) / 2
-//       })
-
-//       cropper.setAspectRatio(NaN) // Remove aspect ratio lock (we're fixing it ourselves)
+//         cropper.setAspectRatio(1)
+//       }, 100)
 //     }
 //   }
 
@@ -41,16 +45,17 @@
 //     <div className="max-w-full mx-auto">
 //       <Cropper
 //         src={imageSrc}
-//         style={{ height: 800, width: '100%' }}
+//         style={{ height: '100%', width: '100%' }}
 //         viewMode={1}
-//         dragMode="move"               // Allow moving the crop box/image
-//         cropBoxResizable={false}      // Prevent resizing
-//         cropBoxMovable={true}         // Allow dragging
+//         dragMode="move"
+//         cropBoxResizable={false}
+//         cropBoxMovable={true}
 //         scalable={false}
 //         zoomable={true}
 //         background={false}
 //         responsive={true}
 //         autoCropArea={1}
+//         aspectRatio={1}
 //         ready={handleReady}
 //         ref={cropperRef}
 //       />
@@ -59,7 +64,7 @@
 //         className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
 //         type="button"
 //       >
-//         Crop Image (774×485)
+//         Crop Image (216×216)
 //       </button>
 //     </div>
 //   )
@@ -80,8 +85,8 @@ export default function ProfileCropper({ imageSrc, onCrop }) {
     if (!cropper) return
 
     const canvas = cropper.getCroppedCanvas({
-      width: 774,
-      height: 485,
+      width: 216,
+      height: 216,
       fillColor: '#fff'
     })
 
@@ -98,27 +103,26 @@ export default function ProfileCropper({ imageSrc, onCrop }) {
 
     const imageData = cropper.getImageData()
     const scale = imageData.naturalWidth / imageData.width
+    const boxSize = 216 / scale
 
-    const boxWidth = 774 / scale
-    const boxHeight = 485 / scale
-
-    cropper.setAspectRatio(774 / 485) // ✅ Correct non-square aspect ratio
+    cropper.setAspectRatio(1)
 
     cropper.setCropBoxData({
-      width: boxWidth,
-      height: boxHeight,
-      left: (imageData.width - boxWidth) / 2,
-      top: (imageData.height - boxHeight) / 2
+      width: boxSize,
+      height: boxSize,
+      left: (imageData.width - boxSize) / 2,
+      top: (imageData.height - boxSize) / 2
     })
 
-    cropper.setDragMode('move')
+    cropper.setDragMode('move') // ✅ Allow image to move
+    // DO NOT call cropper.disable()
   }
 
   return (
     <div className="max-w-full mx-auto">
       <Cropper
         src={imageSrc}
-        style={{ height: 600, width: '100%' }}
+        style={{ height: 400, width: '100%' }}
         viewMode={1}
         dragMode="move"
         cropBoxResizable={false}
@@ -128,7 +132,7 @@ export default function ProfileCropper({ imageSrc, onCrop }) {
         background={false}
         responsive={true}
         autoCropArea={1}
-        aspectRatio={774 / 485} // ✅ Set correct ratio here too
+        aspectRatio={1}
         ready={handleReady}
         ref={cropperRef}
       />
@@ -137,7 +141,7 @@ export default function ProfileCropper({ imageSrc, onCrop }) {
         className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
         type="button"
       >
-        Crop Image (774×485)
+        Crop Image (216×216)
       </button>
     </div>
   )

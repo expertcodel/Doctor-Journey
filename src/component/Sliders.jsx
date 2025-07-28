@@ -63,7 +63,7 @@ export default function Sliders({ sliderList, totalItems }) {
         else {
 
             sessionStorage.setItem('successMsg', 'Slider deleted Successfully');
-            window.location.href = "/admin/journal/slider/list"
+            window.location.href = "/dashboard/journal/slider/list"
           
         }
     }
@@ -124,7 +124,7 @@ setIdx(1);
                         <div className="card-body"><form><div className="row g-4 mb-3">
                             <div className="col-sm-auto">
                                 <div>
-                                    <Link href="/admin/journal/slider/create" className="btn btn-success"><i className="ri-add-line align-bottom me-1" /> Add New</Link>
+                                    <Link href="/dashboard/journal/slider/create" className="btn btn-success"><i className="ri-add-line align-bottom me-1" /> Add New</Link>
                                 </div>
                             </div>
 
@@ -144,7 +144,7 @@ setIdx(1);
                                 <td>
                                     <div class="d-flex gap-2">
                                         <div class="edit">
-                                            <Link class="btn btn-sm btn-success edit-item-btn" href={`/admin/journal/slider/update/${item.sliderId}`}>Edit</Link>
+                                            <Link class="btn btn-sm btn-success edit-item-btn" href={`/dashboard/journal/slider/update/${item.sliderId}`}>Edit</Link>
                                         </div>
                                         <div class="remove">
                                             <button class="btn btn-sm btn-danger remove-item-btn deleteBtn" onClick={() => openPopup(item.sliderId)}><i className='ri-delete-bin-line'></i></button>

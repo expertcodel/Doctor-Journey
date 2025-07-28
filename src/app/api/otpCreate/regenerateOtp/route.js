@@ -35,7 +35,7 @@ async function sendEmail(email, otp, name) {
                                                             <tbody><tr style="font-family:'Roboto',sans-serif;box-sizing:border-box;font-size:14px;margin:0;width: 100%;">
                                                                 <td style="font-family:'Roboto',sans-serif;box-sizing:border-box;font-size:14px;vertical-align:top;margin:0;padding:0 0 20px" valign="top">
                                                                     <div style="text-align:center;margin-bottom:15px">
-                                                                        <img src="https://doctorsjourney.in/images/logo.png" alt="Doctor's Journey" height="23" class="CToWUd" data-bit="iit">
+                                                                        <img src="https://doctorsjourney.in/images/logo.svg" alt="Doctor's Journey" height="23" class="CToWUd" data-bit="iit">
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -90,8 +90,12 @@ export async function POST(request) {
 
     const { email, name } = await request.json();
     const usermodel = await UserModel();
+    let isExisteduser
+    if (name === "") {
+        isExisteduser = await usermodel.findOne({ where: { email } });
+    }
     const otp = generateOtp();
-    const sent = sendEmail(email, otp, name);
+    const sent = sendEmail(email, otp, isExisteduser.name);
     if (!sent) {
         return NextResponse.json({ status: false, message: "some error occured!" });
     }
@@ -109,11 +113,5 @@ export async function POST(request) {
         console.log(error);
         const message = extractErrorMessage(error);
         return NextResponse.json({ status: false, message });
-
-
     }
-
-
-
-
 }

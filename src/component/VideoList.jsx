@@ -165,7 +165,7 @@ export default function VideoList({ videoList, totalItems, usertype, userId }) {
     //     if (res.status) {
     //         bootstrap.Modal.getInstance(document.getElementById('deletetable')).hide();
     //         sessionStorage.setItem('successMsg', 'Image Uploaded Successfully');
-    //         window.location.href = `/admin/videos/list`;
+    //         window.location.href = `/dashboard/videos/list`;
     //     }
 
 

@@ -41,7 +41,8 @@ export const AuthProvider = ({ children }) => {
       const response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users/logout`);
       if (response.data.status) {
 
-        router.push(response.data.url)
+        // router.push(response.data.url)
+        window.location.href=response.data.url
 
       }
 

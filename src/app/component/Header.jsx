@@ -12,7 +12,7 @@ import { useEffect, useState } from "react"
 
 export default function Header() {
     const [isMenuVisible, setIsMenuVisible] = useState(false);
-    const router=useRouter()
+    const router = useRouter()
     // const logout = async () => {
 
     //     const response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users/logout`);
@@ -22,7 +22,7 @@ export default function Header() {
     //     }
 
     // }
-    const { user, logout} = useAuth();
+    const { user, logout } = useAuth();
     const pathName = usePathname();
     const [userType, setUsertype] = useState({ 'readers': false, 'author': false, 'doctor': false, 'publisher': false, 'organization': false });
 
@@ -32,14 +32,16 @@ export default function Header() {
     useEffect(() => {
         if (user) {
 
-            let usertype = { ...userType };
-            user.usertype.map((user) => {
-                usertype[user] = true;
-            })
-            setUsertype(usertype);
+            if (typeof (user.usertype) === 'object') {
+
+                let usertype = { ...userType };
+                user.usertype.map((user) => {
+                    usertype[user] = true;
+                    setUsertype(usertype);
+                })
+            }
 
         }
-
     }, [user])
 
     return (

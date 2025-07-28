@@ -9,8 +9,18 @@ import { UniversalContext } from './context';
 import { usePathname } from 'next/navigation';
 import { country } from '../utils/country.js'
 import { useAuth } from '../context/AuthContext';
+import ProfileCropper from './ProfileCropper'
 export default function organizationForm() {
 
+    const [image, setImage] = useState(null)
+    const [croppedUrl, setCroppedUrl] = useState(null)
+
+
+    const handleCrop = (blob) => {
+        const url = URL.createObjectURL(blob);
+        setImageurl(blob);
+        setCroppedUrl(url)
+    }
     const path = usePathname();
     // const { userData } = UniversalContext();
     const { user } = useAuth();
@@ -279,9 +289,12 @@ export default function organizationForm() {
         const { name, value } = e.target;
         let tabData = { ...tabsdata };
         if (name === 'image') {
-            const imageurl = URL.createObjectURL(profileImg.current.files[0]);
-            setImageurl(profileImg.current.files[0]);
-            tabData[name] = imageurl;
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader()
+                reader.onload = () => setImage(reader.result)
+                reader.readAsDataURL(file)
+            }
 
         }
         else {
@@ -389,7 +402,7 @@ export default function organizationForm() {
             }
 
 
-            if (!tabsdata.image) {
+            if (!image) {
                 validation['image'] = 0;
                 validationMessage['image'] = "This field can't be blank";
                 flag = false;
@@ -599,7 +612,7 @@ export default function organizationForm() {
         }
 
 
-        if (!tabsdata.image) {
+        if (!image) {
             validation['image'] = 0;
             validationMessage['image'] = "This field can't be blank";
             flag = false;
@@ -734,7 +747,7 @@ export default function organizationForm() {
         }
 
 
-        if (!tabsdata.image) {
+        if (!image) {
             validation['image'] = 0;
             validationMessage['image'] = "This field can't be blank";
             flag = false;
@@ -973,7 +986,14 @@ export default function organizationForm() {
                                             {message.image !== "" && <span style={{ color: 'red' }}>{message.image}</span>}
                                         </div>
                                         <div className="mb-3">
-                                            <Image id='imagePreview' className='showBrowseImg' width={tabsdata.image && 100} height={tabsdata.image && 100} ref={previewImg} alt='' src={tabsdata.image} />
+                                            {image && <ProfileCropper imageSrc={image} onCrop={handleCrop} />}
+
+                                            {croppedUrl && (
+                                                <div className="mt-4">
+                                                    <h3 className="text-lg font-medium">Cropped Preview:</h3>
+                                                    <img src={croppedUrl} width={150} height={150} alt="Cropped result" />
+                                                </div>
+                                            )}
                                         </div>
 
                                     </div>

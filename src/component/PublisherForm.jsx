@@ -7,14 +7,27 @@ import { extractErrorMessage } from '../utils/errorMessage';
 import { useRouter } from 'next/navigation';
 import { UniversalContext } from './context';
 import { usePathname } from 'next/navigation';
-import {country} from '../utils/country.js'
+import { country } from '../utils/country.js'
 import { useAuth } from '../context/AuthContext';
+import ProfileCropper from './ProfileCropper'
 export default function publisherForm() {
+
+
+    const [image, setImage] = useState(null)
+    const [croppedUrl, setCroppedUrl] = useState(null)
+
+
+    const handleCrop = (blob) => {
+        const url = URL.createObjectURL(blob);
+        setImageurl(blob);
+        setCroppedUrl(url)
+    }
+
 
     const path = usePathname();
     // const { userData } = UniversalContext();
-     const {user}=useAuth();
-    
+    const { user } = useAuth();
+
     const [errorMsg, setErrormsg] = useState("");
     const [imageUrl, setImageurl] = useState(null);
     const [tabs, setTabs] = useState({ first: true, second: false, third: false, fourth: false });
@@ -44,7 +57,6 @@ export default function publisherForm() {
     const handleDocument = (event, index) => {
 
         const { name, value } = event.target;
-        console.log(domRef.current.files[0], 'kk');
 
         if (name === 'documentFile') {
             const documentlist = [...document];
@@ -279,9 +291,12 @@ export default function publisherForm() {
         const { name, value } = e.target;
         let tabData = { ...tabsdata };
         if (name === 'image') {
-            const imageurl = URL.createObjectURL(profileImg.current.files[0]);
-            setImageurl(profileImg.current.files[0]);
-            tabData[name] = imageurl;
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader()
+                reader.onload = () => setImage(reader.result)
+                reader.readAsDataURL(file)
+            }
 
         }
         else {
@@ -389,7 +404,7 @@ export default function publisherForm() {
             }
 
 
-            if (!tabsdata.image) {
+            if (!image) {
                 validation['image'] = 0;
                 validationMessage['image'] = "This field can't be blank";
                 flag = false;
@@ -599,7 +614,7 @@ export default function publisherForm() {
         }
 
 
-        if (!tabsdata.image) {
+        if (!image) {
             validation['image'] = 0;
             validationMessage['image'] = "This field can't be blank";
             flag = false;
@@ -734,7 +749,7 @@ export default function publisherForm() {
         }
 
 
-        if (!tabsdata.image) {
+        if (!image) {
             validation['image'] = 0;
             validationMessage['image'] = "This field can't be blank";
             flag = false;
@@ -959,6 +974,8 @@ export default function publisherForm() {
                                             <label htmlFor="profile-img" className="form-label">
                                                 Profile Image
                                             </label>
+
+
                                             <input
                                                 type="file"
                                                 className="form-control flatpickr-input"
@@ -973,7 +990,14 @@ export default function publisherForm() {
                                             {message.image !== "" && <span style={{ color: 'red' }}>{message.image}</span>}
                                         </div>
                                         <div className="mb-3">
-                                            <Image id='imagePreview' className='showBrowseImg' width={tabsdata.image && 100} height={tabsdata.image && 100} ref={previewImg} alt='' src={tabsdata.image} />
+                                            {image && <ProfileCropper imageSrc={image} onCrop={handleCrop} />}
+
+                                            {croppedUrl && (
+                                                <div className="mt-4">
+                                                    <h3 className="text-lg font-medium">Cropped Preview:</h3>
+                                                    <img src={croppedUrl} width={150} height={150} alt="Cropped result" />
+                                                </div>
+                                            )}
                                         </div>
 
                                     </div>
@@ -1112,15 +1136,15 @@ export default function publisherForm() {
                                             <label htmlFor="countryInput" className="form-label">
                                                 Country
                                             </label>
-                                            <select name='country' id="countryInput"  style={{ border: formValidation.country === 0 && '0.5px solid red' }}
+                                            <select name='country' id="countryInput" style={{ border: formValidation.country === 0 && '0.5px solid red' }}
                                                 onChange={(e) => handleFormData(e)}
                                                 value={tabsdata.country} className="form-control">
                                                 <option value="select">select</option>
                                                 {
-                                                    country.map((item)=><option value={item.name}>{item.name}</option>)
+                                                    country.map((item) => <option value={item.name}>{item.name}</option>)
                                                 }
                                             </select>
-                                           
+
                                             {message.country !== "" && <span style={{ color: 'red' }}>{message.country}</span>}
                                         </div>
                                     </div>
