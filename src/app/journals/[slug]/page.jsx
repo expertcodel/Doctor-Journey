@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar, faDirections, faDollar, faEye, faLocationDot, faPhone, faStar, faStarHalf, faUser } from "@fortawesome/free-solid-svg-icons";
 import JournalsThumbCarousel from "../../component/JournalsThumbCarousel";
 import JournalsDetailsTop from "../../component/JournalsDetailsTop";
+import JournalsIndexesThumbCarousel from "../../component/JournalsIndexesThumbCarousel";
 
 export default async function JournalsDetails({ params }) {
 
@@ -12,6 +13,7 @@ export default async function JournalsDetails({ params }) {
     let journalList = [];
     let journalDetail = {};
     let doctorProfile = [];
+    let subscriptionsList = [];
 
     try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/client/journal`, {
@@ -47,6 +49,23 @@ export default async function JournalsDetails({ params }) {
     } catch (error) {
         console.log("Fetching doctor profile failed:", error);
     }
+
+    try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/client/subscription/?userId=${userId}&name=`, {
+
+            method: 'GET',
+            cache: 'no-store',
+
+        })
+        if (!response.ok) throw new error(`Failed to fetch: ${response.status}`);
+
+        const res = await response.json();
+        if (res.status) {
+            subscriptionsList = res.subscriptionslist
+        }
+    } catch (error) {
+        console.log("fetching failed", error);
+    }
     return (
         <>
             {/*Breadcrumb*/}
@@ -55,7 +74,27 @@ export default async function JournalsDetails({ params }) {
             {/* Doctor Details*/}
             <section className="sptb journalsDetails">
                 <div className="container">
-                    <JournalsDetailsTop doctorProfile={doctorProfile} />
+                    <JournalsDetailsTop doctorProfile={doctorProfile} subscriptionsList={subscriptionsList} />
+                </div>
+            </section>
+
+            {/* Our Sponsor */}
+            <section className="sectionSpace sptb bg-f5d4cd">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-12">
+                            <h4 className="mainHeading">
+                                Related Journals Indexes
+                                <Link href="/doctor-profile">See all</Link>
+                            </h4>
+                        </div>
+                    </div>
+
+                    <div className="row">
+                        <div className="col-12">
+                            <JournalsIndexesThumbCarousel journalList={journalList} />
+                        </div>
+                    </div>
                 </div>
             </section>
 

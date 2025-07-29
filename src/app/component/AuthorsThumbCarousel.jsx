@@ -11,7 +11,7 @@ export default function AuthorsThumbCarousel({ doctorProfile }) {
         <Swiper
         modules={[Autoplay, FreeMode]}
         autoplay={{
-            delay: 40000000,
+            delay: 4000,
             disableOnInteraction: false,
             pauseOnMouseEnter: true
         }}
@@ -22,7 +22,7 @@ export default function AuthorsThumbCarousel({ doctorProfile }) {
         slidesPerView={3}
         centeredSlides={false}
         breakpoints={{
-            320: { slidesPerView: 1.8, spaceBetween: 8 },
+            320: { slidesPerView: 1, spaceBetween: 8 },
             768: { slidesPerView: 2, spaceBetween: 8 },
             1280: { slidesPerView: 3, spaceBetween: 16 },
         }}

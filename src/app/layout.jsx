@@ -42,7 +42,7 @@ export default async function RootLayout({ children }) {
   return (
 
     <>
-      {path && ['/about-us', '/articles', '/contact-us', '/doctor-profile', '/doctors', '/events', '/forgot-password', '/journals', '/journals-activity', '/login', '/privacy-policy', '/register', '/terms-condition', '/user-dashboard', '/verify-otp','/blog'].some(prefix => path.startsWith(prefix)) || path === '/' ?
+      {path && ['/about-us', '/articles', '/contact-us', '/doctor-profile', '/doctors', '/events', '/forgot-password', '/journals', '/journals-activity', '/login', '/privacy-policy', '/register', '/terms-condition', '/user-dashboard', '/verify-otp','/blog','/buy-now'].some(prefix => path.startsWith(prefix)) || path === '/' ?
 
         <html lang="en">
           <head>

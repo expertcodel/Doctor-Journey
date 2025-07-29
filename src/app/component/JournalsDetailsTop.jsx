@@ -4,10 +4,10 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import AuthorsThumbCarousel from "./AuthorsThumbCarousel";
 import JournalsDetailsBanner from "./JournalsDetailsBanner";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { faAngleRight, faCheck, faPhone, faStar, faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export default function JournalsDetailsTop({ doctorProfile }) {
+export default function JournalsDetailsTop({ doctorProfile, subscriptionsList }) {
     const sidebarRef = useRef(null);
     const pageTopTriggerRef = useRef(null);
     const pageBottomTriggerRef = useRef(null);
@@ -62,7 +62,7 @@ export default function JournalsDetailsTop({ doctorProfile }) {
 
             <div className="row">
                 <div className="col-xl-9 col-lg-8 col-md-12 col-12">
-                    <div className="card">
+                    <div className="card mb-md-0">
                         <div className="card-body detailCardTop detailSideCardTop">
                             <div className='row'>
                                 <div className='col-md-5 col-12'>
@@ -133,7 +133,27 @@ export default function JournalsDetailsTop({ doctorProfile }) {
                                         <div className="tab-pane active" id="tab-1">
                                             <div className="card mb-0 border-0">
                                                 <div className="card-body">
-                                                    Tabs1
+                                                    <p>
+                                                        This journal presents an in-depth exploration of the latest advancements in [Insert Medical Field – e.g., Cardiology, Oncology, Radiology]. Featuring peer-reviewed articles, expert insights, and clinical research findings, it offers valuable knowledge for healthcare professionals, researchers, and students alike.
+                                                    </p>
+                                                    <h5>Key Highlights:</h5>
+                                                    <ul>
+                                                        <li>
+                                                            Research-backed findings with real-world applications
+                                                        </li>
+                                                        <li>
+                                                            Written and reviewed by top medical professionals
+                                                        </li>
+                                                        <li>
+                                                            Up-to-date with global medical and health standards
+                                                        </li>
+                                                        <li>
+                                                            Suitable for academic referencing and institutional libraries
+                                                        </li>
+                                                    </ul>
+                                                    <p>
+                                                        Whether you're looking to stay updated on emerging treatments or expand your research citations, this journal delivers scientifically grounded, actionable content.
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
@@ -142,7 +162,46 @@ export default function JournalsDetailsTop({ doctorProfile }) {
                                             {/*Job listing*/}
                                             <div className="card mb-0 border-0">
                                                 <div className="card-body">
-                                                    Tabs2
+                                                    <p>
+                                                        Journal Title: Journal of Modern Medical Practices – Volume 1, Issue 2
+                                                    </p>
+                                                    <p>
+                                                        Publication Date: June 2025
+                                                    </p>
+                                                    <p>
+                                                        Format: Paperback & Soft Copy (PDF)
+                                                    </p>
+                                                    <h5>Articles Included:</h5>
+                                                    <ol>
+                                                        <li>
+                                                            Artificial Intelligence in Early Cancer Detection
+                                                            <dl>
+                                                                <dt>Dr. Ritika Rana, PhD</dt>
+                                                                <dd>Exploring the use of machine learning in diagnostic imaging.</dd>
+                                                            </dl>
+                                                        </li>
+                                                        <li>
+                                                            Post-Pandemic Respiratory Illness Trends
+                                                            <dl>
+                                                                <dt>Dr. Ranjan, MD</dt>
+                                                                <dd>Insights into long-term effects and evolving treatment protocols.</dd>
+                                                            </dl>
+                                                        </li>
+                                                        <li>
+                                                            Neurosurgical Innovations: 2025 Review
+                                                            <dl>
+                                                                <dt>Dr. Rohit, MBBS, MD</dt>
+                                                                <dd>A summary of technological advances in neurosurgery.</dd>
+                                                            </dl>
+                                                        </li>
+                                                        <li>
+                                                            Telemedicine and Rural Health Access in India
+                                                            <dl>
+                                                                <dt>Guest Contributor</dt>
+                                                                <dd>Discusses telehealth's role in bridging healthcare gaps.</dd>
+                                                            </dl>
+                                                        </li>
+                                                    </ol>
                                                 </div>
                                             </div>
                                             {/*Job Listing*/}
@@ -196,7 +255,7 @@ export default function JournalsDetailsTop({ doctorProfile }) {
                                                     <div className="media mt-0 p-5">
                                                         <div className="d-flex me-3">
                                                             <a href="javascript:void(0);">
-                                                                <img className="media-object brround" alt="64x64" src="../assets/images/users/male/1.jpg" />{" "}
+                                                                <img className="media-object brround" alt="64x64" src="/images/users/male/1.jpg" />{" "}
                                                             </a>
                                                         </div>
                                                         <div className="media-body">
@@ -240,7 +299,7 @@ export default function JournalsDetailsTop({ doctorProfile }) {
                                             <img
                                             className="media-object brround"
                                             alt="64x64"
-                                            src="../assets/images/users/female/2.jpg"
+                                            src="/images/users/female/2.jpg"
                                             />{" "}
                                         </a>
                                                                 </div>
@@ -279,7 +338,7 @@ export default function JournalsDetailsTop({ doctorProfile }) {
                                         <img
                                         className="media-object brround"
                                         alt="64x64"
-                                        src="../assets/images/users/male/3.jpg"
+                                        src="/images/users/male/3.jpg"
                                         />{" "}
                                     </a>
                                                         </div>
@@ -347,7 +406,53 @@ export default function JournalsDetailsTop({ doctorProfile }) {
                                         <div className="tab-pane" id="tab-4">
                                             <div className='card border-0'>
                                                 <div className='card-body'>
-                                                    Tabs4
+                                                    <div className="row">
+                                                        <div className="col-12">
+                                                        <div className="accordion accordion-box" id="faqAccordion">
+                                                            {/* Block 1 */}
+                                                            <div className="accordion-item block">
+                                                            <h2 className="accordion-header" id="headingOne">
+                                                                <button className="accordion-button acc-btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                                Interdum et malesuada fames ac ante ipsum
+                                                                </button>
+                                                            </h2>
+                                                            <div id="collapseOne" className="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
+                                                                <div className="accordion-body content">
+                                                                Suspendisse finibus urna mauris, vitae consequat quam vel.
+                                                                </div>
+                                                            </div>
+                                                            </div>
+
+                                                            {/* Block 2 */}
+                                                            <div className="accordion-item block">
+                                                            <h2 className="accordion-header" id="headingTwo">
+                                                                <button className="accordion-button acc-btn collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                                Maecenas condimentum sollicitudin ligula
+                                                                </button>
+                                                            </h2>
+                                                            <div id="collapseTwo" className="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
+                                                                <div className="accordion-body content">
+                                                                Suspendisse finibus urna mauris, vitae consequat quam vel.
+                                                                </div>
+                                                            </div>
+                                                            </div>
+
+                                                            {/* Block 3 */}
+                                                            <div className="accordion-item block">
+                                                            <h2 className="accordion-header" id="headingThree">
+                                                                <button className="accordion-button acc-btn collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                                Duis rhoncus orci ut metus rhoncus
+                                                                </button>
+                                                            </h2>
+                                                            <div id="collapseThree" className="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
+                                                                <div className="accordion-body content">
+                                                                Suspendisse finibus urna mauris, vitae consequat quam vel.
+                                                                </div>
+                                                            </div>
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -361,7 +466,7 @@ export default function JournalsDetailsTop({ doctorProfile }) {
                 <div className="col-xl-3 col-lg-4 col-md-12 col-12">
                     <div
                         ref={sidebarRef}
-                        className={`participateSidebar journalsPriceSec ${isSticky ? "" : ""}`}
+                        className={`participateSidebar journalsPriceSec ${isSticky ? "stickSideBar" : ""}`}
                     >
                         <div className="drCard w-100">
                             <div className="card mb-0">
@@ -372,17 +477,139 @@ export default function JournalsDetailsTop({ doctorProfile }) {
                                         <span className="triangle"></span>
                                     </div>
                                 </div>
+                                <div className="card-header">
+                                    <h3 className="card-title">Select Price Level</h3>
+                                </div>
+                                <div className="card-body">
+                                    <div className="filter-product-checkboxs">
+                                        <label className="custom-control form-checkbox mb-3">
+                                            <input type="checkbox" className="custom-control-input" name="checkbox1" checked="checked" defaultValue="option1" />
+                                            <span className="custom-control-label">
+                                                Soft Copy
+                                                <span className="label float-end">
+                                                    ₹ 500.00
+                                                </span>
+                                            </span>
+                                        </label>
+                                        <label className="custom-control form-checkbox mb-3">
+                                            <input type="checkbox" className="custom-control-input" name="checkbox2" defaultValue="option2" />
+                                            <span className="custom-control-label">
+                                                Hard Copy
+                                                <span className="label float-end">
+                                                    ₹ 800.00
+                                                </span>
+                                            </span>
+                                        </label>
+                                        <label className="custom-control form-checkbox mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                            <input type="checkbox" className="custom-control-input" name="checkbox3" defaultValue="option3" />
+                                            <span className="custom-control-label">
+                                                <span>Subscription <small>(Yearly)</small></span>
+                                                <span className="label float-end">
+                                                    ₹ 1000.00
+                                                </span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div className="card-footer">
+                                    <h5>
+                                        Total: {" "}<span>₹ 500.00</span>
+                                    </h5>
+                                    <Link className="btn btn-primary d-block w-100 mt-5" href="/buy-now">
+                                        Buy Now <FontAwesomeIcon icon={faAngleRight} />
+                                    </Link>
+                                </div>
+                                <h4 className="mt-5">
+                                    <span className="mb-0">
+                                        Call for Assistance
+                                    </span> 
+                                    
+                                    <Link className="btn border-0 d-block w-100" href="tel:+91 11 4618 1010">
+                                        <FontAwesomeIcon icon={faPhone} /> +91 11 4618 1010
+                                    </Link>
+                                </h4>
                             </div>
                         </div>
-                        <h4>
-                            <span>Introduce with</span> PARTICIPATORY ORGANISATION
-                        </h4>
-                        <p>
-                            Supporters from different organizations who participated in remarkable program.
-                        </p>
-                        <Link className="btn btn-primary" href="/">
-                            Expolere All
-                        </Link>
+                    </div>
+                </div>
+            </div>
+
+            {/* Modal */}
+            <div className="modal fade customModal" id="exampleModal" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal-dialog modal-lg">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="exampleModalLabel">
+                                Subscription Plan
+                            </h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
+                        </div>
+                        <div className="modal-body">
+                            <div className="row g-3">
+                                <div className="col-lg-4 col-md-6 col-12">
+                                    <div className="pricingTable bg-white advance-pricing">
+                                        <div className="price-value">
+                                            &#8377;500
+                                            <span className="month">Yearly</span>
+                                        </div>
+                                        <h3 className="title">Premium</h3>
+                                        <ul className="pricing-content">
+                                            <li>
+                                                Access to <strong>5</strong> Journals
+                                            </li>
+                                            <li>
+                                                Access to full journal content (PDFs, images), 5 journals every 4 months
+                                            </li>
+                                        </ul>
+                                        <button className="pricingTable-signup" style={{ border: 'none' }}>
+                                            Subscribe Now
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div className="col-lg-4 col-md-6 col-12">
+                                    <div className="pricingTable bg-white">
+                                        <div className="price-value">
+                                            &#8377;400
+                                            <span className="month">Monthly</span>
+                                        </div>
+                                        <h3 className="title">Standard</h3>
+                                        <ul className="pricing-content">
+                                            <li>
+                                                Access to <strong>1</strong> Journals
+                                            </li>
+                                            <li>
+                                                Access to full journal content (PDFs, images), 1 journals in a months
+                                            </li>
+                                        </ul>
+                                        <button className="pricingTable-signup" style={{ border: 'none' }}>
+                                            Subscribe Now
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div className="col-lg-4 col-md-6 col-12">
+                                    <div className="pricingTable bg-white">
+                                        <div className="price-value">
+                                            &#8377;300
+                                            <span className="month">Quaterly</span>
+                                        </div>
+                                        <h3 className="title">Business</h3>
+                                        <ul className="pricing-content">
+                                            <li>
+                                                Access to <strong>2</strong> Journals
+                                            </li>
+                                            <li>
+                                                Access to full journal content (PDFs, images), 2 journals every 40 days
+                                            </li>
+                                        </ul>
+                                        <button className="pricingTable-signup" style={{ border: 'none' }}>
+                                            Subscribe Now
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
