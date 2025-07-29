@@ -2,41 +2,50 @@ import Link from "next/link";
 import Breadcrumb from "../../../app/component/Breadcrumb";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendar, faEye, faStar, faStarHalf, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faCalendar, faDirections, faDollar, faEye, faLocationDot, faPhone, faStar, faStarHalf, faUser } from "@fortawesome/free-solid-svg-icons";
 import JournalsThumbCarousel from "../../component/JournalsThumbCarousel";
+import JournalsDetailsTop from "../../component/JournalsDetailsTop";
 
 export default async function JournalsDetails({ params }) {
 
     const { slug } = await params;
     let journalList = [];
     let journalDetail = {};
+    let doctorProfile = [];
 
     try {
-
         const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/client/journal`, {
-
             method: 'POST',
             cache: 'no-store',
             body: JSON.stringify({ journalsUrl: `/${slug}` })
         })
-
         if (!response.ok) throw new error(`Failed to fetch: ${response.status}`);
+
+        const res = await response.json();
+        if (res.status) {
+            journalDetail = res.journaldetail;
+            journalList = res.journallist
+        }
+    } catch (error) {
+        console.log("fetching failed", error);
+    }
+
+    try {
+        // Fetch doctor profile
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/client/home`, {
+            method: 'GET',
+            cache: 'no-store'
+        });
+
+        if (!response.ok) throw new Error(`Failed to fetch doctor profile: ${response.status}`);
 
         const res = await response.json();
 
         if (res.status) {
-
-            journalDetail = res.journaldetail;
-            journalList = res.journallist
-
+            doctorProfile = res.doctorprofile;
         }
-
-
     } catch (error) {
-
-        console.log("fetching failed", error);
-
-
+        console.log("Fetching doctor profile failed:", error);
     }
     return (
         <>
@@ -46,62 +55,7 @@ export default async function JournalsDetails({ params }) {
             {/* Doctor Details*/}
             <section className="sptb journalsDetails">
                 <div className="container">
-                    <div className="row">
-                        <div className="col-md-5 col-12">
-                            {/*imgSec*/}
-                            <div className="card imgSec">
-                                <div className="card-body">
-                                    <div className="item7-card-img">
-                                        <Image unoptimized src={journalDetail.imageUrl} className="img-fluid" fill alt="" />
-                                        <div className="item7-card-text">
-                                            <span className="badge bg-pink">by Author Name</span>
-                                        </div>
-                                    </div>
-                                    <div className="item7-card-desc">
-                                        <Link href="/hello2" className="btn btn-primary">
-                                            Buy Now
-                                        </Link>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="col-md-7 col-12">
-                            <div className="productsDetails">
-                                <h3 className="title">
-                                    {journalDetail.journalsName}
-                                    <span>Paperback – {journalDetail.publishDate}</span>
-                                </h3>
-                                <div className="productsReview">
-                                    <span className="reviewText">
-                                        4.2 <FontAwesomeIcon icon={faStar} />
-                                    </span>
-                                    <span className="reviewContent">
-                                        reviews
-                                    </span>
-                                </div>
-                                <div className="priceSec">
-                                    <span className="newPrice">&#8377;{journalDetail.price}</span>
-                                    <span className="oldPrice">₹725</span>
-                                </div>
-
-                                <p className="shortDec" dangerouslySetInnerHTML={{__html:journalDetail.coverSummary}}>
-                                   
-                                </p>
-                                {/* <p className="shortDec">
-                                    <strong>FROM THE SUNDAY TIMES BESTSELLING AUTHOR & GLOBAL TIK TOK SENSATION, Author Name</strong>
-                                </p>
-                                <p className="shortDec">
-                                    This story, dazzling in its powerful simplicity and soul-stirring wisdom, is about an Andalusian shepherd boy named Santiago who travels from his homeland in Spain to the Egyptian desert in search of a treasure buried near the Pyramids. Lorem ipsum dolor
-                                    sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt et.
-                                </p>
-                                <p className="shortDec">
-                                    This story, dazzling in its powerful simplicity and soul-stirring wisdom, is about an Andalusian shepherd boy named Santiago who travels from his homeland in Spain to the Egyptian desert in search of a treasure buried near the Pyramids. Lorem ipsum dolor
-                                    sit amet.
-                                </p> */}
-                            </div>
-                        </div>
-                    </div>
+                    <JournalsDetailsTop doctorProfile={doctorProfile} />
                 </div>
             </section>
 

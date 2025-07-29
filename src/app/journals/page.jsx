@@ -11,6 +11,7 @@ import TestimonialsCarousel from "../component/Testimonials";
 import JournalsThumbCarousel from "../component/JournalsThumbCarousel";
 import doctorProfile from "../../data/doctorProfile.json";
 import JournalsBanner from "../component/JournalsBanner";
+import JournalsVerticalCarousel from "../component/JournalsVerticalCarousel";
 
 export default async function Journals() {
 
@@ -194,24 +195,7 @@ export default async function Journals() {
                   {/***** jrShortCard *****/}
                   <div className="col-lg-2 col-md-3 col-12 jrShortCard">
                     {/*** card */}
-                    {journalLeftlist.map((journal) => <div className="card" key={journal.journalsId}>
-                      <div className="card-body">
-                        <div className="cat-item">
-                          <Link href={`/journals/${journal.journalsUrl}`} />
-                          <div className="cat-img bg-primary-transparent">
-                            <Image unoptimized src={journal.imageUrl} className="img-fluid" fill alt="" />
-                          </div>
-                          <div className="cat-desc">
-                            <h5>
-                              {journal.journalsName}
-                            </h5>
-                            <small className="badge">
-                              INR {journal.price}/
-                            </small>
-                          </div>
-                        </div>
-                      </div>
-                    </div>)}
+                    <JournalsVerticalCarousel journalLeftlist={journalLeftlist} />
                   </div>
 
                   {journalCenterlist.map((journal) => <div className="col-lg-4 col-md-3 col-12 jrLargeCard" key={journal.journalsId}>
@@ -239,24 +223,7 @@ export default async function Journals() {
                   {/***** jrShortCard *****/}
                   <div className="col-lg-2 col-md-3 col-12 jrShortCard">
                     {/*** card */}
-                    {journalRightlist.map((journal) => <div className="card" key={journal.journalsId}>
-                      <div className="card-body">
-                        <div className="cat-item">
-                          <Link href={`/journals/${journal.journalsUrl}`} />
-                          <div className="cat-img bg-primary-transparent">
-                            <Image unoptimized src={journal.imageUrl} className="img-fluid" fill alt="" />
-                          </div>
-                          <div className="cat-desc">
-                            <h5>
-                              {journal.journalsName}
-                            </h5>
-                            <small className="badge">
-                              INR {journal.price}/
-                            </small>
-                          </div>
-                        </div>
-                      </div>
-                    </div>)}
+                    <JournalsVerticalCarousel journalRightlist={journalRightlist} />
                   </div>
                 </div>
               </div>

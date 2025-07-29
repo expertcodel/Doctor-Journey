@@ -15,7 +15,7 @@ export default function JournalsThumbCarousel({ journalList }) {
     useEffect(() => {
         // Initialize Swiper
         swiperRef.current = new Swiper(".journalsThumb-slider", {
-            slidesPerView: 4, // Show 4 thumbnails at a time
+            slidesPerView: 3, // Show 4 thumbnails at a time
             spaceBetween: 16, // Spacing between slides
             freeMode: true, // Enable free scrolling
             grabCursor: true, // Enable mouse dragging
@@ -24,15 +24,15 @@ export default function JournalsThumbCarousel({ journalList }) {
             // Responsive breakpoints
             breakpoints: {
                 320: {
-                    slidesPerView: 1, // 1 slide for mobile
+                    slidesPerView: 1.2, // 1 slide for mobile
                     spaceBetween: 10
                 },
                 768: {
-                    slidesPerView: 3, // 3 slides for tablets
+                    slidesPerView: 2.5, // 3 slides for tablets
                     spaceBetween: 8
                 },
                 1280: {
-                    slidesPerView: 4, // 3 slides for tablets
+                    slidesPerView: 3, // 3 slides for tablets
                     spaceBetween: 16
                 },
             }
