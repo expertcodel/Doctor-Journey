@@ -1,14 +1,17 @@
 import VideoList from '../../app/component/VideoList.jsx'
-
+import { headers } from 'next/headers';
 export default async function AllDoctors() {
 
 
     let doctorCard = null;
     let totalItems;
-
+    let total
+    let specialization;
+    const headerlist=await headers();
+    const category=headerlist.get('x-category');
     try {
 
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/client/videos/?page=1&name=`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/client/videos/?page=1&name=&category=${category}&sort=select&value=${JSON.stringify([0,100])}&specialization=${JSON.stringify([])}`, {
 
             method: 'GET',
             cache: 'no-store'
@@ -21,7 +24,8 @@ export default async function AllDoctors() {
         if (res.status) {
             doctorCard = res.videolist;
             totalItems = Math.ceil(res.totalItems / 9);
-            
+            specialization=res.specialization;
+            total=res.totalItems;
         }
 
 
@@ -36,7 +40,7 @@ export default async function AllDoctors() {
 
     return (
         <>
-            {doctorCard && <VideoList doctorCard={doctorCard} totalItems={totalItems}/>}
+            {doctorCard && <VideoList doctorCard={doctorCard} totalItems={totalItems} specialization={specialization} total={total}  category={ category}/>}
         </>
     )
 }

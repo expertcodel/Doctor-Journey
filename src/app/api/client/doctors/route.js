@@ -4,6 +4,7 @@ import { doctorModel } from "../../../models/doctor.model.js";
 import { Op } from "sequelize";
 import { connectTodb } from "../../../database/database.js";
 import { articleModel } from "../../../models/article.model";
+
 export async function POST(request) {
 
     const { doctorId } = await request.json();
@@ -52,24 +53,54 @@ export async function GET(request) {
     const input = new URL(request.url).searchParams;
     const name = input.get('name');
     const page = input.get('page');
+    const category = input.get('category');
+    const sort = input.get('sort');
+    const views = JSON.parse(input.get('value'));
+    const specializations = JSON.parse(input.get('specialization'));
+    const location = JSON.parse(input.get('location'));
+    console.log(category, sort, views, specializations);
+    if (category !== 'null') {
+        specializations.push(category);
+    }
     const doctormodel = await doctorModel();
+    const connection = await connectTodb();
     if (!doctormodel) {
         return NextResponse.json({ status: false, message: "database error occured" });
     }
 
     try {
 
+        const specialization = await connection.query(`SELECT public."Doctors"."specialization", COUNT(*) FROM public."Doctors" GROUP BY public."Doctors"."specialization" ORDER BY  public."Doctors"."specialization" ASC`)
+
+        let where =  {
+            status: true, [Op.or]: { doctorName: { [Op.iLike]: `%${name}%` }, doctorId: { [Op.iLike]: `%${name}%` } }, views: { [Op.between]: views }
+        };
+
+        if (specializations.length > 0) {
+
+            where.specialization = {
+                [Op.in]: [...new Set(specializations)]
+            };
+
+        }
+
+        if (location.length > 0) {
+            where.city = { [Op.in]: location }
+        }
+
 
         const { rows, count } = await doctormodel.findAndCountAll({
 
-            where: { status: true, [Op.or]: { doctorName: { [Op.iLike]: `%${name}%` }, doctorId: { [Op.iLike]: `%${name}%` } } },
+            where: where,
             limit: 10,
             offset: (page - 1) * 10,
-            order: [['createdAt', 'DESC']],
+            order: sort === 'select' ? [['views', 'DESC'], ['createdAt', 'DESC']] : sort === 'Newest' ? [['createdAt', 'DESC']] : sort === 'Oldest' ? [['createdAt', 'ASC']] : [['views', 'DESC']],
             attributes: ['shortDescription', 'profileImage', 'doctorId', 'doctorName', 'specialization', 'zip']
         })
 
-        return NextResponse.json({ status: true, doctorlist: rows, totalItems: count });
+        
+        
+        return NextResponse.json({ status: true, doctorlist: rows, totalItems: count, specialization });
 
 
     } catch (error) {

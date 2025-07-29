@@ -11,6 +11,17 @@ export async function middleware(request) {
   const response = NextResponse.next();
   response.headers.set('x-pathname', pathname);
 
+  if(pathname.startsWith('/doctors'))
+  {
+      const category=new URL(request.url).searchParams.get('category');
+      response.headers.set('x-category', category);
+  }
+
+  if(pathname.startsWith('/doctor-profile'))
+  {
+      const category=new URL(request.url).searchParams.get('category');
+      response.headers.set('x-category', category);
+  }
 
   if (!token) {
 

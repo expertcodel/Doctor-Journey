@@ -4,10 +4,10 @@ export default async function JournalsActivities() {
 
     let totalItems;
     let journalList = null;
-
+     let total;
     try {
 
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/client/journal/journals-list/?page=1&name=`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/client/journal/journals-list/?page=1&name=&sort=select`, {
 
             method: 'GET',
             cache: 'no-store',
@@ -22,7 +22,7 @@ export default async function JournalsActivities() {
 
             totalItems = Math.ceil(res.totalItems/9);
             journalList = res.journallist
-          
+            total=res.totalItems;
         }
 
 
@@ -36,7 +36,7 @@ export default async function JournalsActivities() {
     return (
 
         <>{
-            journalList && <JournalActivity journalCard={journalList} totalItems={totalItems}/>
+            journalList && <JournalActivity journalCard={journalList} totalItems={totalItems} total={total}/>
         }</>
 
     );

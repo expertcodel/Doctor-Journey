@@ -5,10 +5,10 @@ export default async function Page() {
 
     let blogCard = [];
     let totalItems;
-
+    let total;
     try {
 
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/client/blogs/?page=1&name=`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/client/blogs/?page=1&name=&sort=select`, {
 
             method: 'GET',
             cache: 'no-store'
@@ -21,6 +21,7 @@ export default async function Page() {
         if (res.status) {
             blogCard = res.bloglist;
             totalItems = Math.ceil(res.totalItems / 9);
+            total=res.totalItems;
         }
 
 
@@ -35,7 +36,7 @@ export default async function Page() {
 
     return (
         <>
-            {blogCard && <Blog blogCard={blogCard} totalItems={totalItems}/>}
+            {blogCard && <Blog blogCard={blogCard} totalItems={totalItems} total={total}/>}
         </>
     )
 }

@@ -99,6 +99,7 @@ export async function GET(request) {
     const name = input.get('name');
     const url = input.get('url');
     const page = input.get('page');
+    const sort = input.get('sort');
     const blogmodel = await blogModel();
     if (!blogmodel) {
         return NextResponse.json({ status: false, message: "database error occured" });
@@ -112,7 +113,8 @@ export async function GET(request) {
             where: { blogStatus: true, [Op.or]: { blogTitle: { [Op.iLike]: `%${name}%` } } },
             limit: url === '/' ? 3 : 9,
             offset: url === '/' ? (page - 1) * 3 : (page - 1) * 9,
-            order: [['blogSerial', 'ASC']]
+            order: [['blogSerial', 'ASC']],
+            order: sort === 'select' ? [['blogSerial', 'ASC']] : sort === 'Newest' ? [['createdAt', 'DESC']] : [['createdAt', 'ASC']] 
         })
 
         return NextResponse.json({ status: true, bloglist: rows, totalItems: count });

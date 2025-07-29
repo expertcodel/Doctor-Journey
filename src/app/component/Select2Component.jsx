@@ -4,8 +4,11 @@ import { useEffect } from "react";
 import $ from "jquery";
 import "select2/dist/css/select2.min.css";
 import "select2/dist/js/select2.full.min.js";
-
-export default function Select2Component({ id, options, select2Options = {}, showSearch = false, onChange, }) {
+import Link from "next/link";
+import { useRouter,usePathname } from "next/navigation";
+export default function Select2Component({ id, options, select2Options = {}, showSearch = false, onChange, type, setSort }) {
+  const router = useRouter();
+  const path=usePathname();
   useEffect(() => {
     if (typeof window !== "undefined") {
       const $select = $(`#${id}`).select2({
@@ -36,9 +39,17 @@ export default function Select2Component({ id, options, select2Options = {}, sho
         }
       });
 
-      $select.on("change", function (e) {
+      $select.on("change", async function (e) {
         const selectedValue = $(this).val();
         onChange?.(selectedValue); // ✅ optional call
+        if (type === 'category') {
+          router.push(`${path}?category=${selectedValue}`)
+        }
+        else if (type === 'sort') {
+
+          setSort(selectedValue);
+
+        }
       });
     }
 
@@ -55,7 +66,7 @@ export default function Select2Component({ id, options, select2Options = {}, sho
       {/* ✅ Placeholder option */}
       {select2Options.placeholder && <option value="">{select2Options.placeholder}</option>}
       {options.map((option) => (
-        <option key={option.value} value={option.value}>
+        <option key={option.value} value={option.label}>
           {option.label}
         </option>
       ))}

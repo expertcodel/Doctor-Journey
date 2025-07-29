@@ -2,29 +2,53 @@
 import Image from "next/image";
 import Link from "next/link";
 import Select2Component from "../component/Select2Component";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import DaysCalculator from '../component/DaysCalculator';
 import Pagination from './Pagination';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBarsStaggered, faEye } from "@fortawesome/free-solid-svg-icons";
 import RangeSlider from "./RangeSlider";
-export default function blogList({ blogCard, totalItems }) {
+import FilterListBlog from './FilterListBlog.jsx'
+export default function blogList({ blogCard, totalItems, total }) {
 
 
     const [button, setButton] = useState(totalItems);
     const [idx, setIdx] = useState(1);
     const [blogLists, setblogLists] = useState(blogCard);
     const [name, setName] = useState("");
+    const [itemCount, setItemcount] = useState(total);
+    const [loading, setLoading] = useState(false);
+    const [sort, setSort] = useState("select");
+    useEffect(() => {
+
+
+
+        const fetching = async () => {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/client/blogs/?page=${1}&name=${name}&sort=${sort}`);
+            setIdx(1);
+            const res = await response.json();
+            if (res.status) {
+                setblogLists(res.bloglist);
+                setItemcount(res.totalItems);
+                setButton(Math.ceil(res.totalItems / 9));
+            }
+        }
+
+        fetching();
+
+    }, [sort])
+
     const searching = async (idx, name) => {
 
 
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/client/blogs/?page=${idx}&name=${name}`)
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/client/blogs/?page=${1}&name=${name}&sort=${sort}`)
         setName(name);
         setIdx(1);
         const res = await response.json();
         if (res.status) {
             setblogLists(res.bloglist);
             setButton(Math.ceil(res.totalItems / 9));
+            setItemcount(res.totalItems);
         }
 
     }
@@ -32,12 +56,13 @@ export default function blogList({ blogCard, totalItems }) {
     const pagination = async (idx) => {
 
         if (idx > 0 && idx <= button) {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/client/blogs/?page=${idx}&name=${name}`);
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/client/blogs/?page=${idx}&name=${name}&sort=${sort}`);
             setIdx(idx);
             const res = await response.json();
             if (res.status) {
                 setblogLists(res.bloglist);
                 setButton(Math.ceil(res.totalItems / 9));
+                setItemcount(res.totalItems);
             }
 
         }
@@ -66,7 +91,7 @@ export default function blogList({ blogCard, totalItems }) {
                                         <div className="col-xl-4 col-lg-3 col-md-12 mb-0 bg-white form-group">
                                             <input type="text" className="form-control input-lg br-tr-md-0 br-br-md-0" id="text4" placeholder="Enter Your Keywords" onChange={(e) => searching(idx, e.target.value)} />
                                         </div>
-                                        <div className="col-xl-3 col-lg-3 col-md-12 mb-0 bg-white form-group">
+                                        {/* <div className="col-xl-3 col-lg-3 col-md-12 mb-0 bg-white form-group">
                                             <input type="text" className="form-control input-lg br-md-0" id="text5" placeholder="Select Location" />
                                             <span>
                                                 <Image
@@ -88,13 +113,15 @@ export default function blogList({ blogCard, totalItems }) {
                                                 ]}
                                                 select2Options={{ placeholder: "Select category", allowClear: true }}
                                                 showSearch={true} />
-                                        </div>
-                                        <div className="col-xl-2 col-lg-3 col-md-12 mb-0">
+                                        </div> */}
+                                        {/* <div className="col-xl-2 col-lg-3 col-md-12 mb-0">
                                             <Link href="/" className="btn btn-lg btn-block btn-secondary br-tl-md-0 br-bl-md-0">
                                                 Search Here
                                             </Link>
-                                        </div>
+                                        </div> */}
                                     </div>
+
+                                     {name !== "" && <FilterListBlog filtered={blogLists} />}
                                 </div>
                             </div>
                         </div>
@@ -109,7 +136,7 @@ export default function blogList({ blogCard, totalItems }) {
                         <div className="col-12 item2-gl">
                             <div className="p-md-5 p-3 bg-white item2-gl-nav d-sm-flex d-block">
                                 <h6 className="mb-0 mt-3">
-                                    Showing <b>1 to 10</b> of 30 Entries
+                                    Showing <b>1 to 9</b> of {itemCount} Blogs
                                 </h6>
                                 <ul className="nav item2-gl-menu mt-1 ms-auto">
                                     {/* <li className="d-flex align-items-center">
@@ -119,20 +146,17 @@ export default function blogList({ blogCard, totalItems }) {
                                     </li> */}
                                 </ul>
                                 <div className="d-flex align-items-center">
-                                    <span className="customFilter">
+                                    {/* <span className="customFilter">
                                         <button className="active" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                                             <FontAwesomeIcon className="active" icon={faBarsStaggered} /> FIlter
                                         </button>
-                                    </span>
+                                    </span> */}
                                     <label className="me-2 mt-2 mb-sm-1">Sort By:</label>
-                                    <Select2Component id="select1" options={[{ value: "1", label: "Relavant" }, { value: "2", label: "Newest First" }, { value: "3", label: "Highest Paid" }, { value: "4", label: "Lowest Paid" }, { value: "5", label: "High Ratings" }, {
-                                        value: "6", label:
-                                            "Popular"
-                                    },]} select2Options={{ placeholder: "Select a fruit", allowClear: true }} showSearch={false} />
+                                    <Select2Component id="select1" options={[{ value: "1", label: "Newest" }, { value: "2", label: "Oldest" }]} select2Options={{ placeholder: "Sort", allowClear: true }} showSearch={false} type="sort" setSort={setSort} />
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div className="offcanvas offcanvas-end filterMainSec" tabIndex={-1} id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
                             <div className="offcanvas-header">
                                 <h5 id="offcanvasRightLabel">Select Filter</h5>
@@ -176,7 +200,7 @@ export default function blogList({ blogCard, totalItems }) {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="card-header border-top">
+                                    {/* <div className="card-header border-top">
                                         <h3 className="card-title">Views</h3>
                                     </div>
                                     <div className="card-body">
@@ -184,8 +208,8 @@ export default function blogList({ blogCard, totalItems }) {
                                             <label htmlFor="price">Views:</label>
                                             <RangeSlider />
                                         </h6>
-                                        {/* <div id="mySlider" /> */}
-                                    </div>
+                                       
+                                    </div> */}
                                     <div className="card-header border-top">
                                         <h3 className="card-title">Rating</h3>
                                     </div>
@@ -247,7 +271,7 @@ export default function blogList({ blogCard, totalItems }) {
                             <div className="col-md-4 col-12 drCard" key={card.blogId}>
                                 <div className="card mb-0">
                                     <div className="item7-card-img">
-                                        <Link href={`/blogs/${card.blogUrl}`} />
+                                        <Link href={`/blogs${card.blogUrl}`} />
                                         <Image src={card.blogImage} fill alt="img" className="cover-image" unoptimized />
 
                                     </div>
@@ -270,7 +294,7 @@ export default function blogList({ blogCard, totalItems }) {
                                      
                                     </div> */}
                                     <div className="card-body">
-                                        <Link href={`/blogs/${card.blogUrl}`} className="text-dark text-decoration-none">
+                                        <Link href={`/blogs${card.blogUrl}`} className="text-dark text-decoration-none">
                                             <h4 className="font-weight-semibold text-break mb-2">{card.blogTitle}</h4>
                                         </Link>
 

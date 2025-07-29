@@ -1,13 +1,17 @@
 import DoctorList from "../../app/component/DoctorList.jsx";
-
+import { headers } from 'next/headers';
 export default async function AllDoctorsProfile() {
 
     let doctorProfile = null;
     let totalItems;
+    let total
+    let specialization;
+    const headerlist=await headers();
+    const category=headerlist.get('x-category');
 
     try {
 
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/client/doctors/?page=1&name=`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/client/doctors/?page=1&name=&category=${category}&sort=select&value=${JSON.stringify([0,100])}&specialization=${JSON.stringify([])}&location=${JSON.stringify([])}`, {
 
             method: 'GET',
             cache: 'no-store'
@@ -20,6 +24,8 @@ export default async function AllDoctorsProfile() {
         if (res.status) {
             doctorProfile = res.doctorlist;
             totalItems = Math.ceil(res.totalItems / 10);
+            specialization=res.specialization;
+            total=res.totalItems;
         }
 
 
@@ -31,7 +37,7 @@ export default async function AllDoctorsProfile() {
     }
     return (
         <>
-       { doctorProfile && <DoctorList doctorProfile={doctorProfile} totalItems={totalItems}/>}
+       { doctorProfile && <DoctorList doctorProfile={doctorProfile} totalItems={totalItems} specialization={specialization} total={total}  category={ category}/>}
        </>
     )
 }

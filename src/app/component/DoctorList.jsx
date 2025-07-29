@@ -3,28 +3,65 @@ import Image from "next/image";
 import Link from "next/link";
 import Select2Component from "../component/Select2Component";
 //  import doctorProfile from "@/data/doctorProfile.json";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBarsStaggered, faBuilding, faCalendar, faChevronRight, faClock, faFilter, faLocation, faLocationArrow, faMap, faStar, faTimesCircle, faUsd, faUserFriends } from "@fortawesome/free-solid-svg-icons";
 import RangeSlider from "../component/RangeSlider";
 import Pagination from './Pagination';
+import FilterList from './FilterList.jsx'
+export default function DoctorList({ doctorProfile, totalItems, specialization, total, category }) {
 
-export default function DoctorList({ doctorProfile, totalItems }) {
-
+    const [bsOffcanvas, setBsOffcanvas] = useState(null);
+    const offcanvasRef = useRef(null);
+    const [specializations, setSpecializations] = useState([]);
+    const [locations, setLocations] = useState([]);
+    const [itemCount, setItemcount] = useState(total);
     const [doctorLists, setdoctorLists] = useState(doctorProfile);
+    const [sort, setSort] = useState("select");
     const [button, setButton] = useState(totalItems);
     const [idx, setIdx] = useState(1);
     const [name, setName] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [value, setValue] = useState([0, 50]);
 
+    useEffect(() => {
+
+
+        import("bootstrap/dist/js/bootstrap.esm.min.js").then((module) => {
+            const { Offcanvas } = module;
+            const instance = Offcanvas.getInstance(offcanvasRef.current) || new Offcanvas(offcanvasRef.current);
+            setBsOffcanvas(instance);
+        });
+        const fetching = async () => {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/client/doctors/?page=${1}&name=${name}&category=${category}&sort=${sort}&value=${JSON.stringify(value)}&specialization=${JSON.stringify(specializations)}&location=${JSON.stringify(locations)}`);
+            setIdx(1);
+            const res = await response.json();
+            if (res.status) {
+                setdoctorLists(res.doctorlist);
+                setItemcount(res.totalItems);
+                setButton(Math.ceil(res.totalItems / 10));
+            }
+        }
+
+        fetching();
+
+    }, [sort, category])
+
+    const openOffcanvas = () => {
+        if (bsOffcanvas) {
+            bsOffcanvas.show();
+        }
+    };
     const searching = async (idx, name) => {
 
 
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/client/doctors/?page=${1}&name=${name}`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/client/doctors/?page=${1}&name=${name}&category=${category}&sort=${sort}&value=${JSON.stringify(value)}&specialization=${JSON.stringify(specializations)}&location=${JSON.stringify(locations)}`);
         setName(name);
-setIdx(1);
+        setIdx(1);
         const res = await response.json();
         if (res.status) {
             setdoctorLists(res.doctorlist);
+            setItemcount(res.totalItems);
             setButton(Math.ceil(res.totalItems / 10));
         }
 
@@ -33,18 +70,76 @@ setIdx(1);
     const pagination = async (idx) => {
 
         if (idx > 0 && idx <= button) {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/client/doctors/?page=${idx}&name=${name}`);
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/client/doctors/?page=${idx}&name=${name}&category=${category}&sort=${sort}&value=${JSON.stringify(value)}&specialization=${JSON.stringify(specializations)}&location=${JSON.stringify(locations)}`);
             setIdx(idx);
             const res = await response.json();
             if (res.status) {
                 setdoctorLists(res.doctorlist);
+                setItemcount(res.totalItems);
                 setButton(Math.ceil(res.totalItems / 10));
             }
 
         }
+    }
 
+    const applyFilter = async (value) => {
+
+        setLoading(true);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/client/doctors/?page=${idx}&name=${name}&category=${category}&sort=${sort}&value=${JSON.stringify(value)}&specialization=${JSON.stringify(specializations)}&location=${JSON.stringify(locations)}`);
+        setName(name);
+        setIdx(1);
+        const res = await response.json();
+        setLoading(false);
+
+        if (res.status) {
+            setdoctorLists(res.doctorlist);
+            setItemcount(res.totalItems);
+            setButton(Math.ceil(res.totalItems / 10));
+            if (bsOffcanvas) {
+                bsOffcanvas.hide();
+            }
+        }
 
     }
+
+    const applyCheckbox = () => {
+
+        const checkboxes = Array.from(document.querySelectorAll('.checkbox'));
+        const checkboxes1 = Array.from(document.querySelectorAll('.checkbox1'));
+        let specialization = [];
+        let location = [];
+        checkboxes.map((box) => box.checked && specialization.push(box.value));
+        checkboxes1.map((box) => box.checked && location.push(box.value));
+        setSpecializations(specialization);
+        setLocations(location);
+    }
+
+    const resetCheckbox = async (value) => {
+
+        const checkboxes = Array.from(document.querySelectorAll('.checkbox'));
+        const checkboxes1 = Array.from(document.querySelectorAll('.checkbox1'));
+        setSpecializations([]);
+        setLocations([]);
+        checkboxes.map((box) => box.checked = false);
+        checkboxes1.map((box) => box.checked = false);
+        setLoading(true);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/client/doctors/?page=${idx}&name=${name}&category=${category}&sort=${sort}&value=${JSON.stringify(value)}&specialization=${JSON.stringify([])}&location=${JSON.stringify([])}`);
+        setName(name);
+        setIdx(1);
+        const res = await response.json();
+        setLoading(false);
+
+        if (res.status) {
+            setdoctorLists(res.doctorlist);
+            setItemcount(res.totalItems);
+            setButton(Math.ceil(res.totalItems / 10));
+            if (bsOffcanvas) {
+                bsOffcanvas.hide();
+            }
+        }
+
+    }
+
 
     return (
         <>
@@ -65,7 +160,8 @@ setIdx(1);
                                         <div className="col-xl-4 col-lg-3 col-md-12 mb-0 bg-white form-group">
                                             <input type="text" className="form-control input-lg br-tr-md-0 br-br-md-0" id="text4" placeholder="Enter Your Keywords" onChange={(e) => searching(idx, e.target.value)} />
                                         </div>
-                                        <div className="col-xl-3 col-lg-3 col-md-12 mb-0 bg-white form-group">
+                                        
+                                        {/* <div className="col-xl-3 col-lg-3 col-md-12 mb-0 bg-white form-group">
                                             <input type="text" className="form-control input-lg br-md-0" id="text5" placeholder="Select Location" />
                                             <span>
                                                 <Image
@@ -74,19 +170,19 @@ setIdx(1);
                                                     alt="image" width={150} height={150}
                                                 />
                                             </span>
-                                        </div>
+                                        </div> */}
                                         <div className="col-xl-3 col-lg-3 col-md-12 select2-lg  mb-0 bg-white form-group">
                                             <Select2Component id="select2"
-                                                options={[
-                                                    { value: "1", label: "South Indian" },
-                                                    { value: "2", label: "North Indian" },
-                                                    { value: "3", label: "West Indian" },
-                                                    { value: "4", label: "Australia" },
-                                                    { value: "5", label: "Afgani" },
-                                                    { value: "6", label: "Russian" },
-                                                ]}
+
+                                                options=
+                                                {
+
+
+                                                    specialization[0].map((item, i) => { return { value: i + 1, label: item.specialization } })
+
+                                                }
                                                 select2Options={{ placeholder: "Select category", allowClear: true }}
-                                                showSearch={true} />
+                                                showSearch={true} type="category" setSort={setSort} />
                                         </div>
                                         <div className="col-xl-2 col-lg-3 col-md-12 mb-0">
                                             <Link href="/" className="btn btn-lg btn-block btn-secondary br-tl-md-0 br-bl-md-0">
@@ -94,7 +190,9 @@ setIdx(1);
                                             </Link>
                                         </div>
                                     </div>
+                                     {name !== "" && <FilterList filtered={doctorLists} />}
                                 </div>
+                               
                             </div>
                         </div>
                     </div>
@@ -114,7 +212,7 @@ setIdx(1);
                                             <div className="">
                                                 <div className="p-md-5 p-3 bg-white item2-gl-nav d-sm-flex d-block">
                                                     <h6 className="mb-0 mt-3">
-                                                        Showing <b>1 to 10</b> of 30 Entries
+                                                        Showing <b>1 to 10</b> of {itemCount} Doctors
                                                     </h6>
                                                     <ul className="nav item2-gl-menu mt-1 ms-auto">
                                                         {/* <li className="d-flex align-items-center">
@@ -125,15 +223,12 @@ setIdx(1);
                                                     </ul>
                                                     <div className="d-flex align-items-center">
                                                         <span className="customFilter">
-                                                            <button className="active" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                                                            <button className="active" type="button" aria-controls="offcanvasRight" onClick={openOffcanvas}>
                                                                 <FontAwesomeIcon className="active" icon={faBarsStaggered} /> FIlter
                                                             </button>
                                                         </span>
                                                         <label className="me-2 mt-2 mb-sm-1">Sort By:</label>
-                                                        <Select2Component id="select1" options={[{ value: "1", label: "Relavant" }, { value: "2", label: "Newest First" }, { value: "3", label: "Highest Paid" }, { value: "4", label: "Lowest Paid" }, { value: "5", label: "High Ratings" }, {
-                                                            value: "6", label:
-                                                                "Popular"
-                                                        },]} select2Options={{ placeholder: "Select a fruit", allowClear: true }} showSearch={false} />
+                                                        <Select2Component id="select1" options={[{ value: "1", label: "Newest" }, { value: "2", label: "Oldest" }, { value: "3", label: "Views" },]} select2Options={{ placeholder: "Sort", allowClear: true }} showSearch={false} type="sort" setSort={setSort} />
                                                     </div>
                                                 </div>
                                             </div>
@@ -206,7 +301,7 @@ setIdx(1);
                                                                                         </span>
                                                                                     )
                                                                                 }
-                                                                                
+
                                                                                 {
                                                                                     item.available_time && (
                                                                                         <span className="me-4">
@@ -215,7 +310,7 @@ setIdx(1);
                                                                                         </span>
                                                                                     )
                                                                                 }
-                                                                                
+
                                                                                 {
                                                                                     item.rating && (
                                                                                         <span className="reviewText me-5">
@@ -223,7 +318,7 @@ setIdx(1);
                                                                                         </span>
                                                                                     )
                                                                                 }
-                                                                                
+
                                                                                 <Link href={`/doctor-profile/${item.doctorId}`} className="text-primary viewDetailsBtn">
                                                                                     View Profile <FontAwesomeIcon icon={faChevronRight} />
                                                                                 </Link>
@@ -240,7 +335,7 @@ setIdx(1);
                                         </div>
                                     </div>
                                     <div className="center-block text-center">
-                                        {button > 1 && 
+                                        {button > 1 &&
                                             <Pagination
                                                 currentPage={idx}
                                                 totalPages={button}
@@ -253,7 +348,7 @@ setIdx(1);
                             {/*/Restaurants lists*/}
                         </div>
 
-                        <div className="offcanvas offcanvas-end filterMainSec" tabIndex={-1} id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+                        {/* <div className="offcanvas offcanvas-end filterMainSec" tabIndex={-1} id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
                             <div className="offcanvas-header">
                                 <h5 id="offcanvasRightLabel">Select Filter</h5>
                                 <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close" />
@@ -302,9 +397,9 @@ setIdx(1);
                                     <div className="card-body">
                                         <h6>
                                             <label htmlFor="price">Price Range:</label>
-                                            <RangeSlider />
+                                            <RangeSlider value={value} setValue={setValue} />
                                         </h6>
-                                        {/* <div id="mySlider" /> */}
+                                        
                                     </div>
                                     <div className="card-header border-top">
                                         <h3 className="card-title">Rating</h3>
@@ -375,6 +470,102 @@ setIdx(1);
                                     <div className="card-footer">
                                         <button type="submit" className="btn btn-warning btn-block">
                                             Apply Filter
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> */}
+
+                        <div className="offcanvas offcanvas-end filterMainSec" tabIndex={-1} id="offcanvasRight" aria-labelledby="offcanvasRightLabel" ref={offcanvasRef}>
+                            <div className="offcanvas-header">
+                                <h5 id="offcanvasRightLabel">Select Filter  {(value[0] !== 0 || value[1] !== 50 || specializations.length > 0 || locations.length > 0) && <small onClick={() => [resetCheckbox([0, 50]), setValue([0, 50])]} style={{ cursor: 'pointer', color: 'red' }}>Reset</small>}</h5>
+                                <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close" />
+                            </div>
+                            <div className="offcanvas-body">
+                                <div className="card">
+                                    <div className="card-header">
+                                        <h3 className="card-title">Specialization</h3>
+                                    </div>
+                                    <div className="card-body">
+                                        <div className="" id="container">
+                                            <div className="filter-product-checkboxs">
+                                                {specialization[0].map((item, i) => <label className="custom-control form-checkbox mb-3" key={i}>
+                                                    <input type="checkbox" className="custom-control-input checkbox" name={`checkbox${i}`} defaultValue={item.specialization} onChange={applyCheckbox} />
+                                                    <span className="custom-control-label">
+                                                        {item.specialization}
+                                                        <span className="label label-secondary float-end">
+                                                            {item.count}
+                                                        </span>
+                                                    </span>
+                                                </label>)}
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="card-header border-top">
+                                        <h3 className="card-title">Profile Views</h3>
+                                    </div>
+                                    <div className="card-body">
+                                        <h6>
+                                            <label htmlFor="price">Range:</label>
+                                            <RangeSlider value={value} setValue={setValue} />
+                                        </h6>
+                                        {/* <div id="mySlider" /> */}
+                                    </div>
+                                    {/* <div className="card-header border-top">
+                                                                <h3 className="card-title">Rating</h3>
+                                                            </div>
+                                                            <div className="card-body">
+                                                                <div className="filter-product-checkboxs">
+                                                                    <label className="custom-control form-checkbox mb-2">
+                                                                        <input type="checkbox" className="custom-control-input" name="checkbox1" defaultValue="option1" />
+                                                                        <span className="custom-control-label">Any</span>
+                                                                    </label>
+                                                                    <label className="custom-control form-checkbox mb-2">
+                                                                        <input type="checkbox" className="custom-control-input" name="checkbox2" defaultValue="option2" />
+                                                                        <span className="custom-control-label">3.5</span>
+                                                                    </label>
+                                                                    <label className="custom-control form-checkbox mb-2">
+                                                                        <input type="checkbox" className="custom-control-input" name="checkbox2" defaultValue="option2" />
+                                                                        <span className="custom-control-label">4.0</span>
+                                                                    </label>
+                                                                    <label className="custom-control form-checkbox mb-0">
+                                                                        <input type="checkbox" className="custom-control-input" name="checkbox2" defaultValue="option2" />
+                                                                        <span className="custom-control-label">4.5</span>
+                                                                    </label>
+                                                                    <label className="custom-control form-checkbox mb-0">
+                                                                        <input type="checkbox" className="custom-control-input" name="checkbox2" defaultValue="option2" />
+                                                                        <span className="custom-control-label">5</span>
+                                                                    </label>
+                                                                </div>
+                                                            </div> */}
+                                    <div className="card-header border-top">
+                                        <h3 className="card-title">Location</h3>
+                                    </div>
+                                    <div className="card-body">
+                                        <div className="filter-product-checkboxs">
+                                            <label className="custom-control form-checkbox mb-2">
+                                                <input type="checkbox" className="custom-control-input checkbox1" name="checkbox1" defaultValue="Delhi" onChange={applyCheckbox} />
+                                                <span className="custom-control-label">Delhi</span>
+                                            </label>
+                                            <label className="custom-control form-checkbox mb-2">
+                                                <input type="checkbox" className="custom-control-input checkbox1" name="checkbox2" defaultValue="Kolkata" onChange={applyCheckbox} />
+                                                <span className="custom-control-label">Kolkata</span>
+                                            </label>
+                                            <label className="custom-control form-checkbox mb-2">
+                                                <input type="checkbox" className="custom-control-input checkbox1" name="checkbox2" defaultValue="Mumbai" onChange={applyCheckbox} />
+                                                <span className="custom-control-label">Mumbai</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div className="card-footer">
+
+
+                                        <button type="submit" className="btn btn-warning btn-block" onClick={() => applyFilter(value)}>
+                                            {loading ? <div className="spinner-border text-white" role="status">
+                                                <span className="visually-hidden">Loading...</span>
+                                            </div> : <> Apply Filter
+                                                <span /> </>}
                                         </button>
                                     </div>
                                 </div>

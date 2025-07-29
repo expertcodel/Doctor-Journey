@@ -56,23 +56,58 @@ export async function GET(request) {
     const input = new URL(request.url).searchParams;
     const name = input.get('name');
     const page = input.get('page');
+    const category = input.get('category');
+    const sort = input.get('sort');
+    const views = JSON.parse(input.get('value'));
+    const specializations = JSON.parse(input.get('specialization'));
+    console.log(category, sort, views, specializations);
+    if (category !== 'null') {
+        specializations.push(category);
+    }
+
     const videomodel = await videoModel();
+    const connection = await connectTodb();
     if (!videomodel) {
         return NextResponse.json({ status: false, message: "database error occured" });
     }
 
     try {
+        const specialization = await connection.query(`SELECT public."Videos"."specialization", COUNT(*) FROM public."Videos" GROUP BY public."Videos"."specialization" ORDER BY  public."Videos"."specialization" ASC`)
+
+        if (specializations.length > 0) {
+            const { rows, count } = await videomodel.findAndCountAll({
+
+                where: {
+                    specialization: {
+                        [Op.in]: [...new Set(specializations)]
+                    }, videoStatus: true, [Op.or]: { videoTitle: { [Op.iLike]: `%${name}%` }, videoId: { [Op.iLike]: `%${name}%` } }, views: { [Op.between]: views }
+                },
+                limit: 9,
+                offset: (page - 1) * 9,
+                order: sort === 'select' ? [['views', 'DESC'], ['createdAt', 'DESC']] : sort === 'Newest' ? [['createdAt', 'DESC']] : sort === 'Oldest' ? [['createdAt', 'ASC']] : [['views', 'DESC']]
+            })
 
 
-        const { rows, count } = await videomodel.findAndCountAll({
+            return NextResponse.json({ status: true, videolist: rows, totalItems: count, specialization });
 
-            where: { videoStatus: true, [Op.or]: { videoTitle: { [Op.iLike]: `%${name}%` }, videoId: { [Op.iLike]: `%${name}%` } } },
-            limit: 9,
-            offset: (page - 1) * 9,
-            order: [['views', 'DESC'], ['createdAt', 'DESC']]
-        })
+        }
+        else {
 
-        return NextResponse.json({ status: true, videolist: rows, totalItems: count });
+            const { rows, count } = await videomodel.findAndCountAll({
+
+                where: { videoStatus: true, [Op.or]: { videoTitle: { [Op.iLike]: `%${name}%` }, videoId: { [Op.iLike]: `%${name}%` } }, views: { [Op.between]: views } },
+                limit: 9,
+                offset: (page - 1) * 9,
+                order: sort === 'select' ? [['views', 'DESC'], ['createdAt', 'DESC']] : sort === 'Newest' ? [['createdAt', 'DESC']] : sort === 'Oldest' ? [['createdAt', 'ASC']] : [['views', 'DESC']]
+            })
+
+
+
+            return NextResponse.json({ status: true, videolist: rows, totalItems: count, specialization });
+
+        }
+
+
 
 
     } catch (error) {

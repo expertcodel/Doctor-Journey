@@ -7,6 +7,7 @@ export async function GET(request) {
     const input = new URL(request.url).searchParams;
     const name = input.get('name');
     const page = input.get('page');
+    const sort = input.get('sort');
     const journalmodel = await journalsModel();
     if (!journalmodel) {
         return NextResponse.json({ status: false, message: "database error occured" });
@@ -21,7 +22,7 @@ export async function GET(request) {
             limit: 9,
             offset: (page - 1) * 9,
 
-            order: [['createdAt', 'DESC']]
+            order: sort === 'select' ? [['createdAt', 'DESC']] : sort === 'Newest' ? [['createdAt', 'DESC']] : [['createdAt', 'ASC']] 
         })
 
 
