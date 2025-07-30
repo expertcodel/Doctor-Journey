@@ -73,7 +73,7 @@ export default function ForgotPassword() {
 
 
     setLoading(true)
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/forget-password`, { method: 'POST', body: JSON.stringify({ email: email.trim() }) })
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/forget-password`, { method: 'POST', body: JSON.stringify({ email: email.trim(), recaptchaToken }) })
     const res = await response.json();
     setLoading(false)
     if (res.status) {
