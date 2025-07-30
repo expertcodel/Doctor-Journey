@@ -260,7 +260,7 @@ export default function ForgotPassword() {
       <Breadcrumb title="Forgot Password" />
 
       {/*Login-Section*/}
-      <section className="sptb loginSec otpScreen">
+      <section className="sptb loginSec otpScreen bg-white">
         <div className="container customerpage">
           <div className="card border-light-subtle shadow-sm">
             <div className="row g-0">

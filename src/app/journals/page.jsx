@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCreditCard, faEuro, faEuroSign, faStar } from "@fortawesome/free-solid-svg-icons";
+import { faCreditCard, faEuro, faEuroSign, faSearch, faStar } from "@fortawesome/free-solid-svg-icons";
 import Select2Component from "../component/Select2Component";
 import ThumbnailSearchCarousel from "../component/ThumbnailSearchCarousel";
 import ThumbnailSponsorCarousel from "../component/ThumbnailSponsorCarousel";
@@ -89,11 +89,12 @@ export default async function Journals() {
                   </h1>
                 </div>
                 <div className="search-background bg-transparent">
-                  <div className="form row no-gutters ">
-                    <div className="col-xl-4 col-lg-3 col-md-12 mb-0 bg-white form-group">
+                  <div className="form row no-gutters searchBoxWithDiv">
+                    <div className="col-md-6 col-12 mb-0 bg-white form-group searchBoxMain">
+                      <span className="searchIcon"><FontAwesomeIcon icon={faSearch} /></span>
                       <input type="text" className="form-control input-lg br-tr-md-0 br-br-md-0" id="text4" placeholder="Enter Your Keywords" />
                     </div>
-                    <div className="col-xl-3 col-lg-3 col-md-12 mb-0 bg-white form-group">
+                    {/* <div className="col-xl-3 col-lg-3 col-md-12 mb-0 bg-white form-group">
                       <input type="text" className="form-control input-lg br-md-0" id="text5" placeholder="Select Location" />
                       <span>
                         <Image
@@ -102,8 +103,8 @@ export default async function Journals() {
                           alt="image" width={150} height={150}
                         />
                       </span>
-                    </div>
-                    <div className="col-xl-3 col-lg-3 col-md-12 select2-lg  mb-0 bg-white form-group">
+                    </div> */}
+                    <div className="col-md-6 col-12 select2-lg  mb-0 bg-white form-group">
                       <Select2Component id="select2"
                         options={[
                           { value: "1", label: "South Indian" },
@@ -116,11 +117,11 @@ export default async function Journals() {
                         select2Options={{ placeholder: "Select category", allowClear: true }}
                         showSearch={true} />
                     </div>
-                    <div className="col-xl-2 col-lg-3 col-md-12 mb-0">
+                    {/* <div className="col-xl-2 col-lg-3 col-md-12 mb-0">
                       <Link href="/" className="btn btn-lg btn-block btn-secondary br-tl-md-0 br-bl-md-0">
                         Search Here
                       </Link>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>

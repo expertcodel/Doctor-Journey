@@ -2,13 +2,15 @@ import Image from "next/image";
 import Link from "next/link";
 import Select2Component from "../component/Select2Component";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBarsStaggered } from "@fortawesome/free-solid-svg-icons";
+import { faBarsStaggered, faSearch } from "@fortawesome/free-solid-svg-icons";
 import RangeSlider from "../component/RangeSlider";
 import eventsCards from "../../data/eventsCards.json";
 import Pagination from '../component/Pagination';
+import Breadcrumb from "../component/Breadcrumb";
 export default function EventsList() {
     return (
         <>
+            <Breadcrumb title={'listing'} />
             {/* search engine */}
             <section className="cover-image sptb-1 bg-background2"
                 data-image-src="../assets/images/banners/banner1.jpg">
@@ -22,11 +24,12 @@ export default function EventsList() {
                                     </h1>
                                 </div>
                                 <div className="search-background bg-transparent">
-                                    <div className="form row no-gutters ">
-                                        <div className="col-xl-4 col-lg-3 col-md-12 mb-0 bg-white form-group">
+                                    <div className="form">
+                                        <div className="col-12 mb-0 bg-white form-group searchBoxMain">
+                                            <span className="searchIcon"><FontAwesomeIcon icon={faSearch} /></span>
                                             <input type="text" className="form-control input-lg br-tr-md-0 br-br-md-0" id="text4" placeholder="Enter Your Keywords" />
                                         </div>
-                                        <div className="col-xl-3 col-lg-3 col-md-12 mb-0 bg-white form-group">
+                                        {/* <div className="col-xl-3 col-lg-3 col-md-12 mb-0 bg-white form-group">
                                             <input type="text" className="form-control input-lg br-md-0" id="text5" placeholder="Select Location" />
                                             <span>
                                                 <Image
@@ -53,7 +56,7 @@ export default function EventsList() {
                                             <Link href="/" className="btn btn-lg btn-block btn-secondary br-tl-md-0 br-bl-md-0">
                                                 Search Here
                                             </Link>
-                                        </div>
+                                        </div> */}
                                     </div>
                                 </div>
                             </div>

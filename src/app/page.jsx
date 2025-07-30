@@ -115,7 +115,7 @@ export default async function Home() {
             <div className="col-12">
               <h4 className="mainHeading">
                 Recommended for users
-                <Link href="/doctor-profile">Browse all activity</Link>
+                <Link href="/doctor">Browse all activity</Link>
               </h4>
             </div>
           </div>
@@ -142,8 +142,8 @@ export default async function Home() {
             </div>
 
             <div className="col-md-7 col-12">
-              <div className="row g-md-4 g-3">
-                <div className="col-md-6 col-12">
+              <div className="row g-md-4 g-3 h-100">
+                <div className="col-md-6 col-12 h-100">
                   <div className="card mb-0">
                     <div className="item7-card-img">
                       <Link href={`/doctors/${videoCards[1].videoId}`} />
@@ -156,7 +156,8 @@ export default async function Home() {
                       <Link href={`/doctors/${videoCards[1].videoId}`} className="text-dark">
                         <h4 className="font-weight-semibold">{videoCards[1].doctorName}</h4>
                       </Link>
-                      <p dangerouslySetInnerHTML={{__html:videoCards[1].videoContent}}>
+                      <p>{videoCards[1].specialization}</p>
+                      <p className="cardDescription" dangerouslySetInnerHTML={{__html:videoCards[1].videoContent}}>
                        
                       </p>
                      
@@ -164,7 +165,7 @@ export default async function Home() {
                   </div>
                 </div>
 
-                <div className="col-md-6 col-12">
+                <div className="col-md-6 col-12 h-100">
                   <div className="card noImg mb-0">
                     <div className="card-body">
                       <Link className="noImgLink" href="/" />

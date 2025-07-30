@@ -27,7 +27,7 @@ export default function DoctorUpdate({ doctorDetail }) {
 
 
                     <div className="row">
-                        <div className="col-xxl-3">
+                        <div className="col-12 mb-5">
 
                             {/*end card*/}
                             <div className="card">

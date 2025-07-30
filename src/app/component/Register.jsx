@@ -211,7 +211,7 @@ export default function Register({ countryList }) {
             <Breadcrumb title={otpPage ? "Verify OTP" : "Register"} />
 
             {/*Login-Section*/}
-            {!otpPage ? <section className="sptb loginSec">
+            {!otpPage ? <section className="sptb loginSec bg-white">
                 <div className="container customerpage">
                     <div className="card border-light-subtle shadow-sm">
                         <div className="row g-0">

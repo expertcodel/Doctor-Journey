@@ -5,6 +5,8 @@ import Select2Component from "./Select2Component";
 import ThumbnailSearchCarousel from "./ThumbnailSearchCarousel";
 import { useState, useEffect, useRef } from "react";
 import  FilterListVideo from './FilterListVideo.jsx'
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 function SearchComponent({ specialization }) {
 
 
@@ -37,8 +39,9 @@ function SearchComponent({ specialization }) {
                                 </h1>
                             </div>
                             <div className="search-background bg-transparent">
-                                <div className="form row no-gutters ">
-                                    <div className="col-xl-4 col-lg-3 col-md-12 mb-0 bg-white form-group">
+                                <div className="form row no-gutters searchBoxWithDiv">
+                                    <div className="col-md-6 col-12 mb-0 bg-white form-group searchBoxMain">
+                                        <span className="searchIcon"><FontAwesomeIcon icon={faSearch} /></span>
                                         <input type="text" className="form-control input-lg br-tr-md-0 br-br-md-0" id="text4" placeholder="Enter Your Keywords" onChange={(e) => searching(e.target.value)}/>
                                     </div>
                                     {/* <div className="col-xl-3 col-lg-3 col-md-12 mb-0 bg-white form-group">
@@ -51,7 +54,7 @@ function SearchComponent({ specialization }) {
                                             />
                                         </span>
                                     </div> */}
-                                    <div className="col-xl-3 col-lg-3 col-md-12 select2-lg  mb-0 bg-white form-group">
+                                    <div className="col-md-6 col-12 select2-lg  mb-0 bg-white form-group">
                                         <Select2Component id="select2"
 
                                             options=

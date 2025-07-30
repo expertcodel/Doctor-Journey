@@ -11,8 +11,24 @@ import AnimatedCounter from "../component/AnimatedCounter";
 import ParticipateOrganisation from "../component/ParticipateOrganisation";
 import UpcomingEventsCarousel from "../component/UpcomingEventsCarousel";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendarAlt, faEye, faFaceSmile, faGlobe, faHeadphones, faMapMarkerAlt, faUserCheck } from '@fortawesome/free-solid-svg-icons';
-export default function Events() {
+import { faCalendarAlt, faEye, faFaceSmile, faGlobe, faHeadphones, faMapMarkerAlt, faSearch, faUserCheck } from '@fortawesome/free-solid-svg-icons';
+export default async function Events() {
+    let specialization = [];
+    try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/client/journal`, {
+            method: 'GET',
+            cache: 'no-store'
+        })
+
+        if (!response.ok) throw new error(`Failed to fetch: ${response.status}`);
+
+        const res = await response.json();
+        if (res.status) {
+            specialization=res.specialization
+        }
+    } catch (error) {
+        console.log("fetching failed", error);
+    }
     return (
         <section>
             <EventsBanner />
@@ -21,58 +37,59 @@ export default function Events() {
             <section className="banner-1 cover-image sptb-3 pb-14 sptb-tab bg-background2"
                 data-image-src="../assets/images/banners/banner1.jpg">
                 <div className="header-text1 mb-0">
-                <div className="container">
-                    <div className="row">
-                    <div className="col-xl-10 col-lg-12 col-md-12 d-block mx-auto">
-                        <div className="text-center text-white ">
-                        <h1 className="mb-5">
-                            Search Your favourite videos
-                        </h1>
-                        </div>
-                        <div className="search-background bg-transparent">
-                        <div className="form row no-gutters ">
-                            <div className="col-xl-4 col-lg-3 col-md-12 mb-0 bg-white form-group">
-                            <input type="text" className="form-control input-lg br-tr-md-0 br-br-md-0" id="text4" placeholder="Enter Your Keywords" />
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-xl-10 col-lg-12 col-md-12 d-block mx-auto">
+                            <div className="text-center text-white ">
+                                <h1 className="mb-5">
+                                Search Your favourite Journals
+                                </h1>
                             </div>
-                            <div className="col-xl-3 col-lg-3 col-md-12 mb-0 bg-white form-group">
-                            <input type="text" className="form-control input-lg br-md-0" id="text5" placeholder="Select Location" />
-                            <span>
-                                <Image
-                                src="/images/svg/gps.svg"
-                                className="location-gps-sm"
-                                alt="image" width={150} height={150}
-                                />
-                            </span>
+                            <div className="search-background bg-transparent">
+                                <div className="form row no-gutters searchBoxWithDiv">
+                                <div className="col-md-6 col-12 mb-0 bg-white form-group searchBoxMain">
+                                    <span className="searchIcon"><FontAwesomeIcon icon={faSearch} /></span>
+                                    <input type="text" className="form-control input-lg br-tr-md-0 br-br-md-0" id="text4" placeholder="Enter Your Keywords" />
+                                </div>
+                                {/* <div className="col-xl-3 col-lg-3 col-md-12 mb-0 bg-white form-group">
+                                    <input type="text" className="form-control input-lg br-md-0" id="text5" placeholder="Select Location" />
+                                    <span>
+                                    <Image
+                                        src="/images/svg/gps.svg"
+                                        className="location-gps-sm"
+                                        alt="image" width={150} height={150}
+                                    />
+                                    </span>
+                                </div> */}
+                                <div className="col-md-6 col-12 select2-lg  mb-0 bg-white form-group">
+                                    <Select2Component id="select2"
+                                    options={[
+                                        { value: "1", label: "South Indian" },
+                                        { value: "2", label: "North Indian" },
+                                        { value: "3", label: "West Indian" },
+                                        { value: "4", label: "Australia" },
+                                        { value: "5", label: "Afgani" },
+                                        { value: "6", label: "Russian" },
+                                    ]}
+                                    select2Options={{ placeholder: "Select category", allowClear: true }}
+                                    showSearch={true} />
+                                </div>
+                                {/* <div className="col-xl-2 col-lg-3 col-md-12 mb-0">
+                                    <Link href="/" className="btn btn-lg btn-block btn-secondary br-tl-md-0 br-bl-md-0">
+                                    Search Here
+                                    </Link>
+                                </div> */}
+                                </div>
                             </div>
-                            <div className="col-xl-3 col-lg-3 col-md-12 select2-lg  mb-0 bg-white form-group">
-                            <Select2Component id="select2"
-                                options={[
-                                { value: "1", label: "South Indian" },
-                                { value: "2", label: "North Indian" },
-                                { value: "3", label: "West Indian" },
-                                { value: "4", label: "Australia" },
-                                { value: "5", label: "Afgani" },
-                                { value: "6", label: "Russian" },
-                                ]}
-                                select2Options={{ placeholder: "Select category", allowClear: true }}
-                                showSearch={true} />
                             </div>
-                            <div className="col-xl-2 col-lg-3 col-md-12 mb-0">
-                            <Link href="/" className="btn btn-lg btn-block btn-secondary br-tl-md-0 br-bl-md-0">
-                                Search Here
-                            </Link>
-                            </div>
-                        </div>
                         </div>
                     </div>
-                    </div>
-                </div>
                 </div>
                 {/* /header-text */}
 
                 <div className="header-slider-img">
                 <div className="container">
-                    <ThumbnailSearchCarousel />
+                    <ThumbnailSearchCarousel specialization={specialization} />
                 </div>
                 </div>
             </section>

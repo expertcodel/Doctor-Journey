@@ -176,7 +176,7 @@ export default function DoctorForm({ doctorDetail }) {
 
 
     return (
-        <div className="col-xxl-9">
+        <div className="col-12">
             <div className="card mt-xxl-n5">
                 <div className="card-header">
                     <ul

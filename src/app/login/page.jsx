@@ -84,10 +84,10 @@ export default function Login() {
 
     if (!validateInputs()) return; // Stop execution if validation fails
 
-    if (!recaptchaToken) {
-      setMessage("Please complete the CAPTCHA");
-      return;
-    }
+    // if (!recaptchaToken) {
+    //   setMessage("Please complete the CAPTCHA");
+    //   return;
+    // }
 
 
     // document.cookie = `authToken=${fakeToken}; path=/; max-age=86400;`; // Store token in cookie
@@ -153,7 +153,7 @@ export default function Login() {
       <Breadcrumb title={otpPage ? "Verify OTP" : "Login"} />
 
       {/*Login-Section*/}
-      {!otpPage ? <section className="sptb loginSec">
+      {!otpPage ? <section className="sptb loginSec bg-white">
         <div className="container customerpage">
           <div className="card border-light-subtle shadow-sm">
             <div className="row g-0">

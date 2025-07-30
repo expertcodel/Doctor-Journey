@@ -24,7 +24,7 @@ export default function FilterListVideo({ filtered }) {
     }, [filtered]);
 
     return (
-        <div className="relative w-72 mx-auto customListShow mt-2" ref={wrapperRef} style={{backgroundColor:'white',color:'white'}}>
+        <div className={`customListShow ${path === "/" ? 'withDiv' : ''}`} ref={wrapperRef} style={{backgroundColor:'white',color:'white'}}>
 
 
             {courseList.length > 0 && (

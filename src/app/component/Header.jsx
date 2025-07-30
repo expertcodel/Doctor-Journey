@@ -284,7 +284,7 @@ export default function Header() {
                                         Journals
                                     </Link>
                                 </li>
-                                <li>
+                                {/* <li>
                                     <Link href="/events"
                                         className={`link ${pathName === '/events' ? 'active' : ''
                                             }`}
@@ -292,7 +292,7 @@ export default function Header() {
                                     >
                                         Events
                                     </Link>
-                                </li>
+                                </li> */}
                                 <li>
                                     <Link href="/blog"
                                         className={`link ${pathName === '/blog' ? 'active' : ''

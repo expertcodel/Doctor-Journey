@@ -134,7 +134,7 @@ export default function ProfileCropper({ imageSrc, onCrop }) {
       />
       <button
         onClick={handleCrop}
-        className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+        className="btn mt-3 rounded btn-warning"
         type="button"
       >
         Crop Image (774×485)

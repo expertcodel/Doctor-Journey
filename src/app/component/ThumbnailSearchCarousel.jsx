@@ -56,7 +56,7 @@ export default function ThumbnailSearchCarousel({specialization}) {
                       <div className="cat-desc text-start">
                           <h5 className="mb-3 mt-0">{item.specialization}</h5>
                           <small className="badge rounded-pill badge bg-primary me-2">
-                           count {item.count}
+                           {item.count} count
                           </small>
                       </div>
                   </div>

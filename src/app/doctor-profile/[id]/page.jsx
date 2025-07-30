@@ -54,7 +54,7 @@ export default async function DoctorProfileDetail({ params }) {
             {/*Breadcrumb*/}
 
             {/* Doctor Details*/}
-            <section className="sptb">
+            <section className="sptb bg-white">
                 <div className="container">
                     <div className="row">
                         <div className="col-12 customProfileMain mt-nagative">
@@ -93,7 +93,7 @@ export default async function DoctorProfileDetail({ params }) {
                             <div className="wideget-user-tab">
                                 <div className="tab-menu-heading">
                                     <div className="tabs-menu1">
-                                        <ul className="nav">
+                                        <ul className="nav border">
                                             <li>
                                                 <Link href="#tab-1" data-bs-toggle="tab" className="active">
                                                     Profile
@@ -118,7 +118,7 @@ export default async function DoctorProfileDetail({ params }) {
                                     </div>
                                 </div>
                             </div>
-                            <div className="card mb-lg-0 border-0">
+                            <div className="card mb-lg-0">
                                 <div className="card-body">
                                     <div className="border-0">
                                         <div className="tab-content">

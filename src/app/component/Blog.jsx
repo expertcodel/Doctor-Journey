@@ -6,7 +6,7 @@ import { useState, useEffect, useRef } from "react";
 import DaysCalculator from '../component/DaysCalculator';
 import Pagination from './Pagination';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBarsStaggered, faCalendar, faEye } from "@fortawesome/free-solid-svg-icons";
+import { faBarsStaggered, faCalendar, faEye, faSearch } from "@fortawesome/free-solid-svg-icons";
 import RangeSlider from "./RangeSlider";
 import FilterListBlog from './FilterListBlog.jsx'
 import Breadcrumb from './Breadcrumb.jsx';
@@ -89,8 +89,9 @@ export default function blogList({ blogCard, totalItems, total }) {
                                     </h1>
                                 </div>
                                 <div className="search-background bg-transparent">
-                                    <div className="form row no-gutters ">
-                                        <div className="col-xl-4 col-lg-3 col-md-12 mb-0 bg-white form-group">
+                                    <div className="form">
+                                        <div className="col-12 mb-0 bg-white form-group searchBoxMain">
+                                            <span className="searchIcon"><FontAwesomeIcon icon={faSearch} /></span>
                                             <input type="text" className="form-control input-lg br-tr-md-0 br-br-md-0" id="text4" placeholder="Enter Your Keywords" onChange={(e) => searching(idx, e.target.value)} />
                                         </div>
                                         {/* <div className="col-xl-3 col-lg-3 col-md-12 mb-0 bg-white form-group">

@@ -30,7 +30,7 @@ export default function blogPage({ blogdetail, blogList }) {
             <Breadcrumb title={blogdetail?.blogTitle} />
 
             {/* blog Details*/}
-            <section className="sptb">
+            <section className="sptb bg-white">
                 <div className="container">
                     <div className="row">
                         <div className="col-xl-8 col-lg-8 col-md-12">

@@ -4,7 +4,7 @@ import Link from "next/link";
 import Breadcrumb from "../../app/component/Breadcrumb";
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBarsStaggered, faCreditCard, faEuro, faEuroSign, faStar } from "@fortawesome/free-solid-svg-icons";
+import { faBarsStaggered, faCreditCard, faEuro, faEuroSign, faSearch, faStar } from "@fortawesome/free-solid-svg-icons";
 import Select2Component from "../../app/component/Select2Component";
 import ThumbnailSearchCarousel from "../../app/component/ThumbnailSearchCarousel";
 import ThumbnailSponsorCarousel from "../../app/component/ThumbnailSponsorCarousel";
@@ -99,8 +99,9 @@ export default function JournalActivity({ journalCard, totalItems, total }) {
                                     </h1>
                                 </div>
                                 <div className="search-background bg-transparent">
-                                    <div className="form row no-gutters ">
-                                        <div className="col-xl-4 col-lg-3 col-md-12 mb-0 bg-white form-group">
+                                    <div className="form">
+                                        <div className="col-12 mb-0 bg-white form-group searchBoxMain">
+                                            <span className="searchIcon"><FontAwesomeIcon icon={faSearch} /></span>
                                             <input type="text" className="form-control input-lg br-tr-md-0 br-br-md-0" id="text4" placeholder="Enter Your Keywords" onChange={(e) => searching(idx, e.target.value)} />
                                         </div>
                                         {/* <div className="col-xl-3 col-lg-3 col-md-12 mb-0 bg-white form-group">
