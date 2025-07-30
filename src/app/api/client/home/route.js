@@ -4,6 +4,7 @@ import { doctorModel } from "../../../models/doctor.model";
 import { videoModel } from "../../../models/video.model";
 import { NextResponse } from "next/server";
 import { extractErrorMessage } from "../../../../utils/errorMessage";
+import { connectTodb } from "../../../../app/database/database";
 export async function GET() {
 
 
@@ -11,12 +12,15 @@ export async function GET() {
     const testimonialmodel = await testimonialModel();
     const doctormodel = await doctorModel();
     const videomodel = await videoModel();
+    const connection = await connectTodb();
+    
     if (!blogmodel) {
         return NextResponse.json({ status: false, message: "database error occured" });
     }
 
     try {
 
+        
         const dataList = await Promise.all([blogmodel.findAll({
             limit: 3,
             order: [['blogSerial', 'ASC']],
@@ -28,9 +32,15 @@ export async function GET() {
                 ['createdAt', 'DESC']
             ]
             , attributes: ['thumbnailImage', 'specialization', 'videoId', 'doctorName', 'views', 'videoTitle', 'publishedDate'], where: { videoStatus: true }
-        })])
+        }),connection.query(`SELECT public."Videos"."specialization", COUNT(*) FROM public."Videos" GROUP BY public."Videos"."specialization" ORDER BY  public."Videos"."specialization" ASC`),videomodel.findAll({
+            limit: 2, order: [
+                ['views', 'DESC'],
+                ['createdAt', 'DESC']
+            ]
+            , attributes: ['thumbnailImage', 'specialization', 'videoId', 'doctorName', 'views', 'videoTitle', 'publishedDate','videoContent'], where: { videoStatus: true }})
+])
 
-        return NextResponse.json({ status: true, bloglist: dataList[0], testimoniallist: dataList[1], doctorprofile: dataList[2], videolist: dataList[3] });
+        return NextResponse.json({ status: true, bloglist: dataList[0], testimoniallist: dataList[1], doctorprofile: dataList[2], videolist: dataList[3],specialization:dataList[4][0],popularVideo:dataList[5]});
 
 
     } catch (error) {

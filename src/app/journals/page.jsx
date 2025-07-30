@@ -22,6 +22,7 @@ export default async function Journals() {
   let journalLeftlist = [];
   let journalCenterlist = [];
   let journalRightlist = [];
+  let specialization = [];
 
   try {
 
@@ -43,7 +44,7 @@ export default async function Journals() {
       journalLeftlist = res.journalleftlist;
       journalCenterlist = res.journalcenterlist;
       journalRightlist = res.journalrightlist;
-
+      specialization=res.specialization
     }
 
 
@@ -130,7 +131,7 @@ export default async function Journals() {
 
         <div className="header-slider-img">
           <div className="container">
-            <ThumbnailSearchCarousel />
+            <ThumbnailSearchCarousel specialization={specialization}/>
           </div>
         </div>
       </section>

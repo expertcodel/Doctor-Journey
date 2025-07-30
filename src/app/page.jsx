@@ -11,6 +11,7 @@ import TestimonialsCarousel from "./component/Testimonials";
 import DaysCalculator from '../app/component/DaysCalculator';
 import DrJourneyBanner from './component/DrJourneyBanner';
 import AboutSection from './component/AboutSection';
+import SearchComponent from './component/SearchComponent.jsx'
 export default async function Home() {
 
 
@@ -18,7 +19,8 @@ export default async function Home() {
   let testimonialList = [];
   let doctorProfile = [];
   let doctorCards = [];
-
+  let specialization = [];
+  let videoCards=[];
   try {
 
     const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/client/home`, {
@@ -36,6 +38,8 @@ export default async function Home() {
       testimonialList = res.testimoniallist;
       doctorProfile = res.doctorprofile
       doctorCards = res.videolist;
+      specialization=res.specialization;
+      videoCards=res.popularVideo;
     }
 
 
@@ -51,64 +55,7 @@ export default async function Home() {
       <DrJourneyBanner />
       
       {/* search engine */}
-      <section className="banner-1 cover-image sptb-3 pb-14 sptb-tab bg-background2"
-        data-image-src="../assets/images/banners/banner1.jpg">
-        <div className="header-text1 mb-0">
-          <div className="container">
-            <div className="row">
-              <div className="col-xl-10 col-lg-12 col-md-12 d-block mx-auto">
-                <div className="text-center text-white ">
-                  <h1 className="mb-5">
-                    Search Your favourite videos
-                  </h1>
-                </div>
-                <div className="search-background bg-transparent">
-                  <div className="form row no-gutters ">
-                    <div className="col-xl-4 col-lg-3 col-md-12 mb-0 bg-white form-group">
-                      <input type="text" className="form-control input-lg br-tr-md-0 br-br-md-0" id="text4" placeholder="Enter Your Keywords" />
-                    </div>
-                    <div className="col-xl-3 col-lg-3 col-md-12 mb-0 bg-white form-group">
-                      <input type="text" className="form-control input-lg br-md-0" id="text5" placeholder="Select Location" />
-                      <span>
-                        <Image
-                          src="/images/svg/gps.svg"
-                          className="location-gps-sm"
-                          alt="image" width={150} height={150}
-                        />
-                      </span>
-                    </div>
-                    <div className="col-xl-3 col-lg-3 col-md-12 select2-lg  mb-0 bg-white form-group">
-                      <Select2Component id="select2"
-                        options={[
-                          { value: "1", label: "South Indian" },
-                          { value: "2", label: "North Indian" },
-                          { value: "3", label: "West Indian" },
-                          { value: "4", label: "Australia" },
-                          { value: "5", label: "Afgani" },
-                          { value: "6", label: "Russian" },
-                        ]}
-                        select2Options={{ placeholder: "Select category", allowClear: true }}
-                        showSearch={true} />
-                    </div>
-                    <div className="col-xl-2 col-lg-3 col-md-12 mb-0">
-                      <Link href="/" className="btn btn-lg btn-block btn-secondary br-tl-md-0 br-bl-md-0">
-                        Search Here
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* /header-text */}
-
-        <div className="header-slider-img">
-          <div className="container">
-            <ThumbnailSearchCarousel />
-          </div>
-        </div>
-      </section>
+      <SearchComponent specialization={specialization}/>
 
       {/* about */}
       <AboutSection />
@@ -177,18 +124,18 @@ export default async function Home() {
             <div className="col-md-5 col-12">
               <div className="card mb-0 h-276">
                 <div className="item7-card-img">
-                  <Link href="javascript:void(0);" />
-                  <Image src="/images/doctor-profile/profile-2.jpg" fill alt="img" className="cover-image" />
-                  <div className="play-button">
+                  <Link href={`/doctors/${videoCards[0].videoId}`} />
+                  <Image src={videoCards[0].thumbnailImage} fill alt="img" className="cover-image" unoptimized />
+                  <div className="play-button" >
                     <span className="triangle"></span>
                   </div>
                 </div>
                 <div className="card-body">
-                  <Link href="/" className="text-dark">
-                    <h4 className="font-weight-semibold">Dr. Alice Kim</h4>
+                  <Link href={`/doctors/${videoCards[0].videoId}`} className="text-dark">
+                    <h4 className="font-weight-semibold">{videoCards[0].doctorName}</h4>
                   </Link>
-                  <p className="cardDescription">
-                    Right now, invisible signals are flying through the air all around you. Massive radio waves carry information between computers, GPS systems, cell phones, and more.
+                  <p className="cardDescription" dangerouslySetInnerHTML={{__html:videoCards[0].videoContent}}>
+                  
                   </p>
                 </div>
               </div>
@@ -199,22 +146,20 @@ export default async function Home() {
                 <div className="col-md-6 col-12">
                   <div className="card mb-0">
                     <div className="item7-card-img">
-                      <Link href="javascript:void(0);" />
-                      <Image src="/images/doctor-profile/profile-1.jpg" fill alt="img" className="cover-image" />
+                      <Link href={`/doctors/${videoCards[1].videoId}`} />
+                      <Image src={videoCards[1].thumbnailImage} fill alt="img" className="cover-image" unoptimized/>
                       <div className="play-button">
                         <span className="triangle"></span>
                       </div>
                     </div>
                     <div className="card-body">
-                      <Link href="/" className="text-dark">
-                        <h4 className="font-weight-semibold">Dr. Alice Kim</h4>
+                      <Link href={`/doctors/${videoCards[1].videoId}`} className="text-dark">
+                        <h4 className="font-weight-semibold">{videoCards[1].doctorName}</h4>
                       </Link>
-                      <p>
-                        Why violence is rising with global temperatures
+                      <p dangerouslySetInnerHTML={{__html:videoCards[1].videoContent}}>
+                       
                       </p>
-                      <p className="cardDescription">
-                        Right now, invisible signals are flying through the air all around you. Massive radio waves carry information between computers, GPS systems, cell phones, and more.
-                      </p>
+                     
                     </div>
                   </div>
                 </div>

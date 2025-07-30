@@ -5,10 +5,10 @@ import $ from "jquery";
 import "select2/dist/css/select2.min.css";
 import "select2/dist/js/select2.full.min.js";
 import Link from "next/link";
-import { useRouter,usePathname } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 export default function Select2Component({ id, options, select2Options = {}, showSearch = false, onChange, type, setSort }) {
   const router = useRouter();
-  const path=usePathname();
+  const path = usePathname();
   useEffect(() => {
     if (typeof window !== "undefined") {
       const $select = $(`#${id}`).select2({
@@ -43,7 +43,11 @@ export default function Select2Component({ id, options, select2Options = {}, sho
         const selectedValue = $(this).val();
         onChange?.(selectedValue); // ✅ optional call
         if (type === 'category') {
-          router.push(`${path}?category=${selectedValue}`)
+          if (path === '/') {
+            router.push(`/doctors?category=${selectedValue}`)
+          } else {
+            router.push(`${path}?category=${selectedValue}`)
+          }
         }
         else if (type === 'sort') {
 

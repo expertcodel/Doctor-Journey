@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBarsStaggered, faCalendar, faEye } from "@fortawesome/free-solid-svg-icons";
 import RangeSlider from "./RangeSlider";
 import FilterListBlog from './FilterListBlog.jsx'
+import Breadcrumb from './Breadcrumb.jsx';
 export default function blogList({ blogCard, totalItems, total }) {
 
 
@@ -75,6 +76,7 @@ export default function blogList({ blogCard, totalItems, total }) {
     return (
         <>
             {/* search engine */}
+            <Breadcrumb title={'listing'} />
             <section className="cover-image sptb-1 bg-background2"
                 data-image-src="../assets/images/banners/banner1.jpg">
                 <div className="header-text1 mb-0">
@@ -121,7 +123,7 @@ export default function blogList({ blogCard, totalItems, total }) {
                                         </div> */}
                                     </div>
 
-                                     {name !== "" && <FilterListBlog filtered={blogLists} />}
+                                     {name !=="" && <FilterListBlog filtered={blogLists} />}
                                 </div>
                             </div>
                         </div>
@@ -136,7 +138,7 @@ export default function blogList({ blogCard, totalItems, total }) {
                         <div className="col-12 item2-gl">
                             <div className="p-md-5 p-3 bg-white item2-gl-nav d-sm-flex d-block">
                                 <h6 className="mb-0 mt-3">
-                                    Showing <b>1 to 9</b> of {itemCount} Blogs
+                                    Showing <b>{(idx-1)*9+1} to {9*idx}</b> of {itemCount} Blogs
                                 </h6>
                                 <ul className="nav item2-gl-menu mt-1 ms-auto">
                                     {/* <li className="d-flex align-items-center">

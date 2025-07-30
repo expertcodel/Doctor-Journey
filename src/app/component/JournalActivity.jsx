@@ -14,6 +14,7 @@ import JournalsThumbCarousel from "../component/JournalsThumbCarousel";
 //  import doctorProfile from "@/data/doctorProfile.json";
 import RangeSlider from "./RangeSlider";
 import FilterListJournal from "./FilterListJournal";
+
 export default function JournalActivity({ journalCard, totalItems, total }) {
 
 
@@ -85,6 +86,7 @@ export default function JournalActivity({ journalCard, totalItems, total }) {
         <section>
             {/*Breadcrumb*/}
 
+            <Breadcrumb title={'listing'} />
             <section className="cover-image sptb-1 bg-background2"
                 data-image-src="../assets/images/banners/banner1.jpg">
                 <div className="header-text1 mb-0">
@@ -146,7 +148,7 @@ export default function JournalActivity({ journalCard, totalItems, total }) {
                         <div className="col-12 item2-gl">
                             <div className="p-md-5 p-3 bg-white item2-gl-nav d-sm-flex d-block">
                                 <h6 className="mb-0 mt-3">
-                                    Showing <b>1 to 9</b> of {itemCount} Journals
+                                    Showing <b>{(idx - 1) * 9 + 1} to {9 * idx}</b> of {itemCount} Journals
                                 </h6>
                                 <ul className="nav item2-gl-menu mt-1 ms-auto">
                                     {/* <li className="d-flex align-items-center">
@@ -162,7 +164,7 @@ export default function JournalActivity({ journalCard, totalItems, total }) {
                                         </button>
                                     </span> */}
                                     <label className="me-2 mt-2 mb-sm-1">Sort By:</label>
-                                    <Select2Component id="select1" options={[{ value: "1", label: "Newest" }, { value: "2", label: "Oldest" }]} select2Options={{ placeholder: "Sort", allowClear: true }} showSearch={false} setSort={setSort} type="sort"/>
+                                    <Select2Component id="select1" options={[{ value: "1", label: "Newest" }, { value: "2", label: "Oldest" }]} select2Options={{ placeholder: "Sort", allowClear: true }} showSearch={false} setSort={setSort} type="sort" />
                                 </div>
                             </div>
                         </div>

@@ -8,8 +8,9 @@ import Pagination from './Pagination';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBarsStaggered, faEye } from "@fortawesome/free-solid-svg-icons";
 import RangeSlider from "./RangeSlider";
-import  FilterListVideo from './FilterListVideo.jsx'
-import { useSearchParams } from "next/navigation";
+import FilterListVideo from './FilterListVideo.jsx'
+import Breadcrumb from './Breadcrumb.jsx';
+
 export default function VideoList({ doctorCard, totalItems, specialization, total, category }) {
 
 
@@ -142,6 +143,8 @@ export default function VideoList({ doctorCard, totalItems, specialization, tota
     return (
         <>
             {/* search engine */}
+            <Breadcrumb title={category !== 'null' ? `${category} Videos` : 'listing'} />
+
             <section className="cover-image sptb-1 bg-background2"
                 data-image-src="../assets/images/banners/banner1.jpg">
                 <div className="header-text1 mb-0">
@@ -186,10 +189,10 @@ export default function VideoList({ doctorCard, totalItems, specialization, tota
                                                 Search Here
                                             </Link>
                                         </div>
-                                        
+
                                     </div>
 
-                                     {name !== "" && <FilterListVideo filtered={doctorLists} />}
+                                    {name !== "" && <FilterListVideo filtered={doctorLists} />}
                                 </div>
                             </div>
                         </div>
@@ -204,7 +207,7 @@ export default function VideoList({ doctorCard, totalItems, specialization, tota
                         <div className="col-12 item2-gl">
                             <div className="p-md-5 p-3 bg-white item2-gl-nav d-sm-flex d-block">
                                 <h6 className="mb-0 mt-3">
-                                    Showing <b>1 to 9</b> of {itemCount} Videos
+                                    Showing <b>{(idx - 1) * 9 + 1} to {9 * idx}</b> of {itemCount} Videos
                                 </h6>
                                 <ul className="nav item2-gl-menu mt-1 ms-auto">
                                     {/* <li className="d-flex align-items-center">

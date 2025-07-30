@@ -187,7 +187,7 @@ export default function VideoPage({ doctordetail, videoList, doctor,specializati
                                                 {
                                                     specialization[0].map((item, id) => (
                                                         <li key={id} className="list-group-item">
-                                                            <Link href="/" className="text-dark">
+                                                            <Link href={`/doctors?category=${item.specialization}`} className="text-dark">
                                                                 <span className="specializationIcon">
                                                                     <Image src="/images/doctor-profile/profile-1.jpg" className="img-fluid" fill alt="img" />
                                                                 </span> {item.specialization}

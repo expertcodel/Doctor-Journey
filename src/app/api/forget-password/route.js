@@ -90,7 +90,7 @@ const generateOtp = () => {
 
 export async function POST(request) {
 
-    const { email } = await request.json();
+    const { email ,recaptchaToken} = await request.json();
     //  Validate CAPTCHA
     const captchaRes = await fetch(
        `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.NEXT_PUBLIC_RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`,

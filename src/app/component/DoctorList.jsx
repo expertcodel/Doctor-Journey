@@ -9,6 +9,7 @@ import { faBarsStaggered, faBuilding, faCalendar, faChevronRight, faClock, faFil
 import RangeSlider from "../component/RangeSlider";
 import Pagination from './Pagination';
 import FilterList from './FilterList.jsx'
+import Breadcrumb from './Breadcrumb.jsx';
 export default function DoctorList({ doctorProfile, totalItems, specialization, total, category }) {
 
     const [bsOffcanvas, setBsOffcanvas] = useState(null);
@@ -144,6 +145,7 @@ export default function DoctorList({ doctorProfile, totalItems, specialization, 
     return (
         <>
             {/* search engine */}
+             <Breadcrumb title={category!=='null' ? `${category} Doctors`: 'listing'} />
             <section className="cover-image sptb-1 bg-background2"
                 data-image-src="../assets/images/banners/banner1.jpg">
                 <div className="header-text1 mb-0">
@@ -152,7 +154,7 @@ export default function DoctorList({ doctorProfile, totalItems, specialization, 
                             <div className="col-xl-10 col-lg-12 col-md-12 d-block mx-auto">
                                 <div className="text-center text-white ">
                                     <h1 className="mb-5">
-                                        Search Your favourite videos
+                                        Search Your favourite doctors
                                     </h1>
                                 </div>
                                 <div className="search-background bg-transparent">
@@ -213,7 +215,7 @@ export default function DoctorList({ doctorProfile, totalItems, specialization, 
                                             <div className="">
                                                 <div className="p-md-5 p-3 bg-white item2-gl-nav d-sm-flex d-block">
                                                     <h6 className="mb-0 mt-3">
-                                                        Showing <b>1 to 10</b> of {itemCount} Doctors
+                                                        Showing <b>{(idx-1)*10+1} to {10*idx}</b> of {itemCount} Doctors
                                                     </h6>
                                                     <ul className="nav item2-gl-menu mt-1 ms-auto">
                                                         {/* <li className="d-flex align-items-center">
