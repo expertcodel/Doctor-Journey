@@ -6,7 +6,7 @@ import { useState, useEffect, useRef } from "react";
 import DaysCalculator from '../component/DaysCalculator';
 import Pagination from './Pagination';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBarsStaggered, faEye } from "@fortawesome/free-solid-svg-icons";
+import { faBarsStaggered, faCalendar, faEye } from "@fortawesome/free-solid-svg-icons";
 import RangeSlider from "./RangeSlider";
 import FilterListBlog from './FilterListBlog.jsx'
 export default function blogList({ blogCard, totalItems, total }) {
@@ -275,44 +275,24 @@ export default function blogList({ blogCard, totalItems, total }) {
                                         <Image src={card.blogImage} fill alt="img" className="cover-image" unoptimized />
 
                                     </div>
-                                    {/* <div className="card-body">
+                                    <div className="card-body p-4">
                                         <div className="item7-card-desc d-flex mb-2">
-                                            <Link href={`/blogs/${card.blogUrl}`} className="text-dark">
-                                                <h4 className="font-weight-semibold">{card.blogTitle}</h4>
+                                            <Link href={`/blog${card.blogUrl}`}>
+                                                <FontAwesomeIcon icon={faCalendar} /> {card.publishedDate}
                                             </Link>
                                             <div className="ms-auto">
-
-                                                <span> <DaysCalculator targetDate={card.publishedDate} today={new Date().toLocaleDateString()} /></span>
-                                              
+                                                <Link href={`/blog${card.blogUrl}`}>
+                                                        <small className="d-block text-muted"><DaysCalculator targetDate={card.publishedDate} today={new Date().toLocaleDateString()}/></small>
+                                                </Link>
                                             </div>
                                         </div>
-
-                                        <p>{card.specialization}</p>
-                                        <div className="item7-card-desc d-flex">
-                                            <span>{card.blogTitle}</span>
-                                        </div>
-                                     
-                                    </div> */}
-                                    <div className="card-body">
-                                        <Link href={`/blogs${card.blogUrl}`} className="text-dark text-decoration-none">
-                                            <h4 className="font-weight-semibold text-break mb-2">{card.blogTitle}</h4>
+                                        <Link href={`/blog${card.blogUrl}`} className="text-dark">
+                                            <h4 className="font-weight-semibold">{card.blogTitle}</h4>
                                         </Link>
-
-                                        <div className="item7-card-desc d-flex justify-content-between align-items-center mb-2">
-                                            <p className="mb-0">{card.specialization}</p>
-                                            <span className="small text-muted">
-                                                <DaysCalculator
-                                                    targetDate={card.publishedDate}
-                                                    today={new Date().toLocaleDateString()}
-                                                />
-                                            </span>
-                                        </div>
-
-                                        <div className="item7-card-desc">
-                                            <span className="text-break">{card.blogTitle}</span>
-                                        </div>
+                                        <p>
+                                            {card.blogDescription.substr(0,50)}...{" "}
+                                        </p>
                                     </div>
-
                                 </div>
                             </div>
                         ))}

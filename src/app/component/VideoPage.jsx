@@ -30,7 +30,7 @@ export default function VideoPage({ doctordetail, videoList, doctor,specializati
             <Breadcrumb title={doctor?.videoTitle} />
 
             {/* Doctor Details*/}
-            <section className="sptb">
+            <section className="sptb bg-white">
                 <div className="container">
                     <div className="row">
                         <div className="col-xl-8 col-lg-8 col-md-12">

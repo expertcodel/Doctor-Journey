@@ -5,7 +5,7 @@ import Select2Component from "../component/Select2Component";
 //  import doctorProfile from "@/data/doctorProfile.json";
 import { useState, useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBarsStaggered, faBuilding, faCalendar, faChevronRight, faClock, faFilter, faLocation, faLocationArrow, faMap, faStar, faTimesCircle, faUsd, faUserFriends } from "@fortawesome/free-solid-svg-icons";
+import { faBarsStaggered, faBuilding, faCalendar, faChevronRight, faClock, faFilter, faLocation, faLocationArrow, faMap, faSearch, faStar, faTimesCircle, faUsd, faUserFriends } from "@fortawesome/free-solid-svg-icons";
 import RangeSlider from "../component/RangeSlider";
 import Pagination from './Pagination';
 import FilterList from './FilterList.jsx'
@@ -156,8 +156,9 @@ export default function DoctorList({ doctorProfile, totalItems, specialization, 
                                     </h1>
                                 </div>
                                 <div className="search-background bg-transparent">
-                                    <div className="form row no-gutters ">
-                                        <div className="col-xl-4 col-lg-3 col-md-12 mb-0 bg-white form-group">
+                                    <div className="form">
+                                        <div className="col-12 mb-0 bg-white form-group searchBoxMain">
+                                            <span className="searchIcon"><FontAwesomeIcon icon={faSearch} /></span>
                                             <input type="text" className="form-control input-lg br-tr-md-0 br-br-md-0" id="text4" placeholder="Enter Your Keywords" onChange={(e) => searching(idx, e.target.value)} />
                                         </div>
                                         
@@ -171,7 +172,7 @@ export default function DoctorList({ doctorProfile, totalItems, specialization, 
                                                 />
                                             </span>
                                         </div> */}
-                                        <div className="col-xl-3 col-lg-3 col-md-12 select2-lg  mb-0 bg-white form-group">
+                                        {/* <div className="col-xl-3 col-lg-3 col-md-12 select2-lg  mb-0 bg-white form-group">
                                             <Select2Component id="select2"
 
                                                 options=
@@ -188,7 +189,7 @@ export default function DoctorList({ doctorProfile, totalItems, specialization, 
                                             <Link href="/" className="btn btn-lg btn-block btn-secondary br-tl-md-0 br-bl-md-0">
                                                 Search Here
                                             </Link>
-                                        </div>
+                                        </div> */}
                                     </div>
                                      {name !== "" && <FilterList filtered={doctorLists} />}
                                 </div>
@@ -200,7 +201,7 @@ export default function DoctorList({ doctorProfile, totalItems, specialization, 
             </section>
 
             {/*Restaurants listing*/}
-            <section className="sptb">
+            <section className="sptb bg-white">
                 <div className="container">
                     <div className="row">
                         <div className="col-12">
