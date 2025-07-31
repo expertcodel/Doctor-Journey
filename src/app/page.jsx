@@ -222,7 +222,7 @@ export default async function Home() {
                         </div>
                         <div className="cat-desc">
                           <h5>
-                            {item.doctorName} <span>{item.qualification}</span>
+                            {item.doctorName} <span>{item.qualification} | {item.specialization}</span>
                           </h5>
                           <small className="badge">
                             view Details

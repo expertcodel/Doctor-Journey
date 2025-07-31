@@ -2,16 +2,17 @@
 import React from 'react'
 import dynamic from 'next/dynamic';
 const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
-import AdminFooter from '../component/AdminFooter.jsx'
+import axios from 'axios';
 import Image from 'next/image';
-import { useState,useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import Link from 'next/link';
+import AdminFooter from './AdminFooter.jsx'
 import { useRouter } from 'next/navigation';
 import { UniversalContext } from './context';
-import FabricCropper from './FabricCropper'
-export default function Page({blogdata, Metadescriptions,categorylist,Blogstatus,Blogstatus1,blogDescription}) {
+import FabricCropper from './FabricCropper.js'
+export default function BlogCreate({categorylist}) {
 
-
-    const [image, setImage] = useState(blogdata.blogImage)
+    const [image, setImage] = useState(null)
     const [croppedUrl, setCroppedUrl] = useState(null)
 
     const handleFileChange = (e) => {
@@ -29,78 +30,66 @@ export default function Page({blogdata, Metadescriptions,categorylist,Blogstatus
         setCroppedUrl(url)
     }
 
-    const router=useRouter();
-    const {userData}=UniversalContext();
-    //const { slug } = useParams();
-    const editor=useRef(null);
-    //const [blogdata, setBlogdata] = useState(blogData);
+    const { userData } = UniversalContext()
+    const router = useRouter();
     const [imageUrl, setImageurl] = useState(null);
-    const [imageUrl1, setImageurl1] = useState(blogdata.blogImage);
+    const [category, setCategory] = useState("");
+    // const [categoryList, setCategorylist] = useState([]);
+    const editor = useRef(null);
     const [success, setSuccess] = useState(false);
     const [errorMsg, setErrormsg] = useState("");
-   
-    // const [categoryList, setCategorylist] = useState(categorylist);
-    const [category, setCategory] = useState("");
-    const [metaDescriptions,setMetadescriptions]=useState(Metadescriptions);
-    const [description, setDescription] = useState(blogDescription);
-    const [blogStatus,setBlogstatus]=useState(Blogstatus);
-    const [blogStatus1,setBlogstatus1]=useState(Blogstatus1);
-    const [formValidation, setFormvalidation] = useState({ blogTitle: -1, blogContent: -1, blogDescription: -1, blogImage: -1,metaDescriptions:-1,metaKeywords:-1,metaTitle:-1,blogSerial:-1,blogCategory:-1 })
 
-   
+    const [formValidation, setFormvalidation] = useState({ blogTitle: -1, blogContent: -1, blogDescription: -1, blogImage: -1, metaDescriptions: -1, metaKeywords: -1, metaTitle: -1, blogSerial: -1, blogUrl: -1 })
 
-    const editBlog = async (e) => {
+    
+    const config = {
+        readonly: false,
+        toolbar: true,
+        minHeight: 300,
+        spellcheck: true,
+        placeholder: 'Type something here...',
+        uploader: {
+            insertImageAsBase64URI: true,
+        }
+
+    };
+
+    const createBlog = async (e) => {
 
         e.preventDefault();
-        let arr = [1,1,1,1,1,1,1,1,1,1];
+        let arr = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
         let flag = true;
         const blogTitle = e.target.title.value.trim();
         const blogImage = imageUrl;
-        const blogDescription = description;
+        const blogDescription = e.target.description.value.trim();
         const blogContent = document.querySelector('.jodit-wysiwyg').innerHTML;
-        const metadescriptions=metaDescriptions;
-        const metaKeywords=e.target.metakeywords.value.trim();;
-        const metaTitle=e.target.metatitle.value.trim();;
-        const blogSerial=e.target.serial.value.trim();
-        const blogUrl=e.target.url.value.trim();
-        let  blogCategory
-        if(category==="")
-        {
-          blogCategory=blogdata.category
-        }
-        else{
-            blogCategory=category;
-        }
-     
-        let blogstatus;
-        if(blogStatus1==='active')
-        {
-            blogstatus=true;
-        }
-        else{
-            blogstatus=false;
-        }
-        
+        const metaDescriptions = e.target.metadescriptions.value.trim();
+        const metaKeywords = e.target.metakeywords.value.trim();
+        const metaTitle = e.target.metatitle.value.trim();
+        const blogSerial = e.target.serial.value.trim();
+        const blogUrl = e.target.url.value.trim();
+        const blogCategory = category;
 
-        if (blogTitle.length < 5) {
+
+        if (blogTitle === "") {
             arr[0] = 0;
             flag = false;
         }
-        // if (blogImage === "") {
-        //     arr[1] = 0;
-        //     flag = false;
-        // }
-        if (blogDescription.length < 10) {
+        if (!blogImage) {
+            arr[1] = 0;
+            flag = false;
+        }
+        if (blogDescription === "") {
             arr[2] = 0;
             flag = false;
 
         }
+
         if (blogContent === '<p><br></p>') {
             arr[3] = 0;
             flag = false;
         }
-
-        if (metadescriptions.length < 10) {
+        if (metaDescriptions.length < 10) {
             arr[4] = 0;
             flag = false;
 
@@ -115,54 +104,58 @@ export default function Page({blogdata, Metadescriptions,categorylist,Blogstatus
             flag = false;
 
         }
-        if (blogSerial==="" || blogSerial <= 0 ) {
+        if (blogSerial === "" || blogSerial <= 0) {
             arr[7] = 0;
             flag = false;
 
         }
 
-        if(blogCategory==="select" || blogCategory==="")
-        {
+        if (blogCategory === "select" || blogCategory === "") {
             arr[8] = 0;
             flag = false;
         }
 
-
-        if (blogUrl==="") {
+        if (blogUrl === "") {
             arr[9] = 0;
             flag = false;
+
         }
-        
+
 
         if (flag) {
 
-            setFormvalidation({ blogTitle: arr[0], blogImage: arr[1], blogDescription: arr[2], blogContent: arr[3] ,metaDescriptions:arr[4],metaKeywords:arr[5],metaTitle:arr[6],blogSerial:arr[7],blogCategory:arr[8],blogUrl:arr[9]});
+            setFormvalidation({ blogTitle: arr[0], blogImage: arr[1], blogDescription: arr[2], blogContent: arr[3], metaDescriptions: arr[4], metaKeywords: arr[5], metaTitle: arr[6], blogSerial: arr[7], blogCategory: arr[8], blogUrl: arr[9] });
 
-            const data={
-                blogTitle,blogDescription, blogContent,metaDescriptions:metadescriptions,metaKeywords,metaTitle,blogSerial,blogStatus:blogstatus,blogUrl,blogId:blogdata.blogId,blogCategory
+            const data = {
+                blogTitle, blogDescription, blogContent, metaDescriptions, metaKeywords, metaTitle, blogSerial, blogUrl,blogCategory
             }
 
-            const formData=new FormData();
-            formData.append('file',imageUrl);
-            formData.append('data',JSON.stringify(data));
+            const formData = new FormData();
+            formData.append('data', JSON.stringify(data));
+            formData.append('file', imageUrl);
 
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/blogs`,{method: "PUT",body:formData});
-            const res=await response.json();
+
+
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/blogs`, { method: 'POST', body: formData })
+
+            const res = await response.json();
+
             if (res.status) {
 
-                sessionStorage.setItem('successMsg','Blogs Updated Successfully');
+                sessionStorage.setItem('successMsg', 'Blogs Created Successfully');
                 router.push(`/dashboard/blog`);
-                
+
 
             }
             else {
                 setErrormsg(res.message);
             }
 
+
         }
         else {
 
-            setFormvalidation({ blogTitle: arr[0], blogImage: arr[1], blogDescription: arr[2], blogContent: arr[3] ,metaDescriptions:arr[4],metaKeywords:arr[5],metaTitle:arr[6],blogSerial:arr[7],blogCategory:arr[8],blogUrl:arr[9]});
+            setFormvalidation({ blogTitle: arr[0], blogImage: arr[1], blogDescription: arr[2], blogContent: arr[3], metaDescriptions: arr[4], metaKeywords: arr[5], metaTitle: arr[6], blogSerial: arr[7], blogCategory: arr[8], blogUrl: arr[9] });
 
         }
 
@@ -173,42 +166,15 @@ export default function Page({blogdata, Metadescriptions,categorylist,Blogstatus
 
     }
 
-    const fileUpload = async () => {
-
-
-        const thumbnailImage = document.getElementById('project-thumbnail-img').files[0];
-        const imageurl=URL.createObjectURL(thumbnailImage);
-        setImageurl1(imageurl);
-        setImageurl(thumbnailImage);
-
-       
-        
-
-    }
-
-    const config = {
-        readonly: false,
-        toolbar: true,
-        minHeight: 300,
-        spellcheck: true,
-        placeholder: 'Type something here...',
-        uploader: {
-            insertImageAsBase64URI: true
-        }
-
-    };
-
-    return (
-
-        <>
-         { Object.keys(blogdata).length > 0  && <div className="main-content">
+ return (
+        <div className="main-content">
             <div className="page-content">
                 <div className="container-fluid">
                     {/* start page title */}
                     <div className="row">
                         <div className="col-12">
                             <div className="page-title-box d-sm-flex align-items-center justify-content-between bg-galaxy-transparent">
-                                <h4 className="mb-sm-0">Edit Blog</h4>
+                                <h4 className="mb-sm-0">Create Blog</h4>
 
                             </div>
                         </div>
@@ -218,71 +184,70 @@ export default function Page({blogdata, Metadescriptions,categorylist,Blogstatus
                         <div className="col-lg-8">
                             <div className="card">
                                 <div className="card-body">
-                                    <form onSubmit={editBlog}>
+                                    <form onSubmit={createBlog}>
                                         <div className="mb-3">
                                             <label className="form-label" htmlFor="project-title-input">Blog Title</label>
-                                            <input type="text" className="form-control" id="project-title-input" placeholder="Enter project title" name='title' style={{ border: formValidation.blogTitle === 0 && '1px solid red' }} defaultValue={blogdata.blogTitle} />
+                                            <input type="text" className="form-control" id="project-title-input" placeholder="Enter project title" name='title' style={{ border: formValidation.blogTitle === 0 && '1px solid red' }} />
                                         </div>
                                         <div className="mb-3">
                                             <label className="form-label" htmlFor="project-url-input">Blog Url</label>
-                                            <input type="text" className="form-control" id="project-url-input" placeholder="Enter blog url" name='url' style={{ border: formValidation.blogUrl === 0 && '1px solid red' }} defaultValue={blogdata.blogUrl} />
+                                            <input type="text" className="form-control" id="project-url-input" placeholder="Enter blog url" name='url' style={{ border: formValidation.blogUrl === 0 && '1px solid red' }} />
                                         </div>
                                         <div className="mb-3">
                                             <label className="form-label" htmlFor="project-thumbnail-img">Blog Image</label>
                                             <input className="form-control" id="project-thumbnail-img" type="file" name='image' accept="image/*" onChange={handleFileChange} style={{ border: formValidation.blogImage === 0 && '1px solid red' }} />
-
                                             {image && <FabricCropper imageSrc={image} onCrop={handleCrop} />}
 
                                             {croppedUrl && (
                                                 <div className="mt-4">
                                                     <h3 className="text-lg font-medium">Cropped Preview:</h3>
-                                                    <img src={croppedUrl} width={274} height={185} alt="Cropped result" />
+                                                    <img src={croppedUrl} width={150} height={150} alt="Cropped result" />
                                                 </div>
                                             )}
+
                                         </div>
                                         <div className="mb-3">
                                             <label className="form-label" htmlFor="project-thumbnail-img">Blog Description</label>
-                                            <textarea className="form-control" rows={4} placeholder='type...' name='description' style={{ border: formValidation.blogDescription === 0 && '1px solid red' }}  value={description} onChange={(e) => setDescription(e.target.value)} /> 
-
-
+                                            <textarea className="form-control" rows={4} placeholder='type...' name='description' style={{ border: formValidation.blogDescription === 0 && '1px solid red' }} />
 
                                         </div>
                                         <div className="mb-3">
                                             <label className="form-label">Blog Content</label>
 
 
-                                            <JoditEditor //value={abstract}
+                                            <JoditEditor
                                                 config={config}
                                                 id='editor-content'
-                                                value={blogdata.blogContent}
+                                                // onImageUpload={handleImageUpload}
                                                 ref={editor}
-                                            // onChange={(value) => setAbstract(value)}
+
                                             />
 
                                         </div>
-
                                         <div className="mb-3">
                                             <label className="form-label" htmlFor="blog-serial-input">Serial No.</label>
-                                            <input type="number" className="form-control" id="blog-serial-input" placeholder="Enter Serial Number" name='serial' style={{ border: formValidation.blogSerial === 0 && '1px solid red' }} defaultValue={blogdata.blogSerial}/>
+                                            <input type="number" className="form-control" id="blog-serial-input" placeholder="Enter Serial Number" name='serial' style={{ border: formValidation.blogSerial === 0 && '1px solid red' }} />
                                         </div>
 
                                         <div className="mb-3">
                                             <label className="form-label" htmlFor="meta-title-input">Meta Title</label>
-                                            <input type="text" className="form-control" id="meta-title-input" placeholder="Enter meta title" name='metatitle' style={{ border: formValidation.metaTitle === 0 && '1px solid red' }} defaultValue={blogdata.metaTitle}/>
+                                            <input type="text" className="form-control" id="meta-title-input" placeholder="Enter meta title" name='metatitle' style={{ border: formValidation.metaTitle === 0 && '1px solid red' }} />
                                         </div>
                                         <div className="mb-3">
                                             <label className="form-label" htmlFor="meta-keywords-input">Meta Keywords</label>
-                                            <input type="text" className="form-control" id="meta-keywords-input" placeholder="Enter meta keywords" name='metakeywords' style={{ border: formValidation.metaKeywords === 0 && '1px solid red' }} defaultValue={blogdata.metaKeywords} />
+                                            <input type="text" className="form-control" id="meta-keywords-input" placeholder="Enter meta keywords" name='metakeywords' style={{ border: formValidation.metaKeywords === 0 && '1px solid red' }} />
                                         </div>
 
                                         <div className="mb-3">
                                             <label className="form-label" htmlFor="meta-descriptions-input">Meta Descriptions</label>
-                                            <textarea type="text" rows={4}className="form-control" id="meta-descriptions-input"  placeholder="Enter meta descriptions" name='metadescriptions' style={{ border: formValidation.metaDescriptions === 0 && '1px solid red' }} value={metaDescriptions} onChange={(e)=>setMetadescriptions(e.target.value)} /> 
+                                            <textarea type="text" rows={4} className="form-control" id="meta-descriptions-input" placeholder="Enter meta descriptions" name='metadescriptions' style={{ border: formValidation.metaDescriptions === 0 && '1px solid red' }} />
                                         </div>
 
                                         <div className="text-end mb-4">
 
-                                            <button type="submit" className="btn btn-success w-sm">Update</button>
+                                            <button type="submit" className="btn btn-success w-sm">Create</button>
+
+
                                         </div>
                                         {
                                             errorMsg !== "" && <div style={{ color: 'red' }}>{errorMsg}</div>
@@ -302,35 +267,20 @@ export default function Page({blogdata, Metadescriptions,categorylist,Blogstatus
                             {/* end card */}
                             <div className="card">
                                 <div className="card-header">
-                                    <h5 className="card-title mb-0">Privacy</h5>
-                                </div>
-                                <div className="card-body">
-                                    <div className="mb-3">
-                                        <label htmlFor="choices-categories-input" className="form-label">Status</label>
-                                        <select className="form-select" onChange={(e) =>setBlogstatus1(e.target.value)}  >
-                                            <option value={blogStatus==='active'?'active':'inactive'} >{blogStatus==='active'?'active':'inactive'}</option>
-                                            <option value={blogStatus==='active'?'inactive':'active'} >{blogStatus==='active'?'inactive':'active'}</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                {/* end card body */}
-                            </div>
-                            <div className="card">
-                                <div className="card-header">
                                     <h5 className="card-title mb-0">Tags</h5>
                                 </div>
                                 <div className="card-body">
                                     <div className="mb-3">
                                         <label htmlFor="choices-categories-input" className="form-label">Categories</label>
                                         <select className="form-select" onChange={(e) => setCategory(e.target.value)} style={{ border: formValidation.blogCategory === 0 && '1px solid red' }} >
-                                        
-                                            {categorylist.length > 0 && categorylist.map((item)=>item.categoryName===blogdata.category ?<option value={item.categoryName} selected>{item.categoryName}</option>:<option value={item.categoryName} >{item.categoryName}</option>)}
+                                            <option value="select" selected>Select</option>
+                                            {
+                                                categorylist.length > 0 && categorylist.map((item) => <option value={item.categoryName} key={item.categoryId}>{item.categoryName}</option>)
+                                            }
 
-                                           
-                                            
                                         </select>
                                     </div>
-                                   
+                                    
                                 </div>
                                 {/* end card body */}
                             </div>
@@ -345,7 +295,7 @@ export default function Page({blogdata, Metadescriptions,categorylist,Blogstatus
                 {/* container-fluid */}
             </div>
             {/* End Page-content */}
-          <AdminFooter/>
+            <AdminFooter />
             <div
                 className={success ? "modal fade zoomIn show" : "modal fade zoomIn"}
                 id="deletetable"
@@ -377,7 +327,7 @@ export default function Page({blogdata, Metadescriptions,categorylist,Blogstatus
                             </div>
                             <div className="mt-4 pt-2">
                                 <h4>Well done !</h4>
-                                <p className="text-muted mx-4">Aww yeah, you successfully updated your Blog.</p>
+                                <p className="text-muted mx-4">Aww yeah, you successfully created your Blog.</p>
                                 <div className="mt-4">
                                     <a href="/dashboard/blog" className="btn btn-success w-100">Back to Dashboard</a>
                                 </div>
@@ -386,8 +336,6 @@ export default function Page({blogdata, Metadescriptions,categorylist,Blogstatus
                     </div>
                 </div>
             </div>
-        </div>}
-
-        </>
+        </div>
     )
 }

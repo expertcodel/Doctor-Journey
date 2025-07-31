@@ -179,7 +179,7 @@ export default function VideoList({ doctorCard, totalItems, specialization, tota
                                                 {
 
 
-                                                    specialization[0].map((item, i) => { return { value: i + 1, label: item.specialization } })
+                                                    specialization[0].map((item, i) => { return { value: i + 1, label: item.departmentName } })
 
                                                 }
                                                 select2Options={{ placeholder: "Select category", allowClear: true }}
@@ -286,7 +286,7 @@ export default function VideoList({ doctorCard, totalItems, specialization, tota
                         <div className="col-md-4 col-lg-3 col-12">
                             <div className="card">
                                 <div className="card-header">
-                                    <h3 className="card-title">Specialization</h3>
+                                    <h3 className="card-title">Departments</h3>
                                 </div>
                                 <div className="card-body p-0">
                                     <div className="list-catergory">
@@ -295,10 +295,10 @@ export default function VideoList({ doctorCard, totalItems, specialization, tota
                                                 {
                                                     specialization[0].map((item, id) => (
                                                         <li key={id} className="list-group-item">
-                                                            <Link href={`/doctors?category=${item.specialization}`} className="text-dark">
+                                                            <Link href={`/doctors?category=${item.departmentName}`} className="text-dark">
                                                                 <span className="specializationIcon">
-                                                                    <Image src="/images/doctor-profile/profile-1.jpg" className="img-fluid" fill alt="img" />
-                                                                </span> {item.specialization}
+                                                                    <Image src={item.icon} className="img-fluid" fill alt="img" unoptimized />
+                                                                </span> {item.departmentName}
                                                                 <span className="badgetext badge rounded-pill bg-light mb-0 mt-1">
                                                                     {item.count}
                                                                 </span>
@@ -327,9 +327,9 @@ export default function VideoList({ doctorCard, totalItems, specialization, tota
                                     <div className="" id="container">
                                         <div className="filter-product-checkboxs">
                                             {specialization[0].map((item, i) => <label className="custom-control form-checkbox mb-3" key={i}>
-                                                <input type="checkbox" className="custom-control-input checkbox" name={`checkbox${i}`} defaultValue={item.specialization} onChange={applyCheckbox} />
+                                                <input type="checkbox" className="custom-control-input checkbox" name={`checkbox${i}`} defaultValue={item.departmentName} onChange={applyCheckbox} />
                                                 <span className="custom-control-label">
-                                                    {item.specialization}
+                                                    {item.departmentName}
                                                     <span className="label label-secondary float-end">
                                                         {item.count}
                                                     </span>

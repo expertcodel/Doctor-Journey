@@ -11,7 +11,7 @@ import LazyYoutube from './LazyYoutube.jsx'
 import DaysCalculator from './DaysCalculator'
 import Breadcrumb from './Breadcrumb.jsx';
 import { faFacebook, faInstagram, faLinkedin, faTwitter } from '@fortawesome/free-brands-svg-icons';
-export default function blogPage({ blogdetail, blogList }) {
+export default function blogPage({ blogdetail, blogList,categorylist }) {
 
 
     const [currentUrl, setCurrentUrl] = useState('');

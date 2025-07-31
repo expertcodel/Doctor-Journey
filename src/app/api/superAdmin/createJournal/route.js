@@ -2,9 +2,12 @@ import { NextResponse } from "next/server";
 import { journalsModel } from "../../../models/journals.model";
 import { extractErrorMessage } from "../../../../utils/errorMessage";
 import { Op } from "sequelize";
+
+
 export async function POST(request) {
 
     const { journalsName, journalsIsbn, publisherName, rights, frequency } = await request.json();
+    
     const journalsmodel = await journalsModel();
     if (!journalsmodel) {
         return NextResponse.json({ status: false, message: 'database error' });
@@ -31,12 +34,14 @@ export async function POST(request) {
         const message = extractErrorMessage(error);
         console.log(error);
         return NextResponse.json({ status: false, message });
+       
 
     }
 
 
 
 }
+
 
 export async function GET(request) {
 

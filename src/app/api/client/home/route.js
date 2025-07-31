@@ -13,41 +13,41 @@ export async function GET() {
     const doctormodel = await doctorModel();
     const videomodel = await videoModel();
     const connection = await connectTodb();
-    
+
     if (!blogmodel) {
         return NextResponse.json({ status: false, message: "database error occured" });
     }
 
     try {
 
-        
+
         const dataList = await Promise.all([blogmodel.findAll({
             limit: 3,
             order: [['blogSerial', 'ASC']],
             attributes: ['blogImage', 'publishedDate', 'blogDescription', 'blogTitle', 'blogUrl', 'blogId'],
             where: { blogStatus: true }
-        }), testimonialmodel.findAll({where:{status:true},order:[['createdAt', 'DESC']]}), doctormodel.findAll({ limit: 8, order: [['createdAt', 'DESC']], attributes: ['profileImage', 'qualification', 'doctorId', 'doctorName'], where: { status: true } }), videomodel.findAll({
+        }), testimonialmodel.findAll({ where: { status: true }, order: [['createdAt', 'DESC']] }), doctormodel.findAll({ limit: 8, order: [['createdAt', 'DESC']], attributes: ['profileImage', 'qualification', 'doctorId', 'doctorName','specialization'], where: { status: true } }), videomodel.findAll({
             limit: 6, order: [
                 ['views', 'DESC'],
                 ['createdAt', 'DESC']
             ]
             , attributes: ['thumbnailImage', 'specialization', 'videoId', 'doctorName', 'views', 'videoTitle', 'publishedDate'], where: { videoStatus: true }
-        }),connection.query(`SELECT public."Videos"."specialization", COUNT(*) FROM public."Videos" GROUP BY public."Videos"."specialization" ORDER BY  public."Videos"."specialization" ASC`),videomodel.findAll({
+        }), connection.query(`SELECT public."Departments"."departmentName", public."Departments"."icon",COUNT(*) FROM public."Users" INNER JOIN public."Departments" ON public."Users"."department_id"=public."Departments"."id" GROUP BY public."Users"."department_id",public."Departments"."departmentName",public."Departments"."icon" ORDER BY  public."Departments"."departmentName" ASC`), videomodel.findAll({
             limit: 2, order: [
                 ['views', 'DESC'],
                 ['createdAt', 'DESC']
             ]
-            , attributes: ['thumbnailImage', 'specialization', 'videoId', 'doctorName', 'views', 'videoTitle', 'publishedDate','videoContent'], where: { videoStatus: true }})
-])
+            , attributes: ['thumbnailImage', 'specialization', 'videoId', 'doctorName', 'views', 'videoTitle', 'publishedDate', 'videoContent'], where: { videoStatus: true }
+        })
+        ])
 
-        return NextResponse.json({ status: true, bloglist: dataList[0], testimoniallist: dataList[1], doctorprofile: dataList[2], videolist: dataList[3],specialization:dataList[4][0],popularVideo:dataList[5]});
+        return NextResponse.json({ status: true, bloglist: dataList[0], testimoniallist: dataList[1], doctorprofile: dataList[2], videolist: dataList[3], specialization: dataList[4][0], popularVideo: dataList[5] });
 
 
     } catch (error) {
 
         const message = extractErrorMessage(error);
-        console.log(error, 'home-err');
-
+        console.log(error);
         return NextResponse.json({ status: false, message });
     }
 }
