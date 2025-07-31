@@ -23,7 +23,7 @@ export async function POST(request) {
             limit: 10,
             where: { status: true },
             order: [['createdAt', 'DESC']],
-            attributes: ['qualification', 'profileImage', 'doctorId', 'doctorName']
+            attributes: ['qualification', 'profileImage', 'doctorId', 'doctorName','specialization']
         })
 
 

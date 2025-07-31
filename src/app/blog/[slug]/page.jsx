@@ -7,6 +7,7 @@ export default async function Page({ params }) {
   
     let blogList = [];
     let blogdetail=null;
+    let categorylist
     
     try {
 
@@ -25,7 +26,7 @@ export default async function Page({ params }) {
            
             blogList = res.bloglist
             blogdetail=res.blogdetail
-         
+            categorylist=res.categorylist
             
         }
 
@@ -43,7 +44,7 @@ export default async function Page({ params }) {
 
     return (
         <>
-            <BlogPage blogdetail={blogdetail} blogList={blogList} /> 
+            <BlogPage blogdetail={blogdetail} blogList={blogList} categorylist={categorylist}/> 
         </>
     );
 }

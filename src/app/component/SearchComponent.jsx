@@ -61,7 +61,7 @@ function SearchComponent({ specialization }) {
                                             {
 
 
-                                                specialization.map((item, i) => { return { value: i + 1, label: item.specialization } })
+                                                specialization.map((item, i) => { return { value: i + 1, label: item.departmentName } })
 
                                             }
                                             select2Options={{ placeholder: "Select category", allowClear: true }}

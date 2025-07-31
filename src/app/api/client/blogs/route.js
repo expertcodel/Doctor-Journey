@@ -2,6 +2,7 @@ import { blogModel } from "../../../../app/models/blog.model";
 import { NextResponse } from "next/server";
 import { fileUploader } from "../../../../utils/fileUploader";
 import { extractErrorMessage } from "../../../../utils/errorMessage";
+import { connectTodb } from "../../../database/database";
 import { Op } from "sequelize";
 export async function POST(request) {
 
@@ -97,30 +98,56 @@ export async function GET(request) {
 
     const input = new URL(request.url).searchParams;
     const name = input.get('name');
-    const url = input.get('url');
+    const category = input.get('category');
     const page = input.get('page');
     const sort = input.get('sort');
     const blogmodel = await blogModel();
+    const connection = await connectTodb();
+    console.log(category, "category");
+
     if (!blogmodel) {
         return NextResponse.json({ status: false, message: "database error occured" });
     }
 
     try {
 
+        const categorylist = await connection.query(`SELECT public."Blogs"."category" AS categoryName, COUNT(*) FROM public."Blogs" GROUP BY public."Blogs"."category"`)
 
-        const { rows, count } = await blogmodel.findAndCountAll({
+        // let where = { blogStatus: true, [Op.or]: { blogTitle: { [Op.iLike]: `%${name}%` } } };
+        if (category !== 'null') {
+            const { rows, count } = await blogmodel.findAndCountAll({
 
-            where: { blogStatus: true, [Op.or]: { blogTitle: { [Op.iLike]: `%${name}%` } } },
-            limit: url === '/' ? 3 : 9,
-            offset: url === '/' ? (page - 1) * 3 : (page - 1) * 9,
-            order: [['blogSerial', 'ASC']],
-            order: sort === 'select' ? [['blogSerial', 'ASC']] : sort === 'Newest' ? [['createdAt', 'DESC']] : [['createdAt', 'ASC']] 
-        })
+                where: { blogStatus: true, [Op.or]: { blogTitle: { [Op.iLike]: `%${name}%` } }, category:category },
+                limit: 9,
+                offset: (page - 1) * 9,
+                order: [['blogSerial', 'ASC']],
+                order: sort === 'select' ? [['blogSerial', 'ASC']] : sort === 'Newest' ? [['createdAt', 'DESC']] : [['createdAt', 'ASC']]
+            })
+            return NextResponse.json({ status: true, bloglist: rows, totalItems: count, categorylist: categorylist[0] });
 
-        return NextResponse.json({ status: true, bloglist: rows, totalItems: count });
+        }
+        else {
+
+            const { rows, count } = await blogmodel.findAndCountAll({
+
+                where: { blogStatus: true, [Op.or]: { blogTitle: { [Op.iLike]: `%${name}%` } } },
+                limit: 9,
+                offset: (page - 1) * 9,
+                order: [['blogSerial', 'ASC']],
+                order: sort === 'select' ? [['blogSerial', 'ASC']] : sort === 'Newest' ? [['createdAt', 'DESC']] : [['createdAt', 'ASC']]
+            })
+
+            return NextResponse.json({ status: true, bloglist: rows, totalItems: count, categorylist: categorylist[0] });
+
+        }
+
+
+
 
 
     } catch (error) {
+
+        console.log(error);
 
         const message = extractErrorMessage(error);
         return NextResponse.json({ status: false, message });

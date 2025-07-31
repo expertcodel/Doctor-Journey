@@ -17,6 +17,12 @@ export async function middleware(request) {
       response.headers.set('x-category', category);
   }
 
+  if(pathname.startsWith('/blog'))
+  {
+      const category=new URL(request.url).searchParams.get('category');
+      response.headers.set('x-category', category);
+  }
+
   if(pathname.startsWith('/doctor-profile'))
   {
       const category=new URL(request.url).searchParams.get('category');
@@ -36,6 +42,8 @@ export async function middleware(request) {
     return response;
 
   }
+
+  
 
   try {
 

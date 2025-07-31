@@ -6,7 +6,7 @@ export default async function Page({ params }) {
     const { childslug } =await params;
 
     let blogData = {};
-    let Categorylist = [];
+    let categorylist = [];
     let Metadescriptions;
     let Blogstatus1;
     let Blogstatus;
@@ -28,7 +28,7 @@ export default async function Page({ params }) {
         if (res.status) {
             blogData = (res.blogdetail);
             description = (res.blogdetail.blogDescription);
-
+            categorylist=res.categorylist;
             if (res.blogdetail.blogStatus===true) {
                 Blogstatus = ('active')
                 Blogstatus1 = ('active')
@@ -38,7 +38,7 @@ export default async function Page({ params }) {
                 Blogstatus1 = ('inactive')
             }
             Metadescriptions = (res.blogdetail.metaDescriptions);
-          //  Categorylist = (res.category);
+          
         }
 
 
@@ -51,7 +51,7 @@ export default async function Page({ params }) {
         <>
             {
                 blogData &&
-                <Blogupdate blogdata={blogData} blogDescription={description} Blogstatus={Blogstatus} Blogstatus1={Blogstatus1}  Metadescriptions={Metadescriptions} />
+                <Blogupdate blogdata={blogData} blogDescription={description} Blogstatus={Blogstatus} Blogstatus1={Blogstatus1}  Metadescriptions={Metadescriptions} categorylist={categorylist}/>
             }
         </>
     )

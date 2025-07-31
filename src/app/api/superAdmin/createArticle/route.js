@@ -3,6 +3,7 @@ import { articleModel } from '../../../models/article.model'
 import { fileUploader } from "../../../../utils/fileUploader";
 import { extractErrorMessage } from "../../../../utils/errorMessage";
 import { Op } from 'sequelize';
+
 function randomNumbers() {
     return String(Math.floor((Math.random() * 9000) + 1000));
 }
@@ -10,6 +11,7 @@ function randomNumbers() {
 export async function POST(request) {
 
     const input = await request.formData();
+    
     const { articleTitle, primaryAuthor, secondaryAuthor, articleSummary, DOI, price, remarks, userId, contentList } = JSON.parse(input.get('data'));
     const file = input.get('file');
 
@@ -19,6 +21,8 @@ export async function POST(request) {
     }
 
     try {
+
+
 
 
 
@@ -50,14 +54,13 @@ export async function POST(request) {
             price,
             remarks,
             thumbnailImage: thumbnailImage && thumbnailImage
+           
         })
 
         return NextResponse.json({ status: true, message: "article saved successfully!" });
 
 
     } catch (error) {
-
-
 
         const message = extractErrorMessage(error);
         console.log("some error occured", message);
@@ -70,10 +73,10 @@ export async function POST(request) {
 
 
 
+
 }
 
 export async function GET(request) {
-
 
     const input = new URL(request.url).searchParams;
     const name = input.get('name');
@@ -83,8 +86,8 @@ export async function GET(request) {
     const articlemodel = await articleModel();
     if (!articlemodel) {
         return NextResponse.json({ status: false, message: "database error occured" });
+   
     }
-
 
     try {
 

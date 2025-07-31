@@ -48,13 +48,13 @@ export default function ThumbnailSearchCarousel({specialization}) {
             <div className="card mb-0">
               <div className="card-body p-3">
                   <div className="cat-item d-flex">
-                      <Link href={`/doctors?category=${item.specialization}`} />
+                      <Link href={`/doctors?category=${item.departmentName}`} />
                       <div className="cat-img me-4 bg-primary-transparent p-3 brround">
-                          <Image src="/images/products/categories/operator.png" className="image-serve" alt="img" width={520} height={520} />
+                          <Image src={item.icon} className="image-serve" alt="img" width={520} height={520} />
                           <Image src="/images/products/categories/operator-white.png" className="image-service-white" alt="img" width={520} height={520} />
                       </div>
                       <div className="cat-desc text-start">
-                          <h5 className="mb-3 mt-0">{item.specialization}</h5>
+                          <h5 className="mb-3 mt-0">{item.departmentName}</h5>
                           <small className="badge rounded-pill badge bg-primary me-2">
                            {item.count} count
                           </small>

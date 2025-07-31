@@ -178,6 +178,8 @@ setIdx(1);
                       <div className="d-flex align-items-center gap-2 mb-3 flex-wrap">
                         <a href="#"> {item.blogStatus === false ? <span className="badge bg-warning-subtle text-warning">inactive</span> : <span className="badge bg-success-subtle text-success">active</span>}</a>
                       </div>
+                       <p className="text-muted mb-2">{item.category}</p>
+
                       <div className="d-flex align-items-center gap-2 mt-3 flex-wrap">
                         <p className="text-muted mb-2">{item.blogDescription}</p>
 

@@ -38,7 +38,8 @@ export async function POST(request) {
             attributes: ['publishedDate', 'thumbnailImage', 'videoId', 'videoTitle', 'videoUrl']
         })
 
-        const specialization = await connection.query(`SELECT public."Doctors"."specialization" , COUNT(*) FROM public."Doctors" GROUP BY public."Doctors"."specialization" ORDER BY  public."Doctors"."specialization" ASC`)
+        const specialization = await connection.query(`SELECT public."Departments"."departmentName", public."Departments"."icon",COUNT(*) FROM public."Users" INNER JOIN public."Departments" ON public."Users"."department_id"=public."Departments"."id" GROUP BY public."Users"."department_id",public."Departments"."departmentName",public."Departments"."icon" ORDER BY  public."Departments"."departmentName" ASC`)
+
 
         return NextResponse.json({ status: true, videodetail, videolist, doctordetail, specialization });
 
@@ -72,7 +73,23 @@ export async function GET(request) {
     }
 
     try {
-        const specialization = await connection.query(`SELECT public."Videos"."specialization", COUNT(*) FROM public."Videos" GROUP BY public."Videos"."specialization" ORDER BY  public."Videos"."specialization" ASC`)
+        // const specialization = await connection.query(`SELECT public."Departments"."departmentName", public."Departments"."icon",COUNT(public."Videos"."userId") FROM public."Users" INNER JOIN public."Videos" ON public."Users"."userId"=public."Videos"."userId" INNER JOIN public."Departments" ON public."Users"."department_id"=public."Departments"."id" GROUP BY public."Users"."department_id",public."Departments"."departmentName",public."Departments"."icon" ORDER BY  public."Departments"."departmentName" ASC`)
+
+        const specialization = await connection.query(`SELECT 
+    d."departmentName", 
+    d."icon", 
+    COUNT(v."id") AS "count"
+FROM 
+    public."Videos" v
+INNER JOIN 
+    public."Users" u ON v."userId" = u."userId"
+INNER JOIN 
+    public."Departments" d ON u."department_id" = d."id"
+GROUP BY 
+    d."departmentName", d."icon"
+ORDER BY 
+    d."departmentName" ASC;
+`)
 
         if (specializations.length > 0) {
             const { rows, count } = await videomodel.findAndCountAll({

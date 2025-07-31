@@ -25,6 +25,9 @@ export default function organizationForm() {
     // const { userData } = UniversalContext();
     const { user } = useAuth();
     // console.log(user,userData, 'kk');
+    // const { userData } = UniversalContext();
+   
+    // console.log(user,userData, 'kk');
     const [errorMsg, setErrormsg] = useState("");
     const [imageUrl, setImageurl] = useState(null);
     const [tabs, setTabs] = useState({ first: true, second: false, third: false, fourth: false });
