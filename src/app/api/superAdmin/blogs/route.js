@@ -7,7 +7,7 @@ export async function POST(request) {
 
     const input = await request.formData();
     const file = input.get('file');
-    const { blogTitle, blogDescription, blogContent, metaDescriptions, metaKeywords, metaTitle, blogSerial, blogUrl } = JSON.parse(input.get('data'));
+    const { blogTitle, blogDescription, blogContent, metaDescriptions, metaKeywords, metaTitle, blogSerial, blogUrl,blogCategory } = JSON.parse(input.get('data'));
     const blogmodel = await blogModel();
 
     if (!blogmodel) {
@@ -29,7 +29,7 @@ export async function POST(request) {
 
 
         await blogmodel.create({
-            blogTitle, blogImage: blogImage && blogImage, blogDescription, blogContent, metaDescriptions, metaKeywords, metaTitle, blogSerial, blogUrl
+            blogTitle, blogImage: blogImage && blogImage, blogDescription, blogContent, metaDescriptions, metaKeywords, metaTitle, blogSerial, blogUrl,category:blogCategory
         })
 
         return NextResponse.json({ status: true, message: "blog created successfully!" });
@@ -50,7 +50,7 @@ export async function PUT(request) {
 
     const input = await request.formData();
     const file = input.get('file');
-    const { blogId, blogTitle, blogDescription, blogContent, metaDescriptions, metaKeywords, metaTitle, blogSerial, blogUrl, blogStatus } = JSON.parse(input.get('data'));
+    const { blogId, blogTitle, blogDescription, blogContent, metaDescriptions, metaKeywords, metaTitle, blogSerial, blogUrl, blogStatus,blogCategory } = JSON.parse(input.get('data'));
     const blogmodel = await blogModel();
 
     if (!blogmodel) {
@@ -65,7 +65,7 @@ export async function PUT(request) {
         }
 
         await blogmodel.update({
-            blogTitle, blogImage: blogImage && blogImage, blogDescription, blogContent, metaDescriptions, metaKeywords, metaTitle, blogSerial, blogUrl, blogStatus
+            blogTitle, blogImage: blogImage && blogImage, blogDescription, blogContent, metaDescriptions, metaKeywords, metaTitle, blogSerial, blogUrl, blogStatus,category:blogCategory
         }, { where: { blogId } })
 
         return NextResponse.json({ status: true, message: "blog updated successfully!" });

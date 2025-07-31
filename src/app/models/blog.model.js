@@ -73,6 +73,9 @@ export const blogModel = async () => {
          type: DataTypes.BOOLEAN,
          defaultValue: true
       },
+      category:{
+         type: DataTypes.STRING
+      }
       
 
    })

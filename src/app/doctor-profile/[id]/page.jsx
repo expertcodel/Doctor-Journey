@@ -74,7 +74,7 @@ export default async function DoctorProfileDetail({ params }) {
                                             <div className="ms-4">
                                                 <h4 className="mt-3 mb-1 text-dark font-weight-bold">{doctor.doctorName}</h4>
                                                 <span>
-                                                    <small className="text-muted">{doctor.qualification}, {doctor.specialization}</small>
+                                                    <small className="text-muted">{doctor.qualification} | {doctor.specialization}</small>
                                                 </span>
                                                 <div className="mt-1 mb-2 profile-details">
                                                     <span className="">

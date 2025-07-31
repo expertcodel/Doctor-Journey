@@ -2,8 +2,10 @@ import { NextResponse } from "next/server";
 import { journalsModel } from "../../../models/journals.model";
 import { Op } from "sequelize";
 import { extractErrorMessage } from "../../../../utils/errorMessage";
+
 export async function GET(request) {
 
+   
     const input = new URL(request.url).searchParams;
     const name = input.get('name');
     const page = input.get('page');

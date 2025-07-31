@@ -178,19 +178,19 @@ export default function VideoPage({ doctordetail, videoList, doctor,specializati
 
                             <div className="card">
                                 <div className="card-header">
-                                    <h3 className="card-title">Specialization</h3>
+                                    <h3 className="card-title">Departments</h3>
                                 </div>
                                 <div className="card-body p-0">
                                     <div className="list-catergory">
                                         <div className="item-list">
                                             <ul className="list-group mb-0 customSpecialization">
                                                 {
-                                                    specialization[0].map((item, id) => (
+                                                   specialization[0].map((item, id) => (
                                                         <li key={id} className="list-group-item">
-                                                            <Link href={`/doctors?category=${item.specialization}`} className="text-dark">
+                                                            <Link href={`/doctors?category=${item.departmentName}`} className="text-dark">
                                                                 <span className="specializationIcon">
-                                                                    <Image src="/images/doctor-profile/profile-1.jpg" className="img-fluid" fill alt="img" />
-                                                                </span> {item.specialization}
+                                                                    <Image src={item.icon} className="img-fluid" fill alt="img" unoptimized />
+                                                                </span> {item.departmentName}
                                                                 <span className="badgetext badge rounded-pill bg-light mb-0 mt-1">
                                                                     {item.count}
                                                                 </span>

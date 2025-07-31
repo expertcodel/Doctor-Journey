@@ -24,6 +24,9 @@ export default function DoctorForm() {
 
     const path = usePathname();
     // const { userData } = UniversalContext();
+     
+   
+    // const { userData } = UniversalContext();
      const {user}=useAuth();
    
     const [errorMsg, setErrormsg] = useState("");
