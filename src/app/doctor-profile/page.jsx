@@ -6,6 +6,7 @@ export default async function AllDoctorsProfile() {
     let totalItems;
     let total
     let specialization;
+    let departmentlist;
     const headerlist=await headers();
     const category=headerlist.get('x-category');
 
@@ -22,6 +23,7 @@ export default async function AllDoctorsProfile() {
             doctorProfile = res.doctorlist;
             totalItems = Math.ceil(res.totalItems / 10);
             specialization=res.specialization;
+            departmentlist=res.departmentlist;
             total=res.totalItems;
         }
     } catch (error) {
@@ -29,7 +31,7 @@ export default async function AllDoctorsProfile() {
     }
     return (
         <>
-       { doctorProfile && <DoctorList doctorProfile={doctorProfile} totalItems={totalItems} specialization={specialization} total={total}  category={ category}/>}
+       { doctorProfile && <DoctorList doctorProfile={doctorProfile} totalItems={totalItems} specialization={specialization} total={total}  category={ category} departmentlist={departmentlist} />}
        </>
     )
 }

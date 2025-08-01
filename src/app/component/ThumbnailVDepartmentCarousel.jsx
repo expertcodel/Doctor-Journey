@@ -7,7 +7,7 @@ import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/navigation";
 
-export default function ThumbnailVDepartmentCarousel({specialization}) {
+export default function ThumbnailVDepartmentCarousel({departmentlist}) {
   return (
     <>
         <div className="list-group mb-0 customSpecialization department-slider-wrapper verticalSlider">
@@ -32,7 +32,7 @@ export default function ThumbnailVDepartmentCarousel({specialization}) {
                 className="department-slider"
             >
                 {
-                    specialization[0].map((item, id) => (
+                    departmentlist.map((item, id) => (
                         <SwiperSlide key={id} className="list-group-item">
                             <Link href={`/doctors?category=${item.departmentName}`} className="text-dark">
                                 <span className="specializationIcon">

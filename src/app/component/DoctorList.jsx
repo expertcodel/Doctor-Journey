@@ -11,7 +11,7 @@ import Pagination from './Pagination';
 import FilterList from './FilterList.jsx'
 import Breadcrumb from './Breadcrumb.jsx';
 import ThumbnailVProfileDepartmentCarousel from "./ThumbnailVProfileDepartmentCarousel";
-export default function DoctorList({ doctorProfile, totalItems, specialization, total, category }) {
+export default function DoctorList({ doctorProfile, totalItems, specialization, total, category,departmentlist }) {
 
     const [bsOffcanvas, setBsOffcanvas] = useState(null);
     const offcanvasRef = useRef(null);
@@ -277,11 +277,11 @@ export default function DoctorList({ doctorProfile, totalItems, specialization, 
                                                                             <div className="mt-2 mb-2">
                                                                                 <span className="me-4">
                                                                                     <FontAwesomeIcon icon={faMap} />{" "}
-                                                                                    {item.specialization}
+                                                                                    {item.departmentName}
                                                                                 </span>
                                                                             </div>
                                                                             <p className="mb-0 leading-tight">
-                                                                                {item.shortDescription}
+                                                                                {item.qualification}
                                                                             </p>
                                                                         </div>
                                                                     </div>
@@ -363,7 +363,7 @@ export default function DoctorList({ doctorProfile, totalItems, specialization, 
                                     <div className="list-catergory">
                                         <div className="item-list">
                                             <div className="list-group mb-0 customSpecialization">
-                                                <ThumbnailVProfileDepartmentCarousel specialization={specialization} />
+                                                <ThumbnailVProfileDepartmentCarousel departmentlist={departmentlist} />
                                             </div>
                                         </div>
                                     </div>

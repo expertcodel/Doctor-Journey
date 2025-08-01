@@ -12,7 +12,7 @@ import FilterListVideo from './FilterListVideo.jsx'
 import Breadcrumb from './Breadcrumb.jsx';
 import ThumbnailVDepartmentCarousel from './ThumbnailVDepartmentCarousel';
 
-export default function VideoList({ doctorCard, totalItems, specialization, total, category }) {
+export default function VideoList({ doctorCard, totalItems, specialization, total, category ,departmentlist}) {
 
 
     const [bsOffcanvas, setBsOffcanvas] = useState(null);
@@ -293,7 +293,7 @@ export default function VideoList({ doctorCard, totalItems, specialization, tota
                                     <div className="list-catergory">
                                         <div className="item-list">
                                             <div className="list-group mb-0 customSpecialization">
-                                                <ThumbnailVDepartmentCarousel specialization={specialization} />
+                                                <ThumbnailVDepartmentCarousel departmentlist={departmentlist} />
                                             </div>
                                         </div>
                                     </div>
@@ -314,10 +314,10 @@ export default function VideoList({ doctorCard, totalItems, specialization, tota
                                     <div className="card-body">
                                         <div className="" id="container">
                                             <div className="filter-product-checkboxs">
-                                                {specialization[0].map((item, i) => <label className="custom-control form-checkbox mb-3" key={i}>
-                                                    <input type="checkbox" className="custom-control-input checkbox" name={`checkbox${i}`} defaultValue={item.departmentName} onChange={applyCheckbox} />
+                                                {specialization.map((item, i) => <label className="custom-control form-checkbox mb-3" key={i}>
+                                                    <input type="checkbox" className="custom-control-input checkbox" name={`checkbox${i}`} defaultValue={item.specialization} onChange={applyCheckbox} />
                                                     <span className="custom-control-label">
-                                                        {item.departmentName}
+                                                        {item.specialization}
                                                         <span className="label label-secondary float-end">
                                                             {item.count}
                                                         </span>

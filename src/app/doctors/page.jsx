@@ -7,6 +7,7 @@ export default async function AllDoctors() {
     let totalItems;
     let total
     let specialization;
+    let departmentlist=[];
     const headerlist=await headers();
     const category=headerlist.get('x-category');
     try {
@@ -26,6 +27,7 @@ export default async function AllDoctors() {
             totalItems = Math.ceil(res.totalItems / 9);
             specialization=res.specialization;
             total=res.totalItems;
+            departmentlist=res.departmentlist
         }
 
 
@@ -40,7 +42,7 @@ export default async function AllDoctors() {
 
     return (
         <>
-            {doctorCard && <VideoList doctorCard={doctorCard} totalItems={totalItems} specialization={specialization} total={total}  category={ category}/>}
+            {doctorCard && <VideoList doctorCard={doctorCard} totalItems={totalItems} specialization={specialization} total={total}  category={ category} departmentlist={departmentlist}/>}
         </>
     )
 }
