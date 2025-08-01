@@ -10,6 +10,7 @@ import RangeSlider from "../component/RangeSlider";
 import Pagination from './Pagination';
 import FilterList from './FilterList.jsx'
 import Breadcrumb from './Breadcrumb.jsx';
+import ThumbnailVProfileDepartmentCarousel from "./ThumbnailVProfileDepartmentCarousel";
 export default function DoctorList({ doctorProfile, totalItems, specialization, total, category }) {
 
     const [bsOffcanvas, setBsOffcanvas] = useState(null);
@@ -26,6 +27,8 @@ export default function DoctorList({ doctorProfile, totalItems, specialization, 
     const [value, setValue] = useState([0, 50]);
 
     useEffect(() => {
+        console.log(specialization);
+        
 
 
         import("bootstrap/dist/js/bootstrap.esm.min.js").then((module) => {
@@ -206,7 +209,7 @@ export default function DoctorList({ doctorProfile, totalItems, specialization, 
             <section className="sptb bg-white">
                 <div className="container">
                     <div className="row">
-                        <div className="col-12">
+                        <div className="col-md-8 col-12">
                             {/*Restaurants lists*/}
                             <div className=" mb-lg-0">
                                 <div className="">
@@ -350,134 +353,23 @@ export default function DoctorList({ doctorProfile, totalItems, specialization, 
                             </div>
                             {/*/Restaurants lists*/}
                         </div>
-
-                        {/* <div className="offcanvas offcanvas-end filterMainSec" tabIndex={-1} id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-                            <div className="offcanvas-header">
-                                <h5 id="offcanvasRightLabel">Select Filter</h5>
-                                <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close" />
-                            </div>
-                            <div className="offcanvas-body">
-                                <div className="card">
-                                    <div className="card-header">
-                                        <h3 className="card-title">Cuisines</h3>
-                                    </div>
-                                    <div className="card-body">
-                                        <div className="" id="container">
-                                            <div className="filter-product-checkboxs">
-                                                <label className="custom-control form-checkbox mb-3">
-                                                    <input type="checkbox" className="custom-control-input" name="checkbox1" defaultValue="option1" />
-                                                    <span className="custom-control-label">
-                                                        South Indian
-                                                        <span className="label label-secondary float-end">
-                                                            14
-                                                        </span>
-                                                    </span>
-                                                </label>
-                                                <label className="custom-control form-checkbox mb-3">
-                                                    <input type="checkbox" className="custom-control-input" name="checkbox2" defaultValue="option2" />
-                                                    <span className="custom-control-label">
-                                                        North Indian
-                                                        <span className="label label-secondary float-end">
-                                                            14
-                                                        </span>
-                                                    </span>
-                                                </label>
-                                                <label className="custom-control form-checkbox mb-3">
-                                                    <input type="checkbox" className="custom-control-input" name="checkbox2" defaultValue="option2" />
-                                                    <span className="custom-control-label">
-                                                        African
-                                                        <span className="label label-secondary float-end">
-                                                            10
-                                                        </span>
-                                                    </span>
-                                                </label>
+                        
+                        <div className="col-md-4 col-12">
+                            <div className="card">
+                                <div className="card-header">
+                                    <h3 className="card-title">Departments</h3>
+                                </div>
+                                <div className="card-body p-0">
+                                    <div className="list-catergory">
+                                        <div className="item-list">
+                                            <div className="list-group mb-0 customSpecialization">
+                                                <ThumbnailVProfileDepartmentCarousel specialization={specialization} />
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="card-header border-top">
-                                        <h3 className="card-title">Price Range</h3>
-                                    </div>
-                                    <div className="card-body">
-                                        <h6>
-                                            <label htmlFor="price">Price Range:</label>
-                                            <RangeSlider value={value} setValue={setValue} />
-                                        </h6>
-                                        
-                                    </div>
-                                    <div className="card-header border-top">
-                                        <h3 className="card-title">Rating</h3>
-                                    </div>
-                                    <div className="card-body">
-                                        <div className="filter-product-checkboxs">
-                                            <label className="custom-control form-checkbox mb-2">
-                                                <input type="checkbox" className="custom-control-input" name="checkbox1" defaultValue="option1" />
-                                                <span className="custom-control-label">Any</span>
-                                            </label>
-                                            <label className="custom-control form-checkbox mb-2">
-                                                <input type="checkbox" className="custom-control-input" name="checkbox2" defaultValue="option2" />
-                                                <span className="custom-control-label">3.5</span>
-                                            </label>
-                                            <label className="custom-control form-checkbox mb-2">
-                                                <input type="checkbox" className="custom-control-input" name="checkbox2" defaultValue="option2" />
-                                                <span className="custom-control-label">4.0</span>
-                                            </label>
-                                            <label className="custom-control form-checkbox mb-0">
-                                                <input type="checkbox" className="custom-control-input" name="checkbox2" defaultValue="option2" />
-                                                <span className="custom-control-label">4.5</span>
-                                            </label>
-                                            <label className="custom-control form-checkbox mb-0">
-                                                <input type="checkbox" className="custom-control-input" name="checkbox2" defaultValue="option2" />
-                                                <span className="custom-control-label">5</span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div className="card-header border-top">
-                                        <h3 className="card-title">More Filters</h3>
-                                    </div>
-                                    <div className="card-body">
-                                        <div className="filter-product-checkboxs">
-                                            <label className="custom-control form-checkbox mb-2">
-                                                <input type="checkbox" className="custom-control-input" name="checkbox1" defaultValue="option1" />
-                                                <span className="custom-control-label">Wheelchair Accessible</span>
-                                            </label>
-                                            <label className="custom-control form-checkbox mb-2">
-                                                <input type="checkbox" className="custom-control-input" name="checkbox2" defaultValue="option2" />
-                                                <span className="custom-control-label">Credit Card</span>
-                                            </label>
-                                            <label className="custom-control form-checkbox mb-2">
-                                                <input type="checkbox" className="custom-control-input" name="checkbox2" defaultValue="option2" />
-                                                <span className="custom-control-label">Buffet</span>
-                                            </label>
-                                            <label className="custom-control form-checkbox mb-2">
-                                                <input type="checkbox" className="custom-control-input" name="checkbox3" defaultValue="option3" />
-                                                <span className="custom-control-label">Sunday Brunch</span>
-                                            </label>
-                                            <label className="custom-control form-checkbox mb-2">
-                                                <input type="checkbox" className="custom-control-input" name="checkbox4" defaultValue="option4" />
-                                                <span className="custom-control-label">Desserts and Bakes</span>
-                                            </label>
-                                            <label className="custom-control form-checkbox mb-2">
-                                                <input type="checkbox" className="custom-control-input" name="checkbox5" defaultValue="option5" />
-                                                <span className="custom-control-label">Cafés</span>
-                                            </label>
-                                            <label className="custom-control form-checkbox mb-2">
-                                                <input type="checkbox" className="custom-control-input" name="checkbox6" defaultValue="option6" />
-                                                <span className="custom-control-label">Online bookings</span>
-                                            </label>
-                                            <label className="custom-control form-checkbox mb-2">
-                                                <input type="checkbox" className="custom-control-input" name="checkbox7" defaultValue="option7" />
-                                                <span className="custom-control-label">Hygiene Rated</span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div className="card-footer">
-                                        <button type="submit" className="btn btn-warning btn-block">
-                                            Apply Filter
-                                        </button>
-                                    </div>
                                 </div>
                             </div>
-                        </div> */}
+                        </div>
 
                         <div className="offcanvas offcanvas-end filterMainSec" tabIndex={-1} id="offcanvasRight" aria-labelledby="offcanvasRightLabel" ref={offcanvasRef}>
                             <div className="offcanvas-header">

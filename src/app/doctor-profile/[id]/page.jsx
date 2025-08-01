@@ -362,11 +362,9 @@ export default async function DoctorProfileDetail({ params }) {
                                 <div className="card-header">
                                     <h3 className="card-title">Popular Profiles</h3>
                                 </div>
-                                <div className="card-body">
-                                    <div className="row g-md-4 g-3">
-                                        {/* drShortDesc */}
-                                        <ThumbnailVDrProfileCarousel doctorProfile={doctorList}/>
-                                    </div>
+                                <div className="card-body p-2">
+                                    {/* drShortDesc */}
+                                    <ThumbnailVDrProfileCarousel doctorProfile={doctorList}/>
                                 </div>
                             </div>
                         </div>

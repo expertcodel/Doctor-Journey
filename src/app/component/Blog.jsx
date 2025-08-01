@@ -136,7 +136,7 @@ export default function blogList({ blogCard, totalItems, total,categorylist ,cat
             <section className="sectionSpace sptb bg-white">
                 <div className="container">
                     <div className="row">
-                        <div className="col-lg-9 col-md-8 col-12">
+                        <div className="col-md-8 col-12">
                             <div className="row">
                                 <div className="col-12 item2-gl">
                                     <div className="p-md-5 p-3 bg-white item2-gl-nav d-sm-flex d-block">
@@ -273,7 +273,7 @@ export default function blogList({ blogCard, totalItems, total,categorylist ,cat
 
                             <div className="row g-md-4 g-3">
                                 {blogLists.map((card) => (
-                                    <div className="col-md-4 col-12 drCard" key={card.blogId}>
+                                    <div className="col-md-6 col-12 drCard" key={card.blogId}>
                                         <div className="card mb-0">
                                             <div className="item7-card-img">
                                                 <Link href={`/blogs${card.blogUrl}`} />
@@ -319,7 +319,7 @@ export default function blogList({ blogCard, totalItems, total,categorylist ,cat
                             </div>
                         </div>
 
-                        <div className="col-lg-3 col-md-4 col-12">
+                        <div className="col-md-4 col-12">
                             <div className="card">
                                 <div className="card-header">
                                     <h3 className="card-title">Category</h3>

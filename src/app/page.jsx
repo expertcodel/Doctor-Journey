@@ -212,7 +212,7 @@ export default async function Home() {
             {/* drShortDesc */}
             {
               doctorProfile.map((item, index) => (
-                <div key={index} className="col-lg-3 col-md-4 col-12 drShortDesc">
+                <div key={index} className="col-lg-4 col-md-6 col-12 drShortDesc">
                   <div className="card mb-0">
                     <div className="card-body">
                       <div className="cat-item">

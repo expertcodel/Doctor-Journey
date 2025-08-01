@@ -10,6 +10,7 @@ import { faBarsStaggered, faEye, faSearch } from "@fortawesome/free-solid-svg-ic
 import RangeSlider from "./RangeSlider";
 import FilterListVideo from './FilterListVideo.jsx'
 import Breadcrumb from './Breadcrumb.jsx';
+import ThumbnailVDepartmentCarousel from './ThumbnailVDepartmentCarousel';
 
 export default function VideoList({ doctorCard, totalItems, specialization, total, category }) {
 
@@ -205,7 +206,7 @@ export default function VideoList({ doctorCard, totalItems, specialization, tota
             <section className="sectionSpace sptb bg-white">
                 <div className="container">
                     <div className="row">
-                        <div className="col-md-8 col-lg-9 col-12">
+                        <div className="col-md-8 col-12">
                             <div className="row">
                                 <div className="col-12 item2-gl">
                                     <div className="p-md-5 p-3 bg-white item2-gl-nav d-sm-flex d-block">
@@ -283,7 +284,7 @@ export default function VideoList({ doctorCard, totalItems, specialization, tota
                             </div>
                         </div>
 
-                        <div className="col-md-4 col-lg-3 col-12">
+                        <div className="col-md-4 col-12">
                             <div className="card">
                                 <div className="card-header">
                                     <h3 className="card-title">Departments</h3>
@@ -291,123 +292,110 @@ export default function VideoList({ doctorCard, totalItems, specialization, tota
                                 <div className="card-body p-0">
                                     <div className="list-catergory">
                                         <div className="item-list">
-                                            <ul className="list-group mb-0 customSpecialization">
-                                                {
-                                                    specialization[0].map((item, id) => (
-                                                        <li key={id} className="list-group-item">
-                                                            <Link href={`/doctors?category=${item.departmentName}`} className="text-dark">
-                                                                <span className="specializationIcon">
-                                                                    <Image src={item.icon} className="img-fluid" fill alt="img" unoptimized />
-                                                                </span> {item.departmentName}
-                                                                <span className="badgetext badge rounded-pill bg-light mb-0 mt-1">
-                                                                    {item.count}
-                                                                </span>
-                                                            </Link>
-                                                        </li>
-                                                    ))
-                                                }
-                                            </ul>
+                                            <div className="list-group mb-0 customSpecialization">
+                                                <ThumbnailVDepartmentCarousel specialization={specialization} />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                    <div className="offcanvas offcanvas-end filterMainSec" tabIndex={-1} id="offcanvasRight" aria-labelledby="offcanvasRightLabel" ref={offcanvasRef}>
-                        <div className="offcanvas-header">
-                            <h5 id="offcanvasRightLabel">Select Filter  {(value[0] !== 0 || value[1] !== 50 || specializations.length > 0) && <small onClick={() => [resetCheckbox([0, 50]), setValue([0, 50])]} style={{ cursor: 'pointer', color: 'red' }}>Reset</small>}</h5>
-                            <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close" />
-                        </div>
-                        <div className="offcanvas-body">
-                            <div className="card">
-                                <div className="card-header">
-                                    <h3 className="card-title">Specialization</h3>
-                                </div>
-                                <div className="card-body">
-                                    <div className="" id="container">
-                                        <div className="filter-product-checkboxs">
-                                            {specialization[0].map((item, i) => <label className="custom-control form-checkbox mb-3" key={i}>
-                                                <input type="checkbox" className="custom-control-input checkbox" name={`checkbox${i}`} defaultValue={item.departmentName} onChange={applyCheckbox} />
-                                                <span className="custom-control-label">
-                                                    {item.departmentName}
-                                                    <span className="label label-secondary float-end">
-                                                        {item.count}
+                        <div className="offcanvas offcanvas-end filterMainSec" tabIndex={-1} id="offcanvasRight" aria-labelledby="offcanvasRightLabel" ref={offcanvasRef}>
+                            <div className="offcanvas-header">
+                                <h5 id="offcanvasRightLabel">Select Filter  {(value[0] !== 0 || value[1] !== 50 || specializations.length > 0) && <small onClick={() => [resetCheckbox([0, 50]), setValue([0, 50])]} style={{ cursor: 'pointer', color: 'red' }}>Reset</small>}</h5>
+                                <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close" />
+                            </div>
+                            <div className="offcanvas-body">
+                                <div className="card">
+                                    <div className="card-header">
+                                        <h3 className="card-title">Specialization</h3>
+                                    </div>
+                                    <div className="card-body">
+                                        <div className="" id="container">
+                                            <div className="filter-product-checkboxs">
+                                                {specialization[0].map((item, i) => <label className="custom-control form-checkbox mb-3" key={i}>
+                                                    <input type="checkbox" className="custom-control-input checkbox" name={`checkbox${i}`} defaultValue={item.departmentName} onChange={applyCheckbox} />
+                                                    <span className="custom-control-label">
+                                                        {item.departmentName}
+                                                        <span className="label label-secondary float-end">
+                                                            {item.count}
+                                                        </span>
                                                     </span>
-                                                </span>
-                                            </label>)}
+                                                </label>)}
 
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="card-header border-top">
-                                    <h3 className="card-title">Views</h3>
-                                </div>
-                                <div className="card-body">
-                                    <h6>
-                                        <label htmlFor="price">Views:</label>
-                                        <RangeSlider value={value} setValue={setValue} />
-                                    </h6>
-                                    {/* <div id="mySlider" /> */}
-                                </div>
-                                {/* <div className="card-header border-top">
-                                    <h3 className="card-title">Rating</h3>
-                                </div>
-                                <div className="card-body">
-                                    <div className="filter-product-checkboxs">
-                                        <label className="custom-control form-checkbox mb-2">
-                                            <input type="checkbox" className="custom-control-input" name="checkbox1" defaultValue="option1" />
-                                            <span className="custom-control-label">Any</span>
-                                        </label>
-                                        <label className="custom-control form-checkbox mb-2">
-                                            <input type="checkbox" className="custom-control-input" name="checkbox2" defaultValue="option2" />
-                                            <span className="custom-control-label">3.5</span>
-                                        </label>
-                                        <label className="custom-control form-checkbox mb-2">
-                                            <input type="checkbox" className="custom-control-input" name="checkbox2" defaultValue="option2" />
-                                            <span className="custom-control-label">4.0</span>
-                                        </label>
-                                        <label className="custom-control form-checkbox mb-0">
-                                            <input type="checkbox" className="custom-control-input" name="checkbox2" defaultValue="option2" />
-                                            <span className="custom-control-label">4.5</span>
-                                        </label>
-                                        <label className="custom-control form-checkbox mb-0">
-                                            <input type="checkbox" className="custom-control-input" name="checkbox2" defaultValue="option2" />
-                                            <span className="custom-control-label">5</span>
-                                        </label>
+                                    <div className="card-header border-top">
+                                        <h3 className="card-title">Views</h3>
                                     </div>
-                                </div> */}
-                                {/* <div className="card-header border-top">
-                                    <h3 className="card-title">Location</h3>
-                                </div>
-                                <div className="card-body">
-                                    <div className="filter-product-checkboxs">
-                                        <label className="custom-control form-checkbox mb-2">
-                                            <input type="checkbox" className="custom-control-input" name="checkbox1" defaultValue="option1" />
-                                            <span className="custom-control-label">Delhi</span>
-                                        </label>
-                                        <label className="custom-control form-checkbox mb-2">
-                                            <input type="checkbox" className="custom-control-input" name="checkbox2" defaultValue="option2" />
-                                            <span className="custom-control-label">Noida</span>
-                                        </label>
-                                        <label className="custom-control form-checkbox mb-2">
-                                            <input type="checkbox" className="custom-control-input" name="checkbox2" defaultValue="option2" />
-                                            <span className="custom-control-label">Gurugram</span>
-                                        </label>
+                                    <div className="card-body">
+                                        <h6>
+                                            <label htmlFor="price">Views:</label>
+                                            <RangeSlider value={value} setValue={setValue} />
+                                        </h6>
+                                        {/* <div id="mySlider" /> */}
                                     </div>
-                                </div> */}
-                                <div className="card-footer">
+                                    {/* <div className="card-header border-top">
+                                        <h3 className="card-title">Rating</h3>
+                                    </div>
+                                    <div className="card-body">
+                                        <div className="filter-product-checkboxs">
+                                            <label className="custom-control form-checkbox mb-2">
+                                                <input type="checkbox" className="custom-control-input" name="checkbox1" defaultValue="option1" />
+                                                <span className="custom-control-label">Any</span>
+                                            </label>
+                                            <label className="custom-control form-checkbox mb-2">
+                                                <input type="checkbox" className="custom-control-input" name="checkbox2" defaultValue="option2" />
+                                                <span className="custom-control-label">3.5</span>
+                                            </label>
+                                            <label className="custom-control form-checkbox mb-2">
+                                                <input type="checkbox" className="custom-control-input" name="checkbox2" defaultValue="option2" />
+                                                <span className="custom-control-label">4.0</span>
+                                            </label>
+                                            <label className="custom-control form-checkbox mb-0">
+                                                <input type="checkbox" className="custom-control-input" name="checkbox2" defaultValue="option2" />
+                                                <span className="custom-control-label">4.5</span>
+                                            </label>
+                                            <label className="custom-control form-checkbox mb-0">
+                                                <input type="checkbox" className="custom-control-input" name="checkbox2" defaultValue="option2" />
+                                                <span className="custom-control-label">5</span>
+                                            </label>
+                                        </div>
+                                    </div> */}
+                                    {/* <div className="card-header border-top">
+                                        <h3 className="card-title">Location</h3>
+                                    </div>
+                                    <div className="card-body">
+                                        <div className="filter-product-checkboxs">
+                                            <label className="custom-control form-checkbox mb-2">
+                                                <input type="checkbox" className="custom-control-input" name="checkbox1" defaultValue="option1" />
+                                                <span className="custom-control-label">Delhi</span>
+                                            </label>
+                                            <label className="custom-control form-checkbox mb-2">
+                                                <input type="checkbox" className="custom-control-input" name="checkbox2" defaultValue="option2" />
+                                                <span className="custom-control-label">Noida</span>
+                                            </label>
+                                            <label className="custom-control form-checkbox mb-2">
+                                                <input type="checkbox" className="custom-control-input" name="checkbox2" defaultValue="option2" />
+                                                <span className="custom-control-label">Gurugram</span>
+                                            </label>
+                                        </div>
+                                    </div> */}
+                                    <div className="card-footer">
 
 
-                                    <button type="submit" className="btn btn-warning btn-block" onClick={() => applyFilter(value)}>
-                                        {loading ? <div className="spinner-border text-white" role="status">
-                                            <span className="visually-hidden">Loading...</span>
-                                        </div> : <> Apply Filter
-                                            <span /> </>}
-                                    </button>
+                                        <button type="submit" className="btn btn-warning btn-block" onClick={() => applyFilter(value)}>
+                                            {loading ? <div className="spinner-border text-white" role="status">
+                                                <span className="visually-hidden">Loading...</span>
+                                            </div> : <> Apply Filter
+                                                <span /> </>}
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                     </div>
                 </div>
             </section>
