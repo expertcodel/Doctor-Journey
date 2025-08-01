@@ -96,6 +96,33 @@ export const UserModel = async () => {
 
             type: DataTypes.STRING,
             defaultValue: '/images/profile-bg.jpg'
+        },
+        city: {
+            type: DataTypes.STRING
+        },
+        address: {
+            type: DataTypes.STRING(5000)
+        },
+        zip: {
+            type: DataTypes.STRING
+        },
+        description: {
+            type: DataTypes.STRING(5000)
+        },
+        facebook: {
+            type: DataTypes.STRING(5000)
+        },
+        instagram: {
+            type: DataTypes.STRING(5000)
+        },
+        linkedin: {
+            type: DataTypes.STRING(5000)
+        },
+        twitter: {
+            type: DataTypes.STRING(5000)
+        },
+        department_id:{
+            type:DataTypes.INTEGER
         }
     })
 

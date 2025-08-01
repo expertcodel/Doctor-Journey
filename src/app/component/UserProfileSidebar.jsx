@@ -22,7 +22,7 @@ export default function UserProfileSidebar() {
                 <div className="profile-pic">
                     <div className="profile-pic-img">
                         <span className="bg-success dots" data-bs-toggle="tooltip" data-bs-placement="top" title="online" />
-                        <Image src={user?.profile_img} width={80} height={80} className="brround" alt="user" />
+                        <Image src={user?.profile_img} width={80} height={80} className="brround" alt="user" unoptimized/>
                     </div>
                     <Link href="/user-dashboard/profile">
                         <h4 className="mt-3 mb-0 font-weight-semibold text-dark">

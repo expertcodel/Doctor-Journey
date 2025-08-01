@@ -6,7 +6,7 @@ import "select2/dist/css/select2.min.css";
 import "select2/dist/js/select2.full.min.js";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
-export default function Select2Component({ id, options, select2Options = {}, showSearch = false, onChange, type, setSort }) {
+export default function Select2Component({ id, options, select2Options = {}, showSearch = false, onChange, type, setSort, setCountry, setDepartmentid }) {
   const router = useRouter();
   const path = usePathname();
   useEffect(() => {
@@ -41,6 +41,7 @@ export default function Select2Component({ id, options, select2Options = {}, sho
 
       $select.on("change", async function (e) {
         const selectedValue = $(this).val();
+
         onChange?.(selectedValue); // ✅ optional call
         if (type === 'category') {
           if (path === '/') {
@@ -53,6 +54,14 @@ export default function Select2Component({ id, options, select2Options = {}, sho
 
           setSort(selectedValue);
 
+        }
+        else if (type === 'country') {
+         
+          setCountry(selectedValue);
+        }
+        else if (type === 'department') {
+
+          setDepartmentid(selectedValue);
         }
       });
     }

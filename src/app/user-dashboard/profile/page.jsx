@@ -2,7 +2,7 @@ import Profile from '../../component/Profile.jsx'
 export default async function Page() {
 
     let departmentlist = [];
-   
+    let countrylist=[];
 
     try {
 
@@ -19,6 +19,7 @@ export default async function Page() {
 
         if (res.status) {
           departmentlist=res.departmentlist;
+          countrylist=res.countrylist
         }
 
 
@@ -29,6 +30,6 @@ export default async function Page() {
     
 
     return (
-       <Profile  departmentlist={departmentlist}/>
+       <Profile  departmentlist={departmentlist} countrylist={countrylist}/>
     )
 }

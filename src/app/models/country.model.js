@@ -62,7 +62,7 @@ export const countryCode=async()=>{
    },
  
 
- })
+ },{timestamps:false})
 
  await sequelize.sync();
  return countryModelschema;

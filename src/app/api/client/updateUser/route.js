@@ -5,14 +5,16 @@ import { UserModel } from "../../../models/user.model";
 import { extractErrorMessage } from "../../../../utils/errorMessage";
 import { cookies } from "next/headers";
 import jwt from 'jsonwebtoken'
+import { connectTodb } from '../../../database/database'
 export async function PATCH(request) {
 
     const input = await request.formData();
+
     const file = input.get('file');
-    const { zip, city, description, address, facebook, instagram, twitter, pinterest, userId } = JSON.parse(input.get('data'));
+    const { zip, city, description, address, facebook, instagram, twitter, linkedin, userId, country, department_id } = JSON.parse(input.get('data'));
 
     const usermodel = await UserModel();
-
+    const connection = await connectTodb();
     if (!usermodel) {
         return NextResponse.json({ status: false, message: "database error occured!" });
     }
@@ -24,9 +26,11 @@ export async function PATCH(request) {
             Image = await fileUploader(file);
         }
 
+        const id = await connection.query(`SELECT * FROM public."Departments" WHERE public."Departments"."departmentName"='${department_id}'`)
+       
         await usermodel.update({
-            zip, city, description, address, facebook, instagram, twitter, pinterest, profile_img: Image && Image
-
+            zip, city, description, address, facebook, instagram, twitter, linkedin, profile_img: Image && Image,
+            country, department_id: id[0][0].id
         }, { where: { userId } })
         const isValiduser = await usermodel.findOne({ where: { userId } });
         const token = jwt.sign({ userData: isValiduser }, process.env.AUTHENTICATION_KEY, { expiresIn: '1h' })
