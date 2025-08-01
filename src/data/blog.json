@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "title": "Excepteur occaecat cupidatat",
+    "img": "/images/dr-banners/banner-1.webp",
+    "date": "2023-04-15",
+    "duration": "1 day ago",
+    "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl eget aliquam ultricies, nunc nisi aliquet sapien, vel aliquet velit eros ut quam.</p><p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea"
+  },
+  {
+    "id": 2,
+    "title": "Duis aute irure dolor in reprehenderit",
+    "img": "/images/dr-banners/banner-2.webp",
+    "date": "2023-04-16",
+    "duration": "1 day ago",
+    "content": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl eget aliquam ultricies, nunc nisi aliquet sapien, vel aliquet velit eros ut quam.</p><p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea"
+  },
+  {
+    "id": 3,
+    "title": "Sed do eiusmod tempor incididunt",
+    "img": "/images/dr-banners/banner-3.webp",
+    "date": "2023-04-17",
+    "duration": "1 day ago",
+    "content": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl eget aliquam ultricies, nunc nisi aliquet sapien, vel aliquet velit eros ut quam.</p><p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea"
+  },
+  {
+    "id": 4,
+    "title": "Incididunt ut labore et dolore magna aliqua",
+    "img": "/images/dr-banners/banner-4.webp",
+    "date": "2023-04-18",
+    "duration": "1 day ago",
+    "content": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl eget aliquam ultricies, nunc nisi aliquet sapien, vel aliquet velit eros ut quam.</p><p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi"
+  },
+  {
+    "id": 5,
+    "title": "Ut enim ad minim veniam",
+    "img": "/images/dr-banners/banner-5.webp",
+    "date": "2023-04-19",
+    "duration": "1 day ago",
+    "content": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl eget aliquam ultricies, nunc nisi aliquet sapien, vel aliquet velit eros ut quam.</p><p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea"
+  }
+]

@@ -11,6 +11,8 @@ import RangeSlider from "./RangeSlider";
 import FilterListBlog from './FilterListBlog.jsx'
 import Breadcrumb from './Breadcrumb.jsx';
 import { useSearchParams } from "next/navigation";
+import blog from "../../data/blog.json"
+import BlogsVerticalCarousel from './BlogsVerticalCarousel.jsx';
 export default function blogList({ blogCard, totalItems, total,categorylist ,category}) {
 
 
@@ -22,8 +24,14 @@ export default function blogList({ blogCard, totalItems, total,categorylist ,cat
     const [itemCount, setItemcount] = useState(total);
     const [loading, setLoading] = useState(false);
     const [sort, setSort] = useState("select");
-    useEffect(() => {
 
+    const blogId = 1;
+    const singleBlog = blog.find(item => item.id === blogId);
+
+
+    useEffect(() => {
+        console.log(blog);
+        
         const fetching = async () => {
             const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/client/blogs/?page=${1}&name=${name}&sort=${sort}&category=${category}`);
             setIdx(1);
@@ -76,56 +84,40 @@ export default function blogList({ blogCard, totalItems, total,categorylist ,cat
     return (
         <>
             {/* search engine */}
-             <Breadcrumb title={category !== 'null' ? `${category} Blog` : 'listing'} />
-            <section className="cover-image sptb-1 bg-background2"
+            <Breadcrumb title={category !== 'null' ? `${category} Blog` : 'listing'} />
+            <section className="cover-image sptb bg-background2"
                 data-image-src="../assets/images/banners/banner1.jpg">
                 <div className="header-text1 mb-0">
                     <div className="container">
                         <div className="row">
-                            <div className="col-xl-10 col-lg-12 col-md-12 d-block mx-auto">
-                                <div className="text-center text-white ">
-                                    <h1 className="mb-5">
-                                        Search Your favourite Blog
-                                    </h1>
-                                </div>
-                                <div className="search-background bg-transparent">
-                                    <div className="form">
-                                        <div className="col-12 mb-0 bg-white form-group searchBoxMain">
-                                            <span className="searchIcon"><FontAwesomeIcon icon={faSearch} /></span>
-                                            <input type="text" className="form-control input-lg br-tr-md-0 br-br-md-0" id="text4" placeholder="Enter Your Keywords" onChange={(e) => searching(idx, e.target.value)} />
+                            {/***** drCard *****/}
+                            <div className="col-md-3 col-12 drCard blogVerticalCard">
+                                {/*** card */}
+                                <BlogsVerticalCarousel blog={blog} />
+                            </div>
+        
+                            <div className="col-md-6 col-12 drCard blogListMiddleCard">
+                                {
+                                    singleBlog && (
+                                        <div className="card mb-0" key={idx}>
+                                            <div className="item7-card-img">
+                                                <Link href="/" />
+                                                <Image src={singleBlog.img} alt={singleBlog.title} className="cover-image" fill unoptimized />
+                                            </div>
+                                            <div className="card-body">
+                                                <Link href="/" className="text-dark">
+                                                    <h4 className="font-weight-semibold m-0">{singleBlog.title}</h4>
+                                                </Link>
+                                            </div>
                                         </div>
-                                        {/* <div className="col-xl-3 col-lg-3 col-md-12 mb-0 bg-white form-group">
-                                            <input type="text" className="form-control input-lg br-md-0" id="text5" placeholder="Select Location" />
-                                            <span>
-                                                <Image
-                                                    src="/images/svg/gps.svg"
-                                                    className="location-gps-sm"
-                                                    alt="image" width={150} height={150}
-                                                />
-                                            </span>
-                                        </div>
-                                        <div className="col-xl-3 col-lg-3 col-md-12 select2-lg  mb-0 bg-white form-group">
-                                            <Select2Component id="select2"
-                                                options={[
-                                                    { value: "1", label: "South Indian" },
-                                                    { value: "2", label: "North Indian" },
-                                                    { value: "3", label: "West Indian" },
-                                                    { value: "4", label: "Australia" },
-                                                    { value: "5", label: "Afgani" },
-                                                    { value: "6", label: "Russian" },
-                                                ]}
-                                                select2Options={{ placeholder: "Select category", allowClear: true }}
-                                                showSearch={true} />
-                                        </div> */}
-                                        {/* <div className="col-xl-2 col-lg-3 col-md-12 mb-0">
-                                            <Link href="/" className="btn btn-lg btn-block btn-secondary br-tl-md-0 br-bl-md-0">
-                                                Search Here
-                                            </Link>
-                                        </div> */}
-                                    </div>
-
-                                     {name !=="" && <FilterListBlog filtered={blogLists} />}
-                                </div>
+                                    )
+                                }
+                            </div>
+        
+                            {/***** drCard *****/}
+                            <div className="col-md-3 col-12 drCard blogVerticalCard">
+                                {/*** card */}
+                                <BlogsVerticalCarousel blog={blog} />
                             </div>
                         </div>
                     </div>
@@ -320,6 +312,24 @@ export default function blogList({ blogCard, totalItems, total,categorylist ,cat
                         </div>
 
                         <div className="col-md-4 col-12">
+                            <div className="card">
+                                <div className="card-header">
+                                    <h3 className="card-title">Search Blog</h3>
+                                </div>
+                                <div className="card-body p-0">
+                                    <div className="search-background bg-transparent">
+                                        <div className="form">
+                                            <div className="col-12 mb-0 bg-white form-group searchBoxMain">
+                                                <span className="searchIcon"><FontAwesomeIcon icon={faSearch} /></span>
+                                                <input type="text" className="form-control input-lg" id="text4" placeholder="Enter Your Keywords" onChange={(e) => searching(idx, e.target.value)} />
+                                            </div>
+                                        </div>
+
+                                        {name !=="" && <FilterListBlog filtered={blogLists} />}
+                                    </div>
+                                </div>
+                            </div>
+
                             <div className="card">
                                 <div className="card-header">
                                     <h3 className="card-title">Category</h3>

@@ -2212,6 +2212,29 @@ body {
 .drCard .card:hover .card-body a h4{color: var(--secondary-color);}
 /* .drCard .card.noImg:hover{box-shadow: none;} */
 /* .drCard .card.noImg:hover .card-body{padding: 16px 0;} */
+
+/********** blogListMiddleCard ******/
+.blogListMiddleCard.drCard .card{position: relative; border: none;}
+.blogListMiddleCard.drCard .card .item7-card-img{
+    height: 360px;
+}
+.blogListMiddleCard.drCard .card .card-body{
+    position: absolute; bottom: 0; left: 0; width: 100%; background: transparent;
+}
+.blogListMiddleCard.drCard .card .card-body a h4{
+    color: var(--bs-body-bg);
+}
+
+/****  blogVerticalCard *******/
+.blogVerticalCard.drCard .card{background: transparent; border: none;}
+.blogVerticalCard.drCard .card .card-body{
+    background: transparent; padding: 8px 0;
+}
+.blogVerticalCard.drCard .card .card-body a h4{
+    font-size: 14px; color: var(--bs-body-bg); text-transform: capitalize;
+}
+.blogVerticalCard.drCard .card:hover{box-shadow: none;}
+
 /********* userJourneyCard *****/
 .userJourneyCard.drCard .card.h-276 .item7-card-img{height: 276px;}
 .userJourneyCard.drCard .card .card-body .cardDescription{
