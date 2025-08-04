@@ -67,7 +67,7 @@ export default function ForgotPassword() {
     if (!validateInputs()) return;
 
     if (!recaptchaToken) {
-      setMessage({failed:"Please complete the CAPTCHA",success:""});
+      setMessage({ failed: "Please complete the CAPTCHA", success: "" });
       return;
     }
 
@@ -86,6 +86,10 @@ export default function ForgotPassword() {
 
     }
     else {
+      if (recaptchaRef.current) {
+        recaptchaRef.current.reset();
+        setRecaptchaToken(null);
+      }
       setMessage({ success: "", failed: res.message });
     }
 
@@ -362,7 +366,7 @@ export default function ForgotPassword() {
                       </div>
 
                       <div className="submit">
-                       
+
                         <button className="btn btn-primary btn-block" type="submit" disabled={!isOtpComplete(emailOtp) || showEmailResend}>
                           {loading ? <div className="spinner-border text-white" role="status">
                             <span className="visually-hidden">Loading...</span>
