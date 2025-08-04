@@ -209,13 +209,13 @@ export default function Login() {
                         <label>Password</label>
                         {errors.password && <p className="text-danger text-start mt-2">{errors.password}</p>}
                       </div>
-                      {/* <div className="">
+                      <div className="">
                         <ReCAPTCHA
                           ref={recaptchaRef}
                           sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
                           onChange={(token) => setRecaptchaToken(token)}
                         />
-                      </div> */}
+                      </div>
                       <div className="submit">
                         <button className="btn btn-primary btn-block" type="submit">
                           {loading ? <div className="spinner-border text-white" role="status">
