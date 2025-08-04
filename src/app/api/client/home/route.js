@@ -21,18 +21,35 @@ export async function GET() {
     try {
 
 
+
         const dataList = await Promise.all([blogmodel.findAll({
             limit: 3,
             order: [['blogSerial', 'ASC']],
             attributes: ['blogImage', 'publishedDate', 'blogDescription', 'blogTitle', 'blogUrl', 'blogId'],
             where: { blogStatus: true }
-        }), testimonialmodel.findAll({ where: { status: true }, order: [['createdAt', 'DESC']] }), doctormodel.findAll({ limit: 6, order: [['createdAt', 'DESC']], attributes: ['profileImage', 'qualification', 'doctorId', 'doctorName','specialization'], where: { status: true } }), videomodel.findAll({
+        }), testimonialmodel.findAll({ where: { status: true }, order: [['createdAt', 'DESC']] }), doctormodel.findAll({ limit: 6, order: [['createdAt', 'DESC']], attributes: ['profileImage', 'qualification', 'doctorId', 'doctorName', 'specialization'], where: { status: true } }), videomodel.findAll({
             limit: 6, order: [
                 ['views', 'DESC'],
                 ['createdAt', 'DESC']
             ]
             , attributes: ['thumbnailImage', 'specialization', 'videoId', 'doctorName', 'views', 'videoTitle', 'publishedDate'], where: { videoStatus: true }
-        }), connection.query(`SELECT public."Departments"."departmentName", public."Departments"."icon",COUNT(*) FROM public."Users" INNER JOIN public."Departments" ON public."Users"."department_id"=public."Departments"."id" GROUP BY public."Users"."department_id",public."Departments"."departmentName",public."Departments"."icon" ORDER BY  public."Departments"."departmentName" ASC`), videomodel.findAll({
+        }), connection.query(`SELECT 
+    d."departmentName", 
+    d."icon", 
+    COUNT(v."userId") AS "count"
+FROM 
+    public."Videos" v
+INNER JOIN 
+    public."Users" u ON v."userId" = u."userId"
+   
+INNER JOIN 
+    public."Departments" d ON u."department_id" = d."id"
+WHERE v."videoStatus"=true
+GROUP BY 
+    d."departmentName", d."icon"
+ORDER BY 
+    d."departmentName" ASC;
+`), videomodel.findAll({
             limit: 2, order: [
                 ['views', 'DESC'],
                 ['createdAt', 'DESC']

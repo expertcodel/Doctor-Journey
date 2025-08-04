@@ -277,7 +277,7 @@ export default function DoctorList({ doctorProfile, totalItems, specialization, 
                                                                             <div className="mt-2 mb-2">
                                                                                 <span className="me-4">
                                                                                     <FontAwesomeIcon icon={faMap} />{" "}
-                                                                                    {item.departmentName}
+                                                                                    {item.specialization}
                                                                                 </span>
                                                                             </div>
                                                                             <p className="mb-0 leading-tight">

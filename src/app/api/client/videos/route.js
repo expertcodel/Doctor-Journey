@@ -180,7 +180,7 @@ WHERE "Videos"."videoStatus" = true
                 })
 
 
-                return NextResponse.json({ status: true, videolist: rows, totalItems: count, specialization });
+                return NextResponse.json({ status: true, videolist: rows, totalItems: count, specialization: specialization[0],departmentlist: departmentlist[0] });
 
             }
             else {
@@ -195,7 +195,7 @@ WHERE "Videos"."videoStatus" = true
 
 
 
-                return NextResponse.json({ status: true, videolist: rows, totalItems: count, specialization });
+                return NextResponse.json({ status: true, videolist: rows, totalItems: count, specialization: specialization[0] ,departmentlist: departmentlist[0]});
 
             }
 

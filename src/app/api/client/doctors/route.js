@@ -138,7 +138,7 @@ AND "Doctors"."views" BETWEEN :minViews AND :maxViews
 
 
             const dataQuery = `
-SELECT "Departments"."departmentName", "Doctors"."doctorName", "Doctors"."qualification", 
+SELECT "Departments"."departmentName", "Doctors"."doctorName", "Doctors"."qualification", "Doctors"."specialization",
        "Doctors"."profileImage", "Doctors"."doctorId", "Doctors"."zip"
 ${baseQuery}
 ${orderClause}
@@ -181,7 +181,7 @@ LIMIT 10 OFFSET :offset
                 limit: 10,
                 offset: (page - 1) * 10,
                 order: sort === 'select' ? [['views', 'DESC'], ['createdAt', 'DESC']] : sort === 'Newest' ? [['createdAt', 'DESC']] : sort === 'Oldest' ? [['createdAt', 'ASC']] : [['views', 'DESC']],
-                attributes: ['shortDescription', 'profileImage', 'doctorId', 'doctorName', 'specialization', 'zip']
+                attributes: ['shortDescription', 'profileImage', 'doctorId', 'doctorName', 'specialization', 'zip','qualification']
             })
 
 

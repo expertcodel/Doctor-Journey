@@ -39,7 +39,7 @@ export default function ThumbnailVDepartmentCarousel({departmentlist}) {
                                     <Image src={item.icon} className="img-fluid" fill alt="img" unoptimized />
                                 </span> {item.departmentName}
                                 <span className="badgetext badge rounded-pill bg-light mb-0 mt-1">
-                                    {item.count}
+                                    {item.count} 
                                 </span>
                             </Link>
                         </SwiperSlide>
