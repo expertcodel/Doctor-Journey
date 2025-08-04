@@ -1,42 +1,42 @@
 [
   {
     "id": 1,
-    "title": "Excepteur occaecat cupidatat",
-    "img": "/images/dr-banners/banner-1.webp",
-    "date": "2023-04-15",
-    "duration": "1 day ago",
-    "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl eget aliquam ultricies, nunc nisi aliquet sapien, vel aliquet velit eros ut quam.</p><p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea"
+    "blogUrl": "/1",
+    "blogTitle": "Excepteur occaecat cupidatat",
+    "blogImage": "/images/dr-banners/banner-1.webp",
+    "publishedDate": "5/14/2025",
+    "blogContent": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl eget aliquam ultricies, nunc nisi aliquet sapien, vel aliquet velit eros ut quam.</p><p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea"
   },
   {
     "id": 2,
-    "title": "Duis aute irure dolor in reprehenderit",
-    "img": "/images/dr-banners/banner-2.webp",
-    "date": "2023-04-16",
-    "duration": "1 day ago",
-    "content": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl eget aliquam ultricies, nunc nisi aliquet sapien, vel aliquet velit eros ut quam.</p><p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea"
+    "blogUrl": "/2",
+    "blogTitle": "Duis aute irure dolor in reprehenderit",
+    "blogImage": "/images/dr-banners/banner-2.webp",
+    "publishedDate": "5/20/2025",
+    "blogContent": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl eget aliquam ultricies, nunc nisi aliquet sapien, vel aliquet velit eros ut quam.</p><p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea"
   },
   {
     "id": 3,
-    "title": "Sed do eiusmod tempor incididunt",
-    "img": "/images/dr-banners/banner-3.webp",
-    "date": "2023-04-17",
-    "duration": "1 day ago",
-    "content": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl eget aliquam ultricies, nunc nisi aliquet sapien, vel aliquet velit eros ut quam.</p><p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea"
+    "blogUrl": "/3",
+    "blogTitle": "Sed do eiusmod tempor incididunt",
+    "blogImage": "/images/dr-banners/banner-3.webp",
+    "publishedDate": "5/10/2025",
+    "blogContent": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl eget aliquam ultricies, nunc nisi aliquet sapien, vel aliquet velit eros ut quam.</p><p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea"
   },
   {
     "id": 4,
-    "title": "Incididunt ut labore et dolore magna aliqua",
-    "img": "/images/dr-banners/banner-4.webp",
-    "date": "2023-04-18",
-    "duration": "1 day ago",
-    "content": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl eget aliquam ultricies, nunc nisi aliquet sapien, vel aliquet velit eros ut quam.</p><p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi"
+    "blogUrl": "/4",
+    "blogTitle": "Incididunt ut labore et dolore magna aliqua",
+    "blogImage": "/images/dr-banners/banner-4.webp",
+    "publishedDate": "5/22/2025",
+    "blogContent": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl eget aliquam ultricies, nunc nisi aliquet sapien, vel aliquet velit eros ut quam.</p><p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi"
   },
   {
     "id": 5,
-    "title": "Ut enim ad minim veniam",
-    "img": "/images/dr-banners/banner-5.webp",
-    "date": "2023-04-19",
-    "duration": "1 day ago",
-    "content": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl eget aliquam ultricies, nunc nisi aliquet sapien, vel aliquet velit eros ut quam.</p><p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea"
+    "blogUrl": "/5",
+    "blogTitle": "Ut enim ad minim veniam",
+    "blogImage": "/images/dr-banners/banner-5.webp",
+    "publishedDate": "5/1/2025",
+    "blogContent": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl eget aliquam ultricies, nunc nisi aliquet sapien, vel aliquet velit eros ut quam.</p><p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea"
   }
 ]

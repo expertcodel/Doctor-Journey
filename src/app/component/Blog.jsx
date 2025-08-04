@@ -29,13 +29,13 @@ export default function blogList({ blogCard, totalItems, total,categorylist ,cat
     const singleBlog = blog.find(item => item.id === blogId);
 
 
-    useEffect(() => {
-        console.log(blog);
-        
+    useEffect(() => {        
         const fetching = async () => {
             const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/client/blogs/?page=${1}&name=${name}&sort=${sort}&category=${category}`);
             setIdx(1);
             const res = await response.json();
+            console.log(res.bloglist);
+            
             if (res.status) {
                 setblogLists(res.bloglist);
                 setItemcount(res.totalItems);
@@ -101,12 +101,12 @@ export default function blogList({ blogCard, totalItems, total,categorylist ,cat
                                     singleBlog && (
                                         <div className="card mb-0" key={idx}>
                                             <div className="item7-card-img">
-                                                <Link href="/" />
-                                                <Image src={singleBlog.img} alt={singleBlog.title} className="cover-image" fill unoptimized />
+                                                <Link href={`/blogs${singleBlog.blogUrl}`} />
+                                                <Image src={singleBlog.blogImage} alt={singleBlog.blogTitle} className="cover-image" fill unoptimized />
                                             </div>
                                             <div className="card-body">
-                                                <Link href="/" className="text-dark">
-                                                    <h4 className="font-weight-semibold m-0">{singleBlog.title}</h4>
+                                                <Link href={`/blogs${singleBlog.blogUrl}`} className="text-dark">
+                                                    <h4 className="font-weight-semibold m-0">{singleBlog.blogTitle}</h4>
                                                 </Link>
                                             </div>
                                         </div>

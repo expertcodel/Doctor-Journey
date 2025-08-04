@@ -35,12 +35,12 @@ export default function BlogsVerticalCarousel({ blog }) {
                     <SwiperSlide key={id}>
                         <div className="card mb-0">
                             <div className="item7-card-img">
-                                <Link href="/" />
-                                <Image src={item.img} alt={item.title} className="cover-image" fill unoptimized />
+                                <Link href={`/blogs${item.blogUrl}`} />
+                                <Image src={item.blogImage} alt={item.blogTitle} className="cover-image" fill unoptimized />
                             </div>
                             <div className="card-body">
-                                <Link href="/" className="text-dark">
-                                    <h4 className="font-weight-semibold m-0">{item.title}</h4>
+                                <Link href={`/blogs${item.blogUrl}`} className="text-dark">
+                                    <h4 className="font-weight-semibold m-0">{item.blogTitle}</h4>
                                 </Link>
                             </div>
                         </div>

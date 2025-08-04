@@ -314,16 +314,21 @@ export default function Register({ countryList }) {
                                                     select2Options={{ placeholder: "Select Country", allowClear: true }}
                                                     showSearch={true}
                                                     onChange={(value) => {
-                                                        if (value) {
-                                                        const parsed = JSON.parse(value);
-                                                        setSelectedCountryValue(value); // ✅ save the full string
-                                                        setCountry(parsed.country);
-                                                        setCountrycode(parsed.countryCode);
-                                                        setErrors((prevErrors) => ({ ...prevErrors, country: "" }));
+                                                        console.log(countryList);
+                                                        
+                                                        console.log(value);
+                                                        
+                                                        const selected = countryList.find(c => c.name === value);
+    
+                                                        if (selected) {
+                                                            setSelectedCountryValue(value); // plain country name
+                                                            setCountry(selected.name);
+                                                            setCountrycode(`+${selected.phonecode}`); // Add + if needed
+                                                            setErrors((prevErrors) => ({ ...prevErrors, country: "" }));
                                                         } else {
-                                                        setSelectedCountryValue("");
-                                                        setCountry("");
-                                                        setCountrycode("");
+                                                            setSelectedCountryValue("");
+                                                            setCountry("");
+                                                            setCountrycode("");
                                                         }
                                                     }}
                                                     onBlur={() => handleBlur("country")}
