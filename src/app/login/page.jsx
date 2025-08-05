@@ -42,8 +42,6 @@ export default function Login() {
 
   }, [])
 
-
-
   // Function to validate email
 
   const validateEmail = (email) => {
