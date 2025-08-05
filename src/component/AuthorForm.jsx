@@ -856,7 +856,7 @@ export default function authorForm() {
                                 onClick={() => setTabs({ first: true, second: false, third: false, fourth: false })}
 
                             >
-                                <i className="fas fa-home" /> Basic Details
+                                <i className="fas fa-home" /> Personal Details
                             </button>
                         </li>
                         <li className="nav-item" role="presentation">
@@ -902,6 +902,7 @@ export default function authorForm() {
                                 {/* <form onSubmit={createauthor}> */}
 
                                 <div className="row">
+                                    <h3 class="card-title mt-2 mb-3">Basic Details</h3>
                                     <div className="col-lg-6">
                                         <div className="mb-3">
                                             <label htmlFor="firstnameInput" className="form-label">
@@ -1001,6 +1002,7 @@ export default function authorForm() {
                                     </div>
 
 
+                                    <h3 class="card-title mt-5 mb-3">Education Details</h3>
                                     <div className="col-lg-4">
                                         <div className="mb-3">
                                             <label htmlFor="Specialization" className="form-label">
@@ -1059,6 +1061,67 @@ export default function authorForm() {
 
                                             />
 
+                                        </div>
+                                    </div>
+
+                                    <h3 class="card-title mt-5 mb-3">Work Details</h3>
+                                    <div className="col-lg-4">
+                                        <div className="mb-3">
+                                            <label htmlFor="AuthorBioPortfolioLinks" className="form-label">
+                                                Author Bio with Portfolio Links
+                                            </label>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                id="AuthorBioPortfolioLinks"
+                                                placeholder="Enter Link"
+                                                name='AuthorBioPortfolioLinks'
+                                                // value={tabsdata.AuthorBioPortfolioLinks}
+                                                // onChange={(e) => handleFormData(e)}
+                                                // style={{ border: formValidation.AuthorBioPortfolioLinks === 0 && '0.5px solid red' }}
+
+                                            />
+                                            {/* {message.AuthorBioPortfolioLinks !== "" && <span style={{ color: 'red' }}>{message.AuthorBioPortfolioLinks}</span>} */}
+                                        </div>
+                                    </div>
+
+                                    <div className="col-lg-4">
+                                        <div className="mb-3">
+                                            <label htmlFor="Published WorkLinks" className="form-label">
+                                                Published Work
+                                            </label>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                id="Published WorkLinks"
+                                                placeholder="Enter Link"
+                                                name='Published WorkLinks'
+                                                // value={tabsdata.Published WorkLinks}
+                                                // onChange={(e) => handleFormData(e)}
+                                                // style={{ border: formValidation.Published WorkLinks === 0 && '0.5px solid red' }}
+
+                                            />
+                                            {/* {message.Published WorkLinks !== "" && <span style={{ color: 'red' }}>{message.Published WorkLinks}</span>} */}
+                                        </div>
+                                    </div>
+
+                                    <div className="col-lg-4">
+                                        <div className="mb-3">
+                                            <label htmlFor="WebsiteBlogLink" className="form-label">
+                                                Website or Blog Link
+                                            </label>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                id="WebsiteBlogLink"
+                                                placeholder="Enter Link"
+                                                name='WebsiteBlogLink'
+                                                // value={tabsdata.WebsiteBlogLink}
+                                                // onChange={(e) => handleFormData(e)}
+                                                // style={{ border: formValidation.WebsiteBlogLink === 0 && '0.5px solid red' }}
+
+                                            />
+                                            {/* {message.WebsiteBlogLink !== "" && <span style={{ color: 'red' }}>{message.WebsiteBlogLink}</span>} */}
                                         </div>
                                     </div>
 
@@ -1250,11 +1313,12 @@ export default function authorForm() {
                                 {/* <form> */}
 
                                 <div className="cardBodySec">
-                                    <h4 className='d-flex'>
+                                    <h4 className='d-flex flex-wrap'>
                                         Document
                                         <button type="button" onClick={addDocument} className="add-btn btn btn-warning ms-auto" >
                                             <i className="fas fa-plus" /> Add
                                         </button>
+                                        <small>(Writing for News/Magazines, Academic Publishing <sup className='text-danger'>*</sup>)</small>
                                     </h4>
                                     {document.length > 0 && document.map((item, i) => <div key={i} className="content-section">
 

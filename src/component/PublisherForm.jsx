@@ -857,7 +857,7 @@ export default function publisherForm() {
                                 onClick={() => setTabs({ first: true, second: false, third: false, fourth: false })}
 
                             >
-                                <i className="fas fa-home" /> Basic Details
+                                <i className="fas fa-home" /> Personal Details
                             </button>
                         </li>
                         <li className="nav-item" role="presentation">
@@ -903,7 +903,8 @@ export default function publisherForm() {
                                 {/* <form onSubmit={createpublisher}> */}
 
                                 <div className="row">
-                                    <div className="col-lg-6">
+                                    <h3 class="card-title mt-2 mb-3">Basic Details</h3>
+                                    <div className="col-lg-4">
                                         <div className="mb-3">
                                             <label htmlFor="firstnameInput" className="form-label">
                                                 Publisher Name
@@ -928,7 +929,7 @@ export default function publisherForm() {
                                     {/*end col*/}
 
                                     {/*end col*/}
-                                    <div className="col-lg-6">
+                                    <div className="col-lg-4">
                                         <div className="mb-3">
                                             <label htmlFor="phonenumberInput" className="form-label">
                                                 Phone Number
@@ -949,7 +950,7 @@ export default function publisherForm() {
                                         </div>
                                     </div>
                                     {/*end col*/}
-                                    <div className="col-lg-6">
+                                    <div className="col-lg-4">
                                         <div className="mb-3">
                                             <label htmlFor="emailInput" className="form-label">
                                                 Email Address
@@ -1001,8 +1002,28 @@ export default function publisherForm() {
                                         </div>
 
                                     </div>
+                                    <div className="col-lg-6">
+                                        <div className="mb-3">
+                                            <label htmlFor="OrganizationName" className="form-label">
+                                                Organization Name
+                                            </label>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                id="OrganizationName"
+                                                placeholder="Enter Registration Number"
+                                                name='OrganizationName'
+                                                // value={tabsdata.OrganizationName}
+                                                // onChange={(e) => handleFormData(e)}
+                                                // style={{ border: formValidation.OrganizationName === 0 && '0.5px solid red' }}
+
+                                            />
+                                            {/* {message.OrganizationName !== "" && <span style={{ color: 'red' }}>{message.OrganizationName}</span>} */}
+                                        </div>
+                                    </div>
 
 
+                                    <h3 class="card-title mt-5 mb-3">Work Details</h3>
                                     <div className="col-lg-4">
                                         <div className="mb-3">
                                             <label htmlFor="Specialization" className="form-label">
@@ -1046,19 +1067,53 @@ export default function publisherForm() {
 
                                     <div className="col-lg-4">
                                         <div className="mb-3">
-                                            <label htmlFor="Experience" className="form-label">
-                                                Experience
+                                            <label htmlFor="TypePublisher" className="form-label">
+                                                Type of Publisher
                                             </label>
                                             <input
                                                 type="text"
                                                 className="form-control"
-                                                id="Experience"
+                                                id="TypePublisher"
                                                 placeholder="Enter experience"
                                                 name='experience'
                                                 value={tabsdata.experience}
                                                 onChange={(e) => handleFormData(e)}
+                                            />
 
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="col-lg-6">
+                                        <div className="mb-3">
+                                            <label htmlFor="BusinessLicense" className="form-label">
+                                                Business License
+                                            </label>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                id="BusinessLicense"
+                                                placeholder="Enter experience"
+                                                // name='experience'
+                                                // value={tabsdata.experience}
+                                                // onChange={(e) => handleFormData(e)}
+                                            />
 
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="col-lg-6">
+                                        <div className="mb-3">
+                                            <label htmlFor="TaxIdentificationNumber" className="form-label">
+                                                Tax Identification Number
+                                            </label>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                id="TaxIdentificationNumber"
+                                                placeholder="Enter experience"
+                                                // name='experience'
+                                                // value={tabsdata.experience}
+                                                // onChange={(e) => handleFormData(e)}
                                             />
 
                                         </div>
@@ -1253,11 +1308,12 @@ export default function publisherForm() {
                                 {/* <form> */}
 
                                 <div className="cardBodySec">
-                                    <h4 className='d-flex'>
+                                    <h4 className='d-flex flex-wrap'>
                                         Document
                                         <button type="button" onClick={addDocument} className="add-btn btn btn-warning ms-auto" >
                                             <i className="fas fa-plus" /> Add
                                         </button>
+                                        <small>(Business Registration, TIN, Website Ownership Proof <sup className='text-danger'>*</sup>)</small>
                                     </h4>
                                     {document.length > 0 && document.map((item, i) => <div key={i} className="content-section">
 

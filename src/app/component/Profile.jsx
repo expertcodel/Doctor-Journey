@@ -247,7 +247,7 @@ let name;
 
 
             {/*User Dashboard*/}
-            <section className="sptb">
+            <section className="sptb bg-white">
                 <div className="container">
                     <div className="row">
                         <div className="col-xl-3 col-lg-12 col-md-12">

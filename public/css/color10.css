@@ -2788,6 +2788,13 @@ body {
 .userViewCard .card .nav .nav-item .nav-link.active::before{opacity: 1;}
 .userViewCard .card .nav .nav-item .nav-link i{margin-right: 4px;}
 .userViewCard .card .card-body .showBrowseImg{border: 1px solid var(--bs-border-color);}
+.userViewCard .card .card-body .card-title{
+    position: relative; padding-bottom: 20px;
+}
+.userViewCard .card .card-body .card-title::before{
+    content: ""; position: absolute; left: 12px; bottom: 8px; width: 32px; height: 3px; background: var(--secondary-color);
+    display: block;
+}
 
 /****** tooltipSec ******/
 .tooltipSec{
@@ -3136,6 +3143,14 @@ body {
 .searchBoxWithDiv .searchBoxMain{padding: 0;}
 .searchBoxWithDiv .searchBoxMain .searchIcon{top: 12px; left: 12px;}
 
+/********** cardBodySec ************/
+.cardBodySec h4 small{
+    flex: none; width: 100%; margin-top: -12px; margin-bottom: 16px; font-size: 14px; padding-right: 80px; line-height: 1.2;
+}
+.cardBodySec h4 small sup{
+    font-size: 18px; position: relative; top: 2px; margin-right: 2px;
+}
+
 @media only screen and (min-width: 1280px) {
     /******* eventDetailsOuter *********/
     .eventDetailsOuter{position: relative; width: 100%; display: flex;}
@@ -3299,6 +3314,11 @@ body {
 
     /******** blogListMiddleCard *********/
     .blogListMiddleCard{margin: 16px 0;}
+
+    /********** cardBodySec ************/
+    .cardBodySec h4 small{
+        margin-top: 8px; padding-right: 0;
+    }
 }
 
 @media (max-width: 568px) {

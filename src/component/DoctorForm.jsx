@@ -860,7 +860,7 @@ export default function DoctorForm() {
                                 onClick={() => setTabs({ first: true, second: false, third: false, fourth: false })}
 
                             >
-                                <i className="fas fa-home" /> Basic Details
+                                <i className="fas fa-home" /> Personal Details
                             </button>
                         </li>
                         <li className="nav-item" role="presentation">
@@ -906,13 +906,12 @@ export default function DoctorForm() {
                                 {/* <form onSubmit={createDoctor}> */}
 
                                 <div className="row">
+                                    <h3 class="card-title mt-2 mb-3">Basic Details</h3>
                                     <div className="col-lg-6">
                                         <div className="mb-3">
                                             <label htmlFor="firstnameInput" className="form-label">
                                                 Doctor Name
                                             </label>
-
-
 
                                             <input
                                                 type="text"
@@ -1004,7 +1003,8 @@ export default function DoctorForm() {
                                     </div>
 
 
-                                    <div className="col-lg-4">
+                                    <h3 class="card-title mt-5 mb-3">Education Details</h3>
+                                    <div className="col-lg-6">
                                         <div className="mb-3">
                                             <label htmlFor="Specialization" className="form-label">
                                                 Specialization
@@ -1024,8 +1024,27 @@ export default function DoctorForm() {
                                         </div>
                                     </div>
 
+                                    <div className="col-lg-6">
+                                        <div className="mb-3">
+                                            <label htmlFor="RegistrationNumber" className="form-label">
+                                                Registration Number
+                                            </label>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                id="RegistrationNumber"
+                                                placeholder="Enter Registration Number"
+                                                name='RegistrationNumber'
+                                                // value={tabsdata.RegistrationNumber}
+                                                // onChange={(e) => handleFormData(e)}
+                                                // style={{ border: formValidation.RegistrationNumber === 0 && '0.5px solid red' }}
 
-                                    <div className="col-lg-4">
+                                            />
+                                            {/* {message.RegistrationNumber !== "" && <span style={{ color: 'red' }}>{message.RegistrationNumber}</span>} */}
+                                        </div>
+                                    </div>
+
+                                    <div className="col-lg-6">
                                         <div className="mb-3">
                                             <label htmlFor="Qualification" className="form-label">
                                                 Qualification
@@ -1045,7 +1064,7 @@ export default function DoctorForm() {
                                         </div>
                                     </div>
 
-                                    <div className="col-lg-4">
+                                    <div className="col-lg-6">
                                         <div className="mb-3">
                                             <label htmlFor="Experience" className="form-label">
                                                 Experience
@@ -1253,11 +1272,12 @@ export default function DoctorForm() {
                                 {/* <form> */}
 
                                 <div className="cardBodySec">
-                                    <h4 className='d-flex'>
+                                    <h4 className='d-flex flex-wrap'>
                                         Document
                                         <button type="button" onClick={addDocument} className="add-btn btn btn-warning ms-auto" >
                                             <i className="fas fa-plus" /> Add
                                         </button>
+                                        <small>(Medical Degree, Postgraduate Degree, Medical Council Registration <sup className='text-danger'>*</sup>)</small>
                                     </h4>
                                     {document.length > 0 && document.map((item, i) => <div key={i} className="content-section">
 
