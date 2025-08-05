@@ -58,7 +58,7 @@ export default function JournalsThumbCarousel({ journalList }) {
                                             {journal.journalsName?.substr(0, 50)} {journal.journalsName?.length > 50 && '...'}
                                         </h5>
                                         <small className="badge">
-                                            INR {journal.price}/
+                                            INR {journal.price_level_1}/
                                         </small>
                                         <div className="catFooter">
                                             <Link href={`/journals/${journal.journalsUrl}`} className="btn btn-warning">

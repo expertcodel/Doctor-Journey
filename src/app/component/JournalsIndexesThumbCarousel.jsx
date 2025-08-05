@@ -15,7 +15,7 @@ export default function JournalsIndexesThumbCarousel({ journalList }) {
     useEffect(() => {
         // Initialize Swiper
         swiperRef.current = new Swiper(".journalsIndexesThumb-slider", {
-            slidesPerView: 4, // Show 4 thumbnails at a time
+            slidesPerView: 3, // Show 4 thumbnails at a time
             spaceBetween: 16, // Spacing between slides
             freeMode: true, // Enable free scrolling
             grabCursor: true, // Enable mouse dragging
@@ -58,7 +58,7 @@ export default function JournalsIndexesThumbCarousel({ journalList }) {
                                             {journal.journalsName?.substr(0, 50)} {journal.journalsName?.length > 50 && '...'}
                                         </h5>
                                         <small className="badge">
-                                            INR {journal.price}/
+                                            INR {journal.price_level_1}/
                                         </small>
                                         <div className="catFooter">
                                             <Link href={`/journals/${journal.journalsUrl}`} className="btn btn-warning">

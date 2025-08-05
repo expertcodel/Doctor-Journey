@@ -43,7 +43,7 @@ export default function JournalsCarouselIndicators({ slides, activeIndex }) {
         {/* Thumbnail Slider */}
         <div className="swiper indicatorSwiper customSwiper">
             <div className="swiper-wrapper">
-                {slides.map((src, idx) => (
+                {slides && slides.map((src, idx) => (
                 <div className="swiper-slide" key={idx}>
                     <button
                     type="button"
@@ -54,9 +54,10 @@ export default function JournalsCarouselIndicators({ slides, activeIndex }) {
                     aria-label={src.alt}
                     >
                     <Image
-                        src={src.image}
+                        unoptimized
+                        src={src}
                         fill
-                        alt={src.alt}
+                        alt={src}
                         className="cover-image"
                     />
                     </button>

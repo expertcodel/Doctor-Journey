@@ -3,7 +3,7 @@ import crypto from "crypto";
 import { NextResponse } from "next/server";
 import { paymentModel } from "../../../models/payment.model";
 import { subscriptionModel } from "../../../models/subscription.model";
-
+import { journal_registrationModel } from "../../../models/journal_subscription.model";
 function addDays(date = new Date(), days = 0) {
     const result = new Date(date);
     result.setDate(result.getDate() + days);
@@ -23,12 +23,13 @@ export async function POST(req) {
     const body = await req.json();
     const paymentmodel = await paymentModel();
     const subscriptionmodel = await subscriptionModel();
+     const journals_registrationmodel=await journal_registrationModel();
     const {
         razorpay_order_id,
         razorpay_payment_id,
         razorpay_signature,
         userData,
-        amount, subscriptionsId, subscriptionName, subscriptionType, duration
+        amount, subscriptionsId, subscriptionName, subscriptionType, duration, path,id
     } = body;
 
     const generatedSignature = crypto
@@ -41,36 +42,47 @@ export async function POST(req) {
     }
 
     try {
-        // Insert payment
-        await paymentmodel.create({
 
-            userId: userData.userId,
-            // orderId: razorpay_order_id,
-            paymentId: razorpay_payment_id,
-            paymentPrice: amount,
-            status: true,
-            paymentDuration: duration,
-            paymentName: subscriptionName,
+        if (path === '/register-journal') {
+
+            await journals_registrationmodel.update({
+               is_paid: true
+            },{ where: { id } })
+            return NextResponse.json({ status: true, razorpay_signature });
+
+        }
+        else {
+            // Insert payment
+            await paymentmodel.create({
+
+                userId: userData.userId,
+                // orderId: razorpay_order_id,
+                paymentId: razorpay_payment_id,
+                paymentPrice: amount,
+                status: true,
+                paymentDuration: duration,
+                paymentName: subscriptionName,
 
 
-        });
+            });
 
-        // Insert subscription
-        await subscriptionmodel.create({
+            // Insert subscription
+            await subscriptionmodel.create({
 
-            userId: userData.userId,
-            subscriptionsId,
-            subscriptionPrice: amount,
-            status: true,
-            subscriptionType,
-            subscriptionName,
-            subscriptionDuration: duration,
-            startDate: new Date().toLocaleDateString(),
-            endDate: formatDate(addDays(today, 15))
+                userId: userData.userId,
+                subscriptionsId,
+                subscriptionPrice: amount,
+                status: true,
+                subscriptionType,
+                subscriptionName,
+                subscriptionDuration: duration,
+                startDate: new Date().toLocaleDateString(),
+                endDate: formatDate(addDays(today, 15))
 
-        });
+            });
 
-        return NextResponse.json({ success: true });
+            return NextResponse.json({ success: true });
+        }
     } catch (err) {
         console.log(err, "error");
 

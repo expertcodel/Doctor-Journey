@@ -36,7 +36,7 @@ export default function Subscription({ subscriptionList, subscriptionsList }) {
         setLoading(subscriptionsId);
         const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/create-order`, {
             method: "POST",
-            body: JSON.stringify({ amount }),
+            body: JSON.stringify({ amount,path: '/subscription' }),
         });
         const order = await res.json();
         setLoading("");

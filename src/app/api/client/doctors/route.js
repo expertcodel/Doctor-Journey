@@ -18,13 +18,13 @@ export async function POST(request) {
 
     try {
 
-        const doctordetail = await connection.query(`SELECT "Doctors"."doctorId", "Doctors"."userId","Doctors"."doctorName", "Doctors"."email", "Doctors"."number", "Doctors"."address", "Doctors"."specialization",  "Doctors"."qualification", "Doctors"."profileImage", "Doctors"."experience", "Doctors"."gallery","Doctors"."city",ARRAY_AGG(jsonb_build_object('thumbnailImage',"Videos"."thumbnailImage",'specialization',"Videos"."specialization", 'videoId', "Videos"."videoId",'doctorName', "Videos"."doctorName",'views',"Videos"."views",'videoTitle',"Videos"."videoTitle",'publishedDate',"Videos"."publishedDate")) AS videoList FROM "Doctors" LEFT JOIN "Videos" ON "Doctors"."userId"="Videos"."userId" WHERE "Doctors"."doctorId"=${doctorId}::text GROUP BY "Doctors"."doctorId"`)
+        const doctordetail = await connection.query(`SELECT "Doctors"."doctorId", "Doctors"."userId","Doctors"."doctorName", "Doctors"."email", "Doctors"."number", "Doctors"."address", "Doctors"."specialization",  "Doctors"."qualification", "Doctors"."profileImage", "Doctors"."experience", "Doctors"."gallery","Doctors"."city",ARRAY_AGG(jsonb_build_object('thumbnailImage',"Videos"."thumbnailImage",'specialization',"Videos"."specialization", 'videoId', "Videos"."videoId",'doctorName', "Videos"."doctorName",'views',"Videos"."views",'videoTitle',"Videos"."videoTitle",'publishedDate',"Videos"."publishedDate")) AS videoList FROM "Doctors" LEFT JOIN "Videos" ON "Doctors"."userId"="Videos"."userId" WHERE "Doctors"."userId"=${doctorId}::text GROUP BY "Doctors"."doctorId"`)
 
         const doctorlist = await doctormodel.findAll({
             limit: 10,
             where: { status: true },
             order: [['createdAt', 'DESC']],
-            attributes: ['qualification', 'profileImage', 'doctorId', 'doctorName', 'specialization']
+            attributes: ['qualification', 'profileImage', 'doctorId', 'doctorName', 'specialization','userId']
         })
 
 
@@ -139,7 +139,7 @@ AND "Doctors"."views" BETWEEN :minViews AND :maxViews
 
             const dataQuery = `
 SELECT "Departments"."departmentName", "Doctors"."doctorName", "Doctors"."qualification", "Doctors"."specialization",
-       "Doctors"."profileImage", "Doctors"."doctorId", "Doctors"."zip"
+       "Doctors"."profileImage", "Doctors"."doctorId", "Doctors"."zip","Doctors"."userId"
 ${baseQuery}
 ${orderClause}
 LIMIT 10 OFFSET :offset
@@ -181,7 +181,7 @@ LIMIT 10 OFFSET :offset
                 limit: 10,
                 offset: (page - 1) * 10,
                 order: sort === 'select' ? [['views', 'DESC'], ['createdAt', 'DESC']] : sort === 'Newest' ? [['createdAt', 'DESC']] : sort === 'Oldest' ? [['createdAt', 'ASC']] : [['views', 'DESC']],
-                attributes: ['shortDescription', 'profileImage', 'doctorId', 'doctorName', 'specialization', 'zip','qualification']
+                attributes: ['shortDescription', 'profileImage', 'doctorId', 'doctorName', 'specialization', 'zip','qualification','userId']
             })
 
 

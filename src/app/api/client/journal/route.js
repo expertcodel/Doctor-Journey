@@ -6,8 +6,8 @@ import { doctorModel } from "../../../models/doctor.model";
 // import { publishJournalmodel } from "../../../models/publish_journal_model";
 import { connectTodb } from "../../../database/database";
 import { journalsModel } from "../../../models/journals.model";
-import { publishJournalmodel } from "../../../models/publish_journal_model";
-
+import { articleModel } from "../../../models/article.model";
+import { Op } from "sequelize";
 export async function GET() {
 
     try {
@@ -36,7 +36,7 @@ export async function POST(request) {
 
     const { journalsUrl } = await request.json();
     const journalmodel = await journalsModel();
-    const connection = await connectTodb();
+    const article = await articleModel();
 
     if (!journalmodel) {
         return NextResponse.json({ status: false, message: "database error occured!" });
@@ -44,8 +44,9 @@ export async function POST(request) {
     try {
 
 
-        const journaldata = await Promise.all([journalmodel.findOne({ where: { journalsUrl } }), journalmodel.findAll({ limit: 4, where: { journalStatus: 'published' } })]);
-        return NextResponse.json({ status: true, journaldetail: journaldata[0], journallist: journaldata[1] });
+        const journalDetail = await journalmodel.findOne({ where: { journalsUrl } });
+        const journaldata = await Promise.all([journalmodel.findAll({ limit: 4, where: { journalStatus: 'published' } }),journalmodel.findAll({ where: { parent_journal: journalDetail.journalsId } }),article.findAll({attributes:['articleId','articleTitle','articleAuthor','articleSummary'],where:{status:true,articleStatus:'published',journalsId:journalDetail.journalsId}})]);
+        return NextResponse.json({ status: true, journaldetail: journalDetail, journallist: journaldata[0],journalversion:journaldata[1],articlelist:journaldata[2]});
 
     } catch (error) {
 

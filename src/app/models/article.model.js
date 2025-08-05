@@ -102,6 +102,10 @@ export const articleModel = async () => {
             type: DataTypes.JSONB,
             allowNull: false
         },
+        secondaryAuthor: {
+            type: DataTypes.JSONB
+
+        },
         articleSummary: {
 
             type: DataTypes.STRING(1000)

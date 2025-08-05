@@ -1,141 +1,35 @@
-"use client"
-import React, { useState } from 'react'
-import axios from 'axios'
-import dynamic from 'next/dynamic'
-import { useRouter } from 'next/navigation'
+import CreateJournal from '../../../../component/CreateJournal.jsx'
 
-function Page() {
+export default async function Page() {
 
-  const [message, setMessage] = useState("");
-  const router=useRouter();
-  async function saveJournal(e) {
+   let journallist = [];
+  
+  try {
 
-    e.preventDefault();
-    //console.log(e.target.frequency.value.trim());
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/createJournal/getPublishedjournal?name=`, {
 
+      method: 'GET',
+      cache: 'no-store'
+    })
 
-    const option =
-    {
-      method: "POST",
-      url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/createJournal`,
-      data:
-      {
-        journalsName: e.target.Journalname.value.trim(),
-        journalsIsbn: e.target.ISBN.value.trim(),
-        publisherName: e.target.Publishername.value.trim(),
-        rights: e.target.Rights.value.trim(),
-        frequency: e.target.frequency.value.trim(),
-      }
-    }
+    if (!response.ok) throw new error(`Failed to fetch: ${response.status}`);
 
-    const response = await axios.request(option)
-    if (response.data.status) {
-      sessionStorage.setItem('successMsg', 'Journal Created Successfully');
-      router.push("/dashboard/journal/journalslist");
-    }
-    else {
-      setMessage(response.data.message)
+    const res = await response.json();
+
+    if (res.status) {
+      journallist = res.journallist;
     }
 
 
+  } catch (error) {
+
+    console.log("fetching failed", error);
   }
-
+ 
 
   return (
 
-    <div className="main-content">
-      <div className="page-content">
-        <form className="row g-3" onSubmit={saveJournal}>
-
-          <div className="col-md-6">
-            <label htmlFor="fullnameInput" className="form-label">
-              Journal Name
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="fullnameInput"
-              placeholder="Journal Name"
-              name='Journalname'
-            />
-          </div>
-          <div className="col-md-6">
-            <label htmlFor="fullnameInput" className="form-label">
-              ISBN
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="fullnameInput"
-              placeholder="ISBN"
-              name='ISBN'
-            />
-          </div>
-          <div className="col-md-6">
-            <label htmlFor="fullnameInput" className="form-label">
-              Publisher Name
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="fullnameInput"
-              placeholder="Publisher Name"
-              name='Publishername'
-            />
-          </div>
-          <div className="col-md-6">
-            <label htmlFor="fullnameInput" className="form-label">
-              Rights
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="fullnameInput"
-              placeholder="Rights"
-              name='Rights'
-            />
-          </div>
-          <div className="col-md-6">
-            <label htmlFor="fullnameInput" className="form-label">
-              frequency
-            </label>
-
-            <select name="frequency" id="" className="form-control"
-            >
-              <option value="select" selected>Select</option>
-              <option value="Yearly">Yearly</option>
-              <option value="Yearly">Half Yearly</option>
-              <option value="Quarterly">Quarterly</option>
-              <option value="Monthly">Monthly</option>
-            </select>
-          </div>
-          <div className="col-12">
-            <label htmlFor="form-control" className="form-label">
-              Description
-            </label>
-            <textarea
-              name='Description'
-              className="form-control"
-              rows={5}
-              placeholder="Description"
-            />
-          </div>
-
-
-          <div className="col-12">
-            <div className="text-end">
-              <button type="submit" className="btn btn-primary">
-                Create
-              </button>
-            </div>
-          </div>
-          {
-            message !== "" && <div>{message}</div>
-          }
-        </form>
-      </div>
-    </div>
+    <CreateJournal journallist={journallist}/>
   )
 }
 
-export default Page

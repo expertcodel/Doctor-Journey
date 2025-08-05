@@ -107,10 +107,10 @@ export default function Login() {
 
     }
     else {
-      if (recaptchaRef.current) {
-        recaptchaRef.current.reset();
-        setRecaptchaToken(null);
-      }
+      // if (recaptchaRef.current) {
+      //   recaptchaRef.current.reset();
+      //   setRecaptchaToken(null);
+      // }
 
       if (res.message === 'Email not verified!') {
         setOtppage(true);

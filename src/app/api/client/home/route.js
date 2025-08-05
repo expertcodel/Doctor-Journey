@@ -27,7 +27,7 @@ export async function GET() {
             order: [['blogSerial', 'ASC']],
             attributes: ['blogImage', 'publishedDate', 'blogDescription', 'blogTitle', 'blogUrl', 'blogId'],
             where: { blogStatus: true }
-        }), testimonialmodel.findAll({ where: { status: true }, order: [['createdAt', 'DESC']] }), doctormodel.findAll({ limit: 6, order: [['createdAt', 'DESC']], attributes: ['profileImage', 'qualification', 'doctorId', 'doctorName', 'specialization'], where: { status: true } }), videomodel.findAll({
+        }), testimonialmodel.findAll({ where: { status: true }, order: [['createdAt', 'DESC']] }), doctormodel.findAll({ limit: 6, order: [['createdAt', 'DESC']], attributes: ['profileImage', 'qualification', 'doctorId', 'doctorName', 'specialization','userId'], where: { status: true } }), videomodel.findAll({
             limit: 6, order: [
                 ['views', 'DESC'],
                 ['createdAt', 'DESC']

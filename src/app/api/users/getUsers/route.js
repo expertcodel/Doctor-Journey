@@ -40,7 +40,7 @@ export async function GET(request) {
             limit: 10,
             where: {
 
-                status:true,
+                status: true,
                 [Op.or]: { userId: { [Op.iLike]: `%${name}%` }, name: { [Op.iLike]: `%${name}%` } }
             },
 

@@ -1,8 +1,14 @@
 // app/api/payment/create-order/route.js
 import Razorpay from "razorpay";
+import { journal_registrationModel } from "../../../models/journal_subscription.model";
+function generate13DigitNumber() {
+  const min = 1e12; // 1000000000000
+  const max = 9.999999999999e12; // Just under 10 trillion
+  return String(Math.floor(Math.random() * (max - min + 1)) + min);
+}
 
 export async function POST(req) {
-  const { amount } = await req.json();
+  const { name, number, email, address, city, zip, country, amount, plans, journal_id, path } = await req.json();
 
   const razorpay = new Razorpay({
     key_id: process.env.RAZORPAY_KEY_ID,
@@ -15,9 +21,22 @@ export async function POST(req) {
     receipt: `receipt_${Date.now()}`,
   };
 
+  const journals_registrationmodel=await journal_registrationModel();
+
   try {
     const order = await razorpay.orders.create(options);
-    return Response.json(order);
+    if (path === '/register-journal') {
+
+      const registration = await journals_registrationmodel.create({
+        name, number, email, address, city, zip, country, amount, plans, journal_id, registration_number: generate13DigitNumber()
+
+      })
+      return Response.json({ order, id: registration.id, status: true });
+    }
+    else {
+      return Response.json(order);
+    }
+
   } catch (err) {
     return new Response(
       JSON.stringify({ error: "Order creation failed", details: err.message }),

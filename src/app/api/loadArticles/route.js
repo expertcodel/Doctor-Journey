@@ -9,9 +9,9 @@ export async function GET(request)
 
     try {
 
-        const response=await sequelize.query(`SELECT * FROM "Publishjournals" INNER JOIN "Articles" ON "Publishjournals"."journalsId"="Articles"."journalsId" WHERE "Publishjournals"."journalsId"='${journalsId}'`);
+        const response=await sequelize.query(`SELECT * FROM "Journals" INNER JOIN "Articles" ON "Journals"."journalsId"="Articles"."journalsId" WHERE "Journals"."journalsId"='${journalsId}'`);
         
-        return NextResponse.json({status:true,response});
+        return NextResponse.json({status:true,response:response[0]});
         
     } catch (error) {
         

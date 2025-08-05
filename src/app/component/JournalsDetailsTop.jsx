@@ -6,8 +6,12 @@ import AuthorsThumbCarousel from "./AuthorsThumbCarousel";
 import JournalsDetailsBanner from "./JournalsDetailsBanner";
 import { faAngleRight, faCheck, faPhone, faStar, faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useRouter } from "next/navigation";
+export default function JournalsDetailsTop({ doctorProfile, subscriptionsList, journalDetail, articlelist }) {
 
-export default function JournalsDetailsTop({ doctorProfile, subscriptionsList }) {
+    const [totalAmount, setTotalamount] = useState(parseFloat(journalDetail.price_level_1))
+    const [checkAmount, setCheckamount] = useState({ plan1: true, plan2: false, plan3: false })
+     const [checkPlans, setCheckplans] = useState({ plan1: true, plan2: false, plan3: false})
     const sidebarRef = useRef(null);
     const pageTopTriggerRef = useRef(null);
     const pageBottomTriggerRef = useRef(null);
@@ -42,9 +46,9 @@ export default function JournalsDetailsTop({ doctorProfile, subscriptionsList })
             lastScrollY = window.scrollY;
 
             if (circleRef.current) {
-            const currentRotation = parseFloat(circleRef.current.style.getPropertyValue('--circle-angle')) || 0;
-            const newRotation = currentRotation + scrollDelta * 0.5; // adjust multiplier for speed
-            circleRef.current.style.setProperty('--circle-angle', `${newRotation}deg`);
+                const currentRotation = parseFloat(circleRef.current.style.getPropertyValue('--circle-angle')) || 0;
+                const newRotation = currentRotation + scrollDelta * 0.5; // adjust multiplier for speed
+                circleRef.current.style.setProperty('--circle-angle', `${newRotation}deg`);
             }
         };
 
@@ -54,6 +58,62 @@ export default function JournalsDetailsTop({ doctorProfile, subscriptionsList })
             window.removeEventListener("scroll", handleScroll);
         };
     }, []);
+
+    const router = useRouter();
+
+    const setJournaldetail = () => {
+
+        sessionStorage.setItem('journalDetail', JSON.stringify({ journal_name: journalDetail.journalsName, price: totalAmount, journal_id: journalDetail.journalsId, volume: journalDetail.volume,checkPlans }));
+        router.push("/buy-now");
+    }
+
+    const Amount1 = () => {
+
+        const price1 = document.getElementById('plan-1').checked;
+        let price = totalAmount
+        let updatedcheckAmount = { ...checkAmount };
+        let updatedPlans = { ...checkPlans };
+        if (price1) {
+            price = totalAmount + parseFloat(journalDetail.price_level_1)
+            updatedcheckAmount['plan1'] = true;
+            updatedPlans['plan1'] = true;
+        }
+        else {
+            price = Math.abs(totalAmount - parseFloat(journalDetail.price_level_1))
+            updatedcheckAmount['plan1'] = false;
+            updatedPlans['plan1'] = false;
+        }
+
+        setTotalamount(price);
+        setCheckamount(updatedcheckAmount)
+        setCheckplans(updatedPlans);
+    }
+
+    const Amount2 = () => {
+
+        const price2 = document.getElementById('plan-2').checked;
+        let updatedcheckAmount = { ...checkAmount };
+        let updatedPlans = { ...checkPlans };
+        let price = totalAmount
+        if (price2) {
+            price = totalAmount + parseFloat(journalDetail.price_level_2)
+            updatedcheckAmount['plan2'] = true;
+            updatedPlans['plan2'] = true;
+        }
+        else {
+
+            price = Math.abs(totalAmount - parseFloat(journalDetail.price_level_2))
+            updatedcheckAmount['plan2'] = false;
+            updatedPlans['plan2'] = false;
+        }
+
+
+
+        setTotalamount(price);
+        setCheckamount(updatedcheckAmount)
+        setCheckplans(updatedPlans);
+    }
+
 
     return (
         <>
@@ -66,12 +126,12 @@ export default function JournalsDetailsTop({ doctorProfile, subscriptionsList })
                         <div className="card-body detailCardTop detailSideCardTop">
                             <div className='row'>
                                 <div className='col-md-5 col-12'>
-                                    <JournalsDetailsBanner />
+                                    <JournalsDetailsBanner journalSlider={journalDetail.journal_slider} />
                                 </div>
 
                                 <div className='col-md-7 col-12'>
                                     <h3>
-                                        journal 1
+                                        {journalDetail.journalsName}
                                         <span className='reviewSec'>
                                             <span className="reviewText">
                                                 4.2 <FontAwesomeIcon icon={faStar} />
@@ -80,10 +140,10 @@ export default function JournalsDetailsTop({ doctorProfile, subscriptionsList })
                                         </span>
                                     </h3>
                                     <p>
-                                        Paperback – 2025-06-16
+                                        Paperback – {journalDetail.publishDate}
                                     </p>
-                                    <p>
-                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                                    <p dangerouslySetInnerHTML={{ __html: journalDetail.coverSummary }}>
+
                                     </p>
                                 </div>
 
@@ -133,27 +193,10 @@ export default function JournalsDetailsTop({ doctorProfile, subscriptionsList })
                                         <div className="tab-pane active" id="tab-1">
                                             <div className="card mb-0 border-0">
                                                 <div className="card-body">
-                                                    <p>
-                                                        This journal presents an in-depth exploration of the latest advancements in [Insert Medical Field – e.g., Cardiology, Oncology, Radiology]. Featuring peer-reviewed articles, expert insights, and clinical research findings, it offers valuable knowledge for healthcare professionals, researchers, and students alike.
+                                                    <p dangerouslySetInnerHTML={{ __html: journalDetail.description }}>
+
                                                     </p>
-                                                    <h5>Key Highlights:</h5>
-                                                    <ul>
-                                                        <li>
-                                                            Research-backed findings with real-world applications
-                                                        </li>
-                                                        <li>
-                                                            Written and reviewed by top medical professionals
-                                                        </li>
-                                                        <li>
-                                                            Up-to-date with global medical and health standards
-                                                        </li>
-                                                        <li>
-                                                            Suitable for academic referencing and institutional libraries
-                                                        </li>
-                                                    </ul>
-                                                    <p>
-                                                        Whether you're looking to stay updated on emerging treatments or expand your research citations, this journal delivers scientifically grounded, actionable content.
-                                                    </p>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -163,44 +206,25 @@ export default function JournalsDetailsTop({ doctorProfile, subscriptionsList })
                                             <div className="card mb-0 border-0">
                                                 <div className="card-body">
                                                     <p>
-                                                        Journal Title: Journal of Modern Medical Practices – Volume 1, Issue 2
+                                                        Journal Title: {journalDetail.journalsName} – {journalDetail.volume}
                                                     </p>
                                                     <p>
-                                                        Publication Date: June 2025
+                                                        Publication Date: {journalDetail.publishDate}
                                                     </p>
                                                     <p>
                                                         Format: Paperback & Soft Copy (PDF)
                                                     </p>
                                                     <h5>Articles Included:</h5>
                                                     <ol>
-                                                        <li>
-                                                            Artificial Intelligence in Early Cancer Detection
+                                                        {articlelist.map((article, i) => <li key={i}>
+                                                            {article.articleTitle}
+                                                            <h4>Authors: </h4>
                                                             <dl>
-                                                                <dt>Dr. Ritika Rana, PhD</dt>
-                                                                <dd>Exploring the use of machine learning in diagnostic imaging.</dd>
+                                                                {article.articleAuthor.map((author, j) => <dt key={author.userId}>{j + 1}. {author.name} : {author.qualification}</dt>)}
+                                                                <dd>{article.articleSummary}</dd>
                                                             </dl>
-                                                        </li>
-                                                        <li>
-                                                            Post-Pandemic Respiratory Illness Trends
-                                                            <dl>
-                                                                <dt>Dr. Ranjan, MD</dt>
-                                                                <dd>Insights into long-term effects and evolving treatment protocols.</dd>
-                                                            </dl>
-                                                        </li>
-                                                        <li>
-                                                            Neurosurgical Innovations: 2025 Review
-                                                            <dl>
-                                                                <dt>Dr. Rohit, MBBS, MD</dt>
-                                                                <dd>A summary of technological advances in neurosurgery.</dd>
-                                                            </dl>
-                                                        </li>
-                                                        <li>
-                                                            Telemedicine and Rural Health Access in India
-                                                            <dl>
-                                                                <dt>Guest Contributor</dt>
-                                                                <dd>Discusses telehealth's role in bridging healthcare gaps.</dd>
-                                                            </dl>
-                                                        </li>
+                                                        </li>)}
+
                                                     </ol>
                                                 </div>
                                             </div>
@@ -260,26 +284,26 @@ export default function JournalsDetailsTop({ doctorProfile, subscriptionsList })
                                                         </div>
                                                         <div className="media-body">
                                                             <h5 className="mt-0 mb-1 font-weight-semibold">
-                                        Joanne Scott
-                                        <span
-                                        className="fs-14 ms-0"
-                                        data-bs-toggle="tooltip"
-                                        data-bs-placement="top"
-                                        title=""
-                                        data-bs-original-title="verified"
-                                        >
-                                        <i className="fa fa-check-circle-o text-success" />
-                                        </span>
-                                        <span className="fs-14 ms-2">
-                                        {" "}
-                                        4.5 <i className="fa fa-star text-yellow" />
-                                        </span>
-                                    </h5>
+                                                                Joanne Scott
+                                                                <span
+                                                                    className="fs-14 ms-0"
+                                                                    data-bs-toggle="tooltip"
+                                                                    data-bs-placement="top"
+                                                                    title=""
+                                                                    data-bs-original-title="verified"
+                                                                >
+                                                                    <i className="fa fa-check-circle-o text-success" />
+                                                                </span>
+                                                                <span className="fs-14 ms-2">
+                                                                    {" "}
+                                                                    4.5 <i className="fa fa-star text-yellow" />
+                                                                </span>
+                                                            </h5>
                                                             <small className="text-muted">
-                                        <i className="fa fa-calendar" /> Dec 21st{" "}
-                                        <i className=" ms-3 fa fa-clock-o" /> 13.00{" "}
-                                        <i className=" ms-3 fa fa-map-marker" /> Brezil
-                                    </small>
+                                                                <i className="fa fa-calendar" /> Dec 21st{" "}
+                                                                <i className=" ms-3 fa fa-clock-o" /> 13.00{" "}
+                                                                <i className=" ms-3 fa fa-map-marker" /> Brezil
+                                                            </small>
                                                             <p className="font-13  mb-2 mt-2">
                                                                 On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue
                                                             </p>
@@ -295,32 +319,32 @@ export default function JournalsDetailsTop({ doctorProfile, subscriptionsList })
                                                             <div className="media mt-5">
                                                                 <div className="d-flex me-3">
                                                                     <a href="javascript:void(0);">
-                                            {" "}
-                                            <img
-                                            className="media-object brround"
-                                            alt="64x64"
-                                            src="/images/users/female/2.jpg"
-                                            />{" "}
-                                        </a>
+                                                                        {" "}
+                                                                        <img
+                                                                            className="media-object brround"
+                                                                            alt="64x64"
+                                                                            src="/images/users/female/2.jpg"
+                                                                        />{" "}
+                                                                    </a>
                                                                 </div>
                                                                 <div className="media-body">
                                                                     <h5 className="mt-0 mb-1 font-weight-semibold">
-                                            Rose Slater{" "}
-                                            <span
-                                            className="fs-14 ms-0"
-                                            data-bs-toggle="tooltip"
-                                            data-bs-placement="top"
-                                            title=""
-                                            data-bs-original-title="verified"
-                                            >
-                                            <i className="fa fa-check-circle-o text-success" />
-                                            </span>
-                                        </h5>
+                                                                        Rose Slater{" "}
+                                                                        <span
+                                                                            className="fs-14 ms-0"
+                                                                            data-bs-toggle="tooltip"
+                                                                            data-bs-placement="top"
+                                                                            title=""
+                                                                            data-bs-original-title="verified"
+                                                                        >
+                                                                            <i className="fa fa-check-circle-o text-success" />
+                                                                        </span>
+                                                                    </h5>
                                                                     <small className="text-muted">
-                                            <i className="fa fa-calendar" /> Dec 22st{" "}
-                                            <i className=" ms-3 fa fa-clock-o" /> 6.00{" "}
-                                            <i className=" ms-3 fa fa-map-marker" /> Brezil
-                                        </small>
+                                                                        <i className="fa fa-calendar" /> Dec 22st{" "}
+                                                                        <i className=" ms-3 fa fa-clock-o" /> 6.00{" "}
+                                                                        <i className=" ms-3 fa fa-map-marker" /> Brezil
+                                                                    </small>
                                                                     <p className="font-13  mb-2 mt-2">
                                                                         Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris commodo Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur consequat.
                                                                     </p>
@@ -334,36 +358,36 @@ export default function JournalsDetailsTop({ doctorProfile, subscriptionsList })
                                                     <div className="media p-5 border-top mt-0">
                                                         <div className="d-flex me-3">
                                                             <a href="javascript:void(0);">
-                                        {" "}
-                                        <img
-                                        className="media-object brround"
-                                        alt="64x64"
-                                        src="/images/users/male/3.jpg"
-                                        />{" "}
-                                    </a>
+                                                                {" "}
+                                                                <img
+                                                                    className="media-object brround"
+                                                                    alt="64x64"
+                                                                    src="/images/users/male/3.jpg"
+                                                                />{" "}
+                                                            </a>
                                                         </div>
                                                         <div className="media-body">
                                                             <h5 className="mt-0 mb-1 font-weight-semibold">
-                                        Edward
-                                        <span
-                                        className="fs-14 ms-0"
-                                        data-bs-toggle="tooltip"
-                                        data-bs-placement="top"
-                                        title=""
-                                        data-bs-original-title="verified"
-                                        >
-                                        <i className="fa fa-check-circle-o text-success" />
-                                        </span>
-                                        <span className="fs-14 ms-2">
-                                        {" "}
-                                        4 <i className="fa fa-star text-yellow" />
-                                        </span>
-                                    </h5>
+                                                                Edward
+                                                                <span
+                                                                    className="fs-14 ms-0"
+                                                                    data-bs-toggle="tooltip"
+                                                                    data-bs-placement="top"
+                                                                    title=""
+                                                                    data-bs-original-title="verified"
+                                                                >
+                                                                    <i className="fa fa-check-circle-o text-success" />
+                                                                </span>
+                                                                <span className="fs-14 ms-2">
+                                                                    {" "}
+                                                                    4 <i className="fa fa-star text-yellow" />
+                                                                </span>
+                                                            </h5>
                                                             <small className="text-muted">
-                                        <i className="fa fa-calendar" /> Dec 21st{" "}
-                                        <i className=" ms-3 fa fa-clock-o" /> 16.35{" "}
-                                        <i className=" ms-3 fa fa-map-marker" /> UK
-                                    </small>
+                                                                <i className="fa fa-calendar" /> Dec 21st{" "}
+                                                                <i className=" ms-3 fa fa-clock-o" /> 16.35{" "}
+                                                                <i className=" ms-3 fa fa-map-marker" /> UK
+                                                            </small>
                                                             <p className="font-13  mb-2 mt-2">
                                                                 On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue
                                                             </p>
@@ -393,11 +417,11 @@ export default function JournalsDetailsTop({ doctorProfile, subscriptionsList })
                                                             <input type="email" className="form-control" placeholder="Email Address" />
                                                         </div>
                                                         <div className="mb-3">
-                                                            <textarea className="form-control" name="example-textarea-input" rows={6} placeholder="Comment" defaultValue={ ""} />
+                                                            <textarea className="form-control" name="example-textarea-input" rows={6} placeholder="Comment" defaultValue={""} />
                                                         </div>
                                                         <a href="javascript:void(0);" className="btn btn-primary">
-                                    Send Reply
-                                    </a>
+                                                            Send Reply
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -408,49 +432,25 @@ export default function JournalsDetailsTop({ doctorProfile, subscriptionsList })
                                                 <div className='card-body'>
                                                     <div className="row">
                                                         <div className="col-12">
-                                                        <div className="accordion accordion-box" id="faqAccordion">
-                                                            {/* Block 1 */}
-                                                            <div className="accordion-item block">
-                                                            <h2 className="accordion-header" id="headingOne">
-                                                                <button className="accordion-button acc-btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                                Interdum et malesuada fames ac ante ipsum
-                                                                </button>
-                                                            </h2>
-                                                            <div id="collapseOne" className="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
-                                                                <div className="accordion-body content">
-                                                                Suspendisse finibus urna mauris, vitae consequat quam vel.
-                                                                </div>
-                                                            </div>
-                                                            </div>
+                                                            <div className="accordion accordion-box" id="faqAccordion">
+                                                                {/* Block 1 */}
 
-                                                            {/* Block 2 */}
-                                                            <div className="accordion-item block">
-                                                            <h2 className="accordion-header" id="headingTwo">
-                                                                <button className="accordion-button acc-btn collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                                                Maecenas condimentum sollicitudin ligula
-                                                                </button>
-                                                            </h2>
-                                                            <div id="collapseTwo" className="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
-                                                                <div className="accordion-body content">
-                                                                Suspendisse finibus urna mauris, vitae consequat quam vel.
-                                                                </div>
-                                                            </div>
-                                                            </div>
+                                                                {journalDetail.faqs && journalDetail.faqs.map((faq, i) => <div className="accordion-item block" key={i}>
+                                                                    <h2 className="accordion-header" id={`heading${i}`}>
+                                                                        <button className="accordion-button acc-btn" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse${i}`} aria-expanded={i === 0 ? "true" : "false"} aria-controls={`collapse${i}`}>
+                                                                            {faq.question}
+                                                                        </button>
+                                                                    </h2>
+                                                                    <div id={`collapse${i}`} className={i === 0 ? "accordion-collapse collapse show" : "accordion-collapse collapse"} aria-labelledby={`heading${i}`} data-bs-parent="#faqAccordion">
+                                                                        <div className="accordion-body content">
+                                                                            {faq.answer}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>)}
 
-                                                            {/* Block 3 */}
-                                                            <div className="accordion-item block">
-                                                            <h2 className="accordion-header" id="headingThree">
-                                                                <button className="accordion-button acc-btn collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                                                Duis rhoncus orci ut metus rhoncus
-                                                                </button>
-                                                            </h2>
-                                                            <div id="collapseThree" className="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
-                                                                <div className="accordion-body content">
-                                                                Suspendisse finibus urna mauris, vitae consequat quam vel.
-                                                                </div>
+
+
                                                             </div>
-                                                            </div>
-                                                        </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -471,11 +471,12 @@ export default function JournalsDetailsTop({ doctorProfile, subscriptionsList })
                         <div className="drCard w-100">
                             <div className="card mb-0">
                                 <div className="item7-card-img">
-                                    <Link href="/" />
-                                    <Image src="/images/dr-banners/banner-1.webp" fill alt="img" className="cover-image" unoptimized />
-                                    <div className="play-button">
+
+                                    <Image src={`https://img.youtube.com/vi/${journalDetail.video_id}/mqdefault.jpg`} fill alt="img" className="cover-image" unoptimized />
+                                    <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal1" className="link-btn popup-youtube play-button" ><span className="triangle"></span> </button>
+                                    {/* <div className="play-button">
                                         <span className="triangle"></span>
-                                    </div>
+                                    </div> */}
                                 </div>
                                 <div className="card-header">
                                     <h3 className="card-title">Select Price Level</h3>
@@ -483,20 +484,20 @@ export default function JournalsDetailsTop({ doctorProfile, subscriptionsList })
                                 <div className="card-body">
                                     <div className="filter-product-checkboxs">
                                         <label className="custom-control form-checkbox mb-3">
-                                            <input type="checkbox" className="custom-control-input" name="checkbox1" checked="checked" defaultValue="option1" />
+                                            <input type="checkbox" className="custom-control-input" name="checkbox1"  id="plan-1" checked={checkAmount.plan1} onChange={Amount1} />
                                             <span className="custom-control-label">
                                                 Soft Copy
                                                 <span className="label float-end">
-                                                    ₹ 500.00
+                                                    ₹ {journalDetail.price_level_1}
                                                 </span>
                                             </span>
                                         </label>
                                         <label className="custom-control form-checkbox mb-3">
-                                            <input type="checkbox" className="custom-control-input" name="checkbox2" defaultValue="option2" />
+                                            <input type="checkbox" className="custom-control-input" name="checkbox2"  id="plan-2" checked={checkAmount.plan2} onChange={Amount2} />
                                             <span className="custom-control-label">
                                                 Hard Copy
                                                 <span className="label float-end">
-                                                    ₹ 800.00
+                                                    ₹ {journalDetail.price_level_2}
                                                 </span>
                                             </span>
                                         </label>
@@ -505,7 +506,7 @@ export default function JournalsDetailsTop({ doctorProfile, subscriptionsList })
                                             <span className="custom-control-label">
                                                 <span>Subscription <small>(Yearly)</small></span>
                                                 <span className="label float-end">
-                                                    ₹ 1000.00
+                                                    ₹ {journalDetail.price_level_3}
                                                 </span>
                                             </span>
                                         </label>
@@ -513,19 +514,19 @@ export default function JournalsDetailsTop({ doctorProfile, subscriptionsList })
                                 </div>
                                 <div className="card-footer">
                                     <h5>
-                                        Total: {" "}<span>₹ 500.00</span>
+                                        Total: {" "}<span>₹ {totalAmount}</span>
                                     </h5>
-                                    <Link className="btn btn-primary d-block w-100 mt-5" href="/buy-now">
+                                    <button  className={totalAmount === 0 ? "btn btn-primary d-block w-100 mt-5 disabled" : "btn btn-primary d-block w-100 mt-5"} onClick={setJournaldetail}>
                                         Buy Now <FontAwesomeIcon icon={faAngleRight} />
-                                    </Link>
+                                    </button>
                                 </div>
                                 <h4 className="mt-5">
                                     <span className="mb-0">
                                         Call for Assistance
-                                    </span> 
-                                    
-                                    <Link className="btn border-0 d-block w-100" href="tel:+91 11 4618 1010">
-                                        <FontAwesomeIcon icon={faPhone} /> +91 11 4618 1010
+                                    </span>
+
+                                    <Link className="btn border-0 d-block w-100" href={`tel:+91 ${journalDetail.assistance_call}`}>
+                                        <FontAwesomeIcon icon={faPhone} /> {journalDetail.assistance_call}
                                     </Link>
                                 </h4>
                             </div>
@@ -609,6 +610,19 @@ export default function JournalsDetailsTop({ doctorProfile, subscriptionsList })
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div className="modal fade customVideoModal" id="exampleModal1" tabIndex={-1} aria-labelledby="exampleModalLabel1" aria-hidden="true">
+                <div className="modal-dialog modal-dialog-centered modal-xl">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
+                        </div>
+                        <div className="modal-body">
+                            <iframe src={`https://www.youtube.com/embed/${journalDetail.video_id}?autoplay=0`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         </div>
                     </div>
                 </div>

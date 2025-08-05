@@ -15,7 +15,12 @@ export async function POST(request) {
    const { email, password, recaptchaToken } = await request.json();
     
    // 1️⃣ Validate CAPTCHA
+<<<<<<< Updated upstream
       // const captchaRes = await fetch(
+=======
+     
+   // const captchaRes = await fetch(
+>>>>>>> Stashed changes
       //    `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.NEXT_PUBLIC_RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`,
       //    { method: "POST" }
       // );

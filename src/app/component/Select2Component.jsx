@@ -6,7 +6,7 @@ import "select2/dist/css/select2.min.css";
 import "select2/dist/js/select2.full.min.js";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
-export default function Select2Component({ id, options, select2Options = {}, showSearch = false, onChange, type, setSort, setCountry, setDepartmentid }) {
+export default function Select2Component({ id, options, select2Options = {}, showSearch = false, onChange, type, setSort, setCountry, setDepartmentid,country }) {
   const router = useRouter();
   const path = usePathname();
   useEffect(() => {
@@ -75,7 +75,7 @@ export default function Select2Component({ id, options, select2Options = {}, sho
   }, [id, select2Options, showSearch]);
 
   return (
-    <select id={id} className="form-control select2-no-search w-70">
+    <select id={id}  name="country" className={country !== ""?"form-control select2-no-search w-70 border border-danger":"form-control select2-no-search w-70"}>
       {/* ✅ Placeholder option */}
       {select2Options.placeholder && <option value="">{select2Options.placeholder}</option>}
       {options.map((option) => (

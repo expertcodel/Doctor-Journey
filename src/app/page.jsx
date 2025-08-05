@@ -216,7 +216,7 @@ export default async function Home() {
                   <div className="card mb-0">
                     <div className="card-body">
                       <div className="cat-item">
-                        <Link href={`/doctor-profile/${item.doctorId}`} />
+                        <Link href={`/doctor-profile/${item.userId}`} />
                         <div className="cat-img bg-primary-transparent brround">
                           <Image unoptimized src={item.profileImage} className="img-fluid" fill alt="" />
                         </div>

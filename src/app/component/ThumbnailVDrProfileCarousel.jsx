@@ -38,7 +38,7 @@ export default function ThumbnailVDrProfileCarousel({doctorProfile}) {
                                 <div className="card mb-0">
                                     <div className="card-body">
                                         <div className="cat-item">
-                                            <Link href={`${item.doctorId}`} />
+                                            <Link href={`${item.userId}`} />
                                             <div className="cat-img bg-primary-transparent brround">
                                                 <Image src={item.profileImage} className="img-fluid" fill alt={item.doctorName} unoptimized/>
                                             </div>

@@ -49,6 +49,7 @@ export async function POST(request) {
             Abbreviations: contentList[8],
             Copyright: contentList[9],
             articleAuthor: primaryAuthor,
+            secondaryAuthor,
             articleSummary,
             DOI,
             price,

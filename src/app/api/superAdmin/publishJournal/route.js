@@ -12,9 +12,9 @@ export async function POST(request) {
 
     const input = await request.formData();
     const file = input.get('file');
-    const { volume, issue, publishDate, journalsId, editorialDetails, journalsUrl, price, check } = JSON.parse(input.get('data'));
+    const { assistance_call, price_level_1, price_level_2, price_level_3, publishDate, journalsId, editorialdetails, journalsUrl, check,userList } = JSON.parse(input.get('data'));
 
-    console.log(volume, issue, publishDate, journalsId, editorialDetails, journalsUrl, price, check, file, "data");
+    // console.log(journalsAuthor, publishDate, journalsId, editorialdetails, journalsUrl, check, "data");
     // const publishJournal = await publishJournalmodel();
     const journalmodel = await journalsModel();
     const articlemodel = await articleModel();
@@ -32,12 +32,12 @@ export async function POST(request) {
         }
 
         await journalmodel.update({
-            volume, issue, publishDate, journalsId, imageUrl: image && image,
-            coverSummary: editorialDetails[0], editorialDetails: editorialDetails[1], subscription: editorialDetails[2],
-            journalsUrl, price, journalStatus: 'published'
+           assistance_call, price_level_1, price_level_2, price_level_3, publishDate, journalsId, imageUrl: image && image,journalsAuthor:userList,
+            coverSummary: editorialdetails[0], editorialdetails: editorialdetails[1], subscription: editorialdetails[2],
+            journalsUrl,journalStatus: 'published'
         }, { where: { journalsId } });
 
-        await articlemodel.update({ journalsId, volume, articleStatus: 'published' }, { where: { articleId: { [Op.in]: check } } });
+        await articlemodel.update({ journalsId,articleStatus: 'published' }, { where: { articleId: { [Op.in]: check } } });
         return NextResponse.json({ status: true, message: "journal published sucessfully" });
 
     } catch (error) {

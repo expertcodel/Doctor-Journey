@@ -28,18 +28,18 @@ export default function AuthorsThumbCarousel({ doctorProfile }) {
         }}
         className="eventGallery-slider customSwiper"
         >
-        {doctorProfile.map((item, index) => (
+        {doctorProfile && doctorProfile.map((item, index) => (
             <SwiperSlide key={index}>
                 <div className="card mb-0">
                     <div className="card-body">
                         <div className="cat-item">
-                            <Link href={`/doctor-profile/${item.doctorId}`} />
+                            <Link href={`/doctor-profile/${item.userId}`} />
                             <div className="cat-img bg-primary-transparent brround">
-                                <Image unoptimized src={item.profileImage} className="img-fluid" fill alt="" />
+                                <Image unoptimized src={item.image} className="img-fluid" fill alt="" />
                             </div>
                             <div className="cat-desc">
                                 <h5>
-                                    {item.doctorName} <span>{item.qualification}</span>
+                                    {item.name} <span>{item.qualification}</span>
                                 </h5>
                                 <small className="badge">
                                     view Details

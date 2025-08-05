@@ -1,10 +1,7 @@
 import { DataTypes } from 'sequelize';
 import { connectTodb } from '../database/database'
 
-const randomNumber = () => {
 
-    return String(Math.floor(9000 * Math.random() + 1000));
-}
 
 export const journalsModel = async () => {
 
@@ -23,7 +20,7 @@ export const journalsModel = async () => {
         journalsId: {
 
             type: DataTypes.STRING,
-            defaultValue: String(new Date().getMilliseconds()) + randomNumber(),
+            allowNull:false,
             primaryKey: true,
 
         },
@@ -43,11 +40,9 @@ export const journalsModel = async () => {
             allowNull: false
 
         },
-        rights: {
+        description: {
 
-            type: DataTypes.STRING,
-            allowNull: false
-
+            type: DataTypes.TEXT
         },
         status: {
 
@@ -70,12 +65,12 @@ export const journalsModel = async () => {
 
         },
         volume: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
 
         },
-        issue: {
+        video_id: {
 
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING(5000)
 
         },
         publishDate: {
@@ -102,7 +97,29 @@ export const journalsModel = async () => {
         },
         journalsAuthor: {
             type: DataTypes.JSONB,
+        },
+        journal_slider: {
+            type: DataTypes.JSONB
+        },
+        faqs: {
+            type: DataTypes.JSONB
+        },
+        price_level_1: {
+            type: DataTypes.STRING
+        },
+        price_level_2: {
+            type: DataTypes.STRING
+        },
+        price_level_3: {
+            type: DataTypes.STRING
+        },
+        assistance_call: {
+            type: DataTypes.STRING
+        },
+        parent_journal: {
+            type: DataTypes.STRING
         }
+
     })
 
     await connection.sync();

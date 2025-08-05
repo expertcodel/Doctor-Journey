@@ -8,25 +8,54 @@ export async function middleware(request) {
   const { pathname } = request.nextUrl;
   const token = request.cookies.get('token');
   const userdata = request.cookies.get('userData');
+  const statusKey = request.cookies.get('statusKey')
   const response = NextResponse.next();
   response.headers.set('x-pathname', pathname);
 
-  if(pathname.startsWith('/doctors'))
-  {
-      const category=new URL(request.url).searchParams.get('category');
-      response.headers.set('x-category', category);
+
+  if (pathname.startsWith('/success')) {
+
+    const token = new URL(request.url).searchParams.get('token');
+    if (!statusKey) {
+      return NextResponse.redirect(new URL('/journals', request.url));
+    }
+
+    await cookies().delete('statusKey')
+    if (token !== statusKey.value) {
+      return NextResponse.redirect(new URL('/journals', request.url));
+    }
+
+
+
   }
 
-  if(pathname.startsWith('/blog'))
-  {
-      const category=new URL(request.url).searchParams.get('category');
-      response.headers.set('x-category', category);
+  if (pathname.startsWith('/failed')) {
+
+    const token = new URL(request.url).searchParams.get('token');
+
+    if (!statusKey) {
+      return NextResponse.redirect(new URL('/journals', request.url));
+    }
+
+    await cookies().delete('statusKey')
+    if (token !== statusKey.value) {
+      return NextResponse.redirect(new URL('/journals', request.url));
+    }
   }
 
-  if(pathname.startsWith('/doctor-profile'))
-  {
-      const category=new URL(request.url).searchParams.get('category');
-      response.headers.set('x-category', category);
+  if (pathname.startsWith('/doctors')) {
+    const category = new URL(request.url).searchParams.get('category');
+    response.headers.set('x-category', category);
+  }
+
+  if (pathname.startsWith('/blog')) {
+    const category = new URL(request.url).searchParams.get('category');
+    response.headers.set('x-category', category);
+  }
+
+  if (pathname.startsWith('/doctor-profile')) {
+    const category = new URL(request.url).searchParams.get('category');
+    response.headers.set('x-category', category);
   }
 
   if (!token) {
@@ -43,7 +72,7 @@ export async function middleware(request) {
 
   }
 
-  
+
 
   try {
 

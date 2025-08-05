@@ -133,11 +133,11 @@ export default function CreateArticle({ userList }) {
 
   }
 
-  const addArticles = async (authorId) => {
+  const addArticles = async (author) => {
 
     let flag = true;
     check.map((item) => {
-      if (item.userId === authorId) {
+      if (item.userId === author.userId) {
         flag = false
 
       }
@@ -145,17 +145,17 @@ export default function CreateArticle({ userList }) {
     })
 
     if (flag) {
-      setCheck((prev) => [...prev, { userId: authorId }]);
+      setCheck((prev) => [...prev, { userId: author.userId,name: author.name,qualification:author.qualification }]);
     }
 
   }
 
 
-  const addArticles1 = async (authorId) => {
+  const addArticles1 = async (author) => {
 
     let flag = true;
     check1.map((item) => {
-      if (item.userId === authorId) {
+      if (item.userId === author.userId) {
         flag = false
 
       }
@@ -163,7 +163,7 @@ export default function CreateArticle({ userList }) {
     })
 
     if (flag) {
-      setCheck1((prev) => [...prev, { userId: authorId }]);
+      setCheck1((prev) => [...prev, { userId: author.userId,name: author.name,qualification:author.qualification }]);
     }
 
   }
@@ -388,7 +388,7 @@ export default function CreateArticle({ userList }) {
 
             <div className="form-select" style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', alignItems: 'center', height: '40px' }} onClick={() => setPrimaryauth(!primaryAuth)}>
               {
-                check.map((item, i) => <div key={i} style={{ backgroundColor: '#405189', color: 'white', borderRadius: '5px', padding: '3px', display: 'flex', gap: '0.5rem' }}>{item.userId}
+                check.map((item, i) => <div key={i} style={{ backgroundColor: '#405189', color: 'white', borderRadius: '5px', padding: '3px', display: 'flex', gap: '0.5rem' }}>{item.name}
                   <span><i class="ri-home-line ri-scissors-line" onClick={() => removeItems(i)}></i></span>
                 </div>)
               }
@@ -445,7 +445,7 @@ export default function CreateArticle({ userList }) {
                                       type="button"
                                       className="btn btn-success add-btn"
                                       style={{ height: '50px' }}
-                                      onClick={() => addArticles(item.userId)}
+                                      onClick={() => addArticles(item)}
                                     >
                                       Add
                                     </button>
@@ -493,7 +493,7 @@ export default function CreateArticle({ userList }) {
 
             <div className="form-select" style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', alignItems: 'center', height: '40px' }} onClick={() => setSecondaryauth(!secondaryAuth)}>
               {
-                check1.map((item, i) => <div key={i} style={{ backgroundColor: '#405189', color: 'white', borderRadius: '5px', padding: '3px', display: 'flex', gap: '0.5rem' }}>{item.userId}
+                check1.map((item, i) => <div key={i} style={{ backgroundColor: '#405189', color: 'white', borderRadius: '5px', padding: '3px', display: 'flex', gap: '0.5rem' }}>{item.name}
                   <span><i class="ri-home-line ri-scissors-line" onClick={() => removeItems1(i)}></i></span>
                 </div>)
               }
@@ -550,7 +550,7 @@ export default function CreateArticle({ userList }) {
                                       type="button"
                                       className="btn btn-success add-btn"
                                       style={{ height: '50px' }}
-                                      onClick={() => addArticles1(item.userId)}
+                                      onClick={() => addArticles1(item)}
                                     >
                                       Add
                                     </button>

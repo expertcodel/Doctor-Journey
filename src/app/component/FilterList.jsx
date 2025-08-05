@@ -34,7 +34,7 @@ export default function FilterList({ filtered }) {
                             key={index}
                             style={{ listStyle: 'none' }}
                         >
-                            <Link href={`/doctor-profile/${item.doctorId}`}>{item.doctorName}</Link>
+                            <Link href={`/doctor-profile/${item.userId}`}>{item.doctorName}</Link>
                         </li>
                     ))}
                 </ul>

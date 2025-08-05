@@ -12,7 +12,7 @@ const slides = [
   { type: 'image', image: '/images/dr-banners/banner-5.webp', alt: 'Banner 5' },
 ];
 
-export default function JournalsDetailsBanner() {
+export default function JournalsDetailsBanner({journalSlider}) {
   const carouselRef = useRef(null);
   const [showVideoIndex, setShowVideoIndex] = useState(null);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -23,7 +23,7 @@ export default function JournalsDetailsBanner() {
     if (!carouselEl) return;
 
     const moveToNextSlide = () => {
-      const nextIndex = (activeIndex + 1) % slides.length;
+      const nextIndex = (activeIndex + 1) % journalSlider.length;
       setActiveIndex(nextIndex);
     };
 
@@ -31,12 +31,12 @@ export default function JournalsDetailsBanner() {
       clearTimeout(timerRef.current);
       setShowVideoIndex(null);
 
-      const current = slides[activeIndex];
-      if (current?.type === 'video') {
-        playVideoSlide(activeIndex);
-      } else {
+      // const current = slides[activeIndex];
+      // if (current?.type === 'video') {
+      //   playVideoSlide(activeIndex);
+      // } else {
         timerRef.current = setTimeout(moveToNextSlide, 4000);
-      }
+      // }
     };
 
     const playVideoSlide = (index) => {
@@ -70,16 +70,17 @@ export default function JournalsDetailsBanner() {
     <section className="heroBanner detailCardTop detailSideCardTop">
       <div id="carouselExampleIndicators" className="carousel slide carousel-fade customCarousel" data-bs-ride="false" data-bs-pause="false" ref={carouselRef}>
         <div className="carousel-indicators">
-          <JournalsCarouselIndicators slides={slides} activeIndex={activeIndex} />
+          <JournalsCarouselIndicators slides={journalSlider} activeIndex={activeIndex} />
         </div>
         <div className="carousel-inner">
-          {slides.map((slide, idx) => (
+          {journalSlider && journalSlider.map((slide, idx) => (
             <div key={idx} className={`carousel-item ${idx === activeIndex ? 'active' : ''}`}>
               <figure style={{ position: 'relative' }}>
                 <Image
-                  src={slide.image}
+                  src={slide}
+                  unoptimized
                   fill
-                  alt={slide.alt}
+                  alt={slide}
                   className="cover-image img-fluid"
                   style={{ display: showVideoIndex === idx ? 'none' : 'block' }}
                 />

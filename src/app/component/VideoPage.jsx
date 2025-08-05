@@ -110,7 +110,7 @@ export default function VideoPage({ doctordetail, videoList, doctor,specializati
                                     <div className="card mb-0">
                                         <div className="card-body">
                                             <div className="cat-item">
-                                                <Link href={`/doctor-profile/${doctordetail?.doctorId}`} />
+                                                <Link href={`/doctor-profile/${doctordetail?.userId}`} />
                                                 <div className="cat-img bg-primary-transparent brround">
                                                     <Image src={doctordetail?.profileImage} className="img-fluid" fill alt="img" unoptimized />
                                                 </div>
@@ -123,7 +123,7 @@ export default function VideoPage({ doctordetail, videoList, doctor,specializati
                                         </div>
                                         <div className="card-body">
                                             <div className="cat-item">
-                                                <Link href={`/doctor-profile/${doctordetail?.doctorId}`} />
+                                                <Link href={`/doctor-profile/${doctordetail?.userId}`} />
                                                 <div className="cat-desc">
                                                     <p>
                                                         {doctordetail?.shortDescription}

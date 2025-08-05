@@ -249,7 +249,7 @@ export default function DoctorList({ doctorProfile, totalItems, specialization, 
                                                                 <div className="p-0 m-0 item-card9-img">
                                                                     <div className="item-card9-imgs">
 
-                                                                        <div id={`carousel-${item.doctorId}`} className="carousel slide customCarousel" data-bs-ride="carousel">
+                                                                        <div id={`carousel-${item.userId}`} className="carousel slide customCarousel" data-bs-ride="carousel">
 
                                                                             <div className="carousel-inner">
                                                                                 <div className="carousel-item active">
@@ -269,7 +269,7 @@ export default function DoctorList({ doctorProfile, totalItems, specialization, 
                                                                 <div className="card overflow-hidden  border-0 box-shadow-0 border-start br-0 mb-0">
                                                                     <div className="card-body pt-3 pt-md-5">
                                                                         <div className="item-card9">
-                                                                            <Link href={`/doctor-profile/${item.doctorId}`} className="text-dark">
+                                                                            <Link href={`/doctor-profile/${item.userId}`} className="text-dark">
                                                                                 <h4 className="font-weight-semibold mt-1">
                                                                                     {item.doctorName}
                                                                                 </h4>
@@ -325,7 +325,7 @@ export default function DoctorList({ doctorProfile, totalItems, specialization, 
                                                                                     )
                                                                                 }
 
-                                                                                <Link href={`/doctor-profile/${item.doctorId}`} className="text-primary viewDetailsBtn">
+                                                                                <Link href={`/doctor-profile/${item.userId}`} className="text-primary viewDetailsBtn">
                                                                                     View Profile <FontAwesomeIcon icon={faChevronRight} />
                                                                                 </Link>
                                                                             </div>

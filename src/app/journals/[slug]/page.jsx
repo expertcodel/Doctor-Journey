@@ -12,8 +12,9 @@ export default async function JournalsDetails({ params }) {
     const { slug } = await params;
     let journalList = [];
     let journalDetail = {};
-    let doctorProfile = [];
+    let journalversion = [];
     let subscriptionsList = [];
+    let articlelist=[];
 
     try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/client/journal`, {
@@ -27,45 +28,14 @@ export default async function JournalsDetails({ params }) {
         if (res.status) {
             journalDetail = res.journaldetail;
             journalList = res.journallist
+            journalversion=res.journalversion;
+            articlelist=res.articlelist;
         }
     } catch (error) {
         console.log("fetching failed", error);
     }
 
-    try {
-        // Fetch doctor profile
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/client/home`, {
-            method: 'GET',
-            cache: 'no-store'
-        });
-
-        if (!response.ok) throw new Error(`Failed to fetch doctor profile: ${response.status}`);
-
-        const res = await response.json();
-
-        if (res.status) {
-            doctorProfile = res.doctorprofile;
-        }
-    } catch (error) {
-        console.log("Fetching doctor profile failed:", error);
-    }
-
-    try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/client/subscription/?userId=${userId}&name=`, {
-
-            method: 'GET',
-            cache: 'no-store',
-
-        })
-        if (!response.ok) throw new error(`Failed to fetch: ${response.status}`);
-
-        const res = await response.json();
-        if (res.status) {
-            subscriptionsList = res.subscriptionslist
-        }
-    } catch (error) {
-        console.log("fetching failed", error);
-    }
+    
     return (
         <>
             {/*Breadcrumb*/}
@@ -74,7 +44,7 @@ export default async function JournalsDetails({ params }) {
             {/* Doctor Details*/}
             <section className="sptb journalsDetails">
                 <div className="container">
-                    <JournalsDetailsTop doctorProfile={doctorProfile} subscriptionsList={subscriptionsList} />
+                    <JournalsDetailsTop doctorProfile={journalDetail.journalsAuthor} subscriptionsList={subscriptionsList} journalDetail={journalDetail} articlelist={articlelist}/>
                 </div>
             </section>
 
@@ -84,7 +54,7 @@ export default async function JournalsDetails({ params }) {
                     <div className="row">
                         <div className="col-12">
                             <h4 className="mainHeading">
-                                Related Journals Indexes
+                                Related Journals Version
                                 <Link href="/doctor-profile">See all</Link>
                             </h4>
                         </div>
@@ -92,7 +62,7 @@ export default async function JournalsDetails({ params }) {
 
                     <div className="row">
                         <div className="col-12">
-                            <JournalsIndexesThumbCarousel journalList={journalList} />
+                            <JournalsIndexesThumbCarousel journalList={journalversion} />
                         </div>
                     </div>
                 </div>

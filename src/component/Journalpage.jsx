@@ -9,20 +9,19 @@ function Journalpage({ journalDetail, setJournalpage }) {
 
     useEffect(() => {
 
-        document.getElementById('editorialDetails').innerHTML = journalDetail.editorialDetails
-        document.getElementById('subscription').innerHTML = journalDetail.subscription
+       
         document.getElementById('coverSummary').innerHTML = journalDetail.coverSummary
         const fetching = async () => {
-            // setLoading(true);
-            const res = await fetch(`http://localhost:3000/api/loadArticles?journalsId=${journalDetail.journalsId}`);
-            const { response } = await res.json();
 
-            //setJournaldetail(response[0][0]);
-            setArticledetails(response[0]);
-            //setLoading(false);
-            //  document.getElementById('editorialDetails').innerHTML = response[0][0].editorialDetails
-            //  document.getElementById('subscription').innerHTML = response[0][0].subscription
-            //  document.getElementById('coverSummary').innerHTML = response[0][0].coverSummary
+            const res = await fetch(`http://localhost:3000/api/loadArticles?journalsId=${journalDetail.journalsId}`);
+            const response = await res.json();
+            if (response.status) {
+                setArticledetails(response.response);
+                console.log(response.response);
+                
+            }
+
+
 
 
         }
@@ -90,19 +89,19 @@ function Journalpage({ journalDetail, setJournalpage }) {
 
                             <div className="d-flex" style={{ backgroundImage: `url(${journalDetail.imageUrl})`, backgroundRepeat: 'no-repeat', backgroundSize: '100%', height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
 
-                                <div id='coverSummary' style={{ color: 'gray', fontWeight: '700' }}>{journalDetail.coverSummary}</div>
+                                <div id='coverSummary' style={{ color: 'gray', fontWeight: '700' }} dangerouslySetInnerHTML={{ __html: journalDetail.coverSummary }}></div>
 
                                 <div>Volume {journalDetail.volume} | Issue {journalDetail.issue}</div>
                                 <div>{journalDetail.publishDate}</div>
 
 
                             </div>
-                            <div id='editorialDetails' style={{ marginTop: '30px' }}>
-                                {journalDetail.editorialDetails}
+                            <div id='editorialDetails' style={{ marginTop: '30px' }} dangerouslySetInnerHTML={{ __html: journalDetail.editorialDetails }}>
+
                             </div>
 
-                            <div id='subscription'>
-                                {journalDetail.subscription}
+                            <div id='subscription' dangerouslySetInnerHTML={{ __html: journalDetail.subscription }}>
+
                             </div>
                             <div id='contents' >
                                 <h3>Contents</h3>
@@ -111,11 +110,7 @@ function Journalpage({ journalDetail, setJournalpage }) {
 
                                 }
                             </div>
-                            <div className="text-end">
-                                <div className="btn btn-danger">
-                                    &#8377;{journalDetail.price}
-                                </div>
-                            </div>
+                            
 
                         </div>
                     </div>
