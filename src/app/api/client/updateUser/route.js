@@ -27,7 +27,7 @@ export async function PATCH(request) {
         }
 
         const id = await connection.query(`SELECT * FROM public."Departments" WHERE public."Departments"."departmentName"='${department_id}'`)
-       
+        
         await usermodel.update({
             zip, city, description, address, facebook, instagram, twitter, linkedin, profile_img: Image && Image,
             country, department_id: id[0][0].id

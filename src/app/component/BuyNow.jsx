@@ -5,24 +5,159 @@ import Select2Component from "../component/Select2Component";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-
+import { useAuth } from "../../context/AuthContext";
 export default function BuyNow({ countrylist }) {
 
+    const {user}=useAuth()
     const [journalData, setjournaldata] = useState(typeof (window) !== 'undefined' && sessionStorage.getItem('journalDetail') && JSON.parse(sessionStorage.getItem('journalDetail')))
     const [loading, setLoading] = useState(false);
     const router = useRouter()
     const [message, setMessage] = useState({ name: "", number: "", email: "", city: "", country: "", zip: "", address: "" })
+    const [validation, setValidation] = useState({ name: false, number: false, email: false, city: false, country: false, zip: false, address: false });
+    const [data, setData] = useState({ name: user?.name, number: user?.number, email: user?.email, city: user?.city, country: "", zip: user?.zip, address: user?.address });
 
     useEffect(() => {
-
-
 
         if (!sessionStorage.getItem('journalDetail')) {
             router.push('/journals');
         }
-
-
     }, [])
+
+    const handleChange = (e) => {
+
+        const { name, value } = e.target;
+        const updatedData = { ...data };
+        updatedData[name] = value;
+        const updateValidation = { ...validation };
+        const updateMessage = { ...message };
+        if (name === 'email') {
+
+            if (value === "") {
+
+                updateValidation['email'] = false;
+                updateMessage['email'] = "This field can't be blank";
+            }
+            else {
+
+                if (!validateEmail(value)) {
+
+                    updateValidation['email'] = false;
+                    updateMessage['email'] = "Please Enter valid email";
+
+                }
+                else {
+
+                    updateValidation['email'] = true;
+                    updateMessage['email'] = "";
+                }
+
+            }
+
+        }
+        else if (name === 'number') {
+
+            if (value === "") {
+
+                updateValidation['number'] = false;
+                updateMessage['number'] = "This field can't be blank";
+
+            }
+            else {
+
+                if (!phoneValidator(value)) {
+
+                    updateValidation['number'] = false;
+                    updateMessage['number'] = "Number must be of 10 digit"
+
+                }
+                else {
+
+                    updateMessage['number'] = "";
+                    updateValidation['number'] = true;
+                }
+
+            }
+
+        }
+        else if (name === 'name') {
+
+            if (value === "") {
+
+                updateMessage['name'] = 'The name field is required.'
+                updateValidation['name'] = false;
+
+            }
+            else {
+
+                updateMessage['name'] = ""
+                updateValidation['name'] = true;
+            }
+
+        }
+        else if (name === 'address') {
+
+            if (value === "") {
+
+                updateMessage['address'] = 'The address field is required.'
+                updateValidation['address'] = false;
+            }
+            else {
+
+                updateMessage['address'] = ""
+                updateValidation['address'] = true;
+            }
+
+        }
+        else if (name === 'city') {
+
+            if (value === "") {
+
+                updateMessage['city'] = 'The city field is required.'
+                updateValidation['city'] = false;
+            }
+            else {
+
+                updateMessage['city'] = ""
+                updateValidation['city'] = true;
+            }
+
+
+        }
+        else if (name === 'zip') {
+
+            if (value === "") {
+
+                updateMessage['zip'] = 'The post code field is required.'
+                updateValidation['zip'] = false;
+            }
+            else {
+
+                updateMessage['zip'] = ""
+                updateValidation['zip'] = true;
+            }
+
+
+        }
+        else {
+
+            if (value === "" || value === "select") {
+
+                updateMessage['country'] = 'The country field is required.'
+                updateValidation['country'] = false;
+            }
+            else {
+
+                updateMessage['country'] = ""
+                updateValidation['country'] = true;
+            }
+        }
+
+        setValidation(updateValidation);
+        setMessage(updateMessage);
+        setData(updatedData);
+    }
+
+
 
 
     const handleKeyDown = (e) => {
@@ -34,6 +169,7 @@ export default function BuyNow({ countrylist }) {
             e.preventDefault();
         }
     };
+
     const phoneValidator = (inputtxt) => {
 
         let phoneno = /^\d{10}$/;
@@ -59,16 +195,16 @@ export default function BuyNow({ countrylist }) {
     const submitFormData = async (e) => {
 
         e.preventDefault();
-        const name = e.target.name.value.trim();
-        const email = e.target.email.value.trim();
-        const number = e.target.number.value.trim();
-        const city = e.target.city.value.trim();
-        const country = e.target.country.value.trim();
-        const zip = e.target.zip.value.trim();
-        const address = e.target.address.value.trim();
+        const name = validation.name;
+        const email =  validation.email;
+        const number =  validation.number;
+        const city =  validation.city;
+        const country =  validation.country;
+        const zip =  validation.zip;
+        const address = validation.address;
         const updateMessage = { ...message };
         let flag = true;
-        if (name === "") {
+        if (!name) {
 
             updateMessage['name'] = 'The name field is required.'
             flag = false;
@@ -78,47 +214,27 @@ export default function BuyNow({ countrylist }) {
             updateMessage['name'] = ""
         }
 
-        if (number === "") {
+        if (!number) {
 
-            updateMessage['number'] = "This field can't be blank";
+            updateMessage['number'] = "This number field is required.";
             flag = false;
         }
         else {
-
-            if (!phoneValidator(number)) {
-
-                updateMessage['number'] = "Number must be of 10 digit";
-                flag = false;
-            }
-            else {
-
-                updateMessage['number'] = "";
-            }
-
+            updateMessage['number'] = "";
         }
 
-        if (email === "") {
+        if (!email) {
 
-            updateMessage['email'] = "This field can't be blank";
+            updateMessage['email'] = "This email field is required.";
             flag = false;
         }
         else {
-
-            if (!validateEmail(email)) {
-
-                updateMessage['email'] = "Please fill valid email";
-                flag = false;
-            }
-            else {
-
-                updateMessage['email'] = "";
-            }
-
+            updateMessage['email'] = "";
         }
 
 
 
-        if (city === "") {
+        if (!city) {
 
             updateMessage['city'] = 'The city name field is required.'
             flag = false;
@@ -128,7 +244,7 @@ export default function BuyNow({ countrylist }) {
             updateMessage['city'] = ""
         }
 
-        if (country === "") {
+        if (!country) {
 
             updateMessage['country'] = 'The country name field is required.'
             flag = false;
@@ -138,7 +254,7 @@ export default function BuyNow({ countrylist }) {
             updateMessage['country'] = ""
         }
 
-        if (zip === "") {
+        if (!zip) {
 
             updateMessage['zip'] = 'The postal code field is required.'
             flag = false;
@@ -149,18 +265,15 @@ export default function BuyNow({ countrylist }) {
         }
 
 
-        if (address === "") {
+        if (!address) {
 
-            updateMessage['address'] = 'The full postal address field is required.'
+            updateMessage['address'] = 'The address field is required.'
             flag = false;
         }
         else {
 
             updateMessage['address'] = ""
         }
-
-
-
 
         setMessage(updateMessage);
         if (flag) {
@@ -283,42 +396,42 @@ export default function BuyNow({ countrylist }) {
                                             <div className="col-sm-6 col-md-4">
                                                 <div className="mb-3">
                                                     <label className="form-label">Full Name</label>
-                                                    <input type="text" className={message.name !== "" ? "form-control border-danger" : "form-control"} placeholder="" name="name" />
+                                                    <input type="text" className={message.name !== "" ? "form-control border-danger" : "form-control"} placeholder="Name" name="name" onChange={(e) => handleChange(e)} value={data.name}/>
                                                     <span className="text-danger">{message.name !== "" && message.name}</span>
                                                 </div>
                                             </div>
                                             <div className="col-sm-6 col-md-4">
                                                 <div className="mb-3">
                                                     <label className="form-label">Email</label>
-                                                    <input type="email" className={message.email !== "" ? "form-control border-danger" : "form-control"} placeholder="Email Address" required="" name="email" />
+                                                    <input type="text" className={message.email !== "" ? "form-control border-danger" : "form-control"} placeholder="Email Address" name="email" onChange={(e) => handleChange(e)} value={data.email}/>
                                                     <span className="text-danger">{message.email !== "" && message.email}</span>
                                                 </div>
                                             </div>
                                             <div className="col-sm-6 col-md-4">
                                                 <div className="mb-3 mb-0">
                                                     <label className="form-label">Phone Number</label>
-                                                    <input type="number" className={message.number !== "" ? "form-control border-danger" : "form-control"} placeholder="Number" required="" name="number" />
+                                                    <input type="text" className={message.number !== "" ? "form-control border-danger" : "form-control"} placeholder="Number" name="number" onChange={(e) => handleChange(e)} value={data.number} onKeyDown={handleKeyDown} maxLength={10}/>
                                                     <span className="text-danger">{message.number !== "" && message.number}</span>
                                                 </div>
                                             </div>
                                             <div className="col-sm-12 col-md-12">
                                                 <div className="mb-3 mb-0">
                                                     <label className="form-label text-dark">Address</label>
-                                                    <textarea className={message.address !== "" ? "form-control border-danger" : "form-control"} name="address" rows={3} placeholder="text here.." required="" defaultValue={""} />
+                                                    <textarea className={message.address !== "" ? "form-control border-danger" : "form-control"} name="address" rows={3} placeholder="text here.." onChange={(e) => handleChange(e)} value={data.address} />
                                                     <span className="text-danger">{message.address !== "" && message.address}</span>
                                                 </div>
                                             </div>
                                             <div className="col-sm-6 col-md-4">
                                                 <div className="mb-3">
                                                     <label className="form-label">City</label>
-                                                    <input type="text" className={message.city !== "" ? "form-control border-danger" : "form-control"} placeholder="City" name="city" />
+                                                    <input type="text" className={message.city !== "" ? "form-control border-danger" : "form-control"} placeholder="City" name="city" onChange={(e) => handleChange(e)} value={data.city}/>
                                                     <span className="text-danger">{message.city !== "" && message.city}</span>
                                                 </div>
                                             </div>
                                             <div className="col-sm-6 col-md-3">
                                                 <div className="mb-3">
                                                     <label className="form-label">Postal Code</label>
-                                                    <input type="number" className={message.zip !== "" ? "form-control border-danger" : "form-control"} placeholder="ZIP Code" name="zip" />
+                                                    <input type="text" className={message.zip !== "" ? "form-control border-danger" : "form-control"} placeholder="ZIP Code" name="zip" onChange={(e) => handleChange(e)} value={data.zip} onKeyDown={handleKeyDown}/>
                                                     <span className="text-danger">{message.zip !== "" && message.zip}</span>
                                                 </div>
                                             </div>
@@ -332,7 +445,7 @@ export default function BuyNow({ countrylist }) {
 
                                                         }
                                                         select2Options={{ placeholder: "Select category", allowClear: true }}
-                                                        showSearch={true} country={message.country} />
+                                                        showSearch={true} setValidation={setValidation} setMessage={setMessage} validation={validation} message={message} />
                                                     <span className="text-danger">{message.country !== "" && message.country}</span>
                                                 </div>
                                             </div>

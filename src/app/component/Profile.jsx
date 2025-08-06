@@ -48,23 +48,16 @@ export default function Profile({ departmentlist, countrylist }) {
     const [validation, setValidation] = useState({ city: "-1", zip: "-1", country: "-1", address: "-1" });
     const [data, setData] = useState({ city: "", zip: "", country: "", address: "", description: "", facebook: "", instagram: "", linkedin: "", twitter: "" });
 
-let name;
+
     useEffect(() => {
 
         if (user) {
 
+            let departmentlists=departmentlist;
+            const [department]=departmentlists.filter((item)=>item.id===user.department_id);
+            setDepartmentid(department.departmentName);
+            console.log(department.departmentName);
             
-            for (let i = 0; i < departmentlist.length; i++) {
-                if (user.department_id === departmentlist[i].id) {
-                    
-                    name=departmentlist[i].departmentName;
-                    console.log(user.department_id,name);
-                    
-                    break;
-                }
-            }
-            
-            setDepartmentid(name);
             setCountry(user.country)
             setData({ city: user.city, zip: user.zip, address: user.address, country: user.country, description: user.description, facebook: user.facebook, instagram: user.instagram, linkedin: user.linkedin, twitter: user.twitter })
             setValidation({ city: user.city !== 'null' ? "" : "-1", country: user.country !== 'null' ? "" : "-1", zip: user.zip !== 'null' ? "" : "-1", address: user.address !== 'null' ? "" : "-1" })
@@ -86,7 +79,7 @@ let name;
 
         }
 
-    }, [user,departmentId])
+    }, [user])
 
     const openLink = () => {
 
@@ -327,7 +320,7 @@ let name;
                                                             <div className="mb-3">
 
                                                                 <label className="form-label">Department</label>
-                                                                {user && <Select2Component id="select9"
+                                                                {departmentId && <Select2Component id="select9"
 
 
                                                                     options={
@@ -347,10 +340,7 @@ let name;
                                                                     select2Options={{ placeholder: departmentId, allowClear: true }}
                                                                     showSearch={true} type="department" setSort="select" setDepartmentid={setDepartmentid} />}
                                                             </div>
-                                                            {
-                                                                console.log(departmentId,"id")
-                                                                
-                                                            }
+                                                           
                                                         </div>
                                                         <div className="col-sm-6 col-md-6">
                                                             <div className="mb-3">
