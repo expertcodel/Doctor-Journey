@@ -6,22 +6,22 @@ import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../../context/AuthContext";
-export default function BuyNow({ countrylist }) {
+export default function BuyNow({ countrylist, journaldata }) {
 
-    const {user}=useAuth()
-    const [journalData, setjournaldata] = useState(typeof (window) !== 'undefined' && sessionStorage.getItem('journalDetail') && JSON.parse(sessionStorage.getItem('journalDetail')))
+    const { user } = useAuth()
     const [loading, setLoading] = useState(false);
+    const [errMsg,setErrmsg]=useState("");
     const router = useRouter()
     const [message, setMessage] = useState({ name: "", number: "", email: "", city: "", country: "", zip: "", address: "" })
-    const [validation, setValidation] = useState({ name: false, number: false, email: false, city: false, country: false, zip: false, address: false });
-    const [data, setData] = useState({ name: user?.name, number: user?.number, email: user?.email, city: user?.city, country: "", zip: user?.zip, address: user?.address });
+    const [validation, setValidation] = useState({ name: user ? true : false, number: user ? true : false, email: user ? true : false, city: user ? true : false, country: user ? true : false, zip: user ? true : false, address: user ? true : false });
+    const [data, setData] = useState({ name: user?.name, number: user?.mobile_number, email: user?.email, city: user?.city, country: user?.country, zip: user?.zip, address: user?.address });
 
     useEffect(() => {
 
-        if (!sessionStorage.getItem('journalDetail')) {
-            router.push('/journals');
-        }
-    }, [])
+        setValidation({ name: user ? true : false, number: user ? true : false, email: user ? true : false, city: user ? true : false, country: user ? true : false, zip: user ? true : false, address: user ? true : false })
+        setData({ name: user?.name, number: user?.mobile_number, email: user?.email, city: user?.city, country: user?.country, zip: user?.zip, address: user?.address })
+
+    }, [user])
 
     const handleChange = (e) => {
 
@@ -196,11 +196,11 @@ export default function BuyNow({ countrylist }) {
 
         e.preventDefault();
         const name = validation.name;
-        const email =  validation.email;
-        const number =  validation.number;
-        const city =  validation.city;
-        const country =  validation.country;
-        const zip =  validation.zip;
+        const email = validation.email;
+        const number = validation.number;
+        const city = validation.city;
+        const country = validation.country;
+        const zip = validation.zip;
         const address = validation.address;
         const updateMessage = { ...message };
         let flag = true;
@@ -278,11 +278,11 @@ export default function BuyNow({ countrylist }) {
         setMessage(updateMessage);
         if (flag) {
 
-            const data = {
-                name, number, email, address, city, zip, country, amount: journalData.price, plans: journalData.checkPlans, journal_id: journalData.journal_id, path: '/register-journal'
+            const data1 = {
+                name: data.name, number: data.number, email: data.email, address: data.address, city: data.city, zip: data.zip, country: data.country, path: '/register-journal', amount: journaldata.amount, id: journaldata.id, userId: user?.userId
             }
             setLoading(true)
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/create-order`, { method: 'POST', body: JSON.stringify(data) })
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/create-order`, { method: 'POST', body: JSON.stringify(data1) })
             const order = await response.json();
             setLoading(false);
 
@@ -290,31 +290,38 @@ export default function BuyNow({ countrylist }) {
 
             const options = {
                 key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-                amount: order.amount,
+                amount: order?.amount,
                 currency: "INR",
                 name: "doctorsjourney.in",
                 description: "journal Payment",
-                order_id: order.order.id,
+                order_id: order?.order?.id,
                 handler: async function (response) {
                     // Successful payment
-                    await fetch("/api/payment/verify", {
+                    const res = await fetch("/api/payment/verify", {
                         method: "POST",
                         body: JSON.stringify({
                             ...response,
-                            id: order.id,      // registration ID
-                            path: "/register-journal"  // or your context path
+                            id: order?.id,      // registration ID
+                            path: "/register-journal",  // or your context path
+                            userId: user?.userId
                         }),
                     });
 
-                    sessionStorage.removeItem('journalDetail');
-                    document.cookie = "statusKey=" + response.razorpay_signature + "; path=/";
-                    router.push(`/success/?token=${response.razorpay_signature}`);
+                    const status = await res.json();
+                    if (status.status) {
+                        
+                        document.cookie = "statusKey=" + response.razorpay_signature + "; path=/";
+                        router.push(`/success/?token=${response.razorpay_signature}`);
+                    }
+                    else {
+                        
+                        document.cookie = "statusKey=" + `AFsdfdx636378hHYDYU4747^^gdhdjvdbhbsc` + "; path=/";
+                        router.push(`/failed/?token=AFsdfdx636378hHYDYU4747^^gdhdjvdbhbsc`)
+                    }
                 },
                 modal: {
                     // 👇 Handle payment cancel/close
                     ondismiss: function () {
-
-                        sessionStorage.removeItem('journalDetail');
                         document.cookie = "statusKey=" + `AFsdfdx636378hHYDYU4747^^gdhdjvdbhbsc` + "; path=/";
                         router.push(`/failed/?token=AFsdfdx636378hHYDYU4747^^gdhdjvdbhbsc`)
                     },
@@ -331,7 +338,13 @@ export default function BuyNow({ countrylist }) {
 
             if (!order.status) {
 
-                router.push(`/failed/?token=AFsdfdx636378hHYDYU4747^^gdhdjvdbhbsc`)
+                setErrmsg(order.message);
+                console.log(order.message,'jkk');
+                
+                setTimeout(() => {
+                    setErrmsg("");
+                }, 3000);
+                
             }
             else {
                 const razorpay = new window.Razorpay(options);
@@ -357,7 +370,7 @@ export default function BuyNow({ countrylist }) {
                             <div className="card card-aside">
                                 <div className="card-body ">
                                     <div className="card-item d-flex">
-                                        <h4 className="m-0">{journalData.journal_name}</h4>
+                                        <h4 className="m-0">{journaldata?.journal_name}</h4>
                                     </div>
                                 </div>
                             </div>
@@ -366,7 +379,7 @@ export default function BuyNow({ countrylist }) {
                             <div className="card card-aside">
                                 <div className="card-body ">
                                     <div className="card-item d-flex">
-                                        <h4 className="m-0">Price: <span className="font-weight-bold">₹ {journalData.price}</span></h4>
+                                        <h4 className="m-0">Price: <span className="font-weight-bold">₹ {journaldata?.amount}</span></h4>
                                     </div>
                                 </div>
                             </div>
@@ -376,7 +389,7 @@ export default function BuyNow({ countrylist }) {
                                 <div className="card-body ">
                                     <div className="card-item d-flex">
                                         <h4 className="m-0">
-                                            Indexing: <span className="font-weight-bold">{journalData.volume}</span>
+                                            Indexing: <span className="font-weight-bold">{journaldata?.volume}</span>
                                         </h4>
                                     </div>
                                 </div>
@@ -396,21 +409,21 @@ export default function BuyNow({ countrylist }) {
                                             <div className="col-sm-6 col-md-4">
                                                 <div className="mb-3">
                                                     <label className="form-label">Full Name</label>
-                                                    <input type="text" className={message.name !== "" ? "form-control border-danger" : "form-control"} placeholder="Name" name="name" onChange={(e) => handleChange(e)} value={data.name}/>
+                                                    <input type="text" className={message.name !== "" ? "form-control border-danger" : "form-control"} placeholder="Name" name="name" onChange={(e) => handleChange(e)} value={data.name} />
                                                     <span className="text-danger">{message.name !== "" && message.name}</span>
                                                 </div>
                                             </div>
                                             <div className="col-sm-6 col-md-4">
                                                 <div className="mb-3">
                                                     <label className="form-label">Email</label>
-                                                    <input type="text" className={message.email !== "" ? "form-control border-danger" : "form-control"} placeholder="Email Address" name="email" onChange={(e) => handleChange(e)} value={data.email}/>
+                                                    <input type="text" className={message.email !== "" ? "form-control border-danger" : "form-control"} placeholder="Email Address" name="email" onChange={(e) => handleChange(e)} value={data.email} />
                                                     <span className="text-danger">{message.email !== "" && message.email}</span>
                                                 </div>
                                             </div>
                                             <div className="col-sm-6 col-md-4">
                                                 <div className="mb-3 mb-0">
                                                     <label className="form-label">Phone Number</label>
-                                                    <input type="text" className={message.number !== "" ? "form-control border-danger" : "form-control"} placeholder="Number" name="number" onChange={(e) => handleChange(e)} value={data.number} onKeyDown={handleKeyDown} maxLength={10}/>
+                                                    <input type="text" className={message.number !== "" ? "form-control border-danger" : "form-control"} placeholder="Number" name="number" onChange={(e) => handleChange(e)} value={data.number} onKeyDown={handleKeyDown} maxLength={10} />
                                                     <span className="text-danger">{message.number !== "" && message.number}</span>
                                                 </div>
                                             </div>
@@ -424,14 +437,14 @@ export default function BuyNow({ countrylist }) {
                                             <div className="col-sm-6 col-md-4">
                                                 <div className="mb-3">
                                                     <label className="form-label">City</label>
-                                                    <input type="text" className={message.city !== "" ? "form-control border-danger" : "form-control"} placeholder="City" name="city" onChange={(e) => handleChange(e)} value={data.city}/>
+                                                    <input type="text" className={message.city !== "" ? "form-control border-danger" : "form-control"} placeholder="City" name="city" onChange={(e) => handleChange(e)} value={data.city} />
                                                     <span className="text-danger">{message.city !== "" && message.city}</span>
                                                 </div>
                                             </div>
                                             <div className="col-sm-6 col-md-3">
                                                 <div className="mb-3">
                                                     <label className="form-label">Postal Code</label>
-                                                    <input type="text" className={message.zip !== "" ? "form-control border-danger" : "form-control"} placeholder="ZIP Code" name="zip" onChange={(e) => handleChange(e)} value={data.zip} onKeyDown={handleKeyDown}/>
+                                                    <input type="text" className={message.zip !== "" ? "form-control border-danger" : "form-control"} placeholder="ZIP Code" name="zip" onChange={(e) => handleChange(e)} value={data.zip} onKeyDown={handleKeyDown} />
                                                     <span className="text-danger">{message.zip !== "" && message.zip}</span>
                                                 </div>
                                             </div>
@@ -444,8 +457,8 @@ export default function BuyNow({ countrylist }) {
                                                             countrylist.map((country, i) => { return { value: i + 1, label: country.name } })
 
                                                         }
-                                                        select2Options={{ placeholder: "Select category", allowClear: true }}
-                                                        showSearch={true} setValidation={setValidation} setMessage={setMessage} validation={validation} message={message} />
+                                                        select2Options={{ placeholder: user ? user?.country : "Select category", allowClear: true }}
+                                                        showSearch={true} setValidation={setValidation} setMessage={setMessage} validation={validation} message={message} data={data} setData={setData} />
                                                     <span className="text-danger">{message.country !== "" && message.country}</span>
                                                 </div>
                                             </div>
@@ -456,7 +469,9 @@ export default function BuyNow({ countrylist }) {
                                                     </div> : <>  Proceed to Checkout <FontAwesomeIcon icon={faAngleRight} /></>}
 
                                                 </button>
+                                                
                                             </div>
+                                            <div className="text-danger">{errMsg!=="" && errMsg}</div>
                                         </div>
                                     </form>
                                 </div>

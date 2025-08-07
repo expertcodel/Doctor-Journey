@@ -13,47 +13,46 @@ export const journal_registrationModel = async () => {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
-            allowNull: false
+
         },
         journal_id: {
             type: DataTypes.INTEGER,
-            allowNull: false
-
         },
-       
+        userId: {
+            type: DataTypes.STRING,
+        },
         amount: {
-            type: DataTypes.FLOAT,
-            allowNull: false,
+            type: DataTypes.STRING,
         },
-        
+
         coupon_uses_id: {
             type: DataTypes.INTEGER,
         },
         registration_number: {
             type: DataTypes.STRING(20),
-            allowNull: false
+
         },
         name: {
             type: DataTypes.STRING,
-            allowNull: false
+
         },
         number: {
             type: DataTypes.STRING(16),
-            allowNull: false
+
         },
         email: {
             type: DataTypes.STRING,
-            allowNull: false
+
         },
-       
+
         address: {
             type: DataTypes.STRING(5000),
-            allowNull: false
+
         },
 
         city: {
             type: DataTypes.STRING,
-            allowNull: false
+
         },
 
         zip: {
@@ -62,23 +61,29 @@ export const journal_registrationModel = async () => {
         country: {
             type: DataTypes.STRING,
         },
-      
+
         is_paid: {
             type: DataTypes.BOOLEAN,
-            allowNull: false,
+
             defaultValue: false
         },
-       
+
         status: {
             type: DataTypes.BOOLEAN,
-            allowNull: false,
+
             defaultValue: true
         },
-        plans:{
-           type: DataTypes.JSONB,
-           allowNull: false
-        }
-       
+        plans: {
+            type: DataTypes.JSONB,
+
+        },
+        volume: {
+            type: DataTypes.STRING(5000),
+        },
+        journal_name: {
+            type: DataTypes.STRING(5000),
+        },
+
 
     })
 

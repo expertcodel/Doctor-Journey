@@ -15,7 +15,7 @@ function CreateJournal({ journallist }) {
     const [image, setImage] = useState([{ image: null }])
     const [imageUrl, setImageurl] = useState([{ image: null }])
     const [croppedUrl, setCroppedUrl] = useState([{ image: null }])
-
+    const [plan, setPlan] = useState([{ plan: "", duration: "", price: "", details: "" }]);
 
     const handleCrop = (blob, index) => {
 
@@ -32,6 +32,25 @@ function CreateJournal({ journallist }) {
     async function saveJournal(e) {
 
         e.preventDefault();
+
+        let arr = [];
+        let parent = Array.from(document.querySelectorAll('.subscription'))
+
+        parent.forEach((p) => {
+            const child = p.querySelector('.jodit-wysiwyg');
+            if (child) {
+                arr.push(child.innerHTML);
+            } else {
+                console.log('No .jodit-wysiwyg found in this parent');
+            }
+        })
+        
+
+        let updatedPlans = [...plan];
+        for (let i = 0; i < updatedPlans.length; i++) {
+            updatedPlans[i]['details'] = arr[i];
+        }
+     
         const journalsName = e.target.Journalname.value.trim();
         const journalsIsbn = e.target.ISBN.value.trim();
         const publisherName = e.target.Publishername.value.trim();
@@ -41,6 +60,7 @@ function CreateJournal({ journallist }) {
         const video_id = e.target.videoId.value.trim();
         const description = document.querySelector('.jodit-wysiwyg').innerHTML
         const formData = new FormData();
+        const subscription_plan=updatedPlans;
         const data =
         {
             journalsName,
@@ -51,8 +71,8 @@ function CreateJournal({ journallist }) {
             frequency,
             description,
             faq,
-            parent_journal
-
+            parent_journal,
+            subscription_plan
 
         }
         for (let i = 0; i < imageUrl.length; i++) {
@@ -142,6 +162,30 @@ function CreateJournal({ journallist }) {
         setImage(image.filter((_, i) => i !== index));
         setCroppedUrl(croppedUrl.filter((_, i) => i !== index));
         setImageurl(imageUrl.filter((_, i) => i !== index));
+    }
+
+
+
+    const handlePlan = (event, index) => {
+
+        const { name, value } = event.target;
+        const planlist = [...plan];
+        planlist[index][name] = value;
+        setPlan(planlist);
+
+    }
+
+    const addPlan = () => {
+
+
+        setPlan((prev) => [...prev, { plan: "", price: "", duration: "", details: "" }]);
+
+    }
+
+    const removePlan = (index) => {
+
+        setPlan(plan.filter((_, i) => i !== index));
+
     }
 
 
@@ -311,6 +355,63 @@ function CreateJournal({ journallist }) {
                                         <img src={croppedUrl[i].image} width={150} height={150} alt="Cropped result" />
                                     </div>
                                 )}
+                            </div>)}
+
+                        </div>
+
+                        <div className="col-12">
+
+                            <h4 className='d-flex align-items-center'>
+                                Journals Subscription
+                                <button type="button" onClick={addPlan} className="add-btn btn btn-info ms-auto" >
+                                    <i className="ri-add-line" /> Add
+                                </button>
+                            </h4>
+
+                            {plan.length > 0 && plan.map((item, i) => <div key={i} className="content-section subscription">
+
+                                <div class="text-end">
+                                    {plan.length > 1 && <button type="button" onClick={() => removePlan(i)} className="remove-btn btn btn-danger ms-auto">
+                                        <i className="fas fa-trash" />
+                                    </button>
+                                    }
+                                </div>
+
+                                <div className='row'>
+
+
+                                    <div className="col-lg-4 mb-3">
+                                        <label className="form-label" htmlFor="latitude-input">Plan {plan.length === 1 ? "" : i + 1}</label>
+                                        <input type="text" className="form-control" placeholder="Enter plan name" onChange={(e) => handlePlan(e, i)} name='plan' value={item.plan} />
+
+
+                                    </div>
+
+                                    <div className="col-lg-4 mb-3">
+                                        <label className="form-label" htmlFor="longitude-input">Price </label>
+
+                                        <input type="text" className="form-control" placeholder="Enter plan price" onChange={(e) => handlePlan(e, i)} name='price' value={item.price} />
+
+                                    </div>
+
+                                    <div className="col-lg-4 mb-3">
+                                        <label className="form-label" htmlFor="longitude-input">Duration </label>
+                                        <select className="form-control" name="duration" onChange={(e) => handlePlan(e, i)} value={item.duration} >
+                                            <option value="Select" selected>Select</option>
+                                            <option value="Monthly" >Monthly</option>
+                                            <option value="Quaterly" >Quaterly</option>
+                                            <option value="Half Yearly" >Half Yearly</option>
+                                            <option value="Yearly" >Yearly</option>
+                                        </select>
+                                    </div>
+
+                                    <div className="col-lg-12 mb-3">
+                                        <label className="form-label" htmlFor="longitude-input">Details</label>
+
+                                        <JoditEditor config={config} />
+
+                                    </div>
+                                </div>
                             </div>)}
 
                         </div>

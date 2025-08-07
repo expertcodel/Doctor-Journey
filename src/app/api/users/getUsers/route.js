@@ -41,7 +41,7 @@ export async function GET(request) {
             where: {
 
                 status: true,
-                [Op.or]: { userId: { [Op.iLike]: `%${name}%` }, name: { [Op.iLike]: `%${name}%` } }
+                [Op.or]: { name: { [Op.iLike]: `%${name}%` } ,userId: { [Op.iLike]: `%${name}%` } }
             },
 
 

@@ -14,7 +14,7 @@ export async function POST(request) {
     const input = await request.formData();
     const file = input.getAll('file');
     const { journalsName, journalsIsbn, publisherName, volume, frequency, description,
-        faq, parent_journal,video_id } = JSON.parse(input.get('data'));
+        faq, parent_journal,video_id ,subscription_plan} = JSON.parse(input.get('data'));
 
     const journalsmodel = await journalsModel();
     if (!journalsmodel) {
@@ -51,7 +51,7 @@ export async function POST(request) {
             volume,
             frequency,
             description, faqs: faq, parent_journal: parent_journal === 'select' ? id : parent_journal,
-            journal_slider: imageUrl
+            journal_slider: imageUrl,subscription_plan
 
         })
 

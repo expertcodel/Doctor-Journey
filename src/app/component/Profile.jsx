@@ -20,7 +20,7 @@ export default function Profile({ departmentlist, countrylist }) {
     const { user } = useAuth();
     const [image, setImage] = useState(null)
     const [country, setCountry] = useState("");
-    const [departmentId, setDepartmentid] = useState("");
+    const [departmentId, setDepartmentid] = useState("select category");
     const [imageUrl, setImageurl] = useState(null);
     const [croppedUrl, setCroppedUrl] = useState(null)
     const [errMsg, setErrmsg] = useState("");
@@ -53,11 +53,17 @@ export default function Profile({ departmentlist, countrylist }) {
 
         if (user) {
 
-            let departmentlists=departmentlist;
-            const [department]=departmentlists.filter((item)=>item.id===user.department_id);
-            setDepartmentid(department.departmentName);
-            console.log(department.departmentName);
+            let departmentlists = departmentlist;
+           
             
+            if (user.department_id) {
+                const [department] = departmentlists.filter((item) => item.id === user.department_id);
+                setDepartmentid(department.departmentName);
+            }
+            else{
+                setDepartmentid("select category");
+            }
+
             setCountry(user.country)
             setData({ city: user.city, zip: user.zip, address: user.address, country: user.country, description: user.description, facebook: user.facebook, instagram: user.instagram, linkedin: user.linkedin, twitter: user.twitter })
             setValidation({ city: user.city !== 'null' ? "" : "-1", country: user.country !== 'null' ? "" : "-1", zip: user.zip !== 'null' ? "" : "-1", address: user.address !== 'null' ? "" : "-1" })
@@ -317,10 +323,10 @@ export default function Profile({ departmentlist, countrylist }) {
                                                             </div>
                                                         </div>
                                                         <div className="col-md-6">
-                                                            <div className="mb-3">
+                                                           { departmentId && <div className="mb-3">
 
                                                                 <label className="form-label">Department</label>
-                                                                {departmentId && <Select2Component id="select9"
+                                                                <Select2Component id="select9"
 
 
                                                                     options={
@@ -335,12 +341,12 @@ export default function Profile({ departmentlist, countrylist }) {
                                                                         })
 
                                                                     }
-                                                                    
 
-                                                                    select2Options={{ placeholder: departmentId, allowClear: true }}
-                                                                    showSearch={true} type="department" setSort="select" setDepartmentid={setDepartmentid} />}
-                                                            </div>
-                                                           
+
+                                                                    select2Options={{ placeholder: departmentId && departmentId, allowClear: true }}
+                                                                    showSearch={true} type="department" setSort="select" setDepartmentid={setDepartmentid} />
+                                                            </div>}
+
                                                         </div>
                                                         <div className="col-sm-6 col-md-6">
                                                             <div className="mb-3">

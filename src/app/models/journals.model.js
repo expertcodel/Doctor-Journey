@@ -20,7 +20,7 @@ export const journalsModel = async () => {
         journalsId: {
 
             type: DataTypes.STRING,
-            allowNull:false,
+            allowNull: false,
             primaryKey: true,
 
         },
@@ -118,6 +118,9 @@ export const journalsModel = async () => {
         },
         parent_journal: {
             type: DataTypes.STRING
+        },
+        subscription_plan: {
+            type: DataTypes.JSONB
         }
 
     })

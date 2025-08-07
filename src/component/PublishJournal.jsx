@@ -173,6 +173,8 @@ function PublishJournal({ articlelist, userslist }) {
         })
 
         if (flag) {
+            console.log({ userId: author.userId, name: author.name,image:author.profile_img,qualification:author.qualification },"detail");
+            
             setUserlist((prev) => [...prev, { userId: author.userId, name: author.name,image:author.profile_img,qualification:author.qualification }]);
         }
 

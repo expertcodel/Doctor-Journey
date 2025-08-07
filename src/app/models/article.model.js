@@ -22,7 +22,7 @@ export const articleModel = async () => {
         url: {
             type: DataTypes.STRING,
             unique: true,
-            allowNull: false
+           
 
         },
         articleId: {

@@ -24,15 +24,15 @@ export default function JournalsIndexesThumbCarousel({ journalList }) {
             // Responsive breakpoints
             breakpoints: {
                 320: {
-                    slidesPerView: 1.5, // 1 slide for mobile
-                    spaceBetween: 10
+                    slidesPerView: 1, // 1 slide for mobile
+                    spaceBetween: 8
                 },
                 768: {
-                    slidesPerView: 3, // 3 slides for tablets
+                    slidesPerView: 2, // 3 slides for tablets
                     spaceBetween: 8
                 },
                 1280: {
-                    slidesPerView: 4, // 3 slides for tablets
+                    slidesPerView: 3, // 3 slides for tablets
                     spaceBetween: 16
                 },
             }

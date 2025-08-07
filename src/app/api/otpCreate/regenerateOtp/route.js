@@ -91,9 +91,9 @@ export async function POST(request) {
     const { email, name } = await request.json();
     const usermodel = await UserModel();
     let isExisteduser
-    if (name === "") {
+    // if (name === "") {
         isExisteduser = await usermodel.findOne({ where: { email } });
-    }
+    // }
     const otp = generateOtp();
     const sent = sendEmail(email, otp, isExisteduser.name);
     if (!sent) {

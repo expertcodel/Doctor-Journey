@@ -1,15 +1,15 @@
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
-import { useParams } from 'next/navigation';
+import { useParams,usePathname } from 'next/navigation';
 const LazyYoutube = ({ videoId, isOpen, setIsOpen, setViews }) => {
   // Lock scroll and close on ESC key
   const { user } = useAuth();
   const playerRef = useRef(null);
   const [isVideoEnded, setIsVideoEnded] = useState(false);
   const { id } = useParams();
-
-
+  const path=usePathname();
+ 
   const overlayStyle = {
     position: 'fixed',
     top: 0,
@@ -152,7 +152,7 @@ const LazyYoutube = ({ videoId, isOpen, setIsOpen, setViews }) => {
         </div>
       </div>
 
-      {isVideoEnded && (
+      {path.startsWith('/doctors') && isVideoEnded && (
         <div style={{ ...overlayStyle, backgroundColor: 'rgba(0,0,0,0.95)' }}>
           <div style={{ background: '#111', padding: '2rem', borderRadius: '8px', textAlign: 'center' }}>
             <button style={closeButtonStyle} onClick={() => setIsVideoEnded(false)}>&times;</button>

@@ -6,7 +6,7 @@ import "select2/dist/css/select2.min.css";
 import "select2/dist/js/select2.full.min.js";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
-export default function Select2Component({ id, options, select2Options = {}, showSearch = false, onChange, type, setSort, setCountry, setDepartmentid, setValidation, setMessage, validation, message }) {
+export default function Select2Component({ id, options, select2Options = {}, showSearch = false, onChange, type, setSort, setCountry, setDepartmentid, setValidation, setMessage, validation, message,setData,data }) {
   const router = useRouter();
   const path = usePathname();
   useEffect(() => {
@@ -47,6 +47,8 @@ export default function Select2Component({ id, options, select2Options = {}, sho
         if (validation) {
           const updateValidation = { ...validation };
           const updateMessage = { ...message };
+          const updateData = { ...data};
+          updateData['country']=selectedValue;
           if (selectedValue === "") {
 
             updateValidation['country'] = false
@@ -59,6 +61,7 @@ export default function Select2Component({ id, options, select2Options = {}, sho
           }
           setValidation(updateValidation)
           setMessage(updateMessage)
+          setData(updateData)
         }
 
         if (type === 'category') {
@@ -80,7 +83,7 @@ export default function Select2Component({ id, options, select2Options = {}, sho
         else if (type === 'department') {
 
           setDepartmentid(selectedValue);
-          console.log(selectedValue,'value');
+          
           
         }
       });

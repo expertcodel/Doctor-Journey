@@ -45,7 +45,9 @@ export async function POST(request) {
 
 
         const journalDetail = await journalmodel.findOne({ where: { journalsUrl } });
-        const journaldata = await Promise.all([journalmodel.findAll({ limit: 4, where: { journalStatus: 'published' } }),journalmodel.findAll({ where: { parent_journal: journalDetail.journalsId } }),article.findAll({attributes:['articleId','articleTitle','articleAuthor','articleSummary'],where:{status:true,articleStatus:'published',journalsId:journalDetail.journalsId}})]);
+        const journaldata = await Promise.all([journalmodel.findAll({ limit: 4, where: { journalStatus: 'published' } }),journalmodel.findAll({ where: { parent_journal: journalDetail.parent_journal } }),article.findAll({attributes:['articleId','articleTitle','articleAuthor','articleSummary'],where:{status:true,articleStatus:'published',journalsId:journalDetail.journalsId}})]);
+        // console.log(journaldata[1],journalDetail.journalsId,'listhh');
+        
         return NextResponse.json({ status: true, journaldetail: journalDetail, journallist: journaldata[0],journalversion:journaldata[1],articlelist:journaldata[2]});
 
     } catch (error) {

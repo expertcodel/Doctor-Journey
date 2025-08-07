@@ -13,6 +13,12 @@ export async function middleware(request) {
   response.headers.set('x-pathname', pathname);
 
 
+  if (pathname.startsWith('/buy-now')) {
+
+    const id = new URL(request.url).searchParams.get('id');
+    response.headers.set('x-id', id);
+  }
+  
   if (pathname.startsWith('/success')) {
 
     const token = new URL(request.url).searchParams.get('token');

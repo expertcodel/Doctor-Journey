@@ -4,6 +4,91 @@ import { NextResponse } from "next/server";
 import { paymentModel } from "../../../models/payment.model";
 import { subscriptionModel } from "../../../models/subscription.model";
 import { journal_registrationModel } from "../../../models/journal_subscription.model";
+import { UserModel } from "../../../models/user.model";
+import bcrypt from 'bcrypt'
+import nodemailer from 'nodemailer'
+
+
+
+async function sendEmail(email, password, name) {
+
+    const config = {
+
+        service: 'gmail',
+        auth: {
+
+            user: "rohitkumarchau656@gmail.com",
+            pass: "pihc knoi rbca lrif"
+        }
+    }
+
+    try {
+
+        const createMail = nodemailer.createTransport(config);
+        await createMail.sendMail({
+
+            from: { name: "Doctor's Journey", address: 'rohitkumarchau656@gmail.com' },
+            to: email.trim(),
+            subject: "Welcome to Doctor's Journey",
+            html: `
+                <div style="/* justify-content: center; */font-family:'Roboto',sans-serif;box-sizing:border-box;font-size:14px;max-width:600px;display:block;margin:0 auto;padding:20px;/* display: flex; *//* align-items: center; */"><div class="adM">
+                    </div><table width="100%" cellpadding="0" cellspacing="0" style="font-family:'Roboto',sans-serif;box-sizing:border-box;font-size:14px;border-radius:3px;margin:0;border:none">
+                        <tbody><tr style="font-family:'Roboto',sans-serif;font-size:14px;margin:0">
+                            <td style="font-family:'Roboto',sans-serif;box-sizing:border-box;color:#495057;font-size:14px;vertical-align:top;margin:0;padding:30px;border-radius:7px;background-color:#fff" valign="top">
+
+                                <table width="100%" cellpadding="0" cellspacing="0" style="font-family:'Roboto',sans-serif;box-sizing:border-box;font-size:14px;margin:0">
+                                    <tbody><tr style="font-family:'Roboto',sans-serif;box-sizing:border-box;font-size:14px;margin:0;width: 100%;">
+                                        <td style="font-family:'Roboto',sans-serif;box-sizing:border-box;font-size:14px;vertical-align:top;margin:0;padding:0 0 20px" valign="top">
+                                            <div style="text-align:center;margin-bottom:15px">
+                                                <img src="https://doctorsjourney.in/images/logo.svg" alt="Doctor's Journey" height="23" class="CToWUd" data-bit="iit">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr style="font-family:'Roboto',sans-serif;box-sizing:border-box;font-size:14px;margin:0">
+                                        <td style="font-family:'Roboto',sans-serif;box-sizing:border-box;line-height:1.5;color:#000000;font-size:24px;vertical-align:top;margin:0;padding:0 0 10px;text-align:left;font-weight:500" valign="top">
+                                            Dear ${name[0].toUpperCase() + name.slice(1, name.length)} 
+                                        </td>
+                                    </tr>
+                                    <tr style="align-items: left;font-family:'Roboto',sans-serif;box-sizing:border-box;font-size:14px;margin:0;display: flex;/* align-content: left; */">
+                                        <td style="font-family:'Roboto',sans-serif;color:#313131;line-height:1.5;box-sizing:border-box;font-size:15px;vertical-align:top;margin:0;padding:0 0 24px;text-align:left" valign="top">
+
+                                        Thank you for your interest in exploring medical resources with DoctorsJourney.
+    here is your, password <b>${password}</b> Now you can login by using this password or you can also change your password by clicking on forgot-password.
+                                            
+                                        </td>
+                                    </tr>
+                                    
+
+                                    <tr style="font-family:'Roboto',sans-serif;box-sizing:border-box;font-size:14px;margin:0;border-top:1px solid #e9ebec;display: flex;">
+                                        <td style="color:#313131;text-align:left;font-family:'Roboto',sans-serif;box-sizing:border-box;font-size:14px;vertical-align:top;margin:0;padding:0;padding-top:15px" valign="top">
+                                            <p>Warm regards,</p>
+                    <p>Doctor's Journey</p>
+                                        </td>
+                                </tr>
+                                </tbody></table>
+                            </td>
+                        </tr>
+                    </tbody></table><div class="yj6qo"></div><div class="adL">
+                    
+                </div>
+                </div>
+            `
+
+        })
+
+        return true;
+
+    } catch (error) {
+
+        console.log(error);
+        return false;
+    }
+
+
+}
+
+
+
 function addDays(date = new Date(), days = 0) {
     const result = new Date(date);
     result.setDate(result.getDate() + days);
@@ -15,7 +100,41 @@ function formatDate(date) {
 }
 const today = new Date();
 
+function generateRandomPassword(length = 12) {
+    const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;:,.<>?';
+    let password = '';
+    for (let i = 0; i < length; i++) {
+        const randomChar = chars.charAt(Math.floor(Math.random() * chars.length));
+        password += randomChar;
+    }
+    return password;
+}
 
+
+async function createUser(data, user) {
+
+    const { name, number, email, address, city, zip, country } = data;
+    const password = generateRandomPassword();
+    const salt = bcrypt.genSaltSync(10);
+    const hashedPassword = bcrypt.hashSync(password, salt);
+
+    try {
+
+        const id = String(Date.now());
+        await user.create({
+            name, mobile_number: number, email, address, city, zip, country, password: hashedPassword, joining_date: new Date().toLocaleDateString(),
+            userId: id
+        })
+        await sendEmail(email, password, name);
+        return id;
+
+    } catch (error) {
+
+        console.log(error);
+        return null
+    }
+
+}
 
 
 export async function POST(req) {
@@ -23,15 +142,16 @@ export async function POST(req) {
     const body = await req.json();
     const paymentmodel = await paymentModel();
     const subscriptionmodel = await subscriptionModel();
-     const journals_registrationmodel=await journal_registrationModel();
+    const journals_registrationmodel = await journal_registrationModel();
+    const user = await UserModel();
     const {
         razorpay_order_id,
         razorpay_payment_id,
         razorpay_signature,
         userData,
-        amount, subscriptionsId, subscriptionName, subscriptionType, duration, path,id
-    } = body;
+        amount, subscriptionsId, subscriptionName, subscriptionType, duration, path, id, userId } = body;
 
+    console.log(userId, 'usdgtd');
     const generatedSignature = crypto
         .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
         .update(`${razorpay_order_id}|${razorpay_payment_id}`)
@@ -45,9 +165,26 @@ export async function POST(req) {
 
         if (path === '/register-journal') {
 
-            await journals_registrationmodel.update({
-               is_paid: true
-            },{ where: { id } })
+            if (!userId) {
+                const data = await journals_registrationmodel.findOne({ where: { id } });
+                let newid = await createUser(data, user);
+                if (!newid) {
+                    return NextResponse.json({ status: false, message: "user can't created" });
+                }
+
+                await journals_registrationmodel.update({
+                    is_paid: true, userId: newid && newid
+                }, { where: { id } })
+            }
+            else {
+
+                await journals_registrationmodel.update({
+                    is_paid: true, userId: userId
+                }, { where: { id } })
+            }
+
+
+
             return NextResponse.json({ status: true, razorpay_signature });
 
         }

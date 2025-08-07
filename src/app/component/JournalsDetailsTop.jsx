@@ -7,17 +7,29 @@ import JournalsDetailsBanner from "./JournalsDetailsBanner";
 import { faAngleRight, faCheck, faPhone, faStar, faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/navigation";
+import LazyYoutube from './LazyYoutube.jsx'
+import { Modal } from 'bootstrap';
 export default function JournalsDetailsTop({ doctorProfile, subscriptionsList, journalDetail, articlelist }) {
 
     const [totalAmount, setTotalamount] = useState(parseFloat(journalDetail.price_level_1))
     const [checkAmount, setCheckamount] = useState({ plan1: true, plan2: false, plan3: false })
-     const [checkPlans, setCheckplans] = useState({ plan1: true, plan2: false, plan3: false})
+    const [checkPlans, setCheckplans] = useState({ plan1: true, plan2: false, plan3: false })
+    const [isOpen, setIsOpen] = useState(false);
+    const openModal = () => setIsOpen(true);
+    const [views, setViews] = useState(0);
+    const [subscription, setSubscription] = useState({ plan: null, price: null, duration: null });
     const sidebarRef = useRef(null);
     const pageTopTriggerRef = useRef(null);
     const pageBottomTriggerRef = useRef(null);
     const [isSticky, setIsSticky] = useState(false);
     const circleRef = useRef(null);
+    const [subscriptionAmount, setSubscriptionamount] = useState(0);
+    const [modelStatus, setModelstatus] = useState(false);
+    const [errMsg, setErrmsg] = useState("");
+    const [loading, setLoading] = useState(false);
 
+    
+    
     useEffect(() => {
         const handleScroll = () => {
             const sidebarTop = sidebarRef.current?.getBoundingClientRect().top;
@@ -59,12 +71,40 @@ export default function JournalsDetailsTop({ doctorProfile, subscriptionsList, j
         };
     }, []);
 
+
+    useEffect(() => {
+        const modalEl = document.getElementById('exampleModal');
+
+
+        const handleClose = () => setSubscriptionamount(0);
+
+
+        modalEl?.addEventListener('hidden.bs.modal', handleClose);
+
+        return () => {
+
+            modalEl?.removeEventListener('hidden.bs.modal', handleClose);
+        };
+    }, []);
+
+
     const router = useRouter();
 
-    const setJournaldetail = () => {
+    const setJournaldetail = async () => {
 
-        sessionStorage.setItem('journalDetail', JSON.stringify({ journal_name: journalDetail.journalsName, price: totalAmount, journal_id: journalDetail.journalsId, volume: journalDetail.volume,checkPlans }));
-        router.push("/buy-now");
+        setLoading(true);
+        const updatedPlan = { ...checkPlans };
+        updatedPlan['plan3'] = subscription;
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/journal-detail`, { method: 'POST', body: JSON.stringify({ journal_name: journalDetail.journalsName, amount: totalAmount, journal_id: journalDetail.journalsId, volume: journalDetail.volume, plans: updatedPlan }) });
+        const res = await response.json();
+        setLoading(false);
+        if (res.status) {
+            router.push(`/buy-now?id=${res.id}`)
+        }
+        else {
+            setErrmsg(res.message);
+        }
+
     }
 
     const Amount1 = () => {
@@ -113,6 +153,32 @@ export default function JournalsDetailsTop({ doctorProfile, subscriptionsList, j
         setCheckamount(updatedcheckAmount)
         setCheckplans(updatedPlans);
     }
+
+    const subscribe = (subscription_plan) => {
+
+
+        setSubscription({ plan: subscription_plan.plan, price: subscription_plan.price, duration: subscription_plan.duration })
+        setModelstatus(true);
+        setTotalamount(parseFloat(totalAmount) + parseFloat(subscription_plan.price) - subscriptionAmount)
+        setSubscriptionamount(parseFloat(subscription_plan.price));
+
+
+    }
+
+
+
+    const handleCheckbox = () => {
+
+        if (modelStatus) {
+            setSubscription({ plan: null, duration: null, price: null });
+            setTotalamount(Math.abs(totalAmount - subscription.price))
+            setModelstatus(false);
+        }
+
+    }
+
+
+
 
 
     return (
@@ -473,7 +539,7 @@ export default function JournalsDetailsTop({ doctorProfile, subscriptionsList, j
                                 <div className="item7-card-img">
 
                                     <Image src={`https://img.youtube.com/vi/${journalDetail.video_id}/mqdefault.jpg`} fill alt="img" className="cover-image" unoptimized />
-                                    <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal1" className="link-btn popup-youtube play-button" ><span className="triangle"></span> </button>
+                                    <button type="button" onClick={openModal} className="play-button" ><span className="triangle"></span> </button>
                                     {/* <div className="play-button">
                                         <span className="triangle"></span>
                                     </div> */}
@@ -484,7 +550,7 @@ export default function JournalsDetailsTop({ doctorProfile, subscriptionsList, j
                                 <div className="card-body">
                                     <div className="filter-product-checkboxs">
                                         <label className="custom-control form-checkbox mb-3">
-                                            <input type="checkbox" className="custom-control-input" name="checkbox1"  id="plan-1" checked={checkAmount.plan1} onChange={Amount1} />
+                                            <input type="checkbox" className="custom-control-input" name="checkbox1" id="plan-1" checked={checkAmount.plan1} onChange={Amount1} />
                                             <span className="custom-control-label">
                                                 Soft Copy
                                                 <span className="label float-end">
@@ -493,7 +559,7 @@ export default function JournalsDetailsTop({ doctorProfile, subscriptionsList, j
                                             </span>
                                         </label>
                                         <label className="custom-control form-checkbox mb-3">
-                                            <input type="checkbox" className="custom-control-input" name="checkbox2"  id="plan-2" checked={checkAmount.plan2} onChange={Amount2} />
+                                            <input type="checkbox" className="custom-control-input" name="checkbox2" id="plan-2" checked={checkAmount.plan2} onChange={Amount2} />
                                             <span className="custom-control-label">
                                                 Hard Copy
                                                 <span className="label float-end">
@@ -501,12 +567,12 @@ export default function JournalsDetailsTop({ doctorProfile, subscriptionsList, j
                                                 </span>
                                             </span>
                                         </label>
-                                        <label className="custom-control form-checkbox mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                            <input type="checkbox" className="custom-control-input" name="checkbox3" defaultValue="option3" />
+                                        <label className="custom-control form-checkbox mb-3" data-bs-toggle={!modelStatus ? "modal" : ""} data-bs-target={!modelStatus ? "#exampleModal" : ""}>
+                                            <input type="checkbox" className="custom-control-input" name="checkbox3" checked={modelStatus} onChange={handleCheckbox} />
                                             <span className="custom-control-label">
-                                                <span>Subscription <small>(Yearly)</small></span>
+                                                <span>Subscription <small>{subscription.duration && <>({subscription.duration})</>}</small></span>
                                                 <span className="label float-end">
-                                                    ₹ {journalDetail.price_level_3}
+                                                    {subscription.price && <>₹ {subscription.price}</>}
                                                 </span>
                                             </span>
                                         </label>
@@ -516,9 +582,17 @@ export default function JournalsDetailsTop({ doctorProfile, subscriptionsList, j
                                     <h5>
                                         Total: {" "}<span>₹ {totalAmount}</span>
                                     </h5>
-                                    <button  className={totalAmount === 0 ? "btn btn-primary d-block w-100 mt-5 disabled" : "btn btn-primary d-block w-100 mt-5"} onClick={setJournaldetail}>
-                                        Buy Now <FontAwesomeIcon icon={faAngleRight} />
+
+
+                                    <button className={totalAmount === 0 ? "btn btn-primary d-block w-100 mt-5 disabled" : "btn btn-primary d-block w-100 mt-5"} onClick={setJournaldetail}>
+
+                                        {loading ? <div className="spinner-border text-white" role="status">
+                                            <span className="visually-hidden">Loading...</span>
+                                        </div> : <>  Buy Now <FontAwesomeIcon icon={faAngleRight} /></>}
+
+
                                     </button>
+                                    <span className="text-danger">{errMsg !== "" && errMsg}</span>
                                 </div>
                                 <h4 className="mt-5">
                                     <span className="mb-0">
@@ -536,6 +610,40 @@ export default function JournalsDetailsTop({ doctorProfile, subscriptionsList, j
             </div>
 
             {/* Modal */}
+            {/* <div className="modal fade customModal" id="exampleModal" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal-dialog modal-lg">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="exampleModalLabel">
+                                Subscription Plan
+                            </h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
+                        </div>
+                        <div className="modal-body">
+                            <div className="row g-3">
+                                {journalDetail.subscription_plan && journalDetail.subscription_plan.map((plan, i) => <div className={`col-lg-4 col-md-6 col-12`} key={i}>
+                                    <div className={subscription.price === plan.price ? `pricingTable bg-white advance-pricing border border-danger` : `pricingTable bg-white advance-pricing`}>
+                                        <div className="price-value">
+                                            &#8377;{plan.price}
+                                            <span className="month">{plan.duration}</span>
+                                        </div>
+                                        <h3 className="title">{plan.plan}</h3>
+                                        <ul className="pricing-content" dangerouslySetInnerHTML={{ __html: plan.details }}>
+
+                                        </ul>
+                                        <button className="pricingTable-signup" style={{ border: 'none' }} onClick={() => subscribe(plan)}>
+                                            Subscribe Now
+                                        </button>
+                                    </div>
+                                </div>)}
+
+                              
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> */}
+
             <div className="modal fade customModal" id="exampleModal" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-lg">
                     <div className="modal-content">
@@ -547,86 +655,42 @@ export default function JournalsDetailsTop({ doctorProfile, subscriptionsList, j
                         </div>
                         <div className="modal-body">
                             <div className="row g-3">
-                                <div className="col-lg-4 col-md-6 col-12">
-                                    <div className="pricingTable bg-white advance-pricing">
-                                        <div className="price-value">
-                                            &#8377;500
-                                            <span className="month">Yearly</span>
+                                {journalDetail.subscription_plan &&
+                                    journalDetail.subscription_plan.map((plan, i) => (
+                                        <div className="col-lg-4 col-md-6 col-12" key={i}>
+                                            <div className={`pricingTable bg-white advance-pricing ${subscription.price === plan.price ? 'border border-danger' : ''}`}>
+                                                <div className="price-value">
+                                                    ₹{plan.price}
+                                                    <span className="month">{plan.duration}</span>
+                                                </div>
+                                                <h3 className="title">{plan.plan}</h3>
+                                                <ul className="pricing-content" dangerouslySetInnerHTML={{ __html: plan.details }} />
+                                                <button
+                                                    className="pricingTable-signup"
+                                                    style={{ border: 'none' }}
+                                                    onClick={() => subscribe(plan)}
+                                                     data-bs-dismiss="modal"
+                                                >
+                                                    Subscribe Now
+                                                </button>
+                                            </div>
                                         </div>
-                                        <h3 className="title">Premium</h3>
-                                        <ul className="pricing-content">
-                                            <li>
-                                                Access to <strong>5</strong> Journals
-                                            </li>
-                                            <li>
-                                                Access to full journal content (PDFs, images), 5 journals every 4 months
-                                            </li>
-                                        </ul>
-                                        <button className="pricingTable-signup" style={{ border: 'none' }}>
-                                            Subscribe Now
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div className="col-lg-4 col-md-6 col-12">
-                                    <div className="pricingTable bg-white">
-                                        <div className="price-value">
-                                            &#8377;400
-                                            <span className="month">Monthly</span>
-                                        </div>
-                                        <h3 className="title">Standard</h3>
-                                        <ul className="pricing-content">
-                                            <li>
-                                                Access to <strong>1</strong> Journals
-                                            </li>
-                                            <li>
-                                                Access to full journal content (PDFs, images), 1 journals in a months
-                                            </li>
-                                        </ul>
-                                        <button className="pricingTable-signup" style={{ border: 'none' }}>
-                                            Subscribe Now
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div className="col-lg-4 col-md-6 col-12">
-                                    <div className="pricingTable bg-white">
-                                        <div className="price-value">
-                                            &#8377;300
-                                            <span className="month">Quaterly</span>
-                                        </div>
-                                        <h3 className="title">Business</h3>
-                                        <ul className="pricing-content">
-                                            <li>
-                                                Access to <strong>2</strong> Journals
-                                            </li>
-                                            <li>
-                                                Access to full journal content (PDFs, images), 2 journals every 40 days
-                                            </li>
-                                        </ul>
-                                        <button className="pricingTable-signup" style={{ border: 'none' }}>
-                                            Subscribe Now
-                                        </button>
-                                    </div>
-                                </div>
+                                    ))}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div className="modal fade customVideoModal" id="exampleModal1" tabIndex={-1} aria-labelledby="exampleModalLabel1" aria-hidden="true">
-                <div className="modal-dialog modal-dialog-centered modal-xl">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
-                        </div>
-                        <div className="modal-body">
-                            <iframe src={`https://www.youtube.com/embed/${journalDetail.video_id}?autoplay=0`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+            {isOpen && (
+                <LazyYoutube
+                    isOpen={isOpen}
+                    setIsOpen={setIsOpen}
+                    videoId={journalDetail.video_id}
+                    setViews={setViews}
+                />
+            )}
 
             {/* Bottom of section observer trigger */}
             <div ref={pageBottomTriggerRef} style={{ height: "1px", marginBottom: "-1px" }}></div>
