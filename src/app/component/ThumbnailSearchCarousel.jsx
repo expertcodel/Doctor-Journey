@@ -42,7 +42,7 @@ export default function ThumbnailSearchCarousel({specialization}) {
   return (
     <>
       {/* Thumbnail Slider */}
-      <div className="swiper thumbs-slider customSwiper">
+      <div className="swiper thumbs-slider customSwiper cneterAlignSlider">
         <div className="swiper-wrapper">
          {specialization.map((item,i)=><div key={i} className={i===0?"swiper-slide item":"swiper-slide"}>
             <div className="card mb-0">

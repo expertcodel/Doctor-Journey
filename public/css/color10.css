@@ -2826,28 +2826,28 @@ body {
     position: absolute; top: calc(100% + 16px); right: 0; width: 250px; background: var(--bs-body-bg); border-radius: 8px;
     padding: 8px; box-shadow: 0 6px 12px rgba(0,0,0,.2); z-index: 9999;
 } */
-.dashboardDropdown .dropdown-menu{padding: 0; min-width: 300px;}
-.dashboardDropdown .dropdown-menu.show{
+.custom li.dashboardDropdown .dropdown-menu{padding: 0; min-width: 300px;}
+.custom li.dashboardDropdown .dropdown-menu.show{
     display: flex; flex-wrap: wrap;
 }
-.dashboardDropdown .dropdown-menu li{width: 50%; text-align: center;}
-.dashboardDropdown .dropdown-menu li:nth-child(odd){
+.custom li.dashboardDropdown .dropdown-menu li{flex: 1; text-align: center; margin: 0; padding: 6px 0;}
+.custom li.dashboardDropdown .dropdown-menu li:nth-child(odd){
     border-width: 1px 1px 0 0; border-style: solid; border-color: var(--bs-border-color);
 }
-.dashboardDropdown .dropdown-menu li:nth-child(even){
+.custom li.dashboardDropdown .dropdown-menu li:nth-child(even){
     border-width: 0 0 1px 0; border-style: solid; border-color: var(--bs-border-color);
 }
-.dashboardDropdown .dropdown-menu li:first-child{border-top: none;}
-.dashboardDropdown .dropdown-menu li:last-child{border-bottom: none;}
-.dashboardDropdown .dropdown-menu li a{
+.custom li.dashboardDropdown .dropdown-menu li:first-child{border-top: none;}
+.custom li.dashboardDropdown .dropdown-menu li:last-child{border-bottom: none;}
+.custom li.dashboardDropdown .dropdown-menu li a{
     display: flex; flex-direction: column; align-items: center; padding: 16px 32px; justify-content: center; font-size: 16px;
     transition: ease all .5s; -webkit-transition: ease all .5s; font-weight: 600;
 }
-.dashboardDropdown .dropdown-menu li a > *{margin: 0;}
-.dashboardDropdown .dropdown-menu li a figure{margin-bottom: 8px; width: 64px;}
-.dashboardDropdown .dropdown-menu li a figure img{filter: grayscale(1);transition: ease all .5s; -webkit-transition: ease all .5s;}
-.dashboardDropdown .dropdown-menu li a:hover figure img{filter: grayscale(0);}
-.dashboardDropdown .dropdown-menu li a:hover{color: var(--primary-09);}
+.custom li.dashboardDropdown .dropdown-menu li a > *{margin: 0;}
+.custom li.dashboardDropdown .dropdown-menu li a figure{margin-bottom: 8px; width: 64px;}
+.custom li.dashboardDropdown .dropdown-menu li a figure img{filter: grayscale(1);transition: ease all .5s; -webkit-transition: ease all .5s;}
+.custom li.dashboardDropdown .dropdown-menu li a:hover figure img{filter: grayscale(0);}
+.custom li.dashboardDropdown .dropdown-menu li a:hover{color: var(--primary-09);}
 
 /********** eventGallery-slider ********/
 .eventGallery-slider .swiper-wrapper .swiper-slide{z-index: 1;}
@@ -3107,6 +3107,9 @@ body {
 .customSwiper .swiper-pagination-bullet-active{opacity: 1;}
 .customSwiper.PopularCourse-slider .swiper-wrapper .swiper-slide{height: auto;}
 
+/********** cneterAlignSlider *******/
+.cneterAlignSlider .swiper-wrapper{justify-content: center;}
+
 /********** customCarousel ********/
 .customModal .modal-dialog .modal-content .modal-header .modal-title{
     font-size: 18px; font-weight: 600; color: var(--bs-black);
@@ -3151,6 +3154,43 @@ body {
     font-size: 18px; position: relative; top: 2px; margin-right: 2px;
 }
 
+/******* thumbs-slider ******/
+.thumbs-slider .swiper-wrapper .swiper-slide .card{box-shadow: none;}
+
+.btn-info.show{background-color: #17acda; border-color: #17acda; color: var(--bs-body-bg);}
+
+/****** thankYou page css ********/
+.thankyouPage{background: var(--lightPrimaryColor); margin: 0; padding: 80px 0;}
+.thankyouPage .wrapper-1{width: 100%; height: 100vh; display: flex; flex-direction: column;}
+.thankyouPage .wrapper-2{padding: 30px; text-align: center; background: var(--white);}
+.thankyouPage .wrapper-2 > *{margin: 0;}
+.thankyouPage .wrapper-2 > *:not(:last-child){margin-bottom: 16px;}
+.thankyouPage .wrapper-2 h1{
+    font-family: 'Kaushan Script', cursive; font-size: 4em; letter-spacing: 3px; color: #44ca91;
+}
+.thankyouPage .wrapper-2 h4 {
+    font-size: 1.3em; color: var(--black); font-family: 'Source Sans Pro', sans-serif; letter-spacing: 1px;
+    font-weight: 600;
+}
+.thankyouPage .wrapper-2 p {
+    color: var(--textGrey); font-family: 'Source Sans Pro', sans-serif; letter-spacing: 1px; font-size: 18px;
+}
+
+
+@media (min-width:360px){
+  .thankyouPage .wrapper-2 h1{
+    font-size:4.5em;
+  }
+}
+@media (min-width:600px){
+    .thankyouPage .content{
+        max-width: 1000px; margin: 0 auto;
+    }
+    .thankyouPage .wrapper-1{
+        height: initial; max-width: 620px; margin: 0 auto; box-shadow: 4px 8px 40px 8px rgba(88, 146, 255, 0.2);
+    }
+    
+}
 @media only screen and (min-width: 1280px) {
     /******* eventDetailsOuter *********/
     .eventDetailsOuter{position: relative; width: 100%; display: flex;}
