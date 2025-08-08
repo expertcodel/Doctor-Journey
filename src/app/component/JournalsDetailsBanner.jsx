@@ -70,7 +70,11 @@ export default function JournalsDetailsBanner({journalSlider}) {
     <section className="heroBanner detailCardTop detailSideCardTop">
       <div id="carouselExampleIndicators" className="carousel slide carousel-fade customCarousel" data-bs-ride="false" data-bs-pause="false" ref={carouselRef}>
         <div className="carousel-indicators">
-          <JournalsCarouselIndicators slides={journalSlider} activeIndex={activeIndex} />
+          {journalSlider.length > 1 && (
+            <div className="carousel-indicators">
+              <JournalsCarouselIndicators slides={journalSlider} activeIndex={activeIndex} />
+            </div>
+          )}
         </div>
         <div className="carousel-inner">
           {journalSlider && journalSlider.map((slide, idx) => (

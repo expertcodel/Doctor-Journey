@@ -567,17 +567,22 @@ export default function JournalsDetailsTop({ doctorProfile, subscriptionsList, j
                                                 </span>
                                             </span>
                                         </label>
-                                        <label className="custom-control form-checkbox mb-3" data-bs-toggle={!modelStatus ? "modal" : ""} data-bs-target={!modelStatus ? "#exampleModal" : ""}>
-                                            <input type="checkbox" className="custom-control-input" name="checkbox3" checked={modelStatus} onChange={handleCheckbox} />
-                                            <span className="custom-control-label">
-                                                <span>Subscription <small>{subscription.duration && <>({subscription.duration})</>}</small></span>
-                                                <span className="label float-end">
-                                                    {
-                                                        subscription.price ? <>₹ {subscription.price}</> : "--"
-                                                    }
-                                                </span>
-                                            </span>
-                                        </label>
+                                        {
+                                            journalDetail.subscription_plan && (
+                                                <label className="custom-control form-checkbox mb-3" data-bs-toggle={!modelStatus ? "modal" : ""} data-bs-target={!modelStatus ? "#exampleModal" : ""}>
+                                                    <input type="checkbox" className="custom-control-input" name="checkbox3" checked={modelStatus} onChange={handleCheckbox} />
+                                                    <span className="custom-control-label">
+                                                        <span>Subscription <small>{subscription.duration && <>({subscription.duration})</>}</small></span>
+                                                        <span className="label float-end">
+                                                            {
+                                                                subscription.price ? <>₹ {subscription.price}</> : "--"
+                                                            }
+                                                        </span>
+                                                    </span>
+                                                </label>
+                                            )
+                                        }
+                                        
                                     </div>
                                 </div>
                                 <div className="card-footer">

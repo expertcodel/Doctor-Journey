@@ -11,7 +11,7 @@ export default function JournalsCarouselIndicators({ slides, activeIndex }) {
     useEffect(() => {
         // Initialize Swiper
         swiperRef.current = new Swiper(".indicatorSwiper", {
-        slidesPerView: 5, // Show 4 thumbnails at a time
+        slidesPerView: 3, // Show 4 thumbnails at a time
         spaceBetween: 4, // Spacing between slides
         freeMode: true, // Enable free scrolling
         grabCursor: true, // Enable mouse dragging
