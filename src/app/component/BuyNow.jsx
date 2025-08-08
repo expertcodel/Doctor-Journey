@@ -463,15 +463,15 @@ export default function BuyNow({ countrylist, journaldata }) {
                                                 </div>
                                             </div>
                                             <div className="col-md-12 mt-3 d-flex justify-content-center">
-                                                <button type="submit" className="btn btn-primary">
+                                                <button type="submit" className="btn btn-primary btn-lg">
                                                     {loading ? <div className="spinner-border text-white" role="status">
                                                         <span className="visually-hidden">Loading...</span>
                                                     </div> : <>  Proceed to Checkout <FontAwesomeIcon icon={faAngleRight} /></>}
-
                                                 </button>
-                                                
                                             </div>
-                                            <div className="text-danger">{errMsg!=="" && errMsg}</div>
+                                            <div className="col-12 text-center mt-3">
+                                                <div className="text-danger">{errMsg!=="" && errMsg}</div>
+                                            </div>
                                         </div>
                                     </form>
                                 </div>

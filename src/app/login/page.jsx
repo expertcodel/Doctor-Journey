@@ -83,10 +83,10 @@ export default function Login() {
 
     if (!validateInputs()) return; // Stop execution if validation fails
 
-    // if (!recaptchaToken) {
-    //   setMessage("Please complete the CAPTCHA");
-    //   return;
-    // }
+    if (!recaptchaToken) {
+      setMessage("Please complete the CAPTCHA");
+      return;
+    }
 
 
     // document.cookie = `authToken=${fakeToken}; path=/; max-age=86400;`; // Store token in cookie
@@ -107,10 +107,10 @@ export default function Login() {
 
     }
     else {
-      // if (recaptchaRef.current) {
-      //   recaptchaRef.current.reset();
-      //   setRecaptchaToken(null);
-      // }
+      if (recaptchaRef.current) {
+        recaptchaRef.current.reset();
+        setRecaptchaToken(null);
+      }
 
       if (res.message === 'Email not verified!') {
         setOtppage(true);

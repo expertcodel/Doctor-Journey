@@ -572,7 +572,9 @@ export default function JournalsDetailsTop({ doctorProfile, subscriptionsList, j
                                             <span className="custom-control-label">
                                                 <span>Subscription <small>{subscription.duration && <>({subscription.duration})</>}</small></span>
                                                 <span className="label float-end">
-                                                    {subscription.price && <>₹ {subscription.price}</>}
+                                                    {
+                                                        subscription.price ? <>₹ {subscription.price}</> : "--"
+                                                    }
                                                 </span>
                                             </span>
                                         </label>

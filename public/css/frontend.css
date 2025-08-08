@@ -37039,8 +37039,11 @@ select.form-control.select-sm {
 
 .select2-container--default .select2-selection--single {
     background-color: #fff;
-    border: 1px solid #e8ebf3 !important;
+    border: 1px solid #e8ebf3;
     border-radius: 4px;
+}
+.countryError + .select2-container--default .select2-selection--single{
+    border-color: #ff382b;
 }
 
 .select2-container--default.select2-container--focus .select2-selection--multiple {

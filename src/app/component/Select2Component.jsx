@@ -98,7 +98,7 @@ export default function Select2Component({ id, options, select2Options = {}, sho
   }, [id, select2Options, showSearch]);
 
   return (
-    <select id={id}  className="form-control select2-no-search w-70">
+    <select id={id}  className={`form-control select2-no-search w-70 ${message?.country ? "countryError" : ""}`}>
       {/* ✅ Placeholder option */}
       {select2Options.placeholder && <option value="">{select2Options.placeholder}</option>}
       {options.map((option) => (
