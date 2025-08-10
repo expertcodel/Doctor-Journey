@@ -12,6 +12,7 @@ import JournalsThumbCarousel from "../component/JournalsThumbCarousel";
 import doctorProfile from "../../data/doctorProfile.json";
 import JournalsBanner from "../component/JournalsBanner";
 import JournalsVerticalCarousel from "../component/JournalsVerticalCarousel";
+import SearchComponent from "../component/SearchComponent";
 
 export default async function Journals() {
 
@@ -77,7 +78,7 @@ export default async function Journals() {
       </section> */}
 
       {/* search engine */}
-      <section className="banner-1 cover-image sptb-3 pb-14 sptb-tab bg-background2"
+      {/* <section className="banner-1 cover-image sptb-3 pb-14 sptb-tab bg-background2"
         data-image-src="../assets/images/banners/banner1.jpg">
         <div className="header-text1 mb-0">
           <div className="container">
@@ -94,16 +95,7 @@ export default async function Journals() {
                       <span className="searchIcon"><FontAwesomeIcon icon={faSearch} /></span>
                       <input type="text" className="form-control input-lg br-tr-md-0 br-br-md-0" id="text4" placeholder="Enter Your Keywords" />
                     </div>
-                    {/* <div className="col-xl-3 col-lg-3 col-md-12 mb-0 bg-white form-group">
-                      <input type="text" className="form-control input-lg br-md-0" id="text5" placeholder="Select Location" />
-                      <span>
-                        <Image
-                          src="/images/svg/gps.svg"
-                          className="location-gps-sm"
-                          alt="image" width={150} height={150}
-                        />
-                      </span>
-                    </div> */}
+                   
                     <div className="col-md-6 col-12 select2-lg  mb-0 bg-white form-group">
                       <Select2Component id="select2"
                         options={[
@@ -117,25 +109,23 @@ export default async function Journals() {
                         select2Options={{ placeholder: "Select category", allowClear: true }}
                         showSearch={true} />
                     </div>
-                    {/* <div className="col-xl-2 col-lg-3 col-md-12 mb-0">
-                      <Link href="/" className="btn btn-lg btn-block btn-secondary br-tl-md-0 br-bl-md-0">
-                        Search Here
-                      </Link>
-                    </div> */}
+                    
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        {/* /header-text */}
+      
 
         <div className="header-slider-img">
           <div className="container">
             <ThumbnailSearchCarousel specialization={specialization}/>
           </div>
         </div>
-      </section>
+      </section> */}
+
+       <SearchComponent specialization={specialization}/>
 
       {/* offer */}
       <section className="sectionSpace aboutMain sptb bg-white">
@@ -214,7 +204,7 @@ export default async function Journals() {
                               {journal.journalsName}
                             </h5>
                             <small className="badge">
-                              INR {journal.price}/
+                              INR {journal.price_level_1}/
                             </small>
                           </div>
                         </div>

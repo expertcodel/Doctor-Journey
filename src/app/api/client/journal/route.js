@@ -19,7 +19,23 @@ export async function GET() {
             where: { status: true },
             order: [['createdAt', 'DESC']]
 
-        }), dataModel[2].findAll({ limit: 8, order: [['createdAt', 'DESC']], attributes: ['profileImage', 'qualification', 'doctorId', 'doctorName'], where: { status: true } }), dataModel[3].findAll({ limit: 10, order: [['createdAt', 'DESC']], where: { journalStatus: 'published' } }), dataModel[4].findAll({ limit: 4, offset: 0, attributes: ['imageUrl', 'price', 'journalsUrl', 'journalsId', 'journalsName'], where: { journalStatus: 'published' } }), dataModel[4].findAll({ limit: 2, order: [['createdAt', 'DESC']], attributes: ['imageUrl', 'price', 'journalsUrl', 'journalsId', 'journalsName'], where: { journalStatus: 'published' } }), dataModel[4].findAll({ limit: 4, offset: 0, attributes: ['imageUrl', 'price', 'journalsUrl', 'journalsId', 'journalsName'], where: { journalStatus: 'published' } }), dataModel[5].query(`SELECT public."Videos"."specialization", COUNT(*) FROM public."Videos" GROUP BY public."Videos"."specialization" ORDER BY  public."Videos"."specialization" ASC`)])
+        }), dataModel[2].findAll({ limit: 8, order: [['createdAt', 'DESC']], attributes: ['profileImage', 'qualification', 'doctorId', 'doctorName'], where: { status: true } }), dataModel[3].findAll({ limit: 10, order: [['createdAt', 'DESC']], where: { journalStatus: 'published' } }), dataModel[4].findAll({ limit: 4, offset: 0, attributes: ['imageUrl', 'price', 'price_level_1','journalsUrl', 'journalsId', 'journalsName'], where: { journalStatus: 'published' } }), dataModel[4].findAll({ limit: 2, order: [['createdAt', 'DESC']], attributes: ['imageUrl', 'price','price_level_1', 'journalsUrl', 'journalsId', 'journalsName'], where: { journalStatus: 'published' } }), dataModel[4].findAll({ limit: 4, offset: 0, attributes: ['imageUrl', 'price','price_level_1', 'journalsUrl', 'journalsId', 'journalsName'], where: { journalStatus: 'published' } }), dataModel[5].query(`SELECT 
+    d."departmentName", 
+    d."icon", 
+    COUNT(v."userId") AS "count"
+FROM 
+    public."Videos" v
+INNER JOIN 
+    public."Users" u ON v."userId" = u."userId"
+   
+INNER JOIN 
+    public."Departments" d ON u."department_id" = d."id"
+WHERE v."videoStatus"=true
+GROUP BY 
+    d."departmentName", d."icon"
+ORDER BY 
+    d."departmentName" ASC;
+`)])
 
         return NextResponse.json({ status: true, sliderlist: dataList[0], offerlist: dataList[1], doctorlist: dataList[2], journallist: dataList[3], journalleftlist: dataList[4], journalcenterlist: dataList[5], journalrightlist: dataList[6], specialization: dataList[7][0] });
 
@@ -45,10 +61,10 @@ export async function POST(request) {
 
 
         const journalDetail = await journalmodel.findOne({ where: { journalsUrl } });
-        const journaldata = await Promise.all([journalmodel.findAll({ limit: 4, where: { journalStatus: 'published' } }),journalmodel.findAll({ where: { parent_journal: journalDetail.parent_journal } }),article.findAll({attributes:['articleId','articleTitle','articleAuthor','articleSummary'],where:{status:true,articleStatus:'published',journalsId:journalDetail.journalsId}})]);
+        const journaldata = await Promise.all([journalmodel.findAll({ limit: 4, where: { journalStatus: 'published' } }), journalmodel.findAll({ where: { parent_journal: journalDetail.parent_journal } }), article.findAll({ attributes: ['articleId', 'articleTitle', 'articleAuthor', 'articleSummary'], where: { status: true, articleStatus: 'published', journalsId: journalDetail.journalsId } })]);
         // console.log(journaldata[1],journalDetail.journalsId,'listhh');
-        
-        return NextResponse.json({ status: true, journaldetail: journalDetail, journallist: journaldata[0],journalversion:journaldata[1],articlelist:journaldata[2]});
+
+        return NextResponse.json({ status: true, journaldetail: journalDetail, journallist: journaldata[0], journalversion: journaldata[1], articlelist: journaldata[2] });
 
     } catch (error) {
 

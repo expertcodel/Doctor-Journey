@@ -26,34 +26,36 @@ export async function POST(req) {
   const user = await UserModel();
 
   try {
+    
     const order = await razorpay.orders.create(options);
-    if (path === '/register-journal') {
+    // if (path === '/register-journal') {
+
+    //   const isExistedemail = await user.findOne({ where: { email } })
+    //   if (isExistedemail) {
+    //     return Response.json({ message: "Email already exist!", status: false });
+    //   }
+
+    //   const isExistednumber = await user.findOne({ where: { email } })
+    //   if (isExistednumber) {
+    //     return Response.json({ message: "Mobile number already exist!", status: false });
+    //   }
+
+    //   await journals_registrationmodel.update({
+    //     name, number, email, address, city, zip, country, registration_number: generate13DigitNumber(),
+    //     userId: userId && userId
+    //   }, { where: { id } })
 
 
-      const isExistedemail = await user.findOne({ where: { email } })
-      if (isExistedemail) {
-        return Response.json({ message: "Email already exist!", status: false });
-      }
 
-      const isExistednumber = await user.findOne({ where: { email } })
-      if (isExistednumber) {
-        return Response.json({ message: "Mobile number already exist!", status: false });
-      }
-
-      await journals_registrationmodel.update({
-        name, number, email, address, city, zip, country, registration_number: generate13DigitNumber(),
-        userId: userId && userId
-      }, { where: { id } })
-
-
-
-      return Response.json({ order, id: id, status: true });
-    }
-    else {
+    //   return Response.json({ order, id: id, status: true });
+    // }
+    // else {
       return Response.json(order);
-    }
+    // }
 
   } catch (err) {
+    console.log(err,'error');
+    
     return new Response(
       JSON.stringify({ error: "Order creation failed", details: err.message }),
       { status: 500 }

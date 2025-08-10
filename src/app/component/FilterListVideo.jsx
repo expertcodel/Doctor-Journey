@@ -34,7 +34,7 @@ export default function FilterListVideo({ filtered }) {
                             key={index}
                             style={{ listStyle: 'none' }}
                         >
-                            <Link href={`/doctors/${item.videoId}`}>{item.videoTitle}</Link>
+                            <Link href={path==='/'?`/doctors/${item.videoId}`:`/journals${item.journalsUrl}`}>{path==='/'?item.videoTitle:item.journalsName}</Link>
                         </li>
                     ))}
                 </ul>

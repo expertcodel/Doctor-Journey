@@ -364,7 +364,7 @@ setIdx(1);
                                       </button>
                                     </span> */}
                                                                         <span>
-                                                                            <Link href={`/dashboard/journalList/${item.journalsId}`} className="btn btn-sm btn-light">
+                                                                            <Link href={`/dashboard/journal/journalslist/${item.journalsId}`} className="btn btn-sm btn-light">
                                                                                 Edit
                                                                             </Link>
                                                                         </span>

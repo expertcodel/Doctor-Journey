@@ -44,7 +44,7 @@ export default function JournalsVerticalCarousel({ journalLeftlist = [], journal
                                 </div>
                                 <div className="cat-desc">
                                     <h5>{journal.journalsName}</h5>
-                                    <small className="badge">INR {journal.price}/</small>
+                                    <small className="badge">INR {journal.price_level_1}/</small>
                                 </div>
                                 </div>
                             </div>
@@ -87,7 +87,7 @@ export default function JournalsVerticalCarousel({ journalLeftlist = [], journal
                                 </div>
                                 <div className="cat-desc">
                                     <h5>{journal.journalsName}</h5>
-                                    <small className="badge">INR {journal.price}/</small>
+                                    <small className="badge">INR {journal.price_level_1}/</small>
                                 </div>
                                 </div>
                             </div>
