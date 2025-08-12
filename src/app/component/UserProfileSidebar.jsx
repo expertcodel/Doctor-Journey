@@ -12,7 +12,7 @@ export default function UserProfileSidebar() {
 
     const pathName = usePathname();
     const { user, logout } = useAuth()
-    
+
     return (
         <div className="card">
             <div className="card-header">
@@ -22,7 +22,7 @@ export default function UserProfileSidebar() {
                 <div className="profile-pic">
                     <div className="profile-pic-img">
                         <span className="bg-success dots" data-bs-toggle="tooltip" data-bs-placement="top" title="online" />
-                        <Image src={user?.profile_img} width={80} height={80} className="brround" alt="user" unoptimized/>
+                        <Image src={user?.profile_img} width={80} height={80} className="brround" alt="user" unoptimized />
                     </div>
                     <Link href="/user-dashboard/profile">
                         <h4 className="mt-3 mb-0 font-weight-semibold text-dark">
@@ -55,6 +55,14 @@ export default function UserProfileSidebar() {
                     <span className="icon1 me-2">
                         <FontAwesomeIcon icon={faClipboardList} />
                     </span>{" "} My Subscription
+                </Link>
+                <Link href="/user-dashboard/journal-subscription"
+                    className={`link ${pathName === '/user-dashboard/journal-subscription' ? 'active d-flex border-bottom' : 'd-flex border-bottom'
+                        }`}
+                >
+                    <span className="icon1 me-2">
+                        <FontAwesomeIcon icon={faClipboardList} />
+                    </span>{" "} Journal Subscription
                 </Link>
                 <Link href="/user-dashboard/payment-history"
                     className={`link ${pathName === '/user-dashboard/payment-history' ? 'active d-flex border-bottom' : 'd-flex border-bottom'

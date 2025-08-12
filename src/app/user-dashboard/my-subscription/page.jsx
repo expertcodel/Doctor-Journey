@@ -4,7 +4,7 @@ export default async function MySubscription() {
 
     let subscriptionList = [];
     let subscriptionsList = [];
-    const {userId } = await extractUsertype();
+    const {userId} = await extractUsertype();
     try {
 
         const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/client/subscription/?userId=${userId}&name=`, {

@@ -28,8 +28,8 @@ export default function JournalsDetailsTop({ doctorProfile, subscriptionsList, j
     const [errMsg, setErrmsg] = useState("");
     const [loading, setLoading] = useState(false);
 
-    
-    
+
+
     useEffect(() => {
         console.log(journalDetail);
         
@@ -126,7 +126,7 @@ export default function JournalsDetailsTop({ doctorProfile, subscriptionsList, j
         if (price1) {
             price = totalAmount + parseFloat(journalDetail.price_level_1)
             updatedcheckAmount['plan1'] = true;
-            updatedPlans['plan1'] = true;
+            updatedPlans['plan1'] = { plan: 'Soft Copy', price: parseFloat(journalDetail.price_level_1), detail: 'sent to mail' };
         }
         else {
             price = Math.abs(totalAmount - parseFloat(journalDetail.price_level_1))
@@ -148,7 +148,7 @@ export default function JournalsDetailsTop({ doctorProfile, subscriptionsList, j
         if (price2) {
             price = totalAmount + parseFloat(journalDetail.price_level_2)
             updatedcheckAmount['plan2'] = true;
-            updatedPlans['plan2'] = true;
+            updatedPlans['plan2'] = {plan:'Hard Copy',price: parseFloat(journalDetail.price_level_2),detail: 'deliver to your address' }
         }
         else {
 
@@ -167,7 +167,7 @@ export default function JournalsDetailsTop({ doctorProfile, subscriptionsList, j
     const subscribe = (subscription_plan) => {
 
 
-        setSubscription({ plan: subscription_plan.plan, price: subscription_plan.price, duration: subscription_plan.duration })
+        setSubscription({plan: subscription_plan.plan, price: subscription_plan.price, duration: subscription_plan.duration,detail:subscription_plan.details})
         setModelstatus(true);
         setTotalamount(parseFloat(totalAmount) + parseFloat(subscription_plan.price) - subscriptionAmount)
         setSubscriptionamount(parseFloat(subscription_plan.price));
@@ -595,7 +595,7 @@ export default function JournalsDetailsTop({ doctorProfile, subscriptionsList, j
                                                 </label>
                                             )
                                         }
-                                        
+
                                     </div>
                                 </div>
                                 <div className="card-footer">
@@ -654,7 +654,7 @@ export default function JournalsDetailsTop({ doctorProfile, subscriptionsList, j
                                                     className="pricingTable-signup"
                                                     style={{ border: 'none' }}
                                                     onClick={() => subscribe(plan)}
-                                                     data-bs-dismiss="modal"
+                                                    data-bs-dismiss="modal"
                                                 >
                                                     Subscribe Now
                                                 </button>

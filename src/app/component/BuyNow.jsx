@@ -279,7 +279,7 @@ export default function BuyNow({ countrylist, journaldata }) {
         if (flag) {
 
             const data1 = {
-                name: data.name, number: data.number, email: data.email, address: data.address, city: data.city, zip: data.zip, country: data.country, path: '/register-journal', amount: journaldata.amount, id: journaldata.id, userId: user?.userId
+                name: data.name, number: data.number, email: data.email, address: data.address, city: data.city, zip: data.zip, country: data.country, path: '/register-journal', amount: journaldata.amount, id: journaldata.id
             }
             setLoading(true)
             const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/create-order`, { method: 'POST', body: JSON.stringify(data1) })
@@ -303,7 +303,7 @@ export default function BuyNow({ countrylist, journaldata }) {
                             ...response,
                             id: order?.id,      // registration ID
                             path: "/register-journal",  // or your context path
-                            userId: user?.userId
+                            email: data.email
                         }),
                     });
 

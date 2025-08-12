@@ -9,7 +9,7 @@ function generate13DigitNumber() {
 }
 
 export async function POST(req) {
-  const { name, number, email, address, city, zip, country, amount, path, id, userId } = await req.json();
+  const { name, number, email, address, city, zip, country, amount, path, id } = await req.json();
 
   const razorpay = new Razorpay({
     key_id: process.env.RAZORPAY_KEY_ID,
@@ -23,39 +23,27 @@ export async function POST(req) {
   };
 
   const journals_registrationmodel = await journal_registrationModel();
-  const user = await UserModel();
+ 
 
   try {
-    
+
     const order = await razorpay.orders.create(options);
-    // if (path === '/register-journal') {
+    if (path === '/register-journal') {
 
-    //   const isExistedemail = await user.findOne({ where: { email } })
-    //   if (isExistedemail) {
-    //     return Response.json({ message: "Email already exist!", status: false });
-    //   }
+     
+      await journals_registrationmodel.update({
+        name, number, email, address, city, zip, country, registration_number: generate13DigitNumber()
+      }, { where: { id } })
 
-    //   const isExistednumber = await user.findOne({ where: { email } })
-    //   if (isExistednumber) {
-    //     return Response.json({ message: "Mobile number already exist!", status: false });
-    //   }
-
-    //   await journals_registrationmodel.update({
-    //     name, number, email, address, city, zip, country, registration_number: generate13DigitNumber(),
-    //     userId: userId && userId
-    //   }, { where: { id } })
-
-
-
-    //   return Response.json({ order, id: id, status: true });
-    // }
-    // else {
+      return Response.json({ order, id: id, status: true });
+    }
+    else {
       return Response.json(order);
-    // }
+    }
 
   } catch (err) {
-    console.log(err,'error');
-    
+    console.log(err, 'error');
+
     return new Response(
       JSON.stringify({ error: "Order creation failed", details: err.message }),
       { status: 500 }

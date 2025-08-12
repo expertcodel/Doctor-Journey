@@ -7,8 +7,8 @@ import { journal_registrationModel } from "../../../models/journal_subscription.
 import { UserModel } from "../../../models/user.model";
 import bcrypt from 'bcrypt'
 import nodemailer from 'nodemailer'
-
-
+import { journalSubscriptionModel } from "../../../models/journal-subscription.model";
+import dayjs from 'dayjs'
 
 async function sendEmail(email, password, name) {
 
@@ -136,6 +136,12 @@ async function createUser(data, user) {
 
 }
 
+function generate13DigitNumber() {
+  const min = 1e12; // 1000000000000
+  const max = 9.999999999999e12; // Just under 10 trillion
+  return String(Math.floor(Math.random() * (max - min + 1)) + min);
+}
+
 
 export async function POST(req) {
 
@@ -143,15 +149,16 @@ export async function POST(req) {
     const paymentmodel = await paymentModel();
     const subscriptionmodel = await subscriptionModel();
     const journals_registrationmodel = await journal_registrationModel();
+    const journalSubscriptionmodel=await journalSubscriptionModel();
     const user = await UserModel();
     const {
         razorpay_order_id,
         razorpay_payment_id,
         razorpay_signature,
         userData,
-        amount, subscriptionsId, subscriptionName, subscriptionType, duration, path, id, userId } = body;
+        amount, subscriptionsId, subscriptionName, subscriptionType, duration, path, id, email } = body;
 
-    console.log(userId, 'usdgtd');
+
     const generatedSignature = crypto
         .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
         .update(`${razorpay_order_id}|${razorpay_payment_id}`)
@@ -165,25 +172,84 @@ export async function POST(req) {
 
         if (path === '/register-journal') {
 
-            if (!userId) {
+            const isExistedemail = await user.findOne({ where: { email } })
+            let user_id;
+            let is_updated;
+            let data;
+            if (!isExistedemail) {
+
                 const data = await journals_registrationmodel.findOne({ where: { id } });
                 let newid = await createUser(data, user);
                 if (!newid) {
-                    return NextResponse.json({ status: false, message: "user can't created" });
+                    return NextResponse.json({ status: false, message: "user couldn't created" });
                 }
 
-                await journals_registrationmodel.update({
+                const [updatedCount,updatedRows] = await journals_registrationmodel.update({
                     is_paid: true, userId: newid && newid
                 }, { where: { id } })
+
+                if (updatedCount > 0) {
+
+                    is_updated = true
+                    user_id = newid
+                    data=updatedRows[0].toJSON()
+                }
             }
             else {
 
-                await journals_registrationmodel.update({
-                    is_paid: true, userId: userId
-                }, { where: { id } })
+
+                const [updatedCount, updatedRows] = await journals_registrationmodel.update(
+                    { is_paid: true, userId: isExistedemail.userId },
+                    {
+                        where: { id },
+                        returning: true
+                    }
+                );
+
+
+                if (updatedCount > 0) {
+
+                    is_updated = true
+                    user_id = isExistedemail.userId
+                    data=updatedRows[0].toJSON()
+                }
+
+                console.log(updatedRows,"updatedRows");
             }
 
+            console.log(data,"gshhsd");
+            
 
+
+            if (is_updated) {
+
+                const durationMap = {
+                    "Monthly": 1,
+                    "Quarterly": 4,
+                    "Quaterly": 4,
+                    "Yearly": 12,
+                    "Half-Yearly":6
+                };
+
+                const startDate = dayjs();
+                const monthsToAdd = durationMap[data.plans.plan3.duration] || 0;
+                const endDate = startDate.add(monthsToAdd, 'month');
+
+                await journalSubscriptionmodel.create({
+                    userId:user_id,
+                    startDate: startDate.toDate(),
+                    endDate: endDate.toDate(),
+                    duration_type: data.plans.plan3.duration,
+                    duration_value: monthsToAdd,
+                    status: true,
+                    subscriptionId:generate13DigitNumber(),
+                    subscriptionName:data.plans.plan3.plan,
+                    journal_id:data.journal_id,
+                    journal_name:data.journal_name,
+                    amount:data.amount
+                });
+
+            }
 
             return NextResponse.json({ status: true, razorpay_signature });
 
@@ -226,3 +292,12 @@ export async function POST(req) {
         return NextResponse.json({ error: err.message }, { status: 500 });
     }
 }
+
+// const now = dayjs();
+// const subscription = await subscriptionmodel.findOne({ where: { userId } });
+
+// if (now.isAfter(subscription.end_date)) {
+//     // mark as expired
+//     subscription.status = 'expired';
+//     await subscription.save();
+// }
