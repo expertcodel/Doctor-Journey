@@ -15,6 +15,25 @@ import { UniversalContext } from "./context.js";
 
 export default function Menubar({ data }) {
 
+  // Map role names (case-insensitive) to Remix Icon classes
+  const roleIcons = {
+    "basic": "ri-apps-line",
+    "setting": "ri-settings-2-line",
+    "manage blogs": "ri-newspaper-line",
+    "manage users": "ri-user-3-line",
+    "manage authors": "ri-pencil-line",
+    "manage doctors": "ri-stethoscope-line",
+    "manage articles": "ri-article-line",
+    "manage journals": "ri-book-line",
+    "manage publishers": "ri-building-line",
+    "manage organizations": "ri-building-2-line"
+  };
+
+  // Helper to get icon class by role
+  const getIconClass = (role) => {
+    return roleIcons[role?.toLowerCase()] || "ri-question-line"; // fallback icon
+  };
+
   // const { data } = UniversalContext();
 
   // useEffect(() => {
@@ -188,7 +207,8 @@ export default function Menubar({ data }) {
 
 
                                         {
-
+                                          console.log(item.role);
+                                          
                                           <span>{item.role}</span>
                                           return item?.path === 'scroll' ?
                                             <li className='nav-item' key={i}>
@@ -201,7 +221,7 @@ export default function Menubar({ data }) {
                                                 aria-controls={`sidebarDashboards1${i}`}
 
                                               >
-                                                <i className="ri-dashboard-2-line" />{" "}
+                                                <i className={getIconClass(item.role)} />{" "}
                                                 <span data-key="t-dashboards" >{item.role}</span>
                                               </Link>
                                               <div

@@ -15,8 +15,8 @@ export default function JournalsVerticalCarousel({ journalLeftlist = [], journal
             {journalLeftlist.length > 0 && (
                 <Swiper
                     direction="vertical"
-                    slidesPerView={4}
-                    spaceBetween={16}
+                    slidesPerView={3}
+                    spaceBetween={8}
                     grabCursor={true}
                     loop={true}
                     autoHeight={true}
@@ -28,7 +28,7 @@ export default function JournalsVerticalCarousel({ journalLeftlist = [], journal
                     }}
                     breakpoints={{
                     320: { slidesPerView: 3, spaceBetween: 8 },
-                    768: { slidesPerView: 2.5, spaceBetween: 8 },
+                    768: { slidesPerView: 3, spaceBetween: 8 },
                     1280: { slidesPerView: 4, spaceBetween: 8 }
                     }}
                     className="JournalsVertical-slider"
@@ -58,8 +58,8 @@ export default function JournalsVerticalCarousel({ journalLeftlist = [], journal
             {journalRightlist.length > 0 && (
                 <Swiper
                     direction="vertical"
-                    slidesPerView={4}
-                    spaceBetween={16}
+                    slidesPerView={3}
+                    spaceBetween={8}
                     grabCursor={true}
                     loop={true}
                     autoHeight={true}
@@ -71,7 +71,7 @@ export default function JournalsVerticalCarousel({ journalLeftlist = [], journal
                     }}
                     breakpoints={{
                     320: { slidesPerView: 3, spaceBetween: 8 },
-                    768: { slidesPerView: 2.5, spaceBetween: 8 },
+                    768: { slidesPerView: 3, spaceBetween: 8 },
                     1280: { slidesPerView: 4, spaceBetween: 8 }
                     }}
                     className="JournalsVertical-slider"

@@ -300,20 +300,23 @@ export default async function Journals() {
                   </div>
                   <div className="col-md-6 col-12">
                     <aside>
-                      <h3>
-                        Get 20% Off Your Order !
+                      <h3 className="text-center">
+                        To click the below link <br /> get 20% Off <br /> for your Order !
                       </h3>
-                      <p>
+                      {/* <p>
                         Enter your email and receive a 10% discount on your next order !
-                      </p>
-                      <div className="input-group w-100">
+                      </p> */}
+                      <button type="button" className="btn btn-primary btn-lg">
+                        {" "} Explore More{" "}
+                      </button>
+                      {/* <div className="input-group w-100">
                         <input type="text" className="form-control  border" placeholder="Email" />
                         <div className="">
                           <button type="button" className="btn btn-primary ">
                             {" "} Subscribe{" "}
                           </button>
                         </div>
-                      </div>
+                      </div> */}
                     </aside>
                   </div>
                 </div>

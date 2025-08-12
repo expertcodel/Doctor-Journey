@@ -3,7 +3,7 @@ import { useRef } from 'react'
 import Cropper from 'react-cropper'
 import 'cropperjs/dist/cropper.css'
 
-export default function ProfileCropper({ imageSrc, onCrop }) {
+export default function JournalDetailsSliderCropper({ imageSrc, onCrop }) {
   const cropperRef = useRef(null)
 
   const handleCrop = () => {
@@ -11,8 +11,8 @@ export default function ProfileCropper({ imageSrc, onCrop }) {
     if (!cropper) return
 
     const canvas = cropper.getCroppedCanvas({
-      width: 774,
-      height: 485,
+      width: 335,
+      height: 400,
       fillColor: '#fff'
     })
 
@@ -30,10 +30,10 @@ export default function ProfileCropper({ imageSrc, onCrop }) {
     const imageData = cropper.getImageData()
     const scale = imageData.naturalWidth / imageData.width
 
-    const boxWidth = 774 / scale
-    const boxHeight = 485 / scale
+    const boxWidth = 335 / scale
+    const boxHeight = 400 / scale
 
-    cropper.setAspectRatio(774 / 485) // ✅ Correct non-square aspect ratio
+    cropper.setAspectRatio(335 / 400) // ✅ Correct non-square aspect ratio
 
     cropper.setCropBoxData({
       width: boxWidth,
@@ -49,7 +49,7 @@ export default function ProfileCropper({ imageSrc, onCrop }) {
     <div className="max-w-full mx-auto">
       <Cropper
         src={imageSrc}
-        style={{ height: 300, width: '100%', overflow: 'hidden' }}
+        style={{ height: 200, width: '100%', overflow: 'hidden' }}
         viewMode={1}
         dragMode="move"
         cropBoxResizable={false}
@@ -59,7 +59,7 @@ export default function ProfileCropper({ imageSrc, onCrop }) {
         background={false}
         responsive={true}
         autoCropArea={1}
-        aspectRatio={774 / 485} // ✅ Set correct ratio here too
+        aspectRatio={335 / 400} // ✅ Set correct ratio here too
         ready={handleReady}
         ref={cropperRef}
       />
@@ -68,7 +68,7 @@ export default function ProfileCropper({ imageSrc, onCrop }) {
         className="btn mt-3 rounded btn-warning"
         type="button"
       >
-        Crop Image (774×485)
+        Crop Image (335×400)
       </button>
     </div>
   )

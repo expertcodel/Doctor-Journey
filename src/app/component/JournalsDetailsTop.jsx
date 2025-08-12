@@ -31,6 +31,8 @@ export default function JournalsDetailsTop({ doctorProfile, subscriptionsList, j
     
     
     useEffect(() => {
+        console.log(journalDetail);
+        
         const handleScroll = () => {
             const sidebarTop = sidebarRef.current?.getBoundingClientRect().top;
             const isAboveTopTrigger = pageTopTriggerRef.current?.getBoundingClientRect().bottom <= 0;
@@ -91,6 +93,14 @@ export default function JournalsDetailsTop({ doctorProfile, subscriptionsList, j
     const router = useRouter();
 
     const setJournaldetail = async () => {
+        const plan1Checked = document.getElementById("plan-1")?.checked;
+        const plan2Checked = document.getElementById("plan-2")?.checked;
+
+        if (!plan1Checked && !plan2Checked) {
+            setErrmsg("Please select at least one option: Soft Copy or Hard Copy.");
+            return;
+        }
+        setErrmsg("");
 
         setLoading(true);
         const updatedPlan = { ...checkPlans };
@@ -536,14 +546,17 @@ export default function JournalsDetailsTop({ doctorProfile, subscriptionsList, j
                     >
                         <div className="drCard w-100">
                             <div className="card mb-0">
-                                <div className="item7-card-img">
-
-                                    <Image src={`https://img.youtube.com/vi/${journalDetail.video_id}/mqdefault.jpg`} fill alt="img" className="cover-image" unoptimized />
-                                    <button type="button" onClick={openModal} className="play-button" ><span className="triangle"></span> </button>
-                                    {/* <div className="play-button">
-                                        <span className="triangle"></span>
-                                    </div> */}
-                                </div>
+                                {
+                                    journalDetail.video_id && (
+                                        <div className="item7-card-img">
+                                            <Image src={`https://img.youtube.com/vi/${journalDetail.video_id}/mqdefault.jpg`} fill alt="img" className="cover-image" unoptimized />
+                                            <div className="play-button" onClick={openModal}>
+                                                <span className="triangle"></span>
+                                            </div>
+                                        </div>
+                                    )
+                                }
+                                
                                 <div className="card-header">
                                     <h3 className="card-title">Select Price Level</h3>
                                 </div>
@@ -599,7 +612,7 @@ export default function JournalsDetailsTop({ doctorProfile, subscriptionsList, j
 
 
                                     </button>
-                                    <span className="text-danger">{errMsg !== "" && errMsg}</span>
+                                    <span className="text-danger mt-2 d-block">{errMsg !== "" && errMsg}</span>
                                 </div>
                                 <h4 className="mt-5">
                                     <span className="mb-0">
@@ -615,41 +628,6 @@ export default function JournalsDetailsTop({ doctorProfile, subscriptionsList, j
                     </div>
                 </div>
             </div>
-
-            {/* Modal */}
-            {/* <div className="modal fade customModal" id="exampleModal" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div className="modal-dialog modal-lg">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">
-                                Subscription Plan
-                            </h5>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
-                        </div>
-                        <div className="modal-body">
-                            <div className="row g-3">
-                                {journalDetail.subscription_plan && journalDetail.subscription_plan.map((plan, i) => <div className={`col-lg-4 col-md-6 col-12`} key={i}>
-                                    <div className={subscription.price === plan.price ? `pricingTable bg-white advance-pricing border border-danger` : `pricingTable bg-white advance-pricing`}>
-                                        <div className="price-value">
-                                            &#8377;{plan.price}
-                                            <span className="month">{plan.duration}</span>
-                                        </div>
-                                        <h3 className="title">{plan.plan}</h3>
-                                        <ul className="pricing-content" dangerouslySetInnerHTML={{ __html: plan.details }}>
-
-                                        </ul>
-                                        <button className="pricingTable-signup" style={{ border: 'none' }} onClick={() => subscribe(plan)}>
-                                            Subscribe Now
-                                        </button>
-                                    </div>
-                                </div>)}
-
-                              
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> */}
 
             <div className="modal fade customModal" id="exampleModal" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-lg">

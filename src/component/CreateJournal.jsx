@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic'
 import { useRouter } from 'next/navigation'
 import FabricCropper from './FabricCropper.js'
 const JoditEditor = dynamic(() => import('jodit-react'), { ssr: false });
+import JournalDetailsSliderCropper from './JournalDetailsSliderCropper';
 
 function CreateJournal({ journallist }) {
 
@@ -347,7 +348,7 @@ function CreateJournal({ journallist }) {
                                 <h3>Slider {i + 1}</h3>
                                 <label className="form-label" htmlFor={`project-section-img${i}`}>Slider Image</label>
                                 <input className="form-control" id={`project-section-img${i}`} type="file" name='sliderImage' accept="image/*" onChange={(e) => handleSlider(e, i)} required />
-                                {item.image && <FabricCropper imageSrc={item.image} onCrop={(blob) => handleCrop(blob, i)} />}
+                                {item.image && <JournalDetailsSliderCropper imageSrc={item.image} onCrop={(blob) => handleCrop(blob, i)} />}
 
                                 {croppedUrl[i].image && (
                                     <div className="mt-4">
