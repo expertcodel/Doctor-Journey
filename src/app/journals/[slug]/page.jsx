@@ -55,7 +55,7 @@ export default async function JournalsDetails({ params }) {
                         <div className="col-12">
                             <h4 className="mainHeading">
                                 Related Journals Version
-                                <Link href="/doctor-profile">See all</Link>
+                                <Link href="/journals-activity">See all</Link>
                             </h4>
                         </div>
                     </div>
@@ -75,7 +75,7 @@ export default async function JournalsDetails({ params }) {
                         <div className="col-12">
                             <h4 className="mainHeading">
                                 Our Related Journals
-                                <Link href="/doctor-profile">See all</Link>
+                                <Link href="/journals-activity">See all</Link>
                             </h4>
                         </div>
                     </div>

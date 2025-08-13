@@ -230,7 +230,7 @@ export default async function Journals() {
           <div className="row">
             <div className="col-12">
               <h4 className="mainHeading">
-                Our Favourite Journals
+                Our Journals
                 <Link href="/journals-activity">See all</Link>
               </h4>
             </div>
