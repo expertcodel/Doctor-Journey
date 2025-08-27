@@ -86,7 +86,7 @@ export default async function Journals() {
               <div className="col-xl-10 col-lg-12 col-md-12 d-block mx-auto">
                 <div className="text-center text-white ">
                   <h1 className="mb-5">
-                    Search Your favourite Journals
+                    Search Your Favourite Journals
                   </h1>
                 </div>
                 <div className="search-background bg-transparent">

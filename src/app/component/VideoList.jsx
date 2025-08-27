@@ -154,7 +154,7 @@ export default function VideoList({ doctorCard, totalItems, specialization, tota
                             <div className="col-xl-10 col-lg-12 col-md-12 d-block mx-auto">
                                 <div className="text-center text-white ">
                                     <h1 className="mb-5">
-                                        Search Your favourite videos
+                                        Search Your Favourite Journey
                                     </h1>
                                 </div>
                                 <div className="search-background bg-transparent">
